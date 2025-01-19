@@ -12,7 +12,7 @@ get_latest_version <- function(pkgname,
   url <- file.path(baseurl, pkgname, "index.html")
 
   # Read and parse page into data frame
-  page <- read_html(url)
+  page <- rvest::read_html(url)
   tables <- html_elements(page, "table")
   table1 <- html_table(tables[1], fill = TRUE)[[1]]
   table3 <- html_table(tables[3], fill = TRUE)[[1]]
@@ -50,7 +50,7 @@ get_archive_versions <- function(pkgname,
   url <- file.path(baseurl, pkgname)
 
   # Read and parse page into data frame
-  page <- read_html(url)
+  page <- rvest::read_html(url)
   tables <- html_elements(page, "table")
   table1 <- html_table(tables[1], fill = TRUE)[[1]]
 

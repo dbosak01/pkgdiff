@@ -14,7 +14,7 @@ Description: Contains a set of functions to identify changes between
     determine if there are breaking changes from one package version
     to the next.  The functions also work with a vector of package names,
     so that you can identify changes for an entire repository.
-License: What license is it under?
+License: CC0
 Encoding: UTF-8
 LazyData: true
 URL: https://pkgdiff.r-sassy.org, https://github.com/dbosak01/pkgdiff
