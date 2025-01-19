@@ -107,12 +107,32 @@ get_version <- function(pkgname) {
 #' @noRd
 get_current_version <- function(pkgname) {
 
+  dat <- get_installed_packages()
 
+  sdat <- subset(dat, Package == pkgname, "Version")
+
+  ret <- sdat[["Version"]]
+
+  return(ret)
 }
 
 get_file_name <- function(pkgname, version) {
 
+  ret <- paste0(pkgname, "_", version, ".tar.gz")
+
+  return(ret)
+}
 
 
+#' @noRd
+get_installed_packages <- function() {
+
+  ip <- as.data.frame(installed.packages()[,c(1,3:4)])
+  rownames(ip) <- NULL
+  ip <- ip[is.na(ip$Priority),1:2,drop=FALSE]
+
+  rownames(ip) <- NULL
+
+  return(ip)
 }
 

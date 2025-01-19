@@ -38,3 +38,39 @@ test_that("utilities3: get_latest_version() works as expected.", {
   expect_equal(res[3], "1.3.0")
 
 })
+
+test_that("utilities4: get_installed_packages() works as expected.", {
+
+
+  res <- get_installed_packages()
+
+  expect_equal(is.data.frame(res), TRUE)
+
+  expect_equal(nrow(res) > 1, TRUE)
+
+  expect_equal(ncol(res) == 2, TRUE)
+
+})
+
+
+test_that("utilities5: get_current_version() works as expected.", {
+
+
+  res <- get_current_version("common")
+
+  expect_equal(is.data.frame(res), FALSE)
+
+  expect_equal(length(res), 1)
+
+  expect_equal(nchar(res) > 0, TRUE)
+
+})
+
+
+test_that("utilities6: get_file_name() works as expected.", {
+
+  res <- get_file_name("common", "1.2.3")
+
+  expect_equal(res, "common_1.2.3.tar.gz")
+})
+
