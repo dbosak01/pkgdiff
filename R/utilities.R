@@ -104,7 +104,15 @@ get_version <- function(pkgname) {
 }
 
 
+#' @noRd
+get_current_version <- function(pkgname) {
+
+
+}
+
+get_file_name <- function(pkgname, version) {
 
 
 
+}
 
