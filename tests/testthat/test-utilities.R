@@ -1,4 +1,5 @@
 
+dev <- FALSE
 
 test_that("utilities1: get_archive_versions() works as expected.", {
 
@@ -17,11 +18,9 @@ test_that("utilities2: get_latest_version() works as expected.", {
 
   res <- get_latest_version("logr")
 
-  expect_equal(is.data.frame(res), TRUE)
+  expect_equal(is.data.frame(res), FALSE)
 
-  expect_equal(nrow(res) == 1, TRUE)
-
-  expect_equal(ncol(res) == 4, TRUE)
+  expect_equal(length(res) == 1, TRUE)
 
 })
 
@@ -73,4 +72,67 @@ test_that("utilities6: get_file_name() works as expected.", {
 
   expect_equal(res, "common_1.2.3.tar.gz")
 })
+
+
+test_that("utilities7: get_latest_data() works as expected.", {
+
+  res <- get_latest_data("logr")
+
+  expect_equal(is.data.frame(res), TRUE)
+
+  expect_equal(nrow(res) == 1, TRUE)
+
+  expect_equal(ncol(res) == 4, TRUE)
+
+})
+
+
+test_that("utilities8: get_deprecated_functions() works as expected.", {
+
+  if (dev) {
+
+    a1 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_0.12.3.tar.gz"
+    a2 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_1.0.0.tar.gz"
+
+    # Lot of changes
+    info1 <- packageDiff::pkgInfo(a1)
+    info2 <- packageDiff::pkgInfo(a2)
+
+    res <- get_deprecated_functions(info1, info2)
+
+    expect_equal(length(res) > 0, TRUE)
+
+
+  } else {
+
+    expect_equal(TRUE, TRUE)
+  }
+
+})
+
+
+
+test_that("utilities9: get_deprecated_parameters() works as expected.", {
+
+  if (dev) {
+
+    a1 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_0.12.3.tar.gz"
+    a2 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_1.0.0.tar.gz"
+
+    # Lot of changes
+    info1 <- packageDiff::pkgInfo(a1)
+    info2 <- packageDiff::pkgInfo(a2)
+
+    res <- get_deprecated_parameters(info1, info2)
+
+    expect_equal(length(res) > 0, TRUE)
+
+
+  } else {
+
+    expect_equal(TRUE, TRUE)
+  }
+
+})
+
 

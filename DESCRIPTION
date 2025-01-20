@@ -25,7 +25,9 @@ Depends:
     R (>= 4.0.0)
 Imports: rvest,
          common,
-         packageDiff
+         packageDiff,
+         crayon,
+         utils
 Suggests: 
     knitr,
     rmarkdown,

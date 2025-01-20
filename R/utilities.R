@@ -1,8 +1,8 @@
 
 #' @import rvest
 #' @noRd
-get_latest_version <- function(pkgname,
-                                 baseurl = "https://cran.r-project.org/web/packages") {
+get_latest_data <- function(pkgname,
+                            baseurl = "https://cran.r-project.org/web/packages") {
 
   if (is.null(pkgname)) {
     stop("pkgname parameter cannot be NULL.")
@@ -31,6 +31,16 @@ get_latest_version <- function(pkgname,
   src <- subset(table3, table3$X1 == "Package source:")[[2]]
 
   ret <- data.frame(Version = ver, FileName = src, "Date" = as.Date(date), "Size" = "")
+
+  return(ret)
+}
+
+#' @noRd
+get_latest_version <- function(pkgname) {
+
+  dat <- get_latest_data(pkgname)
+
+  ret <- dat$Version[1]
 
   return(ret)
 }
@@ -109,7 +119,7 @@ get_current_version <- function(pkgname) {
 
   dat <- get_installed_packages()
 
-  sdat <- subset(dat, Package == pkgname, "Version")
+  sdat <- subset(dat, dat$Package == pkgname, "Version")
 
   ret <- sdat[["Version"]]
 
@@ -123,11 +133,11 @@ get_file_name <- function(pkgname, version) {
   return(ret)
 }
 
-
+#' @import utils
 #' @noRd
 get_installed_packages <- function() {
 
-  ip <- as.data.frame(installed.packages()[,c(1,3:4)])
+  ip <- as.data.frame(utils::installed.packages()[,c(1,3:4)])
   rownames(ip) <- NULL
   ip <- ip[is.na(ip$Priority),1:2,drop=FALSE]
 
@@ -135,4 +145,61 @@ get_installed_packages <- function() {
 
   return(ip)
 }
+
+#' @noRd
+get_deprecated_functions <- function(v1info, v2info) {
+
+  ret <- c()
+
+  idx <- v1info$ExportedFunctions %in% v2info$ExportedFunctions
+
+  if (any(idx == FALSE)) {
+    ret <- v1info$ExportedFunctions[!idx]
+  }
+
+  return(ret)
+}
+
+#' @noRd
+get_deprecated_parameters <- function(v1info, v2info) {
+
+  ret <- list()
+
+  ret <- c()
+
+  args1 <- v1info$FormalArgs
+  args2 <- v2info$FormalArgs
+
+  # Get function names
+  nms <- names(args1)
+
+  # Filter out non-exported names
+  nms <- nms[nms %in% v1info$ExportedFunctions]
+
+  # Filter out deprecated functions
+  nms <- nms[nms %in% v2info$ExportedFunctions]
+
+  ret <- list()
+
+  for (nm in nms) {
+
+    f1 <- args1[[nm]]
+    f2 <- args2[[nm]]
+
+    dp <- f1[!f1 %in% f2]
+
+    if (length(dp) > 0) {
+
+      ret[[nm]] <- dp
+    }
+  }
+
+
+  return(ret)
+}
+
+
+
+
+
 

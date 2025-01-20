@@ -5,23 +5,22 @@
 #' package was written specifically to detect breaking changes and
 #' help with package upgrades.
 #'
-#' @details
-#' The \strong{pkgdiff} package ...
-#'
 #' @section Functions:
 #' The main functions included in the \strong{pkgdiff} package are
 #' as follows:
 #' \itemize{
-#'   \item {\code{\link{One}}: Applies formatting
-#' to a dataframe.}
-#'   \item {\code{\link{Two}}: Applies formatting
+#'   \item {\code{\link{get_diff}}: Compares two package versions, and
+#'   returns an object that contains information about the differences.
+#'   Information returned from this function is relatively high level.}
+#'   \item {\code{\link{view_details}}: Shows a side-by-side comparison
+#'   of the two package versions in the RStudio viewer.  This function
+#'   is useful to see the differences at a very detailed level.
 #' to a vector.}
-#'   \item {\code{\link{Three}}: Creates a format catalog.}
 #' }
 #'
-#' Here is more stuff...
+#' The \strong{pkgdiff} package builds upon \strong{packageDiff}
+#' by Cole Beck.
 #'
-
 #' @keywords internal
 #' @aliases pkgdiff-package
 #' @name pkgdiff
