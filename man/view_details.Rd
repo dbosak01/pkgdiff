@@ -4,11 +4,14 @@
 \alias{view_details}
 \title{View Package Difference Details}
 \usage{
-view_details(diff)
+view_details(diff, docs = TRUE)
 }
 \arguments{
 \item{diff}{A package difference object of class "pdiff".  This object is
 returned from \code{\link{get_diff}}.}
+
+\item{docs}{Whether to include the function documentation
+in the viewer comparison.  Default is TRUE.}
 }
 \value{
 A package version comparison is displyed in the RStudio viewer.

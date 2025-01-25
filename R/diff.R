@@ -1,8 +1,10 @@
 
 #' @title Get a Package Difference Object
 #' @param pkgname The package name.
-#' @param v1 The earlier package version.
-#' @param v2 The later package version.
+#' @param v1 The earlier package version.  Default is "current", which
+#' means the function will look up the currently installed version.
+#' @param v2 The later package version.  The default is "latest", which is the
+#' latest version of the package available on CRAN.
 #' @family pdiff
 #' @import packageDiff
 #' @export
@@ -24,7 +26,7 @@ get_diff <- function(pkgname, v1 = "current",
 
   # Get first release date
   if (nrow(v2archive) > 0)
-    vFirst <- v2archive[nrow(v2archive), "Date"]
+    vFirst <- v2archive[nrow(v2archive), "Release"]
   else
     vFirst <- vLatest
 
@@ -32,9 +34,7 @@ get_diff <- function(pkgname, v1 = "current",
     v2 <- vLatest
   }
 
-  # https://cran.r-project.org/src/contrib/logr_1.3.8.tar.gz
   currentpath = "https://cran.r-project.org/src/contrib/"
-  # https://cran.r-project.org/src/contrib/Archive/logr/logr_1.0.3.tar.gz
   archivepath = "https://cran.r-project.org/src/contrib/Archive"
 
   # Get path to v1 package
@@ -46,45 +46,72 @@ get_diff <- function(pkgname, v1 = "current",
   else
     v2_path <- file.path(archivepath, pkgname, get_file_name(pkgname, v2))
 
+  # browser()
+
   # Get Diff Info Objects
-  v1_diff_info <- packageDiff::pkgInfo(v1_path)
-  v2_diff_info <- packageDiff::pkgInfo(v2_path)
+  v1_diff_info <- tryCatch({suppressWarnings(packageDiff::pkgInfo(v1_path))},
+                           error = function(e){NULL})
+  v2_diff_info <- tryCatch({suppressWarnings(packageDiff::pkgInfo(v2_path))},
+                           error = function(e){NULL})
 
-  # Get time span
-  spn <-  v2data$Date[1] - vFirst
+  if (is.null(v1_diff_info)) {
 
-  # Get deprecated functions
-  depf <- get_deprecated_functions(v1_diff_info, v2_diff_info)
+    stop(paste0("Could not retrieve package ", pkgname, " v",  v1, " from ",
+                v1_path))
+  }
 
-  # Get deprecated parameters
-  depp <- get_deprecated_parameters(v1_diff_info, v2_diff_info)
+  if (is.null(v1_diff_info)) {
 
-  # Get breaking changes
-  if (length(depf) > 0 || length(depp) > 0)
-    bc <- TRUE
-  else
-    bc <- FALSE
+    stop(paste0("Could not retrieve package ", pkgname, " v",  v2, " from ",
+                v2_path))
+  }
 
-  # Populate pdiff object
-  d$PackageName <- pkgname
-  d$PackageAge <- sprintf("%0.2f years", spn / 30 / 12)
-  d$FirstRelease <- vFirst
-  d$LastRelease <- v2data$Date[1]
-  d$NumReleases <- nrow(v2archive) + 1
-  d$Version1 <- v1
-  d$Version2 <- v2
-  d$Version1Path <- v1_path
-  d$Version2Path <- v2_path
-  d$Version1DiffInfo <- v1_diff_info
-  d$Version2DiffInfo <- v2_diff_info
-  d$DeprecatedFunctions <- depf
-  d$DeprecatedParameters <- depp
-  #d$ChangedFunctions <- cf
-  d$BreakingChanges <- bc
+  if (!is.null(v1_diff_info) && !is.null(v2_diff_info)) {
+
+    # Get time span
+    spn <-  v2data$Release[1] - vFirst
+
+    # Get deprecated functions
+    depf <- get_removed_functions(v1_diff_info, v2_diff_info)
+
+    # Get deprecated parameters
+    depp <- get_removed_parameters(v1_diff_info, v2_diff_info)
+
+    # Get breaking changes
+    if (length(depf) > 0 || length(depp) > 0)
+      bc <- TRUE
+    else
+      bc <- FALSE
+
+    addf <- get_added_functions(v1_diff_info, v2_diff_info)
+    addp <- get_added_parameters(v1_diff_info, v2_diff_info)
+    af <- get_all_functions(v1_diff_info, v2_diff_info)
+
+    # Populate pdiff object
+    d$PackageName <- pkgname
+    d$PackageAge <- sprintf("%0.2f years", spn / 30 / 12)
+    d$FirstRelease <- vFirst
+    d$LastRelease <- v2data$Release[1]
+    d$NumReleases <- nrow(v2archive) + 1
+    d$Version1 <- v1
+    d$Version2 <- v2
+    d$Version1Path <- v1_path
+    d$Version2Path <- v2_path
+    d$Version1DiffInfo <- v1_diff_info
+    d$Version2DiffInfo <- v2_diff_info
+    d$AddedFunctions <- addf
+    d$AddedParameters <- addp
+    d$RemovedFunctions <- depf
+    d$RemovedParameters <- depp
+    d$BreakingChanges <- bc
+    d$AllFunctions <- af
+
+  }
 
   return(d)
 
 }
+
 
 #' @title Print a Package Difference Object
 #' @param x The package difference to print
@@ -127,25 +154,47 @@ print.pdiff <- function(x, ..., verbose = FALSE) {
     if (!is.null(x$BreakingChanges))
       cat(paste0("- Breaking Changes: ", as.character(x$BreakingChanges), "\n"))
 
-    if (!is.null(x$DeprecatedFunctions)) {
-      cat(paste0("- Deprecated Functions: \n"))
+    if (!is.null(x$AddedFunctions)) {
+      cat(paste0("- Added Functions: \n"))
 
-      for (nm in x$DeprecatedFunctions) {
+      for (nm in x$AddedFunctions) {
         cat(paste0("  - ",  nm, "()\n"))
       }
     }
 
-    if (!is.null(x$DeprecatedParameters)) {
-      if (length(x$DeprecatedParameters) > 0) {
-        cat(paste0("- Deprecated Parameters: \n"))
+    if (!is.null(x$AddedParameters)) {
+      if (length(x$AddedParameters) > 0) {
+        cat(paste0("- Added Parameters: \n"))
 
-        nms <- names(x$DeprecatedParameters)
+        nms <- names(x$AddedParameters)
         for (nm in nms) {
-          parms <- paste(x$DeprecatedParameters[[nm]], collapse = ", ")
+          parms <- paste(x$AddedParameters[[nm]], collapse = ", ")
           cat(paste0("  - ",  nm, "(): ", parms, "\n"))
         }
       }
     }
+
+    if (!is.null(x$RemovedFunctions)) {
+      cat(paste0("- Removed Functions: \n"))
+
+      for (nm in x$RemovedFunctions) {
+        cat(paste0("  - ",  nm, "()\n"))
+      }
+    }
+
+    if (!is.null(x$RemovedParameters)) {
+      if (length(x$RemovedParameters) > 0) {
+        cat(paste0("- Deprecated Parameters: \n"))
+
+        nms <- names(x$RemovedParameters)
+        for (nm in nms) {
+          parms <- paste(x$RemovedParameters[[nm]], collapse = ", ")
+          cat(paste0("  - ",  nm, "(): ", parms, "\n"))
+        }
+      }
+    }
+
+
 
   }
 
@@ -158,11 +207,13 @@ print.pdiff <- function(x, ..., verbose = FALSE) {
 #' is taken from CRAN.
 #' @param diff A package difference object of class "pdiff".  This object is
 #' returned from \code{\link{get_diff}}.
+#' @param docs Whether to include the function documentation
+#' in the viewer comparison.  Default is TRUE.
 #' @return A package version comparison is displyed in the RStudio viewer.
 #' @family pdiff
 #' @import packageDiff
 #' @export
-view_details <- function(diff) {
+view_details <- function(diff, docs = TRUE) {
 
   if (!"pdiff" %in% class(diff)) {
 
@@ -173,7 +224,7 @@ view_details <- function(diff) {
   d2 <- diff$Version2DiffInfo
 
 
-  pkgDiff(d1, d2)
+  pkgDiff(d1, d2, doc = docs)
 
 }
 

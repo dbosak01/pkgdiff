@@ -84,7 +84,7 @@ test_that("diff4: view_details() works.", {
 
 
 
-test_that("diff1: get_diff() basic functionality.", {
+test_that("diff5: get_diff() check printing.", {
 
   if (dev) {
 
@@ -92,7 +92,7 @@ test_that("diff1: get_diff() basic functionality.", {
 
     print(res)
 
-    res <- get_diff("admiral", "1.1.0", "1.2.0")
+    res <- get_diff("admiral", "0.12.3", "1.0.0")
 
     print(res)
 
@@ -105,6 +105,39 @@ test_that("diff1: get_diff() basic functionality.", {
 
 })
 
+test_that("diff7: get_diff_by_version() old version.", {
+
+  res <- get_diff("logr", "1.2.9", "1.3.0")
+
+  expect_equal("pdiff" %in% class(res), TRUE)
+  expect_equal(res$PackageName, "logr")
+  expect_equal(res$Version1, "1.2.9")
+  expect_equal(res$Version2, "1.3.0")
+  expect_equal(nchar(res$Version1Path) > 0, TRUE)
+  expect_equal(nchar(res$Version2Path) > 0, TRUE)
+
+
+})
+
+
+# test_that("diff6: get_diff() basic path functionality.", {
+#
+#
+#   v1 <- "https://cran.r-project.org/src/contrib/Archive/logr/logr_1.3.6.tar.gz"
+#   v2 <- "https://cran.r-project.org/src/contrib/Archive/logr/logr_1.3.7.tar.gz"
+#
+#   res <- get_diff("logr", v1, v2)
+#
+#
+#   expect_equal("pdiff" %in% class(res), TRUE)
+#   expect_equal(res$PackageName, "logr")
+#   expect_equal(res$Version1, "1.3.7")
+#   expect_equal(res$Version2, "1.3.8")
+#   expect_equal(nchar(res$Version1Path) > 0, TRUE)
+#   expect_equal(nchar(res$Version2Path) > 0, TRUE)
+#
+#
+# })
 
 
 

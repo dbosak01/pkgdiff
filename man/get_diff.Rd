@@ -9,9 +9,11 @@ get_diff(pkgname, v1 = "current", v2 = "latest")
 \arguments{
 \item{pkgname}{The package name.}
 
-\item{v1}{The earlier package version.}
+\item{v1}{The earlier package version.  Default is "current", which
+means the function will look up the currently installed version.}
 
-\item{v2}{The later package version.}
+\item{v2}{The later package version.  The default is "latest", which is the
+latest version of the package available on CRAN.}
 }
 \description{
 Get a Package Difference Object
