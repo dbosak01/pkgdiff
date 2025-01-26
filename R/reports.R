@@ -30,7 +30,7 @@ report_breakages <- function(v1pkgs = "current", v2pkgs = "latest") {
 
       lver <- get_latest_version(v1pkgs$Package)
 
-      v2_pkgs <- data.frame(Package = v1pkgs$Package,
+      v2pkgs <- data.frame(Package = v1pkgs$Package,
                             Version = lver)
 
     }
@@ -83,13 +83,59 @@ report_breakages <- function(v1pkgs = "current", v2pkgs = "latest") {
 
 
 
-#' @title Generate a Report of Upgrade Breakages
+#' @title Generate a Stability Report
+#' @description The function generates a stability report
+#' for a vector of packages. Note that these stability assessments
+#' take time.  The function has to download and
+#' compare many packages. Therefore, be very cautious about how many
+#' packages you send into the function.  Also be prepared for the
+#' function to run for a considerable amount of time.
 #' @param pkgs A data frame that identifies the source packages
 #' and versions.
+#' @param releases An integer number of releases to assess stability.
+#' @param months An integer number of months from the current date
+#' to assess stability.
+#' @returns A data frame of information regarding the stability of the
+#' packages. There will be one row per package.
 #' @family reports
+#' @import common
 #' @export
-report_stability <- function(pkgs) {
+report_stability <- function(pkgs, releases = NULL, months = NULL) {
 
+  ret <- NULL
 
+  dat <- data.frame("Package" = NA, FV = NA, LV = NA,
+                    FR = NA, LR = NA,
+                    RC = NA, BC = NA, Score = NA)
 
+  idx <- 1
+
+  for (pkg in pkgs) {
+
+    rpt <- get_stability_score(pkg, releases = releases, months = months)
+
+    dat[[idx, "Package"]] <- pkg
+    dat[[idx, "FV"]] <- rpt$FirstVersion
+    dat[[idx, "LV"]] <- rpt$LastVersion
+    dat[[idx, "FR"]] <- as.Date(rpt$FirstRelease)
+    dat[[idx, "LR"]] <- as.Date(rpt$LastRelease)
+    dat[[idx, "RC"]] <- rpt$NumReleases
+    dat[[idx, "BC"]] <- rpt$BreakingReleases
+    dat[[idx, "Score"]] <- rpt$StabilityScore
+
+    idx <- idx + 1
+  }
+
+  if (!is.null(dat)) {
+
+    common::labels(dat) <- list(FV = "First Version", LV = "Last Version",
+                                FR = "First Release", LR = "Last Release",
+                                RC = "Release Count", BC = "Breaking Releases",
+                                Score = "Stability Score",
+                                Package = "Package Name")
+  }
+
+  ret <- dat
+
+  return(ret)
 }

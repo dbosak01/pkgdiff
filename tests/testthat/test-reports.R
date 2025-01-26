@@ -30,4 +30,24 @@ test_that("reports1: report_breakages() works as expected.", {
 
 })
 
+test_that("reports2: report_stability() works as expected.", {
+
+  pkgs <- c("crayon", "common", "rvest")
+
+  if (dev) {
+
+    pkgs <- c("admiral", "common", "rvest")
+
+  }
+
+  res <- report_stability(pkgs, releases = 5)
+
+  expect_equal(is.data.frame(res), TRUE)
+
+  expect_equal(nrow(res) == 3, TRUE)
+
+  expect_equal(ncol(res) == 4, TRUE)
+
+
+})
 

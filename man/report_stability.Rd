@@ -2,16 +2,30 @@
 % Please edit documentation in R/reports.R
 \name{report_stability}
 \alias{report_stability}
-\title{Generate a Report of Upgrade Breakages}
+\title{Generate a Stability Report}
 \usage{
-report_stability(pkgs)
+report_stability(pkgs, releases = NULL, months = NULL)
 }
 \arguments{
 \item{pkgs}{A data frame that identifies the source packages
 and versions.}
+
+\item{releases}{An integer number of releases to assess stability.}
+
+\item{months}{An integer number of months from the current date
+to assess stability.}
+}
+\value{
+A data frame of information regarding the stability of the
+packages. There will be one row per package.
 }
 \description{
-Generate a Report of Upgrade Breakages
+The function generates a stability report
+for a vector of packages. Note that these stability assessments
+take time.  The function has to download and
+compare many packages. Therefore, be very cautious about how many
+packages you send into the function.  Also be prepared for the
+function to run for a considerable amount of time.
 }
 \seealso{
 Other reports: 
