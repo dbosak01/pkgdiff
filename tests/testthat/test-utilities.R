@@ -9,8 +9,20 @@ test_that("utilities1: get_archive_versions() works as expected.", {
 
   expect_equal(nrow(res) > 0, TRUE)
 
-  expect_equal(ncol(res) == 4, TRUE)
+  expect_equal(ncol(res) == 5, TRUE)
 
+
+  if (dev) {
+
+    res <- get_archive_versions(c("fmtr", "common", "rvest"))
+
+    expect_equal(is.data.frame(res), TRUE)
+
+    expect_equal(nrow(res) > 0, TRUE)
+
+    expect_equal(ncol(res) == 5, TRUE)
+
+  }
 })
 
 
@@ -22,9 +34,16 @@ test_that("utilities2: get_latest_version() works as expected.", {
 
   expect_equal(length(res) == 1, TRUE)
 
+  res <- get_latest_version(c("logr", "fmtr", "common"))
+
+  expect_equal(is.data.frame(res), FALSE)
+
+  expect_equal(length(res) == 3, TRUE)
+
+
 })
 
-test_that("utilities3: get_latest_version() works as expected.", {
+test_that("utilities3: get_version() works as expected.", {
 
 
   vers <- c("logr_1.2.3.tar.gz", "logr_1.2.4.tar.gz", "logr_1.3.0.tar.gz")
@@ -48,6 +67,27 @@ test_that("utilities4: get_installed_packages() works as expected.", {
   expect_equal(nrow(res) > 1, TRUE)
 
   expect_equal(ncol(res) == 2, TRUE)
+
+  if (dev) {
+    res <- get_installed_packages(c("logr", "fmtr", "common", "reporter"))
+
+    expect_equal(is.data.frame(res), TRUE)
+
+    expect_equal(nrow(res) > 1, TRUE)
+
+    expect_equal(ncol(res) == 2, TRUE)
+
+    pth <- "C:\\Users\\dbosa\\AppData\\Local\\R\\win-library\\4.2"
+
+    res <- get_installed_packages(c("logr", "fmtr", "common", "reporter"),
+                                  repos = pth)
+
+    expect_equal(is.data.frame(res), TRUE)
+
+    expect_equal(nrow(res) > 1, TRUE)
+
+    expect_equal(ncol(res) == 2, TRUE)
+  }
 
 })
 
@@ -82,7 +122,23 @@ test_that("utilities7: get_latest_data() works as expected.", {
 
   expect_equal(nrow(res) == 1, TRUE)
 
-  expect_equal(ncol(res) == 4, TRUE)
+  expect_equal(ncol(res) == 5, TRUE)
+
+  if (dev) {
+
+     res <- get_latest_data(c("common", "purr", "fmtr", "rvest"), skip_size = TRUE)
+
+     expect_equal(is.data.frame(res), TRUE)
+
+     expect_equal(nrow(res) == 3, TRUE)
+
+     expect_equal(ncol(res) == 5, TRUE)
+
+  }
+
+  res <- get_latest_data("purr")
+
+  expect_equal(is.null(res), TRUE)
 
 })
 

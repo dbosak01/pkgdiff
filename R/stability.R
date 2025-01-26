@@ -80,7 +80,7 @@ get_stability_data <- function(pkgname, releases = NULL, months = NULL) {
     v2 <- dat[idx, "Version"]
     v1 <- dat[idx + 1, "Version"]
 
-    cat(paste0("Comparing ", v1, "/", v2, "\n"))
+    cat(paste0("Comparing ", pkgname, " ", v1, "/", v2, "\n"))
 
     diff <- tryCatch({
      get_diff(pkgname, v1, v2)
@@ -173,7 +173,6 @@ get_stability_score <- function(pkgname, releases = NULL, months = NULL ) {
   d <- structure(list(), class = c("pdiff_score", "list"))
 
   dat <- get_stability_data(pkgname, releases, months)
-
 
   # Calculate stability score
   scr <- 1 - (sum(dat$BC, na.rm = TRUE) / (nrow(dat) - 1))

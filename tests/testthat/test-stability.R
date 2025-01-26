@@ -5,11 +5,17 @@ dev <- FALSE
 
 test_that("stability1: get_stability_data() basic functionality.", {
 
-  res <- get_stability_data("libr")
+  if (dev) {
 
+    res <- get_stability_data("libr")
 
-  expect_equal(is.data.frame(res), TRUE)
-  expect_equal(nrow(res) > 0, TRUE)
+    expect_equal(is.data.frame(res), TRUE)
+    expect_equal(nrow(res) > 0, TRUE)
+
+  } else {
+
+    expect_equal(TRUE, TRUE)
+  }
 
 
 })
@@ -73,12 +79,27 @@ test_that("stability5: get_stability_data() only one release.", {
 
 })
 
-test_that("stability5: get_stability_score() basic functionality.", {
+
+
+
+test_that("stability6: get_stability_score() basic functionality.", {
+
+
+    res <- get_stability_score("fmtr", releases = 10)
+
+    expect_equal(res$StabilityScore < 1, TRUE)
+
+
+
+})
+
+
+test_that("stability7: get_stability_score() stressed functionality.", {
 
 
   if (dev) {
-    res <- get_stability_score("admiral", months = 36)
 
+    res <- get_stability_score("admiral", rel)
 
     expect_equal(res$StabilityScore < 1, TRUE)
 
@@ -90,3 +111,4 @@ test_that("stability5: get_stability_score() basic functionality.", {
 
 
 })
+

@@ -4,7 +4,15 @@
 \alias{get_installed_packages}
 \title{Get Installed Packages and Versions}
 \usage{
-get_installed_packages()
+get_installed_packages(pkgs = NULL, repos = NULL)
+}
+\arguments{
+\item{pkgs}{Optional vector of package names.  If supplied,
+this vector will be used to filter the repository package list.}
+
+\item{repos}{The path to the desired repository. This parameter
+is optional.  If not supplied, the function will use the
+repository associated with the currently running version of R.}
 }
 \value{
 A data frame containing each installed

@@ -22,7 +22,7 @@ get_diff <- function(pkgname, v1 = "current",
   # Collect data
   v2data <- get_latest_data(pkgname)
   v2archive <- get_archive_versions(pkgname)
-  vLatest <- v2data$Version[1]
+  vLatest <- v2data$Version[[1]]
 
   # Get first release date
   if (nrow(v2archive) > 0)
@@ -184,7 +184,7 @@ print.pdiff <- function(x, ..., verbose = FALSE) {
 
     if (!is.null(x$RemovedParameters)) {
       if (length(x$RemovedParameters) > 0) {
-        cat(paste0("- Deprecated Parameters: \n"))
+        cat(paste0("- Removed Parameters: \n"))
 
         nms <- names(x$RemovedParameters)
         for (nm in nms) {

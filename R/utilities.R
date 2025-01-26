@@ -2,70 +2,102 @@
 #' @import rvest
 #' @import utils
 #' @noRd
-get_latest_data <- function(pkgname,
-                            baseurl = "https://cran.r-project.org/web/packages") {
+get_latest_data <- function(pkgs,
+                            skip_size = FALSE) {
 
-  if (is.null(pkgname)) {
-    stop("pkgname parameter cannot be NULL.")
+  baseurl = "https://cran.r-project.org/web/packages"
+
+  if (is.null(pkgs)) {
+    stop("pkgs parameter cannot be NULL.")
   }
 
-  # Concat url
-  url <- file.path(baseurl, pkgname, "index.html")
+  ret <- NULL
 
-  # Read and parse page into data frame
-  page <- rvest::read_html(url)
-  tables <- html_elements(page, "table")
-  table1 <- html_table(tables[1], fill = TRUE)[[1]]
-  table3 <- html_table(tables[3], fill = TRUE)[[1]]
+  for(pkg in pkgs) {
 
-  # Replace non-breaking space
-  table1$X1 <- gsub('\xc2\xa0+', " ", table1$X1)
-  table3$X1 <- gsub('\xc2\xa0+', " ", table3$X1)
+    # Concat url
+    url <- file.path(baseurl, pkg, "index.html")
 
-  # Get package version
-  ver <- subset(table1, table1$X1 == "Version:")[[2]]
+    # Read and parse page into data frame
+    page <- tryCatch({rvest::read_html(url)},
+                     error = function(e){NULL})
+    if (is.null(page)) {
 
-  # Convert dates
-  date <- subset(table1, table1$X1 == "Published:")[[2]]
+      message(paste0("Package data for '", pkg, "' not found."))
+    } else {
 
-  # Get package name
-  src <- subset(table3, table3$X1 == "Package source:")[[2]]
+      tables <- html_elements(page, "table")
+      table1 <- html_table(tables[1], fill = TRUE)[[1]]
+      table3 <- html_table(tables[3], fill = TRUE)[[1]]
 
-  # Get temp file name
-  flnm <- tempfile()
+      # Replace non-breaking space
+      table1$X1 <- gsub('\xc2\xa0+', " ", table1$X1)
+      table3$X1 <- gsub('\xc2\xa0+', " ", table3$X1)
 
-  currentpath = "https://cran.r-project.org/src/contrib/"
+      # Get package version
+      ver <- subset(table1, table1$X1 == "Version:")[[2]]
 
-  # Get path to package
-  url <- file.path(currentpath, src)
+      # Convert dates
+      date <- subset(table1, table1$X1 == "Published:")[[2]]
 
-  # Download from CRAN
-  rc <- tryCatch({utils::download.file(url, flnm, quiet = TRUE)},
-                 error = function(e){1})
+      # Get package name
+      src <- subset(table3, table3$X1 == "Package source:")[[2]]
 
-  # Get size
-  sz <- NA
-  if (rc == 0) {
-    sz <- format(structure(file.size(flnm), class = "object_size"),
-                 units = "auto")
-    sz <- sub(" Kb", "K", sz, fixed = TRUE)
-    sz <- sub(" Mb", "M", sz, fixed = TRUE)
-    sz <- sub(" Gb", "G", sz, fixed = TRUE)
-    unlink(flnm)
+      sz <- NA
+      if (skip_size == FALSE) {
+
+        # Get temp file name
+        flnm <- tempfile()
+
+        currentpath = "https://cran.r-project.org/src/contrib/"
+
+        # Get path to package
+        url <- file.path(currentpath, src)
+
+        # Download from CRAN
+        rc <- tryCatch({utils::download.file(url, flnm, quiet = TRUE)},
+                       error = function(e){1})
+
+        # Get size
+
+        if (rc == 0) {
+          sz <- format(structure(file.size(flnm), class = "object_size"),
+                       units = "auto")
+          sz <- sub(" Kb", "K", sz, fixed = TRUE)
+          sz <- sub(" Mb", "M", sz, fixed = TRUE)
+          sz <- sub(" Gb", "G", sz, fixed = TRUE)
+          unlink(flnm)
+        }
+      }
+
+      # Create data from from captured info
+      rw <- data.frame(Package = pkg, Version = ver, FileName = src,
+                       "Release" = as.Date(date), "Size" = sz)
+
+      if (is.null(ret)) {
+        ret <- rw
+      } else {
+        ret <- rbind(ret, rw)
+      }
+
+    }
   }
-
-  # Create data from from captured info
-  ret <- data.frame(Version = ver, FileName = src, "Release" = as.Date(date), "Size" = sz)
 
   return(ret)
 }
 
 #' @noRd
-get_latest_version <- function(pkgname) {
+get_latest_version <- function(pkgs) {
 
-  dat <- get_latest_data(pkgname)
+  ret <- c()
 
-  ret <- dat$Version[1]
+  for (pkg in pkgs) {
+
+    dat <- get_latest_data(pkg, skip_size = TRUE)
+
+    ret[[pkg]] <- dat$Version[1]
+
+  }
 
   return(ret)
 }
@@ -74,55 +106,67 @@ get_latest_version <- function(pkgname) {
 #' @import rvest
 #' @import common
 #' @noRd
-get_archive_versions <- function(pkgname,
-                              baseurl = "https://cran.r-project.org/src/contrib/Archive") {
+get_archive_versions <- function(pkgs) {
 
-  if (is.null(pkgname)) {
-    stop("pkgname parameter cannot be NULL.")
+  baseurl = "https://cran.r-project.org/src/contrib/Archive"
+
+  if (is.null(pkgs)) {
+    stop("pkgs parameter cannot be NULL.")
   }
 
-  # Concat url
-  url <- file.path(baseurl, pkgname)
+  ret <- NULL
 
-  # Read and parse page into data frame
-  page <- tryCatch({rvest::read_html(url)},
-                   error = function(e){NULL})
+  for (pkg in pkgs) {
 
-  if (is.null(page)) {
-    stop(paste0("Cannot open url: ", url))
+    # Concat url
+    url <- file.path(baseurl, pkg)
+
+    # Read and parse page into data frame
+    page <- tryCatch({rvest::read_html(url)},
+                     error = function(e){NULL})
+
+    if (is.null(page)) {
+      stop(paste0("Cannot open url: ", url))
+    }
+
+    tables <- html_elements(page, "table")
+    table1 <- html_table(tables[1], fill = TRUE)[[1]]
+
+    # Get column names
+    nms <- names(table1)
+
+    # Clear out unnecessary columns
+    if (nms[5] == "Description") {
+      table1[[5]] <- NULL
+    }
+    if (nms[1] == "") {
+      table1[[1]] <- NULL
+    }
+
+
+    # Clear out unnecessary rows
+    tmp <- subset(table1, table1$Name != "Parent Directory" & table1$Name != "")
+
+    # Convert dates
+    tmp[["Last modified"]] <- as.Date(tmp[["Last modified"]])
+
+    # Extract package version
+    vers <- get_version(tmp$Name)
+
+    # Create final data frame
+    tmp <- data.frame(Package = pkg, Version = vers, FileName = tmp$Name,
+                      Release = tmp[["Last modified"]],
+                      Size = tmp$Size)
+
+    # Sort descending
+    tmp <- sort(tmp, by = "Release", ascending = FALSE)
+
+    if (is.null(ret)) {
+      ret <- tmp
+    } else {
+      ret <- rbind(ret, tmp)
+    }
   }
-
-  tables <- html_elements(page, "table")
-  table1 <- html_table(tables[1], fill = TRUE)[[1]]
-
-  # Get column names
-  nms <- names(table1)
-
-  # Clear out unnecessary columns
-  if (nms[5] == "Description") {
-    table1[[5]] <- NULL
-  }
-  if (nms[1] == "") {
-    table1[[1]] <- NULL
-  }
-
-
-  # Clear out unnecessary rows
-  ret <- subset(table1, table1$Name != "Parent Directory" & table1$Name != "")
-
-  # Convert dates
-  ret[["Last modified"]] <- as.Date(ret[["Last modified"]])
-
-  # Extract package version
-  vers <- get_version(ret$Name)
-
-  # Create final data frame
-  ret <- data.frame(Version = vers, FileName = ret$Name,
-                    Release = ret[["Last modified"]],
-                    Size = ret$Size)
-
-  # Sort descending
-  ret <- sort(ret, by = "Release", ascending = FALSE)
 
   return(ret)
 }
@@ -168,6 +212,11 @@ get_file_name <- function(pkgname, version) {
 #' @description A utility function to return the installed packages
 #' in the current repository and their
 #' versions numbers.
+#' @param pkgs Optional vector of package names.  If supplied,
+#' this vector will be used to filter the repository package list.
+#' @param repos The path to the desired repository. This parameter
+#' is optional.  If not supplied, the function will use the
+#' repository associated with the currently running version of R.
 #' @returns A data frame containing each installed
 #' package and its version number.
 #' @examples
@@ -189,15 +238,19 @@ get_file_name <- function(pkgname, version) {
 #' # 10       bit64   4.0.5
 #' @import utils
 #' @export
-get_installed_packages <- function() {
+get_installed_packages <- function(pkgs = NULL, repos = NULL) {
 
-  ip <- as.data.frame(utils::installed.packages()[,c(1,3:4)])
+  ip <- as.data.frame(utils::installed.packages(repos)[,c(1,3:4)])
   rownames(ip) <- NULL
-  ip <- ip[is.na(ip$Priority),1:2,drop=FALSE]
+  ret <- ip[is.na(ip$Priority),1:2,drop=FALSE]
 
-  rownames(ip) <- NULL
+  if (!is.null(pkgs)) {
+     ret <- subset(ret, ret$Package %in% pkgs)
+  }
 
-  return(ip)
+  rownames(ret) <- NULL
+
+  return(ret)
 }
 
 #' @noRd
