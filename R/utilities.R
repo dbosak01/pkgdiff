@@ -126,45 +126,46 @@ get_archive_versions <- function(pkgs) {
                      error = function(e){NULL})
 
     if (is.null(page)) {
-      stop(paste0("Cannot open url: ", url))
-    }
-
-    tables <- html_elements(page, "table")
-    table1 <- html_table(tables[1], fill = TRUE)[[1]]
-
-    # Get column names
-    nms <- names(table1)
-
-    # Clear out unnecessary columns
-    if (nms[5] == "Description") {
-      table1[[5]] <- NULL
-    }
-    if (nms[1] == "") {
-      table1[[1]] <- NULL
-    }
-
-
-    # Clear out unnecessary rows
-    tmp <- subset(table1, table1$Name != "Parent Directory" & table1$Name != "")
-
-    # Convert dates
-    tmp[["Last modified"]] <- as.Date(tmp[["Last modified"]])
-
-    # Extract package version
-    vers <- get_version(tmp$Name)
-
-    # Create final data frame
-    tmp <- data.frame(Package = pkg, Version = vers, FileName = tmp$Name,
-                      Release = tmp[["Last modified"]],
-                      Size = tmp$Size)
-
-    # Sort descending
-    tmp <- sort(tmp, by = "Release", ascending = FALSE)
-
-    if (is.null(ret)) {
-      ret <- tmp
+      message(paste0("Archive versions of '", pkg, "' not available."))
     } else {
-      ret <- rbind(ret, tmp)
+
+      tables <- html_elements(page, "table")
+      table1 <- html_table(tables[1], fill = TRUE)[[1]]
+
+      # Get column names
+      nms <- names(table1)
+
+      # Clear out unnecessary columns
+      if (nms[5] == "Description") {
+        table1[[5]] <- NULL
+      }
+      if (nms[1] == "") {
+        table1[[1]] <- NULL
+      }
+
+
+      # Clear out unnecessary rows
+      tmp <- subset(table1, table1$Name != "Parent Directory" & table1$Name != "")
+
+      # Convert dates
+      tmp[["Last modified"]] <- as.Date(tmp[["Last modified"]])
+
+      # Extract package version
+      vers <- get_version(tmp$Name)
+
+      # Create final data frame
+      tmp <- data.frame(Package = pkg, Version = vers, FileName = tmp$Name,
+                        Release = tmp[["Last modified"]],
+                        Size = tmp$Size)
+
+      # Sort descending
+      tmp <- sort(tmp, by = "Release", ascending = FALSE)
+
+      if (is.null(ret)) {
+        ret <- tmp
+      } else {
+        ret <- rbind(ret, tmp)
+      }
     }
   }
 
@@ -343,15 +344,17 @@ get_added_parameters <- function(v1info, v2info) {
 
   ret <- list()
 
+  # Loop through functions
   for (nm in nms) {
 
     f1 <- args1[[nm]]
     f2 <- args2[[nm]]
 
+    # Compare parameters
     dp <- f2[!f2 %in% f1]
 
+    # Add to return value
     if (length(dp) > 0) {
-
       ret[[nm]] <- dp
     }
   }
@@ -372,5 +375,93 @@ get_all_functions <- function(v1info, v2info) {
   return(ret)
 }
 
+#' @import packageDiff
+#' @noRd
+get_latest_info <- function(pkgname) {
 
 
+  currentpath = "https://cran.r-project.org/src/contrib/"
+
+  v2data <- get_latest_data(pkgname)
+  vLatest <- v2data$Version[[1]]
+
+
+  # Get path to v2 package
+  pth <- file.path(currentpath, get_file_name(pkgname, vLatest))
+
+
+
+  ret <- tryCatch({suppressWarnings(packageDiff::pkgInfo(pth))},
+                  error = function(e){NULL})
+
+
+
+  return(ret)
+}
+
+
+get_archive_info <- function(pkgname, version) {
+
+  archivepath = "https://cran.r-project.org/src/contrib/Archive"
+
+  pth <- file.path(archivepath, pkgname, get_file_name(pkgname, version))
+
+
+  ret <- tryCatch({suppressWarnings(packageDiff::pkgInfo(pth))},
+                  error = function(e){NULL})
+
+
+
+  return(ret)
+
+}
+
+
+
+#' @noRd
+get_all_parameters <- function(info) {
+
+  ret <- list()
+
+  ret <- c()
+
+  args1 <- info$FormalArgs
+
+  # Get function names
+  nms <- names(args1)
+
+  # Filter out non-exported names
+  nms <- nms[nms %in% info$ExportedFunctions]
+
+
+  ret <- list()
+
+  for (nm in nms) {
+
+    dp <- args1[[nm]]
+
+    if (length(dp) > 0) {
+
+      ret[[nm]] <- dp
+    }
+  }
+
+
+  return(ret)
+}
+
+
+get_parameter_count <- function(info) {
+
+
+  ap <- get_all_parameters(info)
+
+  ret <- 0
+  for (nm in names(ap)) {
+
+    ret <- ret + length(ap[[nm]])
+
+  }
+
+  return(ret)
+}

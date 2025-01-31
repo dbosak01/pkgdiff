@@ -40,7 +40,7 @@ test_that("reports2: report_stability() works as expected.", {
 
   }
 
-  res <- report_stability(pkgs, releases = 5)
+  res <- report_stability(pkgs)
 
   expect_equal(is.data.frame(res), TRUE)
 

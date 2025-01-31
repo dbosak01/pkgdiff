@@ -120,6 +120,25 @@ test_that("diff7: get_diff_by_version() old version.", {
 })
 
 
+
+test_that("diff8: get_diff() parameter checks.", {
+
+  expect_error(get_diff("logxx", "1.3.7", "1.3.8"))
+
+  expect_error(get_diff("logr", "0.0.0", "1.3.8"))
+
+  expect_error(get_diff("logr", "1.3.7", "0.0.0"))
+
+  # No error OK
+  # expect_error(get_diff("logr", "1.3.7", "1.3.6"))
+  #
+  # get_diff("logr", "1.3.6", "1.3.7")
+
+})
+
+
+
+
 # test_that("diff6: get_diff() basic path functionality.", {
 #
 #

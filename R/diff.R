@@ -46,7 +46,7 @@ get_diff <- function(pkgname, v1 = "current",
   else
     v2_path <- file.path(archivepath, pkgname, get_file_name(pkgname, v2))
 
-  # browser()
+  #browser()
 
   # Get Diff Info Objects
   v1_diff_info <- tryCatch({suppressWarnings(packageDiff::pkgInfo(v1_path))},
@@ -60,7 +60,7 @@ get_diff <- function(pkgname, v1 = "current",
                 v1_path))
   }
 
-  if (is.null(v1_diff_info)) {
+  if (is.null(v2_diff_info)) {
 
     stop(paste0("Could not retrieve package ", pkgname, " v",  v2, " from ",
                 v2_path))
@@ -111,6 +111,7 @@ get_diff <- function(pkgname, v1 = "current",
   return(d)
 
 }
+
 
 
 #' @title Print a Package Difference Object

@@ -37,6 +37,7 @@ description of the stability data frame, see \code{\link{get_stability_data}}.
 }
 \seealso{
 Other stability: 
+\code{\link{collect_stability_data}()},
 \code{\link{get_stability_data}()},
 \code{\link{print.pdiff_score}()}
 }

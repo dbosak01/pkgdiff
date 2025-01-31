@@ -4,10 +4,10 @@
 \alias{get_stability_data}
 \title{Collect Stability Data for a Package}
 \usage{
-get_stability_data(pkgname, releases = NULL, months = NULL)
+get_stability_data(pkgs, releases = NULL, months = NULL)
 }
 \arguments{
-\item{pkgname}{The name of the package.}
+\item{pkgs}{A character vector of one or more package names.}
 
 \item{releases}{An integer indicating the number of releases to collect
 stability data for. For example, \code{releases = 10} will return stability
@@ -21,7 +21,7 @@ no limitation on the number of release months, and the function will collect
 data from all releases.}
 }
 \value{
-A data frame of stability information for the targeted package.
+A data frame of stability information for the targeted packages.
 The data frame will contain one row for each release.  Each row will
 contains comparison information against the prior release.  The
 columns will be organized as follows:
@@ -56,6 +56,7 @@ Collect Stability Data for a Package
 }
 \seealso{
 Other stability: 
+\code{\link{collect_stability_data}()},
 \code{\link{get_stability_score}()},
 \code{\link{print.pdiff_score}()}
 }

@@ -69,7 +69,7 @@ test_that("stability5: get_stability_data() only one release.", {
     res <- get_stability_data("defineR")
 
     expect_equal(is.data.frame(res), TRUE)
-    expect_equal(nrow(res) == 5, TRUE)
+    expect_equal(nrow(res) == 1, TRUE)
 
   } else {
 
@@ -85,9 +85,9 @@ test_that("stability5: get_stability_data() only one release.", {
 test_that("stability6: get_stability_score() basic functionality.", {
 
 
-    res <- get_stability_score("fmtr", releases = 10)
+    res <- get_stability_score("procs")
 
-    expect_equal(res$StabilityScore < 1, TRUE)
+    expect_equal(res$StabilityScore == 1, TRUE)
 
 
 
@@ -103,6 +103,86 @@ test_that("stability7: get_stability_score() stressed functionality.", {
 
     expect_equal(res$StabilityScore < 1, TRUE)
 
+
+  } else {
+
+    expect_equal(TRUE, TRUE)
+  }
+
+
+})
+
+
+test_that("stability8: get_stability_data() no releases in time period.", {
+
+  if (dev) {
+
+    res <- get_stability_data("tibble", months = 1)
+
+    expect_equal(is.data.frame(res), TRUE)
+    expect_equal(nrow(res) == 1, TRUE)
+
+  } else {
+
+    expect_equal(TRUE, TRUE)
+  }
+
+})
+
+test_that("stability9: get_stability_score() out of range.", {
+
+  if (dev) {
+
+    res <- get_stability_score("tibble", months = 1)
+
+    expect_equal(res$StabilityScore == 1, TRUE)
+
+  } else {
+
+    expect_equal(TRUE, TRUE)
+  }
+
+})
+
+test_that("stability10: get_stability_data() boundry conditions.", {
+
+  if (dev) {
+
+    # Unknown package
+    pkgs <- c("definer")
+
+    res <- get_stability_data(pkgs)
+
+    expect_equal(is.data.frame(res), FALSE)
+
+    # No archive data
+    pkgs <- c("defineR")
+
+    res <- get_stability_data(pkgs)
+
+    expect_equal(is.data.frame(res), TRUE)
+
+  } else {
+
+    expect_equal(TRUE, TRUE)
+  }
+
+
+})
+
+
+test_that("stability11: get_stability_data() multiple packages.", {
+
+  if (dev) {
+
+    pkgs <- c("common", "procs", "libr", "defineR")
+
+    res <- get_stability_data(pkgs)
+
+    saveRDS(res, "c:/packages/pkgdiff/tests/testthat/data/dat.rds")
+
+    expect_equal(is.data.frame(res), TRUE)
+    expect_equal(nrow(res) > 0, TRUE)
 
   } else {
 

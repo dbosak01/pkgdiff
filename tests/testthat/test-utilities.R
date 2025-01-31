@@ -12,6 +12,8 @@ test_that("utilities1: get_archive_versions() works as expected.", {
   expect_equal(ncol(res) == 5, TRUE)
 
 
+
+
   if (dev) {
 
     res <- get_archive_versions(c("fmtr", "common", "rvest"))
@@ -259,3 +261,70 @@ test_that("utilities12: get_all_functions() works as expected.", {
   }
 
 })
+
+test_that("utilities13: get_latest_info() works as expected.", {
+
+
+  res <- get_latest_info("tibble")
+
+  expect_equal(is.null(res), FALSE)
+
+  expect_equal("pkgInfo" %in% class(res), TRUE)
+
+})
+
+
+test_that("utilities14: get_archive_info() works as expected.", {
+
+
+  res <- get_archive_info("fmtr", "1.0.1")
+
+  expect_equal(is.null(res), FALSE)
+
+  expect_equal("pkgInfo" %in% class(res), TRUE)
+
+})
+
+test_that("utilities15: get_all_parameters() works as expected.", {
+
+
+  inf <- get_archive_info("fmtr", "1.0.1")
+
+  res <- get_all_parameters(inf)
+
+  expect_equal(is.null(res), FALSE)
+
+  expect_equal("pkgInfo" %in% class(inf), TRUE)
+
+  expect_equal(length(res) > 0, TRUE)
+
+})
+
+test_that("utilities16: get_parameter_count() works as expected.", {
+
+
+  inf <- get_archive_info("fmtr", "1.0.1")
+
+  res <- get_parameter_count(inf)
+
+  expect_equal(is.null(res), FALSE)
+
+  expect_equal(res, 37)
+
+})
+
+test_that("utilities17: get_archive_versions() for negative tests.", {
+
+
+  # Non-exisitant package name
+  res <- get_archive_versions("definrr")
+
+  # No error
+  expect_equal(is.null(res), TRUE)
+
+  res <- get_archive_versions("defineR")
+
+  expect_equal(is.null(res), TRUE)
+
+})
+
