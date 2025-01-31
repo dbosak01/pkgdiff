@@ -11,6 +11,8 @@
 # 3. Drill-down reports on packages with breaking changes.
 # 4. Ease portability with compatible versions instead of exact versions.
 # 5. Scan code for known breaking changes.
+# 6. Minimum compatible version or compatible version vector.
+# 7. Scan for minimum compatible version.
 #
 #
 #

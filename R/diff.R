@@ -2,9 +2,13 @@
 #' @title Get a Package Difference Object
 #' @param pkgname The package name.
 #' @param v1 The earlier package version.  Default is "current", which
-#' means the function will look up the currently installed version.
+#' means the function will look up the currently installed version.  Parameter
+#' also accepts an object of class "pkgInfo".  When passed, the function
+#' will use this object for comparison, instead of downloading from CRAN.
 #' @param v2 The later package version.  The default is "latest", which is the
-#' latest version of the package available on CRAN.
+#' latest version of the package available on CRAN. Parameter
+#' also accepts an object of class "pkgInfo".  When passed, the function
+#' will use this object for comparison, instead of downloading from CRAN.
 #' @family pdiff
 #' @import packageDiff
 #' @export
@@ -15,14 +19,26 @@ get_diff <- function(pkgname, v1 = "current",
 
   d <- structure(list(), class = c("pdiff", "list"))
 
-  if (v1 == "current") {
+  v1_diff_info <- NULL
+  v2_diff_info <- NULL
+
+  if ("pkgInfo" %in% class(v1)) {
+    v1_diff_info <- v1
+    v1 <- v1$Version
+  } else if (v1 == "current") {
     v1 <- get_current_version(pkgname)
   }
 
   # Collect data
+  if ("pkgInfo" %in% class(v2)) {
+    v2_diff_info <- v2
+    v2 <- v2$Version
+  }
+
   v2data <- get_latest_data(pkgname)
   v2archive <- get_archive_versions(pkgname)
   vLatest <- v2data$Version[[1]]
+
 
   # Get first release date
   if (nrow(v2archive) > 0)
@@ -49,10 +65,15 @@ get_diff <- function(pkgname, v1 = "current",
   #browser()
 
   # Get Diff Info Objects
-  v1_diff_info <- tryCatch({suppressWarnings(packageDiff::pkgInfo(v1_path))},
+  if (is.null(v1_diff_info)) {
+    v1_diff_info <- tryCatch({suppressWarnings(packageDiff::pkgInfo(v1_path))},
                            error = function(e){NULL})
-  v2_diff_info <- tryCatch({suppressWarnings(packageDiff::pkgInfo(v2_path))},
+  }
+
+  if (is.null(v2_diff_info)) {
+    v2_diff_info <- tryCatch({suppressWarnings(packageDiff::pkgInfo(v2_path))},
                            error = function(e){NULL})
+  }
 
   if (is.null(v1_diff_info)) {
 

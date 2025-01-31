@@ -89,18 +89,23 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #' stability data for the previous 2 years.  Default is NULL, meaning there is
 #' no limitation on the number of release months, and the function will collect
 #' data from all releases.
+#' @param source The location to retrieve stability data.  Valid choices are
+#' "github", or "cran".  The default is "github".
 #' @returns An stability score object of class "pdiff_score".  The object
 #' contains the stability score, plus other useful information such as
 #' the release and version ranges, the number of releases, and number of
 #' breaking releases.
 #' @family stability
 #' @export
-get_stability_score <- function(pkgname, releases = NULL, months = NULL ) {
+get_stability_score <- function(pkgname, releases = NULL, months = NULL, source = "github") {
 
 
   d <- structure(list(), class = c("pdiff_score", "list"))
 
-  dat <- get_cran_data(pkgname, releases, months)
+  if (source == "cran")
+    dat <- get_cran_data(pkgname, releases, months)
+  else if (source == "github")
+    dat <- get_github_data(pkgname, releases, months)
 
   if (nrow(dat) == 1) {
 
@@ -286,7 +291,11 @@ get_cran_data <- function(pkgname, releases = NULL, months = NULL) {
 
   } else {
 
+    # browser()
+
     idxs <- seq(1, nrow(dat) - 1)
+
+    laginfo <- NULL
 
     for (idx in idxs) {
 
@@ -295,11 +304,20 @@ get_cran_data <- function(pkgname, releases = NULL, months = NULL) {
 
       cat(paste0("Comparing ", pkgname, " ", v1, "/", v2, "\n"))
 
-      diff <- tryCatch({
-        get_diff(pkgname, v1, v2)
-      }, error = function(e) {
-        NULL
-      })
+      if (is.null(laginfo)) {
+        diff <- tryCatch({
+          get_diff(pkgname, v1, v2)
+        }, error = function(e) {
+          NULL
+        })
+      } else {
+        diff <- tryCatch({
+          get_diff(pkgname, v1, laginfo)
+        }, error = function(e) {
+          NULL
+        })
+
+      }
 
       if (!is.null(diff)) {
 
@@ -333,7 +351,10 @@ get_cran_data <- function(pkgname, releases = NULL, months = NULL) {
         else
           dat[idx, "TF"] <- length(diff$AllFunctions)
 
+        laginfo <- diff$Version1DiffInfo
+
       }
+
 
     }
 
