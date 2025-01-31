@@ -196,27 +196,39 @@ print.pdiff_score <- function(x, ..., verbose = FALSE) {
   invisible(x)
 }
 
-#' @title Collect Stability Data for Multiple Packages
-#' @description
-#' The \strong{collect_stability_data} function function
-#'
-#' @param pkgs A vector of package names to collect stability data for.
-#' @param releases An integer indicating the number of releases to collect
-#' stability data for. For example, \code{releases = 10} will return stability
-#' data for the last 10 releases of the package. Default is NULL, which means
-#' the function will return data for all releases.
-#' @param months An integer indicating the number of months back to collect
-#' stability data for.  For example, \code{months = 24} will collect
-#' stability data for the previous 2 years.  Default is NULL, meaning there is
-#' no limitation on the number of release months, and the function will collect
-#' data from all releases.
-#' @family stability
-#' @export
-collect_stability_data <- function(pkgs, releases = NULL, months = NULL) {
+
+#' @noRd
+get_github_data <- function(pkgname, releases = NULL, months = NULL) {
+
+  pth <- "https://github.com/dbosak01/pkgdiffdata/blob/main/data/stability3.rds"
+
+  pth <- "https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/data/stability3.rds"
 
 
+  adat <- get(load(gzcon(url(pth))))
+
+  dat <- subset(adat, adat$Package == pkgname)
 
 
+  if (!is.null(releases)) {
+
+    if (nrow(dat) > releases)
+      dat <- dat[seq(1, releases + 1), ]
+  }
+
+  if (!is.null(months)) {
+    dm <- Sys.Date() - ((months + 1) * 30)
+
+    # Handle situation where last package release date
+    # is before the requested release range.
+    if (max(dat$Release) < dm) {
+      dat <- dat[1, ]
+    } else {
+      dat <- subset(dat, dat$Release >= dm)
+    }
+  }
+
+  return(dat)
 }
 
 

@@ -179,7 +179,6 @@ test_that("stability11: get_stability_data() multiple packages.", {
 
     res <- get_stability_data(pkgs)
 
-    saveRDS(res, "c:/packages/pkgdiff/tests/testthat/data/dat.rds")
 
     expect_equal(is.data.frame(res), TRUE)
     expect_equal(nrow(res) > 0, TRUE)
@@ -191,4 +190,29 @@ test_that("stability11: get_stability_data() multiple packages.", {
 
 
 })
+
+
+test_that("stability12: get_github_data() works as expected.", {
+
+  if (TRUE) {
+
+
+    res <- get_github_data("common")
+
+    expect_equal(is.data.frame(res), TRUE)
+    expect_equal(nrow(res) > 0, TRUE)
+
+    res <- get_github_data("fmtr")
+
+    expect_equal(is.data.frame(res), TRUE)
+    expect_equal(nrow(res) > 0, TRUE)
+
+  } else {
+
+    expect_equal(TRUE, TRUE)
+  }
+
+
+})
+
 

@@ -2,7 +2,6 @@
 
 S3method(print,pdiff)
 S3method(print,pdiff_score)
-export(collect_stability_data)
 export(get_diff)
 export(get_installed_packages)
 export(get_stability_data)
