@@ -133,7 +133,12 @@ report_stability <- function(pkgs, releases = NULL, months = NULL) {
                                 RC = "Release Count", BC = "Breaking Releases",
                                 Score = "Stability Score",
                                 Package = "Package Name")
+
+    dat$FR <- as.Date(dat$FR)
+    dat$LR <- as.Date(dat$LR)
   }
+
+
 
   ret <- dat
 

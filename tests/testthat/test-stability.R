@@ -85,7 +85,7 @@ test_that("stability5: get_stability_data() only one release.", {
 test_that("stability6: get_stability_score() basic functionality.", {
 
 
-    res <- get_stability_score("procs")
+    res <- get_stability_score("libr")
 
     expect_equal(res$StabilityScore == 1, TRUE)
 
