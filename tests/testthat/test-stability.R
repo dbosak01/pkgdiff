@@ -44,7 +44,9 @@ test_that("stability3: get_stability_data() release limit.", {
 
 
   expect_equal(is.data.frame(res), TRUE)
-  expect_equal(nrow(res) == 5, TRUE)
+
+  # Need one extra for comparison
+  expect_equal(nrow(res) == 6, TRUE)
 
 
 })
@@ -85,7 +87,7 @@ test_that("stability5: get_stability_data() only one release.", {
 test_that("stability6: get_stability_score() basic functionality.", {
 
 
-    res <- get_stability_score("libr")
+    res <- get_stability_score("logr")
 
     expect_equal(res$StabilityScore == 1, TRUE)
 

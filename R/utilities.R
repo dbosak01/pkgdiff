@@ -1,4 +1,10 @@
 
+
+
+# Screen Scraping ---------------------------------------------------------
+
+
+
 #' @import rvest
 #' @import utils
 #' @noRd
@@ -91,13 +97,17 @@ get_latest_version <- function(pkgs) {
 
   ret <- c()
 
+  pos <- 1
   for (pkg in pkgs) {
 
     dat <- get_latest_data(pkg, skip_size = TRUE)
 
-    ret[[pkg]] <- dat$Version[1]
+    ret[pos] <- dat$Version[1]
 
+    pos <- pos + 1
   }
+
+  names(ret) <- pkgs
 
   return(ret)
 }
@@ -174,6 +184,10 @@ get_archive_versions <- function(pkgs) {
 
 
 
+# File Utilities ----------------------------------------------------------
+
+
+
 #' @noRd
 get_version <- function(pkgname) {
 
@@ -190,6 +204,19 @@ get_version <- function(pkgname) {
 }
 
 
+get_file_name <- function(pkgname, version) {
+
+  ret <- paste0(pkgname, "_", version, ".tar.gz")
+
+  return(ret)
+}
+
+
+
+# Repo Utilities ----------------------------------------------------------
+
+
+
 #' @noRd
 get_current_version <- function(pkgname) {
 
@@ -198,13 +225,6 @@ get_current_version <- function(pkgname) {
   sdat <- subset(dat, dat$Package == pkgname, "Version")
 
   ret <- sdat[["Version"]]
-
-  return(ret)
-}
-
-get_file_name <- function(pkgname, version) {
-
-  ret <- paste0(pkgname, "_", version, ".tar.gz")
 
   return(ret)
 }
@@ -253,6 +273,12 @@ get_installed_packages <- function(pkgs = NULL, repos = NULL) {
 
   return(ret)
 }
+
+
+
+# Difference Utilities ----------------------------------------------------
+
+
 
 #' @noRd
 get_removed_functions <- function(v1info, v2info) {
@@ -375,47 +401,6 @@ get_all_functions <- function(v1info, v2info) {
   return(ret)
 }
 
-#' @import packageDiff
-#' @noRd
-get_latest_info <- function(pkgname) {
-
-
-  currentpath = "https://cran.r-project.org/src/contrib/"
-
-  v2data <- get_latest_data(pkgname)
-  vLatest <- v2data$Version[[1]]
-
-
-  # Get path to v2 package
-  pth <- file.path(currentpath, get_file_name(pkgname, vLatest))
-
-
-
-  ret <- tryCatch({suppressWarnings(packageDiff::pkgInfo(pth))},
-                  error = function(e){NULL})
-
-
-
-  return(ret)
-}
-
-
-get_archive_info <- function(pkgname, version) {
-
-  archivepath = "https://cran.r-project.org/src/contrib/Archive"
-
-  pth <- file.path(archivepath, pkgname, get_file_name(pkgname, version))
-
-
-  ret <- tryCatch({suppressWarnings(packageDiff::pkgInfo(pth))},
-                  error = function(e){NULL})
-
-
-
-  return(ret)
-
-}
-
 
 
 #' @noRd
@@ -465,3 +450,98 @@ get_parameter_count <- function(info) {
 
   return(ret)
 }
+
+
+
+
+# Retrieving Infos --------------------------------------------------------
+
+
+
+#' @import packageDiff
+#' @noRd
+get_latest_info <- function(pkgname) {
+
+
+  currentpath = "https://cran.r-project.org/src/contrib/"
+
+  v2data <- get_latest_data(pkgname)
+  vLatest <- v2data$Version[[1]]
+
+
+  # Get path to v2 package
+  pth <- file.path(currentpath, get_file_name(pkgname, vLatest))
+
+
+
+  ret <- tryCatch({suppressWarnings(packageDiff::pkgInfo(pth))},
+                  error = function(e){NULL})
+
+
+
+  return(ret)
+}
+
+
+get_archive_info <- function(pkgname, version) {
+
+  archivepath = "https://cran.r-project.org/src/contrib/Archive"
+
+  pth <- file.path(archivepath, pkgname, get_file_name(pkgname, version))
+
+
+  ret <- tryCatch({suppressWarnings(packageDiff::pkgInfo(pth))},
+                  error = function(e){NULL})
+
+
+
+  return(ret)
+
+}
+
+
+#' @noRd
+get_all_infos <- function(pkg) {
+
+  ret <- NULL
+
+  info <- get_latest_info(pkg)
+
+  if (!is.null(info)) {
+
+    ret[[info$Version]] <- info
+  }
+
+  adat <- get_archive_versions(pkg)
+
+
+  for (ver in adat$Version) {
+
+    info <- get_archive_info(pkg, ver)
+
+    if (!is.null(info)) {
+      ret[[info$Version]] <- info
+    }
+
+  }
+
+  return(ret)
+
+}
+
+
+
+# Github Utilities --------------------------------------------------------
+
+#' @noRd
+github_package_names <- function() {
+
+  pth <- "https://cran.r-project.org/src/contrib/Archive/fmtr/"
+
+  pth <- "https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/data/"
+
+
+
+
+}
+

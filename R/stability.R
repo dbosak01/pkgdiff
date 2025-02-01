@@ -102,9 +102,9 @@ get_stability_score <- function(pkgname, releases = NULL, months = NULL, source 
 
   d <- structure(list(), class = c("pdiff_score", "list"))
 
-  if (source == "cran")
+  if (tolower(source) == "cran")
     dat <- get_cran_data(pkgname, releases, months)
-  else if (source == "github")
+  else if (tolower(source) == "github")
     dat <- get_github_data(pkgname, releases, months)
 
   if (nrow(dat) == 1) {

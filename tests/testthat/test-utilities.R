@@ -40,6 +40,8 @@ test_that("utilities2: get_latest_version() works as expected.", {
 
   expect_equal(is.data.frame(res), FALSE)
 
+  expect_equal(is.list(res), FALSE)
+
   expect_equal(length(res) == 3, TRUE)
 
 
@@ -328,3 +330,15 @@ test_that("utilities17: get_archive_versions() for negative tests.", {
 
 })
 
+
+test_that("utilities18: get_all_infos() works as expected.", {
+
+  res <- get_all_infos("procs")
+
+  res
+
+  expect_equal(is.list(res), TRUE)
+  expect_equal(length(res) > 0, TRUE)
+  expect_equal("pkgInfo" %in% class(res[[1]]), TRUE)
+
+})
