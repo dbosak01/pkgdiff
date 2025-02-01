@@ -182,7 +182,21 @@ get_archive_versions <- function(pkgs) {
   return(ret)
 }
 
+get_all_versions <- function(pkg) {
 
+  ldat <- get_latest_data(pkg)
+  adat <- get_archive_versions(pkg)
+
+
+  ret <- ldat
+
+  if (!is.null(adat)) {
+
+    ret <- rbind(ret, adat)
+  }
+
+  return(ret)
+}
 
 # File Utilities ----------------------------------------------------------
 
@@ -213,7 +227,7 @@ get_file_name <- function(pkgname, version) {
 
 
 
-# Repo Utilities ----------------------------------------------------------
+# Local Repo Utilities -------------------------------------------------------
 
 
 
@@ -501,28 +515,29 @@ get_archive_info <- function(pkgname, version) {
 
 
 #' @noRd
-get_all_infos <- function(pkg) {
+get_all_infos <- function(pkg, versions = NULL) {
 
   ret <- NULL
 
-  info <- get_latest_info(pkg)
+  if (is.null(versions)) {
+    info <- get_latest_info(pkg)
 
-  if (!is.null(info)) {
+    if (!is.null(info)) {
 
-    ret[[info$Version]] <- info
+      ret[[info$Version]] <- info
+    }
+
+    adat <- get_archive_versions(pkg)
+    versions <- adat$Version
   }
 
-  adat <- get_archive_versions(pkg)
-
-
-  for (ver in adat$Version) {
+  for (ver in versions) {
 
     info <- get_archive_info(pkg, ver)
 
     if (!is.null(info)) {
       ret[[info$Version]] <- info
     }
-
   }
 
   return(ret)
@@ -534,14 +549,15 @@ get_all_infos <- function(pkg) {
 # Github Utilities --------------------------------------------------------
 
 #' @noRd
-github_package_names <- function() {
+github_packages <- function() {
 
-  pth <- "https://cran.r-project.org/src/contrib/Archive/fmtr/"
+  pth <- "https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/packages.rds"
 
-  pth <- "https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/data/"
+  ret <- get(load(gzcon(url(pth))))
 
-
-
-
+  return(ret)
 }
+
+
+
 

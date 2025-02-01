@@ -341,4 +341,35 @@ test_that("utilities18: get_all_infos() works as expected.", {
   expect_equal(length(res) > 0, TRUE)
   expect_equal("pkgInfo" %in% class(res[[1]]), TRUE)
 
+  res <- get_all_infos("procs", c("1.0.3", "1.0.4"))
+
+  res
+
+  expect_equal(is.list(res), TRUE)
+  expect_equal(length(res) == 2, TRUE)
+  expect_equal("pkgInfo" %in% class(res[[1]]), TRUE)
+
+
+
 })
+
+test_that("utilities19: github_packages() works as expected.", {
+
+  res <- github_packages()
+
+  expect_equal(length(res) > 0, TRUE)
+  expect_equal("logr" %in% names(res), TRUE)
+
+})
+
+test_that("utilities20: get_all_versions() works as expected.", {
+
+  res <- get_all_versions("procs")
+
+  expect_equal(is.data.frame(res), TRUE)
+  expect_equal(nrow(res) > 0, TRUE)
+  expect_equal(ncol(res), 5)
+
+})
+
+
