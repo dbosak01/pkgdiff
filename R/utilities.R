@@ -519,21 +519,20 @@ get_all_infos <- function(pkg, versions = NULL) {
 
   ret <- NULL
 
+  lVersion <- get_latest_version(pkg)
+
   if (is.null(versions)) {
-    info <- get_latest_info(pkg)
-
-    if (!is.null(info)) {
-
-      ret[[info$Version]] <- info
-    }
 
     adat <- get_archive_versions(pkg)
-    versions <- adat$Version
+    versions <- c(lVersion, adat$Version)
   }
 
   for (ver in versions) {
 
-    info <- get_archive_info(pkg, ver)
+    if (ver == lVersion)
+      info <- get_latest_info(pkg)
+    else
+      info <- get_archive_info(pkg, ver)
 
     if (!is.null(info)) {
       ret[[info$Version]] <- info
@@ -543,21 +542,106 @@ get_all_infos <- function(pkg, versions = NULL) {
   return(ret)
 
 }
+
+#' @noRd
+get_fastest_info <- function(pkgname, version) {
+
+  ret <- NULL
+
+  if (!is.na(github_packages(pkgname))) {
+
+    info <- github_package(pkgname)
+    ret <- info$infos[[version]]
+
+  }
+
+  if (is.null(ret)) {
+
+    ret <- get_all_infos(pkgname, version)[[1]]
+  }
+
+  return(ret)
+}
+
+#' @noRd
+get_fastest_infos <- function(pkgname, v1, v2) {
+
+  inf1 <- NULL
+  inf2 <- NULL
+  ret <- list()
+
+  if (!is.na(github_packages(pkgname))) {
+
+    info <- github_package(pkgname)
+    inf1 <- info$infos[[v1]]
+    inf2 <- info$infos[[v2]]
+  }
+
+  if (is.null(inf1)) {
+
+    inf1 <- get_all_infos(pkgname, v1)[[1]]
+  }
+
+  if (is.null(inf2)) {
+
+    inf2 <- get_all_infos(pkgname, v2)[[1]]
+  }
+
+  ret[[v1]] <- inf1
+  ret[[v2]] <- inf2
+
+  return(ret)
+}
+
 
 
 
 # Github Utilities --------------------------------------------------------
 
 #' @noRd
-github_packages <- function() {
+github_packages <- function(pkg = NULL) {
 
   pth <- "https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/packages.rds"
 
-  ret <- get(load(gzcon(url(pth))))
+  murl <- url(pth)
+  ret <- get(load(gzcon(murl)))
+  close(murl)
+
+  if (!is.null(pkg)) {
+    ret <- ret[pkg]
+  }
 
   return(ret)
 }
 
+#' @noRd
+github_package <- function(pkg) {
 
 
+  # https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/data/procs.Rdata
+  # https://github.com/dbosak01/pkgdiffdata/blob/main/data/procs.Rdata
+  # pth <- "https://github.com/dbosak01/pkgdiffdata/blob/main/data"
+  pth <- "https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/data"
+
+
+  fl <- file.path(pth, paste0(pkg, ".RData"))
+
+  info <- tryCatch({
+      murl <- url(fl)
+      ret <- get(load(gzcon(murl)))
+      close(murl)
+      ret
+    },
+      error = function(e){NULL})
+
+  return(info)
+
+}
+
+
+github_versions <- function(pkg) {
+
+
+
+}
 

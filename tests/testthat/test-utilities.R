@@ -349,8 +349,6 @@ test_that("utilities18: get_all_infos() works as expected.", {
   expect_equal(length(res) == 2, TRUE)
   expect_equal("pkgInfo" %in% class(res[[1]]), TRUE)
 
-
-
 })
 
 test_that("utilities19: github_packages() works as expected.", {
@@ -359,6 +357,15 @@ test_that("utilities19: github_packages() works as expected.", {
 
   expect_equal(length(res) > 0, TRUE)
   expect_equal("logr" %in% names(res), TRUE)
+
+  res <- github_packages("logr")
+
+  expect_equal(length(res) == 1, TRUE)
+  expect_equal("logr" %in% names(res), TRUE)
+
+
+  res <- github_packages("loxx")
+  expect_equal(is.na(res[[1]]) == TRUE, TRUE)
 
 })
 
@@ -371,5 +378,61 @@ test_that("utilities20: get_all_versions() works as expected.", {
   expect_equal(ncol(res), 5)
 
 })
+
+
+test_that("utilities21: github_package() works as expected.", {
+
+  res <- github_package("tibble")
+
+  expect_equal(is.data.frame(res$stability), TRUE)
+  expect_equal(nrow(res$stability) > 0, TRUE)
+  expect_equal("pkgInfo" %in% class(res$infos[[1]]), TRUE)
+  expect_equal(length(res$infos) > 2, TRUE)
+
+})
+
+
+test_that("utilities22: get_fastest_info() works as expected.", {
+
+  if (dev) {
+    res <- get_fastest_info("procs", "1.0.6")
+
+    expect_equal("pkgInfo" %in% class(res), TRUE)
+
+    res <- get_fastest_info("procs", "1.0.5")
+
+    expect_equal("pkgInfo" %in% class(res), TRUE)
+
+    res <- get_fastest_info("ccRemover", "1.0.4")
+
+    expect_equal("pkgInfo" %in% class(res), TRUE)
+
+  } else {
+
+    expect_equal(TRUE, TRUE)
+  }
+
+})
+
+
+test_that("utilities23: get_fastest_infos() works as expected.", {
+
+  if (dev) {
+
+    res <- get_fastest_infos("procs", "1.0.5", "1.0.6")
+
+    expect_equal("pkgInfo" %in% class(res), TRUE)
+
+    res <- get_fastest_infos("ccRemover", "1.0.3", "1.0.4")
+
+    expect_equal("pkgInfo" %in% class(res), TRUE)
+
+  } else {
+
+    expect_equal(TRUE, TRUE)
+  }
+
+})
+
 
 

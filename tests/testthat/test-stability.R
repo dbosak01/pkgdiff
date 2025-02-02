@@ -5,34 +5,24 @@ dev <- FALSE
 
 test_that("stability1: get_stability_data() basic functionality.", {
 
-  if (dev) {
 
-    res <- get_stability_data("libr")
+  res <- get_stability_data("libr")
 
-    expect_equal(is.data.frame(res), TRUE)
-    expect_equal(nrow(res) > 0, TRUE)
-
-  } else {
-
-    expect_equal(TRUE, TRUE)
-  }
-
+  expect_equal(is.data.frame(res), TRUE)
+  expect_equal(nrow(res) > 0, TRUE)
 
 })
 
 test_that("stability2: get_stability_data() many changes.", {
 
-  if (dev) {
-    res <- get_stability_data("admiral")
+
+  res <- get_stability_data("admiral")
 
 
-    expect_equal(is.data.frame(res), TRUE)
-    expect_equal(nrow(res) > 0, TRUE)
+  expect_equal(is.data.frame(res), TRUE)
+  expect_equal(nrow(res) > 0, TRUE)
 
-  } else {
 
-    expect_equal(TRUE, TRUE)
-  }
 
 
 })
@@ -65,19 +55,12 @@ test_that("stability4: get_stability_data() time limit.", {
 # Need to handle
 test_that("stability5: get_stability_data() only one release.", {
 
-  if (dev) {
 
-    # No archives
-    res <- get_stability_data("defineR")
+  # No archives
+  res <- get_stability_data("defineR")
 
-    expect_equal(is.data.frame(res), TRUE)
-    expect_equal(nrow(res) == 1, TRUE)
-
-  } else {
-
-    expect_equal(TRUE, TRUE)
-  }
-
+  expect_equal(is.data.frame(res), TRUE)
+  expect_equal(nrow(res) == 1, TRUE)
 
 })
 
@@ -87,9 +70,11 @@ test_that("stability5: get_stability_data() only one release.", {
 test_that("stability6: get_stability_score() basic functionality.", {
 
 
-    res <- get_stability_score("logr")
+  res <- get_stability_score("logr")
 
-    expect_equal(res$StabilityScore == 1, TRUE)
+  res
+
+  expect_equal(res$StabilityScore == 1, TRUE)
 
 
 
@@ -99,17 +84,10 @@ test_that("stability6: get_stability_score() basic functionality.", {
 test_that("stability7: get_stability_score() stressed functionality.", {
 
 
-  if (dev) {
 
-    res <- get_stability_score("admiral", rel)
+  res <- get_stability_score("admiral")
 
-    expect_equal(res$StabilityScore < 1, TRUE)
-
-
-  } else {
-
-    expect_equal(TRUE, TRUE)
-  }
+  expect_equal(res$StabilityScore < 1, TRUE)
 
 
 })
@@ -133,41 +111,30 @@ test_that("stability8: get_stability_data() no releases in time period.", {
 
 test_that("stability9: get_stability_score() out of range.", {
 
-  if (dev) {
 
-    res <- get_stability_score("tibble", months = 1)
+  res <- get_stability_score("tibble", months = 1)
 
-    expect_equal(res$StabilityScore == 1, TRUE)
+  expect_equal(res$StabilityScore == 1, TRUE)
 
-  } else {
 
-    expect_equal(TRUE, TRUE)
-  }
 
 })
 
 test_that("stability10: get_stability_data() boundry conditions.", {
 
-  if (dev) {
 
-    # Unknown package
-    pkgs <- c("definer")
+  # Unknown package
+  pkgs <- c("definer")
 
-    res <- get_stability_data(pkgs)
+  expect_error(suppressWarnings(get_stability_data(pkgs)))
 
-    expect_equal(is.data.frame(res), FALSE)
 
-    # No archive data
-    pkgs <- c("defineR")
+  # No archive data
+  pkgs <- c("defineR")
 
-    res <- get_stability_data(pkgs)
+  res <- get_stability_data(pkgs)
 
-    expect_equal(is.data.frame(res), TRUE)
-
-  } else {
-
-    expect_equal(TRUE, TRUE)
-  }
+  expect_equal(is.data.frame(res), TRUE)
 
 
 })
@@ -175,7 +142,6 @@ test_that("stability10: get_stability_data() boundry conditions.", {
 
 test_that("stability11: get_stability_data() multiple packages.", {
 
-  if (dev) {
 
     pkgs <- c("common", "procs", "libr", "defineR")
 
@@ -185,10 +151,6 @@ test_that("stability11: get_stability_data() multiple packages.", {
     expect_equal(is.data.frame(res), TRUE)
     expect_equal(nrow(res) > 0, TRUE)
 
-  } else {
-
-    expect_equal(TRUE, TRUE)
-  }
 
 
 })
@@ -196,23 +158,19 @@ test_that("stability11: get_stability_data() multiple packages.", {
 
 test_that("stability12: get_github_data() works as expected.", {
 
-  if (TRUE) {
 
 
-    res <- get_github_data("common")
+  res <- get_github_data("procs")
 
-    expect_equal(is.data.frame(res), TRUE)
-    expect_equal(nrow(res) > 0, TRUE)
+  expect_equal(is.data.frame(res), TRUE)
+  expect_equal(nrow(res) > 0, TRUE)
 
-    res <- get_github_data("fmtr")
+  res <- get_github_data("fmtr")
 
-    expect_equal(is.data.frame(res), TRUE)
-    expect_equal(nrow(res) > 0, TRUE)
+  expect_equal(is.data.frame(res), TRUE)
+  expect_equal(nrow(res) > 0, TRUE)
 
-  } else {
 
-    expect_equal(TRUE, TRUE)
-  }
 
 
 })
@@ -228,6 +186,26 @@ test_that("stability13: get_info_data() works as expected.", {
   expect_equal(is.data.frame(res), TRUE)
   expect_equal(nrow(res) > 0, TRUE)
   expect_equal(ncol(res) == 11, TRUE)
+
+})
+
+
+
+test_that("stability14: get_stability_score() one release.", {
+
+  if (dev) {
+
+    res <- get_stability_score("defineR")
+
+    res
+
+    expect_equal(res$StabilityScore == 1, TRUE)
+
+  } else {
+
+    expect_equal(TRUE, TRUE)
+  }
+
 
 })
 

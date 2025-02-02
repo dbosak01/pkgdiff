@@ -9,7 +9,7 @@
 #' The main functions included in the \strong{pkgdiff} package are
 #' as follows:
 #' \itemize{
-#'   \item {\code{\link{get_diff}}: Compares two package versions, and
+#'   \item {\code{\link{pkg_diff}}: Compares two package versions, and
 #'   returns an object that contains information about the differences.
 #'   Information returned from this function is relatively high level.}
 #'   \item {\code{\link{view_details}}: Shows a side-by-side comparison

@@ -8,7 +8,7 @@ view_details(diff, docs = TRUE)
 }
 \arguments{
 \item{diff}{A package difference object of class "pdiff".  This object is
-returned from \code{\link{get_diff}}.}
+returned from \code{\link{pkg_diff}}.}
 
 \item{docs}{Whether to include the function documentation
 in the viewer comparison.  Default is TRUE.}
@@ -23,7 +23,7 @@ is taken from CRAN.
 }
 \seealso{
 Other pdiff: 
-\code{\link{get_diff}()},
+\code{\link{pkg_diff}()},
 \code{\link{print.pdiff}()}
 }
 \concept{pdiff}

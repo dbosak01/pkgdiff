@@ -60,7 +60,7 @@ report_breakages <- function(v1pkgs = "current", v2pkgs = "latest") {
     bc <- FALSE
     if (v1 != v2) {
       cat(paste0("Comparing ", pkg, " v", v1, "/v", v2, "\n"))
-      diff <- suppressWarnings(get_diff(pkg, v1, v2))
+      diff <- suppressWarnings(pkg_diff(pkg, v1, v2))
       bc <- diff$BreakingChanges
     }
 

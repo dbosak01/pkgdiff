@@ -109,14 +109,18 @@ get_stability_score <- function(pkgname, releases = NULL, months = NULL, source 
 
   if (nrow(dat) == 1) {
 
+    spn <- Sys.Date() - dat$Release[[nrow(dat)]]
+
     # Populate pdiff_score object
     d$PackageName <- pkgname
-    d$FirstRelease <- NA
+    d$PackageAge <- sprintf("%0.2f years", spn / 30 / 12)
+    d$FirstRelease <- dat$Release[[1]]
     d$LastRelease <- dat$Release[[1]]
     d$StabilityScore <- 1
-    d$NumReleases <- 0
+    d$Assessment <- get_stability_assessment(1)
+    d$NumReleases <- 1
     d$BreakingReleases <- 0
-    d$FirstVersion <- NA
+    d$FirstVersion <- dat$Version[[1]]
     d$LastVersion <- dat$Version[[1]]
     d$AddedFunctions <- 0
     d$AddedParameters <- 0
@@ -127,13 +131,17 @@ get_stability_score <- function(pkgname, releases = NULL, months = NULL, source 
   } else {
 
     # Calculate stability score
-    scr <- 1 - (sum(dat$BC, na.rm = TRUE) / (nrow(dat) - 1))
+    scr <- 1 - (sum(dat$BC, na.rm = TRUE) / nrow(dat))
+
+    spn <- Sys.Date() - dat$Release[[nrow(dat)]]
 
     # Populate pdiff_score object
     d$PackageName <- pkgname
+    d$PackageAge <- sprintf("%0.2f years", spn / 30 / 12)
     d$FirstRelease <- dat$Release[[nrow(dat)]]
     d$LastRelease <- dat$Release[[1]]
     d$StabilityScore <- scr
+    d$Assessment <- get_stability_assessment(scr)
     d$NumReleases <- nrow(dat)
     d$BreakingReleases <- sum(dat$BC, na.rm = TRUE)
     d$FirstVersion <- dat$Version[[nrow(dat)]]
@@ -168,10 +176,20 @@ print.pdiff_score <- function(x, ..., verbose = FALSE) {
     grey60 <- crayon::make_style(grey60 = "#999999")
     cat(grey60("# A stability score: " %+%
                  as.character(x$PackageName) %+% " package\n"))
+
+    if (!is.null(x$PackageAge))
+      cat(paste0("- Age: ", x$PackageAge, "\n"))
+
     if (!is.null(x$StabilityScore)) {
 
       scr <- sprintf("%.1f", x$StabilityScore * 100)
       cat(paste0("- Score: ", scr, "\n"))
+
+    }
+
+    if (!is.null(x$Assessment)) {
+
+      cat(paste0("- Assessment: ", x$Assessment, "\n"))
 
     }
 
@@ -202,18 +220,29 @@ print.pdiff_score <- function(x, ..., verbose = FALSE) {
 }
 
 
+
+# Get Data ----------------------------------------------------------------
+
+
+
 #' @noRd
 get_github_data <- function(pkgname, releases = NULL, months = NULL) {
 
-  pth <- "https://github.com/dbosak01/pkgdiffdata/blob/main/data/stability3.rds"
+  fl <- paste0(pkgname, ".RData")
 
-  pth <- "https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/data/stability3.rds"
+  # https://github.com/dbosak01/pkgdiffdata/blob/main/data/common.Rdata
+  # https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/data/common.Rdata
+  # https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/data/common.Rdata
+  # https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/data/common.Rdata
 
+  pth <- file.path("https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/data",
+                   fl)
 
-  adat <- get(load(gzcon(url(pth))))
+  murl <- url(pth)
+  info <- get(load(gzcon(murl)))
+  close(murl)
 
-  dat <- subset(adat, adat$Package == pkgname)
-
+  dat <- info$stability
 
   if (!is.null(releases)) {
 
@@ -232,6 +261,8 @@ get_github_data <- function(pkgname, releases = NULL, months = NULL) {
       dat <- subset(dat, dat$Release >= dm)
     }
   }
+
+  rownames(dat) <- NULL
 
   return(dat)
 }
@@ -306,13 +337,13 @@ get_cran_data <- function(pkgname, releases = NULL, months = NULL) {
 
       if (is.null(laginfo)) {
         diff <- tryCatch({
-          get_diff(pkgname, v1, v2)
+          pkg_diff(pkgname, v1, v2)
         }, error = function(e) {
           NULL
         })
       } else {
         diff <- tryCatch({
-          get_diff(pkgname, v1, laginfo)
+          pkg_diff(pkgname, v1, laginfo)
         }, error = function(e) {
           NULL
         })
@@ -447,7 +478,7 @@ get_info_data <- function(pkgname, pkginfos) {
       cat(paste0("Comparing ", pkgname, " ", v1, "/", v2, "\n"))
 
       diff <- tryCatch({
-        get_diff(pkgname, v1info, v2info)
+        pkg_diff(pkgname, v1info, v2info)
       }, error = function(e) {
         NULL
       })
@@ -523,4 +554,27 @@ get_info_data <- function(pkgname, pkginfos) {
 
   return(dat)
 
+}
+
+
+# Utilities ---------------------------------------------------------------
+
+get_stability_assessment <- function(score) {
+
+  ret <- NULL
+  if (score == 1) {
+    ret <- "Perfect"
+  } else if (score >= .95) {
+    ret <- "Very Stable"
+  } else if (score >= .9) {
+
+    ret <- "Stable"
+  } else if (score >= .8) {
+    ret <- "Somewhat Unstable"
+  } else {
+
+    ret <- "Unstable"
+  }
+
+  return(ret)
 }
