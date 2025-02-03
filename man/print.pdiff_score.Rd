@@ -18,7 +18,6 @@ Print a Package Difference Stability Score Object
 }
 \seealso{
 Other stability: 
-\code{\link{get_stability_data}()},
-\code{\link{get_stability_score}()}
+\code{\link{pkg_stability}()}
 }
 \concept{stability}

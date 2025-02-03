@@ -55,7 +55,7 @@ report_breakages <- function(v1pkgs = "current", v2pkgs = "latest") {
 
     pkg <- v1pkgs$Package[[idx]]
     v1 <- v1pkgs$Version[[idx]]
-    v2 <- subset(v2pkgs, v2pkgs$Package == pkg, "Version")
+    v2 <- v2pkgs[v2pkgs$Package == pkg, "Version"]
 
     bc <- FALSE
     if (v1 != v2) {
@@ -112,7 +112,7 @@ report_stability <- function(pkgs, releases = NULL, months = NULL) {
 
   for (pkg in pkgs) {
 
-    rpt <- get_stability_score(pkg, releases = releases, months = months)
+    rpt <- pkg_stability(pkg, releases = releases, months = months)
 
     dat[[idx, "Package"]] <- pkg
     dat[[idx, "FV"]] <- rpt$FirstVersion

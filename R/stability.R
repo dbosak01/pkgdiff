@@ -12,10 +12,92 @@
 #' stability data for the previous 2 years.  Default is NULL, meaning there is
 #' no limitation on the number of release months, and the function will collect
 #' data from all releases.
-#' @return A data frame of stability information for the targeted packages.
+#' @family stability
+#' @import common
+#' @noRd
+get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
+
+
+  ret <- NULL
+  for (pkg in pkgs) {
+
+    obj <- pkg_stability(pkg, releases = releases, months = months)
+
+    dat <- obj$StabilityData
+
+    if (!is.null(dat)) {
+      if (is.null(ret))
+        ret <- dat
+      else
+        ret <- rbind(ret, dat)
+    }
+
+  }
+
+
+  return(ret)
+
+}
+
+
+#' @title Calculate Stability Score for a Package
+#' @description
+#' The \code{pkg_stablity} function calculates a stability score for
+#' a specified package.  The score is calculated as the percentage of
+#' releases with no breaking changes.  A breaking change is defined as
+#' either a removed function or removed function parameter. The object
+#' also returns the raw data from which the stability score is calculated.
+#' This data can be useful for review or even custom analytics.
+#' @details
+#' The \code{pkg_stability} function is used to get an overall feel for the
+#' stability of a package.  The stability score and other information returned
+#' by the function are based on data retrived from CRAN.  The function
+#' compares each version of a package and determines if any functions or
+#' function parameters have been removed. If a release removes functions or
+#' parameters contained in the previous release, it is flagged as a
+#' "breaking release".
+#'
+#' The stability score is calculated as the percentage of non-breaking releases.
+#' For example, if a package has 10 releases, and one breaking release,
+#' the stability score will be 90.
+#'
+#' The stability assessment is a categorization of the stability score. The
+#' assessment aim to provide a general evaluation of the package, whether it
+#' it stable or unstable.  The
+#' assessment has 5 categories, as follows:
+#' \itemize{
+#'   \item {\strong{Perfect}: Stability score of 100.  Package has never
+#'   had a breaking release in its entire history.
+#'   }
+#'   \item {\strong{Very Stable}: Stability score between 95 and 100. Package
+#'   has had a breaking release, but very rarely.
+#'   }
+#'   \item {\strong{Stable}: Stability score between 90 and 95.  The package
+#'   has had an occasional breaking release, but it is still rather rare.
+#'   }
+#'   \item {\strong{Somewhat unstable}: Stability score between 80 and 90. The
+#'   package sometimes has a breaking release.
+#'   }
+#'   \item {\strong{Unstable}: Stability score below 80.  The package breaks
+#'   every 5th release or less.  This frequency of breaking releases
+#'   is considered unstable.
+#'   }
+#' }
+#' The above stability score and stability assessment system is designed
+#' to promote package stability. The assessment is weighted heavily toward
+#' the high end.  This categorization is intentionally designed to encourage
+#' package stability, and discourage the number of breaking changes.
+#'
+#' Note that a "breaking release" does not currently factor in the number of
+#' functions deprecated. One deprecated function counts the same as 10 deprecated
+#' functions.  Current methodology also does not differentiate between removed
+#' functions and removed parameters.  Current methodology also does not factor in
+#' changed functions.
+#' @section Stability Data: Stability calculations are based on a
+#' data frame of stability information gathered from each package release.
 #' The data frame will contain one row for each release.  Each row will
 #' contains comparison information against the prior release.  The
-#' columns will be organized as follows:
+#' columns are organized as follows:
 #' \itemize{
 #'   \item {\strong{Version}: The version number of the release.
 #'   }
@@ -39,46 +121,9 @@
 #'   }
 #'   \item {\strong{TF}: The total number of functions in the package.
 #'   }
-#'
-#'
 #' }
-#' @family stability
-#' @import common
-#' @export
-get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
-
-
-  ret <- NULL
-  for (pkg in pkgs) {
-
-    obj <- get_stability_score(pkg, releases = releases, months = months)
-
-    dat <- obj$StabilityData
-
-    if (!is.null(dat)) {
-      if (is.null(ret))
-        ret <- dat
-      else
-        ret <- rbind(ret, dat)
-    }
-
-  }
-
-
-  return(ret)
-
-}
-
-
-#' @title Calculate Stability Score for a Package
-#' @description
-#' The \code{get_stablity_score} function calculates a stability score for
-#' a specified package.  The score is calculated as the percentage of
-#' releases with no breaking changes.  A breaking change is defined as
-#' either a removed function or removed function parameter. The object
-#' also returns the raw data from which the stability score is calculated.
-#' This data can be useful for review or even custom analytics.  For a
-#' description of the stability data frame, see \code{\link{get_stability_data}}.
+#' The above data will be included in the function print out.  It an also be
+#' accessed on the returned object.
 #' @param pkgname The name of the package.
 #' @param releases An integer indicating the number of releases to collect
 #' stability data for. For example, \code{releases = 10} will return stability
@@ -97,7 +142,7 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #' breaking releases.
 #' @family stability
 #' @export
-get_stability_score <- function(pkgname, releases = NULL, months = NULL, source = "github") {
+pkg_stability <- function(pkgname, releases = NULL, months = NULL, source = "github") {
 
 
   d <- structure(list(), class = c("pdiff_score", "list"))

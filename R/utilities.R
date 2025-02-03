@@ -573,8 +573,12 @@ get_fastest_infos <- function(pkgname, v1, v2) {
   if (!is.na(github_packages(pkgname))) {
 
     info <- github_package(pkgname)
-    inf1 <- info$infos[[v1]]
-    inf2 <- info$infos[[v2]]
+    if ("infos" %in% names(info)) {
+      inf1 <- info$infos[[v1]]
+      inf2 <- info$infos[[v2]]
+      # if (!is.null(inf1) && !is.null(inf2))
+      #   print("Retrived from github")
+    }
   }
 
   if (is.null(inf1)) {

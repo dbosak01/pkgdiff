@@ -80,8 +80,6 @@ pkg_diff <- function(pkgname, v1 = "current",
     d$PackageName <- pkgname
     d$Version1 <- v1
     d$Version2 <- v2
-    # d$Version1Path <- v1_path
-    # d$Version2Path <- v2_path
     d$Version1DiffInfo <- v1_diff_info
     d$Version2DiffInfo <- v2_diff_info
     d$AddedFunctions <- addf

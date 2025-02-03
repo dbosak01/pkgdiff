@@ -2,7 +2,7 @@ dev <- FALSE
 
 test_that("reports1: report_breakages() works as expected.", {
 
-  pkgs <- c("crayon", "common", "rvest")
+  pkgs <- c("common", "libr", "fmtr")
 
   if (dev) {
 
@@ -32,7 +32,7 @@ test_that("reports1: report_breakages() works as expected.", {
 
 test_that("reports2: report_stability() works as expected.", {
 
-  pkgs <- c("common", "fmtr", "defineR")
+  pkgs <- c("common", "fmtr", "libr")
 
   if (dev) {
 

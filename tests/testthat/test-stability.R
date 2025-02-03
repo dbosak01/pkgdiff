@@ -67,10 +67,10 @@ test_that("stability5: get_stability_data() only one release.", {
 
 
 
-test_that("stability6: get_stability_score() basic functionality.", {
+test_that("stability6: pkg_stability() basic functionality.", {
 
 
-  res <- get_stability_score("logr")
+  res <- pkg_stability("logr")
 
   res
 
@@ -81,11 +81,11 @@ test_that("stability6: get_stability_score() basic functionality.", {
 })
 
 
-test_that("stability7: get_stability_score() stressed functionality.", {
+test_that("stability7: pkg_stability() stressed functionality.", {
 
 
 
-  res <- get_stability_score("admiral")
+  res <- pkg_stability("admiral")
 
   expect_equal(res$StabilityScore < 1, TRUE)
 
@@ -109,10 +109,10 @@ test_that("stability8: get_stability_data() no releases in time period.", {
 
 })
 
-test_that("stability9: get_stability_score() out of range.", {
+test_that("stability9: pkg_stability() out of range.", {
 
 
-  res <- get_stability_score("tibble", months = 1)
+  res <- pkg_stability("tibble", months = 1)
 
   expect_equal(res$StabilityScore == 1, TRUE)
 
@@ -191,11 +191,11 @@ test_that("stability13: get_info_data() works as expected.", {
 
 
 
-test_that("stability14: get_stability_score() one release.", {
+test_that("stability14: pkg_stability() one release.", {
 
   if (dev) {
 
-    res <- get_stability_score("defineR")
+    res <- pkg_stability("defineR")
 
     res
 
