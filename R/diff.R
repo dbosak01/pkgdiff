@@ -9,7 +9,6 @@
 #' @param v2 The later package version.  The default is "latest", which is the
 #' latest version of the package available on CRAN.
 #' @family pdiff
-#' @import packageDiff
 #' @export
 pkg_diff <- function(pkgname, v1 = "current",
                      v2 = "latest") {
@@ -314,7 +313,6 @@ print.pdiff <- function(x, ..., verbose = FALSE) {
 #' in the viewer comparison.  Default is TRUE.
 #' @return A package version comparison is displyed in the RStudio viewer.
 #' @family pdiff
-#' @import packageDiff
 #' @export
 view_details <- function(diff, docs = TRUE) {
 
@@ -327,7 +325,7 @@ view_details <- function(diff, docs = TRUE) {
   d2 <- diff$Version2DiffInfo
 
 
-  pkgDiff(d1, d2, doc = docs)
+  pkgDiff(d1, d2, doc = docs, )
 
 }
 

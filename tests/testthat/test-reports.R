@@ -33,7 +33,7 @@ test_that("reports1: report_breakages() works as expected.", {
 
 test_that("reports2: report_stability() works as expected.", {
 
-  pkgs <- c("common", "fmtr", "libr")
+  pkgs <- c("common", "fmtr", "libr", "defineR")
 
   if (dev) {
 
@@ -45,7 +45,7 @@ test_that("reports2: report_stability() works as expected.", {
 
   expect_equal(is.data.frame(res), TRUE)
 
-  expect_equal(nrow(res) == 3, TRUE)
+  expect_equal(nrow(res) == 4, TRUE)
 
   expect_equal(ncol(res) == 8, TRUE)
 

@@ -155,8 +155,8 @@ test_that("utilities8: get_removed_functions() works as expected.", {
     a2 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_1.0.0.tar.gz"
 
     # Lot of changes
-    info1 <- suppressWarnings(packageDiff::pkgInfo(a1))
-    info2 <- suppressWarnings(packageDiff::pkgInfo(a2))
+    info1 <- suppressWarnings(pkgInfo(a1))
+    info2 <- suppressWarnings(pkgInfo(a2))
 
     res <- get_removed_functions(info1, info2)
 
@@ -180,8 +180,8 @@ test_that("utilities9: get_removed_parameters() works as expected.", {
     a2 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_1.0.0.tar.gz"
 
     # Lot of changes
-    info1 <- suppressWarnings(packageDiff::pkgInfo(a1))
-    info2 <- suppressWarnings(packageDiff::pkgInfo(a2))
+    info1 <- suppressWarnings(pkgInfo(a1))
+    info2 <- suppressWarnings(pkgInfo(a2))
 
     res <- get_removed_parameters(info1, info2)
 
@@ -203,8 +203,8 @@ test_that("utilities10: get_added_functions() works as expected.", {
     a2 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_1.0.0.tar.gz"
 
     # Lot of changes
-    info1 <- suppressWarnings(packageDiff::pkgInfo(a1))
-    info2 <- suppressWarnings(packageDiff::pkgInfo(a2))
+    info1 <- suppressWarnings(pkgInfo(a1))
+    info2 <- suppressWarnings(pkgInfo(a2))
 
     res <- get_added_functions(info1, info2)
 
@@ -226,8 +226,8 @@ test_that("utilities11: get_added_parameters() works as expected.", {
     a2 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_1.0.0.tar.gz"
 
     # Lot of changes
-    info1 <- suppressWarnings(packageDiff::pkgInfo(a1))
-    info2 <- suppressWarnings(packageDiff::pkgInfo(a2))
+    info1 <- suppressWarnings(pkgInfo(a1))
+    info2 <- suppressWarnings(pkgInfo(a2))
 
     res <- get_added_parameters(info1, info2)
 
@@ -249,8 +249,8 @@ test_that("utilities12: get_all_functions() works as expected.", {
     a2 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_1.0.0.tar.gz"
 
     # Lot of changes
-    info1 <- suppressWarnings(packageDiff::pkgInfo(a1))
-    info2 <- suppressWarnings(packageDiff::pkgInfo(a2))
+    info1 <- suppressWarnings(pkgInfo(a1))
+    info2 <- suppressWarnings(pkgInfo(a2))
 
     res <- get_all_functions(info1, info2)
 

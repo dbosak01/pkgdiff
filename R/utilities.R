@@ -470,9 +470,6 @@ get_parameter_count <- function(info) {
 
 # Retrieving Infos --------------------------------------------------------
 
-
-
-#' @import packageDiff
 #' @noRd
 get_latest_info <- function(pkgname) {
 
@@ -488,7 +485,7 @@ get_latest_info <- function(pkgname) {
 
 
 
-  ret <- tryCatch({suppressWarnings(packageDiff::pkgInfo(pth))},
+  ret <- tryCatch({suppressWarnings(pkgInfo(pth))},
                   error = function(e){NULL})
 
 
@@ -504,7 +501,7 @@ get_archive_info <- function(pkgname, version) {
   pth <- file.path(archivepath, pkgname, get_file_name(pkgname, version))
 
 
-  ret <- tryCatch({suppressWarnings(packageDiff::pkgInfo(pth))},
+  ret <- tryCatch({suppressWarnings(pkgInfo(pth))},
                   error = function(e){NULL})
 
 

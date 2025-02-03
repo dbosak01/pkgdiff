@@ -106,7 +106,7 @@ report_stability <- function(pkgs, releases = NULL, months = NULL) {
 
   dat <- data.frame("Package" = NA, FV = NA, LV = NA,
                     FR = NA, LR = NA,
-                    RC = NA, BC = NA, Score = NA)
+                    TR = NA, BR = NA, Score = NA)
 
   idx <- 1
 
@@ -119,8 +119,8 @@ report_stability <- function(pkgs, releases = NULL, months = NULL) {
     dat[[idx, "LV"]] <- rpt$LastVersion
     dat[[idx, "FR"]] <- as.Date(rpt$FirstRelease)
     dat[[idx, "LR"]] <- as.Date(rpt$LastRelease)
-    dat[[idx, "RC"]] <- rpt$NumReleases
-    dat[[idx, "BC"]] <- rpt$BreakingReleases
+    dat[[idx, "TR"]] <- rpt$NumReleases
+    dat[[idx, "BR"]] <- rpt$BreakingReleases
     dat[[idx, "Score"]] <- rpt$StabilityScore
 
     idx <- idx + 1
@@ -130,7 +130,7 @@ report_stability <- function(pkgs, releases = NULL, months = NULL) {
 
     common::labels(dat) <- list(FV = "First Version", LV = "Last Version",
                                 FR = "First Release", LR = "Last Release",
-                                RC = "Release Count", BC = "Breaking Releases",
+                                TR = "Total Releases", BR = "Breaking Releases",
                                 Score = "Stability Score",
                                 Package = "Package Name")
 

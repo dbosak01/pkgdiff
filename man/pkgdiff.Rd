@@ -24,9 +24,6 @@ of the two package versions in the RStudio viewer.  This function
 is useful to see the differences at a very detailed level.
 to a vector.}
 }
-
-The \strong{pkgdiff} package builds upon \strong{packageDiff}
-by Cole Beck.
 }
 
 \seealso{

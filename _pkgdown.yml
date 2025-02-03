@@ -1,13 +1,5 @@
 url: https://pkgdiff.r-sassy.org
 
-articles:
-- title: Examples
-  navbar: ~
-  contents:
-  - pkgdiff-diff
-  - pkgdiff-stability
-  - pkgdiff-reports
-  - pkgdiff-faq
 
 reference:
 - title: Primary Functions
@@ -32,7 +24,7 @@ reference:
 navbar:
   type: inverse
   structure:
-    right: [home, intro, articles, reference, faq, news, github]
+    right: [home, intro, reference, faq, news, github]
     left: []
   components:
     faq:

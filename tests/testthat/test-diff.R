@@ -123,7 +123,7 @@ test_that("diff9: pkg_diff() with pkgInfo works.", {
  pth1 <- "https://cran.r-project.org/src/contrib/Archive/logr/logr_1.0.3.tar.gz"
  pth2 <- "https://cran.r-project.org/src/contrib/Archive/logr/logr_1.0.4.tar.gz"
 
- inf <- packageDiff::pkgInfo(pth2)
+ inf <- pkgInfo(pth2)
 
  df <- pkg_diff("logr", "1.0.3", inf)
 
@@ -134,7 +134,7 @@ test_that("diff9: pkg_diff() with pkgInfo works.", {
 
 
 
- inf <- packageDiff::pkgInfo(pth1)
+ inf <- pkgInfo(pth1)
 
  df <- pkg_diff("logr", inf, "1.0.4")
 

@@ -18,9 +18,6 @@
 #' to a vector.}
 #' }
 #'
-#' The \strong{pkgdiff} package builds upon \strong{packageDiff}
-#' by Cole Beck.
-#'
 #' @keywords internal
 #' @aliases pkgdiff-package
 #' @name pkgdiff
