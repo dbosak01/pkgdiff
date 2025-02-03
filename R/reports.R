@@ -12,7 +12,7 @@ report_breakages <- function(v1pkgs = "current", v2pkgs = "latest") {
 
   if (!is.data.frame(v1pkgs)) {
     if (v1pkgs == "current") {
-      v1pkgs <- get_installed_packages()
+      v1pkgs <- installed_packages()
     }
   }
 

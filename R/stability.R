@@ -53,18 +53,18 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #' stability of a package.  The stability score and other information returned
 #' by the function are based on data retrived from CRAN.  The function
 #' compares each version of a package and determines if any functions or
-#' function parameters have been removed. If a release removes functions or
-#' parameters contained in the previous release, it is flagged as a
-#' "breaking release".
+#' function parameters have been removed from the previous release.
+#' If a release removes functions or parameters contained in the previous release,
+#' it is flagged as a "breaking release" or "breaking change".
 #'
 #' The stability score is calculated as the percentage of non-breaking releases.
 #' For example, if a package has 10 releases, and one breaking release,
-#' the stability score will be 90.
+#' the stability score will be .9, or 90\%.
 #'
 #' The stability assessment is a categorization of the stability score. The
-#' assessment aim to provide a general evaluation of the package, whether it
-#' it stable or unstable.  The
-#' assessment has 5 categories, as follows:
+#' aim of the assessment is to provide a general evaluation of the package,
+#' whether it is stable or unstable.  The
+#' assessment has 5 categories:
 #' \itemize{
 #'   \item {\strong{Perfect}: Stability score of 100.  Package has never
 #'   had a breaking release in its entire history.
@@ -73,26 +73,20 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #'   has had a breaking release, but very rarely.
 #'   }
 #'   \item {\strong{Stable}: Stability score between 90 and 95.  The package
-#'   has had an occasional breaking release, but it is still rather rare.
+#'   has had some breaking releases, but it is still rather rare.
 #'   }
 #'   \item {\strong{Somewhat unstable}: Stability score between 80 and 90. The
-#'   package sometimes has a breaking release.
+#'   package sometimes has a breaking release, at a rate of about 1 in 5.
 #'   }
 #'   \item {\strong{Unstable}: Stability score below 80.  The package breaks
-#'   every 5th release or less.  This frequency of breaking releases
+#'   more frequently than every 5th release.  This frequency of breaking releases
 #'   is considered unstable.
 #'   }
 #' }
-#' The above stability score and stability assessment system is designed
-#' to promote package stability. The assessment is weighted heavily toward
+#' As can be seen above, the stability assessment is weighted heavily toward
 #' the high end.  This categorization is intentionally designed to encourage
 #' package stability, and discourage the number of breaking changes.
 #'
-#' Note that a "breaking release" does not currently factor in the number of
-#' functions deprecated. One deprecated function counts the same as 10 deprecated
-#' functions.  Current methodology also does not differentiate between removed
-#' functions and removed parameters.  Current methodology also does not factor in
-#' changed functions.
 #' @section Stability Data: Stability calculations are based on a
 #' data frame of stability information gathered from each package release.
 #' The data frame will contain one row for each release.  Each row will
@@ -124,6 +118,21 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #' }
 #' The above data will be included in the function print out.  It an also be
 #' accessed on the returned object.
+#' @section Disclaimers: Note that a "breaking release" does not currently factor
+#' in the number of
+#' functions deprecated. One deprecated function counts the same as 10 deprecated
+#' functions within a release.  Current methodology also does not differentiate
+#' between removed
+#' functions and removed parameters. They are both considered "breaking", and
+#' counted equally.
+#'
+#' Current methodology also does not factor in
+#' changed functions.  The reason is simply that it is much more difficult to
+#' identify whether or not a changed function is breaking.  That is to say,
+#' you may still have breaking changes that are not identified by the
+#' \strong{pkgdiff} package.
+#' @section Performance:  Performance of the \code{pkg_stability} function
+#' can vary greatly depending on the package selected.  The
 #' @param pkgname The name of the package.
 #' @param releases An integer indicating the number of releases to collect
 #' stability data for. For example, \code{releases = 10} will return stability

@@ -12,7 +12,7 @@ Authors@R: c(
 Description: Contains a set of functions to identify changes between
     versions of a package.  Specifically, the functions help 
     determine if there are breaking changes from one package version
-    to the next.  The functions also work with a vector of package names,
+    to the next.  The package also works with a vector of package names,
     so that you can identify changes for an entire repository.
 License: CC0
 Encoding: UTF-8

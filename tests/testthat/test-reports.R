@@ -2,19 +2,20 @@ dev <- FALSE
 
 test_that("reports1: report_breakages() works as expected.", {
 
-  pkgs <- c("common", "libr", "fmtr")
+  pkgs <- c("common", "knitr", "rvest")
+  vrs <- c("1.1.3", "1.39", "0.3.6")
 
   if (dev) {
 
     pkgs <- c("admiral", "common", "rvest")
 
     pth <- "C:\\Users\\dbosa\\AppData\\Local\\R\\win-library\\4.2"
-    lst1 <- get_installed_packages(pkgs,
+    lst1 <- installed_packages(pkgs,
                                  repos = pth)
 
   } else {
 
-    lst1 <- get_installed_packages(pkgs)
+    lst1 <- data.frame(Package = pkgs, Version = vrs)
   }
 
   lst2 <- get_latest_data(pkgs)[ , c("Package", "Version")]

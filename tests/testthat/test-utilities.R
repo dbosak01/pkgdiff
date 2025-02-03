@@ -61,10 +61,10 @@ test_that("utilities3: get_version() works as expected.", {
 
 })
 
-test_that("utilities4: get_installed_packages() works as expected.", {
+test_that("utilities4: installed_packages() works as expected.", {
 
 
-  res <- get_installed_packages()
+  res <- installed_packages()
 
   expect_equal(is.data.frame(res), TRUE)
 
@@ -73,7 +73,7 @@ test_that("utilities4: get_installed_packages() works as expected.", {
   expect_equal(ncol(res) == 2, TRUE)
 
   if (dev) {
-    res <- get_installed_packages(c("logr", "fmtr", "common", "reporter"))
+    res <- installed_packages(c("logr", "fmtr", "common", "reporter"))
 
     expect_equal(is.data.frame(res), TRUE)
 
@@ -83,7 +83,7 @@ test_that("utilities4: get_installed_packages() works as expected.", {
 
     pth <- "C:\\Users\\dbosa\\AppData\\Local\\R\\win-library\\4.2"
 
-    res <- get_installed_packages(c("logr", "fmtr", "common", "reporter"),
+    res <- installed_packages(c("logr", "fmtr", "common", "reporter"),
                                   repos = pth)
 
     expect_equal(is.data.frame(res), TRUE)

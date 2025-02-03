@@ -234,7 +234,7 @@ get_file_name <- function(pkgname, version) {
 #' @noRd
 get_current_version <- function(pkgname) {
 
-  dat <- get_installed_packages()
+  dat <- installed_packages()
 
   sdat <- subset(dat, dat$Package == pkgname, "Version")
 
@@ -256,7 +256,7 @@ get_current_version <- function(pkgname) {
 #' package and its version number.
 #' @examples
 #' # Get all packages in repo
-#' res <- get_installed_packages()
+#' res <- installed_packages()
 #'
 #' # View top 10 results
 #' res[1:12, ]
@@ -273,7 +273,7 @@ get_current_version <- function(pkgname) {
 #' # 10       bit64   4.0.5
 #' @import utils
 #' @export
-get_installed_packages <- function(pkgs = NULL, repos = NULL) {
+installed_packages <- function(pkgs = NULL, repos = NULL) {
 
   ip <- as.data.frame(utils::installed.packages(repos)[,c(1,3:4)])
   rownames(ip) <- NULL
