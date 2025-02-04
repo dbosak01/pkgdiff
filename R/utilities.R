@@ -76,6 +76,11 @@ get_latest_data <- function(pkgs,
         }
       }
 
+      print(pkg)
+      print(ver)
+      print(src)
+      print(as.Date(date))
+      print(sz)
       # Create data from from captured info
       rw <- data.frame(Package = pkg, Version = ver, FileName = src,
                        "Release" = as.Date(date), "Size" = sz)
