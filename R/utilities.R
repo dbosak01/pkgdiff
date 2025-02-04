@@ -516,13 +516,18 @@ get_all_infos <- function(pkg, versions = NULL) {
 
   ret <- NULL
 
+  print("Debug A")
   lVersion <- get_latest_version(pkg)
+
+  print("Debug B")
 
   if (is.null(versions)) {
 
     adat <- get_archive_versions(pkg)
     versions <- c(lVersion, adat$Version)
   }
+
+  print("Debug C")
 
   for (ver in versions) {
 
@@ -535,6 +540,8 @@ get_all_infos <- function(pkg, versions = NULL) {
       ret[[info$Version]] <- info
     }
   }
+
+  print("Debug D")
 
   return(ret)
 
