@@ -106,7 +106,7 @@ report_stability <- function(pkgs, releases = NULL, months = NULL) {
 
   dat <- data.frame("Package" = NA, FV = NA, LV = NA,
                     FR = NA, LR = NA,
-                    TR = NA, BR = NA, Score = NA)
+                    TR = NA, BR = NA, Score = NA, Assessment = NA)
 
   idx <- 1
 
@@ -117,11 +117,12 @@ report_stability <- function(pkgs, releases = NULL, months = NULL) {
     dat[[idx, "Package"]] <- pkg
     dat[[idx, "FV"]] <- rpt$FirstVersion
     dat[[idx, "LV"]] <- rpt$LastVersion
-    dat[[idx, "FR"]] <- as.Date(rpt$FirstRelease)
-    dat[[idx, "LR"]] <- as.Date(rpt$LastRelease)
+    dat[[idx, "FR"]] <- as.Date(rpt$FirstRelease, origin = '1970-01-01')
+    dat[[idx, "LR"]] <- as.Date(rpt$LastRelease, origin = '1970-01-01')
     dat[[idx, "TR"]] <- rpt$NumReleases
     dat[[idx, "BR"]] <- rpt$BreakingReleases
     dat[[idx, "Score"]] <- rpt$StabilityScore
+    dat[[idx, "Assessment"]] <- get_stability_assessment(rpt$StabilityScore)
 
     idx <- idx + 1
   }
@@ -132,10 +133,11 @@ report_stability <- function(pkgs, releases = NULL, months = NULL) {
                                 FR = "First Release", LR = "Last Release",
                                 TR = "Total Releases", BR = "Breaking Releases",
                                 Score = "Stability Score",
+                                Assessment = "Stability Assessment",
                                 Package = "Package Name")
 
-    dat$FR <- as.Date(dat$FR)
-    dat$LR <- as.Date(dat$LR)
+    dat$FR <- as.Date(dat$FR, origin = '1970-01-01')
+    dat$LR <- as.Date(dat$LR, origin = '1970-01-01')
   }
 
 

@@ -47,7 +47,7 @@ test_that("reports2: report_stability() works as expected.", {
 
   expect_equal(nrow(res) == 4, TRUE)
 
-  expect_equal(ncol(res) == 8, TRUE)
+  expect_equal(ncol(res) == 9, TRUE)
 
 
 })

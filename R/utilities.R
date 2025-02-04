@@ -86,7 +86,8 @@ get_latest_data <- function(pkgs,
       # print(sz)
       # Create data from from captured info
       rw <- data.frame(Package = pkg, Version = ver, FileName = src,
-                       "Release" = as.Date(date), "Size" = sz)
+                       "Release" = as.Date(date, origin = '1970-01-01'),
+                       "Size" = sz)
 
       if (is.null(ret)) {
         ret <- rw
@@ -166,7 +167,8 @@ get_archive_versions <- function(pkgs) {
       tmp <- subset(table1, table1$Name != "Parent Directory" & table1$Name != "")
 
       # Convert dates
-      tmp[["Last modified"]] <- as.Date(tmp[["Last modified"]])
+      tmp[["Last modified"]] <- as.Date(tmp[["Last modified"]],
+                                        origin = '1970-01-01')
 
       # Extract package version
       vers <- get_version(tmp$Name)
