@@ -47,11 +47,9 @@ get_latest_data <- function(pkgs,
       date <- subset(table1, table1$X1 == "Published:")[[2]]
 
       # Get package source
-      srcrow <- subset(table3, grepl("Package\\s+source:", table3$X1))
+      src <- subset(table3, grepl("Package\\s+source:", table3$X1))[[2]]
 
-      if (nrow(srcrow) > 0)
-        src <- srcrow[[2]]
-      else
+      if (length(src) == 0)
         src <- ""
 
       sz <- NA
