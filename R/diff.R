@@ -20,7 +20,7 @@ pkg_diff <- function(pkgname, v1 = "current",
   v1_diff_info <- NULL
   v2_diff_info <- NULL
 
-  print("Debug 1")
+  # print("Debug 1")
 
   if ("pkgInfo" %in% class(v1)) {
     v1_diff_info <- v1
@@ -29,7 +29,7 @@ pkg_diff <- function(pkgname, v1 = "current",
     v1 <- get_current_version(pkgname)
   }
 
-  print("Debug 2")
+  # print("Debug 2")
 
   # Collect data
   if ("pkgInfo" %in% class(v2)) {
@@ -37,7 +37,7 @@ pkg_diff <- function(pkgname, v1 = "current",
     v2 <- v2$Version
   }
 
-  print("Debug 3")
+  # print("Debug 3")
 
   v2data <- get_latest_data(pkgname)
   vLatest <- v2data$Version[[1]]
@@ -45,13 +45,13 @@ pkg_diff <- function(pkgname, v1 = "current",
   if (v2 == "latest") {
     v2 <- vLatest
   }
-  print("Debug 4")
+  # print("Debug 4")
 
   infos <- get_fastest_infos(pkgname, v1, v2)
   v1_diff_info <- infos[[v1]]
   v2_diff_info <- infos[[v2]]
 
-  print("Debug 5")
+  # print("Debug 5")
 
   if (is.null(v1_diff_info)) {
 
@@ -69,12 +69,12 @@ pkg_diff <- function(pkgname, v1 = "current",
     # Get deprecated functions
     depf <- get_removed_functions(v1_diff_info, v2_diff_info)
 
-    print("Debug 6")
+    # print("Debug 6")
 
     # Get deprecated parameters
     depp <- get_removed_parameters(v1_diff_info, v2_diff_info)
 
-    print("Debug 7")
+    # print("Debug 7")
 
     # Get breaking changes
     if (length(depf) > 0 || length(depp) > 0)
@@ -86,7 +86,7 @@ pkg_diff <- function(pkgname, v1 = "current",
     addp <- get_added_parameters(v1_diff_info, v2_diff_info)
     af <- get_all_functions(v1_diff_info, v2_diff_info)
 
-    print("Debug 8")
+    # print("Debug 8")
 
     # Populate pdiff object
     d$PackageName <- pkgname

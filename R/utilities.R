@@ -79,11 +79,11 @@ get_latest_data <- function(pkgs,
         }
       }
 
-      print(pkg)
-      print(ver)
-      print(src)
-      print(as.Date(date))
-      print(sz)
+      # print(pkg)
+      # print(ver)
+      # print(src)
+      # print(as.Date(date))
+      # print(sz)
       # Create data from from captured info
       rw <- data.frame(Package = pkg, Version = ver, FileName = src,
                        "Release" = as.Date(date), "Size" = sz)
@@ -524,10 +524,10 @@ get_all_infos <- function(pkg, versions = NULL) {
 
   ret <- NULL
 
-  print("Debug A")
+  # print("Debug A")
   lVersion <- get_latest_version(pkg)
 
-  print("Debug B")
+  # print("Debug B")
 
   if (is.null(versions)) {
 
@@ -535,7 +535,7 @@ get_all_infos <- function(pkg, versions = NULL) {
     versions <- c(lVersion, adat$Version)
   }
 
-  print("Debug C")
+  # print("Debug C")
 
   for (ver in versions) {
 
@@ -549,7 +549,7 @@ get_all_infos <- function(pkg, versions = NULL) {
     }
   }
 
-  print("Debug D")
+  # print("Debug D")
 
   return(ret)
 
