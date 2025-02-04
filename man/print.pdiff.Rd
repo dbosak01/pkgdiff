@@ -18,7 +18,6 @@ Print a Package Difference Object
 }
 \seealso{
 Other pdiff: 
-\code{\link{pkg_diff}()},
-\code{\link{view_details}()}
+\code{\link{pkg_diff}()}
 }
 \concept{pdiff}

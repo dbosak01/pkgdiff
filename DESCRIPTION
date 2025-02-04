@@ -25,8 +25,6 @@ Depends:
     R (>= 4.0.0)
 Imports: rvest,
          common,
-         diffr,
-         htmlwidgets,
          crayon,
          utils
 Suggests: 

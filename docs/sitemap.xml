@@ -12,6 +12,7 @@
 <url><loc>https://pkgdiff.r-sassy.org/reference/get_installed_packages.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/index.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/installed_packages.html</loc></url>
+<url><loc>https://pkgdiff.r-sassy.org/reference/lfwtr.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/pkgdiff.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/pkg_diff.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/pkg_stability.html</loc></url>
@@ -19,6 +20,10 @@
 <url><loc>https://pkgdiff.r-sassy.org/reference/print.pdiff_score.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/report_breakages.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/report_stability.html</loc></url>
+<url><loc>https://pkgdiff.r-sassy.org/reference/scanner.html</loc></url>
+<url><loc>https://pkgdiff.r-sassy.org/reference/setOrReplace.html</loc></url>
+<url><loc>https://pkgdiff.r-sassy.org/reference/sourcerer.html</loc></url>
+<url><loc>https://pkgdiff.r-sassy.org/reference/suppresser.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/view_details.html</loc></url>
 </urlset>
 

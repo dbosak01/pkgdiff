@@ -7,7 +7,6 @@ reference:
   contents:
   - pkg_diff
   - pkg_stability
-  - view_details
   - print.pdiff
   - print.pdiff_score
 - title: Reporting Functions

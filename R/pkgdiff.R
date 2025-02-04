@@ -12,9 +12,9 @@
 #'   \item {\code{\link{pkg_diff}}: Compares two package versions, and
 #'   returns an object that contains information about the differences.
 #'   Information returned from this function is relatively high level.}
-#'   \item {\code{\link{view_details}}: Shows a side-by-side comparison
-#'   of the two package versions in the RStudio viewer.  This function
-#'   is useful to see the differences at a very detailed level.
+#'   \item {\code{\link{pkg_stability}}: Compiles information on package
+#'   stability over time, and calculates a score based on this information.
+#'   This function is useful when making package selection choices.
 #' to a vector.}
 #' }
 #'

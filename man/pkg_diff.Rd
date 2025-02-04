@@ -20,7 +20,6 @@ Get a Package Difference Object
 }
 \seealso{
 Other pdiff: 
-\code{\link{print.pdiff}()},
-\code{\link{view_details}()}
+\code{\link{print.pdiff}()}
 }
 \concept{pdiff}

@@ -2,12 +2,9 @@ pandoc: '3.2'
 pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
-  pkgdiff-diff: pkgdiff-diff.html
   pkgdiff-faq: pkgdiff-faq.html
-  pkgdiff-reports: pkgdiff-reports.html
-  pkgdiff-stability: pkgdiff-stability.html
   pkgdiff: pkgdiff.html
-last_built: 2025-02-03T05:51Z
+last_built: 2025-02-04T15:37Z
 urls:
   reference: https://pkgdiff.r-sassy.org/reference
   article: https://pkgdiff.r-sassy.org/articles
