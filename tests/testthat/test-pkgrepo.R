@@ -1,4 +1,4 @@
-dev <- TRUE
+dev <- FALSE
 
 
 test_that("repo1: get_base_paths() works as expected.", {

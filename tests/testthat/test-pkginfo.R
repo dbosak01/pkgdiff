@@ -1,5 +1,5 @@
 base_path <- "c:/packages/pkgdiff/tests/testthat"
-base_path <- tempdir()
+base_path <- "."
 
 dev <- FALSE
 
