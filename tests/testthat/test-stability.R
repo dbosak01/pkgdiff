@@ -178,18 +178,18 @@ test_that("stability12: get_github_data() works as expected.", {
 })
 
 
-# test_that("stability13: get_info_data() works as expected.", {
-#
-#   infos <-  get_all_infos("procs")
-#
-#   res <- get_info_data("procs", infos)
-#
-#   expect_equal(is.null(res), FALSE)
-#   expect_equal(is.data.frame(res), TRUE)
-#   expect_equal(nrow(res) > 0, TRUE)
-#   expect_equal(ncol(res) == 11, TRUE)
-#
-# })
+test_that("stability13: get_info_data() works as expected.", {
+
+  infos <-  get_all_infos("procs")
+
+  res <- get_info_data("procs", infos)
+
+  expect_equal(is.null(res), FALSE)
+  expect_equal(is.data.frame(res), TRUE)
+  expect_equal(nrow(res) > 0, TRUE)
+  expect_equal(ncol(res) == 11, TRUE)
+
+})
 
 
 
