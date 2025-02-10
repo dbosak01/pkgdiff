@@ -72,89 +72,89 @@
 #' print(info)
 #' }
 #' @noRd
-print.pkgInfo <- function(x, doc = FALSE, src = FALSE, vignettes = FALSE, tests = FALSE, demo = FALSE, ...) {
-  defprint <- function(x, ...) paste(utils::capture.output(print(x, ...)), collapse = '\n')
-  fun0 <- x$ImportedFunctions
-  if(length(fun0)) {
-    f0out <- paste(fun0, collapse = '\n')
-  } else {
-    f0out <- NA
-  }
-  addlargs <- list(...)
-  if('width' %in% names(addlargs)) {
-    width <- getOption('width')
-    on.exit(options(width = width))
-    options(width = addlargs$width)
-  }
-  fun1 <- x$ExportedFunctions
-  fun2 <- setdiff(x$AllFunctions, fun1)
-  fun1args <- vapply(x$FormalArgs[fun1], paste, character(1), collapse = '|', USE.NAMES = FALSE)
-  fun2args <- vapply(x$FormalArgs[fun2], paste, character(1), collapse = '|', USE.NAMES = FALSE)
-  f1 <- data.frame(name = fun1, arguments = fun1args)
-  f2 <- data.frame(name = fun2, arguments = fun2args)
-  f1out <- defprint(f1, right = FALSE, row.names = FALSE)
-  f2out <- defprint(f2, right = FALSE, row.names = FALSE)
-  dat <- defprint(x$Data, row.names = FALSE)
-  out <- sprintf("Package: %s
-Version: %s
-Imports: %s
-Suggests: %s
-
-Imported Functions:
-%s
-
-Exported Functions:
-%s
-
-Non-Exported Functions:
-%s
-
-Data:
-%s
-", x$Package, x$Version, x$Imports, x$Suggests,
-                 f0out,
-                 f1out,
-                 f2out,
-                 dat
-  )
-  if(doc) {
-    xd <- unlist(x$documentation, use.names = FALSE)
-    xd <- paste(xd, collapse = '\n')
-    out <- paste(out, xd, sep = '\n')
-  }
-  if(src) {
-    xd <- unlist(x$source, use.names = FALSE)
-    if(length(xd) > 1L || !is.na(xd)) {
-      xd <- sprintf("##### %s #####\n%s", names(x$source), xd)
-    }
-    xd <- paste(c('Src directory:', xd, ''), collapse = '\n')
-    out <- paste(out, xd, sep = '\n')
-  }
-  if(vignettes) {
-    xd <- unlist(x$vignettes, use.names = FALSE)
-    if(length(xd) > 1L || !is.na(xd)) {
-      xd <- sprintf("##### %s #####\n%s", names(x$vignettes), xd)
-    }
-    xd <- paste(c('Vignettes directory:', xd, ''), collapse = '\n')
-    out <- paste(out, xd, sep = '\n')
-  }
-  if(tests) {
-    xd <- unlist(x$tests, use.names = FALSE)
-    if(length(xd) > 1L || !is.na(xd)) {
-      xd <- sprintf("##### %s #####\n%s", names(x$tests), xd)
-    }
-    xd <- paste(c('Tests directory:', xd, ''), collapse = '\n')
-    out <- paste(out, xd, sep = '\n')
-  }
-  if(demo) {
-    xd <- unlist(x$demo, use.names = FALSE)
-    if(length(xd) > 1L || !is.na(xd)) {
-      xd <- sprintf("##### %s #####\n%s", names(x$demo), xd)
-    }
-    xd <- paste(c('Demo directory:', xd, ''), collapse = '\n')
-    out <- paste(out, xd, sep = '\n')
-  }
-  cat(out)
-  invisible(x)
-}
+# print.pkgInfo <- function(x, doc = FALSE, src = FALSE, vignettes = FALSE, tests = FALSE, demo = FALSE, ...) {
+#   defprint <- function(x, ...) paste(utils::capture.output(print(x, ...)), collapse = '\n')
+#   fun0 <- x$ImportedFunctions
+#   if(length(fun0)) {
+#     f0out <- paste(fun0, collapse = '\n')
+#   } else {
+#     f0out <- NA
+#   }
+#   addlargs <- list(...)
+#   if('width' %in% names(addlargs)) {
+#     width <- getOption('width')
+#     on.exit(options(width = width))
+#     options(width = addlargs$width)
+#   }
+#   fun1 <- x$ExportedFunctions
+#   fun2 <- setdiff(x$AllFunctions, fun1)
+#   fun1args <- vapply(x$FormalArgs[fun1], paste, character(1), collapse = '|', USE.NAMES = FALSE)
+#   fun2args <- vapply(x$FormalArgs[fun2], paste, character(1), collapse = '|', USE.NAMES = FALSE)
+#   f1 <- data.frame(name = fun1, arguments = fun1args)
+#   f2 <- data.frame(name = fun2, arguments = fun2args)
+#   f1out <- defprint(f1, right = FALSE, row.names = FALSE)
+#   f2out <- defprint(f2, right = FALSE, row.names = FALSE)
+#   dat <- defprint(x$Data, row.names = FALSE)
+#   out <- sprintf("Package: %s
+# Version: %s
+# Imports: %s
+# Suggests: %s
+#
+# Imported Functions:
+# %s
+#
+# Exported Functions:
+# %s
+#
+# Non-Exported Functions:
+# %s
+#
+# Data:
+# %s
+# ", x$Package, x$Version, x$Imports, x$Suggests,
+#                  f0out,
+#                  f1out,
+#                  f2out,
+#                  dat
+#   )
+#   if(doc) {
+#     xd <- unlist(x$documentation, use.names = FALSE)
+#     xd <- paste(xd, collapse = '\n')
+#     out <- paste(out, xd, sep = '\n')
+#   }
+#   if(src) {
+#     xd <- unlist(x$source, use.names = FALSE)
+#     if(length(xd) > 1L || !is.na(xd)) {
+#       xd <- sprintf("##### %s #####\n%s", names(x$source), xd)
+#     }
+#     xd <- paste(c('Src directory:', xd, ''), collapse = '\n')
+#     out <- paste(out, xd, sep = '\n')
+#   }
+#   if(vignettes) {
+#     xd <- unlist(x$vignettes, use.names = FALSE)
+#     if(length(xd) > 1L || !is.na(xd)) {
+#       xd <- sprintf("##### %s #####\n%s", names(x$vignettes), xd)
+#     }
+#     xd <- paste(c('Vignettes directory:', xd, ''), collapse = '\n')
+#     out <- paste(out, xd, sep = '\n')
+#   }
+#   if(tests) {
+#     xd <- unlist(x$tests, use.names = FALSE)
+#     if(length(xd) > 1L || !is.na(xd)) {
+#       xd <- sprintf("##### %s #####\n%s", names(x$tests), xd)
+#     }
+#     xd <- paste(c('Tests directory:', xd, ''), collapse = '\n')
+#     out <- paste(out, xd, sep = '\n')
+#   }
+#   if(demo) {
+#     xd <- unlist(x$demo, use.names = FALSE)
+#     if(length(xd) > 1L || !is.na(xd)) {
+#       xd <- sprintf("##### %s #####\n%s", names(x$demo), xd)
+#     }
+#     xd <- paste(c('Demo directory:', xd, ''), collapse = '\n')
+#     out <- paste(out, xd, sep = '\n')
+#   }
+#   cat(out)
+#   invisible(x)
+# }
 

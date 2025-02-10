@@ -6,7 +6,7 @@ dev <- FALSE
 test_that("stability1: get_stability_data() basic functionality.", {
 
 
-  res <- get_stability_data("libr")
+  res <- get_stability_data("procs")
 
   expect_equal(is.data.frame(res), TRUE)
   expect_equal(nrow(res) > 0, TRUE)
@@ -70,7 +70,7 @@ test_that("stability5: get_stability_data() only one release.", {
 test_that("stability6: pkg_stability() basic functionality.", {
 
 
-  res <- pkg_stability("logr")
+  res <- pkg_stability("procs")
 
   res
 
@@ -85,7 +85,9 @@ test_that("stability7: pkg_stability() stressed functionality.", {
 
 
 
-  res <- pkg_stability("admiral")
+  res <- pkg_stability("admiral", releases = 5)
+
+  res
 
   expect_equal(res$StabilityScore < 1, TRUE)
 
@@ -176,18 +178,18 @@ test_that("stability12: get_github_data() works as expected.", {
 })
 
 
-test_that("stability13: get_info_data() works as expected.", {
-
-  infos <-  get_all_infos("procs")
-
-  res <- get_info_data("procs", infos)
-
-  expect_equal(is.null(res), FALSE)
-  expect_equal(is.data.frame(res), TRUE)
-  expect_equal(nrow(res) > 0, TRUE)
-  expect_equal(ncol(res) == 11, TRUE)
-
-})
+# test_that("stability13: get_info_data() works as expected.", {
+#
+#   infos <-  get_all_infos("procs")
+#
+#   res <- get_info_data("procs", infos)
+#
+#   expect_equal(is.null(res), FALSE)
+#   expect_equal(is.data.frame(res), TRUE)
+#   expect_equal(nrow(res) > 0, TRUE)
+#   expect_equal(ncol(res) == 11, TRUE)
+#
+# })
 
 
 

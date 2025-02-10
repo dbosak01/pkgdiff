@@ -44,30 +44,30 @@ test_that("diff3: pkg_diff() breaking changes.", {
 
 
 
-test_that("diff4: view_details() works.", {
-
-  if (dev) {
-
-    # Not many changes
-    res <- pkg_diff("logr", "1.3.7", "1.3.8")
-
-
-    view_details(res)
-
-    # Lot of changes
-    res <- pkg_diff("admiral", "1.1.0", "1.2.0")
-
-
-    view_details(res)
-
-    # No error is good
-    expect_equal(TRUE, TRUE)
-
-  } else {
-
-    expect_equal(TRUE, TRUE)
-  }
-})
+# test_that("diff4: view_details() works.", {
+#
+#   if (dev) {
+#
+#     # Not many changes
+#     res <- pkg_diff("logr", "1.3.7", "1.3.8")
+#
+#
+#     view_details(res)
+#
+#     # Lot of changes
+#     res <- pkg_diff("admiral", "1.1.0", "1.2.0")
+#
+#
+#     view_details(res)
+#
+#     # No error is good
+#     expect_equal(TRUE, TRUE)
+#
+#   } else {
+#
+#     expect_equal(TRUE, TRUE)
+#   }
+# })
 
 
 
@@ -120,10 +120,7 @@ test_that("diff8: pkg_diff() parameter checks.", {
 
 test_that("diff9: pkg_diff() with pkgInfo works.", {
 
- pth1 <- "https://cran.r-project.org/src/contrib/Archive/logr/logr_1.0.3.tar.gz"
- pth2 <- "https://cran.r-project.org/src/contrib/Archive/logr/logr_1.0.4.tar.gz"
-
- inf <- pkgInfo(pth2)
+ inf <- pkg_info("logr", "1.0.4")
 
  df <- pkg_diff("logr", "1.0.3", inf)
 
@@ -134,10 +131,11 @@ test_that("diff9: pkg_diff() with pkgInfo works.", {
 
 
 
- inf <- pkgInfo(pth1)
+ inf <- pkg_info("logr", "1.0.3")
 
  df <- pkg_diff("logr", inf, "1.0.4")
 
+ df
  expect_equal(is.null(df), FALSE)
  expect_equal("pdiff" %in% class(df), TRUE)
  expect_equal(df$Version1, "1.0.3")
@@ -146,25 +144,6 @@ test_that("diff9: pkg_diff() with pkgInfo works.", {
 
 })
 
-
-# test_that("diff6: pkg_diff() basic path functionality.", {
-#
-#
-#   v1 <- "https://cran.r-project.org/src/contrib/Archive/logr/logr_1.3.6.tar.gz"
-#   v2 <- "https://cran.r-project.org/src/contrib/Archive/logr/logr_1.3.7.tar.gz"
-#
-#   res <- pkg_diff("logr", v1, v2)
-#
-#
-#   expect_equal("pdiff" %in% class(res), TRUE)
-#   expect_equal(res$PackageName, "logr")
-#   expect_equal(res$Version1, "1.3.7")
-#   expect_equal(res$Version2, "1.3.8")
-#   expect_equal(nchar(res$Version1Path) > 0, TRUE)
-#   expect_equal(nchar(res$Version2Path) > 0, TRUE)
-#
-#
-# })
 
 
 

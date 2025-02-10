@@ -22,17 +22,21 @@ pkg_diff <- function(pkgname, v1 = "current",
 
   # print("Debug 1")
 
-  if ("pkgInfo" %in% class(v1)) {
+  if ("pinfo" %in% class(v1)) {
     v1_diff_info <- v1
     v1 <- v1$Version
   } else if (v1 == "current") {
     v1 <- get_current_version(pkgname)
+
+    if (length(v1) == 0) {
+      stop(paste0("There is no current version of the package '", pkgname, "'."))
+    }
   }
 
   # print("Debug 2")
 
   # Collect data
-  if ("pkgInfo" %in% class(v2)) {
+  if ("pinfo" %in% class(v2)) {
     v2_diff_info <- v2
     v2 <- v2$Version
   }
@@ -46,6 +50,17 @@ pkg_diff <- function(pkgname, v1 = "current",
     v2 <- vLatest
   }
   # print("Debug 4")
+
+  # Check that versions exist
+  avers <- get_all_versions(pkgname)
+
+  if (!v1 %in% avers$Version) {
+    stop("Version '", v1, "' of package '", pkgname, "' does not exist on CRAN.")
+  }
+
+  if (!v2 %in% avers$Version) {
+    stop("Version '", v2, "' of package '", pkgname, "' does not exist on CRAN.")
+  }
 
   infos <- get_fastest_infos(pkgname, v1, v2)
   v1_diff_info <- infos[[v1]]

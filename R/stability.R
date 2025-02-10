@@ -143,20 +143,19 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #' stability data for the previous 2 years.  Default is NULL, meaning there is
 #' no limitation on the number of release months, and the function will collect
 #' data from all releases.
-#' @param source The location to retrieve stability data.  Valid choices are
-#' "github", or "cran".  The default is "github".
 #' @returns An stability score object of class "pdiff_score".  The object
 #' contains the stability score, plus other useful information such as
 #' the release and version ranges, the number of releases, and number of
 #' breaking releases.
 #' @family stability
 #' @export
-pkg_stability <- function(pkgname, releases = NULL, months = NULL, source = "github") {
+pkg_stability <- function(pkgname, releases = NULL, months = NULL) {
 
 
   d <- structure(list(), class = c("pdiff_score", "list"))
 
-  if (tolower(source) == "cran")
+  pk <- github_packages(pkgname)
+  if (is.na(pk))
     dat <- get_cran_data(pkgname, releases, months)
   else if (tolower(source) == "github")
     dat <- get_github_data(pkgname, releases, months)
@@ -365,14 +364,14 @@ get_cran_data <- function(pkgname, releases = NULL, months = NULL) {
 
     dat <- ldat
 
-    inf <- get_latest_info(pkgname)
+    inf <- pkg_info(pkgname, "latest")
 
-    dat$AF <- length(inf$ExportedFunctions)
-    dat$AP <- length(inf$ExportedFunctions)
+    dat$AF <- length(inf$Functions)
+    dat$AP <- length(inf$Functions)
     dat$RF <- 0
     dat$RP <- 0
     dat$BC <- 0
-    dat$TF <- length(inf$ExportedFunctions)
+    dat$TF <- length(inf$Functions)
 
   } else {
 
@@ -461,13 +460,13 @@ get_cran_data <- function(pkgname, releases = NULL, months = NULL) {
 
         v1 <- dat[[idx, "Version"]]
 
-        inf <- get_archive_info(pkgname, v1)
-        dat[[idx, "AF"]] <- length(inf$ExportedFunctions)
+        inf <- get_info_cran(pkgname, v1)
+        dat[[idx, "AF"]] <- length(inf$Functions)
         dat[[idx, "AP"]] <- length(get_all_parameters(inf))
         dat[[idx, "RF"]] <- 0
         dat[[idx, "RP"]] <- 0
         dat[[idx, "BC"]] <- 0
-        dat[[idx, "TF"]] <- length(inf$ExportedFunctions)
+        dat[[idx, "TF"]] <- length(inf$Functions)
 
       }
     }
@@ -488,127 +487,127 @@ get_cran_data <- function(pkgname, releases = NULL, months = NULL) {
 
 
 # Assume versions are in proper order.
-#' @import common
-#' @noRd
-get_info_data <- function(pkgname, pkginfos) {
-
-  # browser()
-
-  # Get table data for all versions
-  dat <- get_all_versions(pkgname)
-
-  # Extract desired versions
-  versions <- names(pkginfos)
-
-  # Subset table for desired versions
-  dat <- subset(dat, dat$Version %in% versions)
-
-  if (length(versions) == 1) {
-
-    inf <- pkginfos[[versions]]
-
-    dat$AF <- length(inf$ExportedFunctions)
-    dat$AP <- length(inf$ExportedFunctions)
-    dat$RF <- 0
-    dat$RP <- 0
-    dat$BC <- 0
-    dat$TF <- length(inf$ExportedFunctions)
-
-  } else {
-
-    # browser()
-
-    idxs <- seq(1, length(versions) - 1)
-
-
-    for (idx in idxs) {
-
-      v2info <- pkginfos[[idx]]
-      v1info <- pkginfos[[idx + 1]]
-
-      v2 <- v2info$Version
-      v1 <- v1info$Version
-
-      cat(paste0("Comparing ", pkgname, " ", v1, "/", v2, "\n"))
-
-      diff <- tryCatch({
-        pkg_diff(pkgname, v1info, v2info)
-      }, error = function(e) {
-        NULL
-      })
-
-
-      if (!is.null(diff)) {
-
-        if (is.null(diff$AddedFunctions))
-          dat[idx, "AF"] <- 0
-        else
-          dat[idx, "AF"] <- length(diff$AddedFunctions)
-
-        if (is.null(diff$AddedParameters))
-          dat[idx, "AP"] <- 0
-        else
-          dat[idx, "AP"] <- length(diff$AddedParameters)
-
-        if (is.null(diff$RemovedFunctions))
-          dat[idx, "RF"] <- 0
-        else
-          dat[idx, "RF"] <- length(diff$RemovedFunctions)
-
-        if (is.null(diff$RemovedParameters))
-          dat[idx, "RP"] <- 0
-        else
-          dat[idx, "RP"] <- length(diff$RemovedParameters)
-
-        if (dat[idx, "RF"] > 0 | dat[idx, "RP"] > 0)
-          dat[idx, "BC"] <- 1
-        else
-          dat[idx, "BC"] <- 0
-
-        if (is.null(diff$AllFunctions))
-          dat[idx, "TF"] <- 0
-        else
-          dat[idx, "TF"] <- length(diff$AllFunctions)
-
-
-      }
-
-    }
-
-  }
-
-  # Deal with first release
-  if (nrow(dat) > 0) {
-
-    idx <- nrow(dat)
-    if (is.na(dat[[idx, "TF"]])) {
-      if (!is.na(dat[[idx, "Version"]])) {
-
-        v1 <- dat[[idx, "Version"]]
-
-        inf <- pkginfos[[v1]]
-        dat[[idx, "AF"]] <- length(inf$ExportedFunctions)
-        dat[[idx, "AP"]] <- length(get_all_parameters(inf))
-        dat[[idx, "RF"]] <- 0
-        dat[[idx, "RP"]] <- 0
-        dat[[idx, "BC"]] <- 0
-        dat[[idx, "TF"]] <- length(inf$ExportedFunctions)
-
-      }
-    }
-  }
-
-  # Add labels
-  common::labels(dat) <- list(AF = "Added Functions",
-                              AP = "Added Parameters",
-                              RF = "Removed Functions",
-                              RP = "Removed Parameters",
-                              BC = "Breaking Changes",
-                              TC = "Total Functions")
-
-  return(dat)
-
-}
+# @import common
+# @noRd
+# get_info_data <- function(pkgname, pkginfos) {
+#
+#   # browser()
+#
+#   # Get table data for all versions
+#   dat <- get_all_versions(pkgname)
+#
+#   # Extract desired versions
+#   versions <- names(pkginfos)
+#
+#   # Subset table for desired versions
+#   dat <- subset(dat, dat$Version %in% versions)
+#
+#   if (length(versions) == 1) {
+#
+#     inf <- pkginfos[[versions]]
+#
+#     dat$AF <- length(inf$Functions)
+#     dat$AP <- length(inf$Functions)
+#     dat$RF <- 0
+#     dat$RP <- 0
+#     dat$BC <- 0
+#     dat$TF <- length(inf$Functions)
+#
+#   } else {
+#
+#     # browser()
+#
+#     idxs <- seq(1, length(versions) - 1)
+#
+#
+#     for (idx in idxs) {
+#
+#       v2info <- pkginfos[[idx]]
+#       v1info <- pkginfos[[idx + 1]]
+#
+#       v2 <- v2info$Version
+#       v1 <- v1info$Version
+#
+#       cat(paste0("Comparing ", pkgname, " ", v1, "/", v2, "\n"))
+#
+#       diff <- tryCatch({
+#         pkg_diff(pkgname, v1info, v2info)
+#       }, error = function(e) {
+#         NULL
+#       })
+#
+#
+#       if (!is.null(diff)) {
+#
+#         if (is.null(diff$AddedFunctions))
+#           dat[idx, "AF"] <- 0
+#         else
+#           dat[idx, "AF"] <- length(diff$AddedFunctions)
+#
+#         if (is.null(diff$AddedParameters))
+#           dat[idx, "AP"] <- 0
+#         else
+#           dat[idx, "AP"] <- length(diff$AddedParameters)
+#
+#         if (is.null(diff$RemovedFunctions))
+#           dat[idx, "RF"] <- 0
+#         else
+#           dat[idx, "RF"] <- length(diff$RemovedFunctions)
+#
+#         if (is.null(diff$RemovedParameters))
+#           dat[idx, "RP"] <- 0
+#         else
+#           dat[idx, "RP"] <- length(diff$RemovedParameters)
+#
+#         if (dat[idx, "RF"] > 0 | dat[idx, "RP"] > 0)
+#           dat[idx, "BC"] <- 1
+#         else
+#           dat[idx, "BC"] <- 0
+#
+#         if (is.null(diff$AllFunctions))
+#           dat[idx, "TF"] <- 0
+#         else
+#           dat[idx, "TF"] <- length(diff$AllFunctions)
+#
+#
+#       }
+#
+#     }
+#
+#   }
+#
+#   # Deal with first release
+#   if (nrow(dat) > 0) {
+#
+#     idx <- nrow(dat)
+#     if (is.na(dat[[idx, "TF"]])) {
+#       if (!is.na(dat[[idx, "Version"]])) {
+#
+#         v1 <- dat[[idx, "Version"]]
+#
+#         inf <- pkginfos[[v1]]
+#         dat[[idx, "AF"]] <- length(inf$ExportedFunctions)
+#         dat[[idx, "AP"]] <- length(get_all_parameters(inf))
+#         dat[[idx, "RF"]] <- 0
+#         dat[[idx, "RP"]] <- 0
+#         dat[[idx, "BC"]] <- 0
+#         dat[[idx, "TF"]] <- length(inf$ExportedFunctions)
+#
+#       }
+#     }
+#   }
+#
+#   # Add labels
+#   common::labels(dat) <- list(AF = "Added Functions",
+#                               AP = "Added Parameters",
+#                               RF = "Removed Functions",
+#                               RP = "Removed Parameters",
+#                               BC = "Breaking Changes",
+#                               TC = "Total Functions")
+#
+#   return(dat)
+#
+# }
 
 
 # Utilities ---------------------------------------------------------------

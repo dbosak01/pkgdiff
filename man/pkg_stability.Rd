@@ -4,7 +4,7 @@
 \alias{pkg_stability}
 \title{Calculate Stability Score for a Package}
 \usage{
-pkg_stability(pkgname, releases = NULL, months = NULL, source = "github")
+pkg_stability(pkgname, releases = NULL, months = NULL)
 }
 \arguments{
 \item{pkgname}{The name of the package.}
@@ -19,9 +19,6 @@ stability data for.  For example, \code{months = 24} will collect
 stability data for the previous 2 years.  Default is NULL, meaning there is
 no limitation on the number of release months, and the function will collect
 data from all releases.}
-
-\item{source}{The location to retrieve stability data.  Valid choices are
-"github", or "cran".  The default is "github".}
 }
 \value{
 An stability score object of class "pdiff_score".  The object

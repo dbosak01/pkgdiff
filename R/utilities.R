@@ -9,9 +9,94 @@
 #' @import utils
 #' @noRd
 get_latest_data <- function(pkgs,
+                                 skip_size = FALSE) {
+
+
+
+  if (is.null(pkgs)) {
+    stop("pkgs parameter cannot be NULL.")
+  }
+
+  ret <- NULL
+
+  lst <- e$AvailablePackages[e$AvailablePackages$Package %in% pkgs, ]
+
+  for(pkg in pkgs) {
+
+    lrw <- lst[lst$Package == pkg, ]
+
+
+    if (nrow(lrw) == 0) {
+
+      message(paste0("Package data for '", pkg, "' not found."))
+    } else {
+
+      # Get package version
+      ver <- lrw$Version
+
+      # Convert dates
+      date <- lrw$Release
+
+      # Get package source
+      src <- get_file_name(pkg, ver)
+
+      sz <- NA
+      if (skip_size == FALSE) {
+
+        # Get temp file name
+        flnm <- tempfile()
+
+        currentpath = e$CranCurrentPath
+
+        # Get path to package
+        url <- file.path(currentpath, src)
+
+        # Download from CRAN
+        rc <- tryCatch({utils::download.file(url, flnm, quiet = TRUE)},
+                       error = function(e){1})
+
+        # Get size
+
+        if (rc == 0) {
+          sz <- format(structure(file.size(flnm), class = "object_size"),
+                       units = "auto")
+          sz <- sub(" Kb", "K", sz, fixed = TRUE)
+          sz <- sub(" Mb", "M", sz, fixed = TRUE)
+          sz <- sub(" Gb", "G", sz, fixed = TRUE)
+          unlink(flnm)
+        }
+      }
+
+      # print(pkg)
+      # print(ver)
+      # print(src)
+      # print(as.Date(date))
+      # print(sz)
+      # Create data from from captured info
+      rw <- data.frame(Package = pkg, Version = ver, FileName = src,
+                       "Release" = as.Date(date, origin = '1970-01-01'),
+                       "Size" = sz)
+
+      if (is.null(ret)) {
+        ret <- rw
+      } else {
+        ret <- rbind(ret, rw)
+      }
+
+    }
+  }
+
+  return(ret)
+}
+
+
+#' @import rvest
+#' @import utils
+#' @noRd
+get_latest_data_back <- function(pkgs,
                             skip_size = FALSE) {
 
-  baseurl = "https://cran.r-project.org/web/packages"
+  baseurl = e$CranPackagePath
 
   if (is.null(pkgs)) {
     stop("pkgs parameter cannot be NULL.")
@@ -50,7 +135,7 @@ get_latest_data <- function(pkgs,
       src <- subset(table3, grepl("Package\\s+source:", table3$X1))[[2]]
 
       if (length(src) == 0)
-        src <- ""
+        src <- get_file_name(pkg, ver)
 
       sz <- NA
       if (skip_size == FALSE) {
@@ -58,7 +143,7 @@ get_latest_data <- function(pkgs,
         # Get temp file name
         flnm <- tempfile()
 
-        currentpath = "https://cran.r-project.org/src/contrib/"
+        currentpath = e$CranArchivePath
 
         # Get path to package
         url <- file.path(currentpath, src)
@@ -106,12 +191,14 @@ get_latest_version <- function(pkgs) {
 
   ret <- c()
 
+  lst <- e$AvailablePackages[e$AvailablePackages$Package %in% pkgs, ]
+
   pos <- 1
   for (pkg in pkgs) {
 
-    dat <- get_latest_data(pkg, skip_size = TRUE)
+    dat <- lst[lst$Package == pkg, "Version"]
 
-    ret[pos] <- dat$Version[1]
+    ret[pos] <- dat
 
     pos <- pos + 1
   }
@@ -127,6 +214,7 @@ get_latest_version <- function(pkgs) {
 #' @noRd
 get_archive_versions <- function(pkgs) {
 
+  x <- "https://cran.rstudio.com/src/contrib/Archive/fmtr"
   baseurl = "https://cran.r-project.org/src/contrib/Archive"
 
   if (is.null(pkgs)) {
@@ -282,7 +370,7 @@ get_current_version <- function(pkgname) {
 #' # 9          bit   4.0.5
 #' # 10       bit64   4.0.5
 #' @import utils
-#' @export
+#' @noRd
 installed_packages <- function(pkgs = NULL, repos = NULL) {
 
   ip <- as.data.frame(utils::installed.packages(repos)[,c(1,3:4)])
@@ -309,10 +397,10 @@ get_removed_functions <- function(v1info, v2info) {
 
   ret <- c()
 
-  idx <- v1info$ExportedFunctions %in% v2info$ExportedFunctions
+  idx <- names(v1info$Functions) %in% names(v2info$Functions)
 
   if (any(idx == FALSE)) {
-    ret <- v1info$ExportedFunctions[!idx]
+    ret <- names(v1info$Functions)[!idx]
   }
 
   return(ret)
@@ -323,10 +411,10 @@ get_added_functions <- function(v1info, v2info) {
 
   ret <- c()
 
-  idx <- !v2info$ExportedFunctions %in% v1info$ExportedFunctions
+  idx <- !names(v2info$Functions) %in% names(v1info$Functions)
 
   if (any(idx == TRUE)) {
-    ret <- v2info$ExportedFunctions[idx]
+    ret <- names(v2info$Functions)[idx]
   }
 
   return(ret)
@@ -339,27 +427,31 @@ get_removed_parameters <- function(v1info, v2info) {
 
   ret <- c()
 
-  args1 <- v1info$FormalArgs
-  args2 <- v2info$FormalArgs
+  args1 <- v1info$Functions
+  args2 <- v2info$Functions
 
   # Get function names
   nms <- names(args1)
 
-  # Filter out non-exported names
-  nms <- nms[nms %in% v1info$ExportedFunctions]
-
   # Filter out deprecated functions
-  nms <- nms[nms %in% v2info$ExportedFunctions]
+  nms <- nms[nms %in% names(args2)]
 
   ret <- list()
 
   for (nm in nms) {
 
+    # Get args for both versions
     f1 <- args1[[nm]]
     f2 <- args2[[nm]]
 
+    # Strip out empty string
+    f1 <- f1[nchar(f1) > 0]
+    f2 <- f2[nchar(f2) > 0]
+
+    # Look for removed functions
     dp <- f1[!f1 %in% f2]
 
+    # if there are any, add to list
     if (length(dp) > 0) {
 
       ret[[nm]] <- dp
@@ -380,17 +472,14 @@ get_added_parameters <- function(v1info, v2info) {
 
   ret <- c()
 
-  args1 <- v1info$FormalArgs
-  args2 <- v2info$FormalArgs
+  args1 <- v1info$Functions
+  args2 <- v2info$Functions
 
   # Get function names
   nms <- names(args1)
 
-  # Filter out non-exported names
-  nms <- nms[nms %in% v1info$ExportedFunctions]
-
   # Filter out deprecated functions
-  nms <- nms[nms %in% v2info$ExportedFunctions]
+  nms <- nms[nms %in% names(args2)]
 
   ret <- list()
 
@@ -420,15 +509,45 @@ get_all_functions <- function(v1info, v2info) {
   ret <- c()
 
   if (!is.null(v2info)) {
-    ret <- v2info$ExportedFunctions
+    ret <- names(v2info$Functions)
   }
   return(ret)
 }
 
+#' @noRd
+get_all_parameters <- function(info) {
+
+  ret <- list()
+
+  ret <- c()
+
+  args1 <- info$Functions
+
+  # Get function names
+  nms <- names(args1)
+
+  ret <- list()
+
+  for (nm in nms) {
+
+    dp <- args1[[nm]]
+
+    # Remove empty string
+    # dp <- dp[nchar(dp) > 0]
+
+    if (length(dp) > 0) {
+
+      ret[[nm]] <- dp
+    }
+  }
+
+
+  return(ret)
+}
 
 
 #' @noRd
-get_all_parameters <- function(info) {
+get_all_parameters_back <- function(info) {
 
   ret <- list()
 
@@ -480,47 +599,8 @@ get_parameter_count <- function(info) {
 
 # Retrieving Infos --------------------------------------------------------
 
-#' @noRd
-get_latest_info <- function(pkgname) {
 
-
-  currentpath = "https://cran.r-project.org/src/contrib/"
-
-  v2data <- get_latest_data(pkgname)
-  vLatest <- v2data$Version[[1]]
-
-
-  # Get path to v2 package
-  pth <- file.path(currentpath, get_file_name(pkgname, vLatest))
-
-
-
-  ret <- tryCatch({suppressWarnings(pkgInfo(pth))},
-                  error = function(e){NULL})
-
-
-
-  return(ret)
-}
-
-
-get_archive_info <- function(pkgname, version) {
-
-  archivepath = "https://cran.r-project.org/src/contrib/Archive"
-
-  pth <- file.path(archivepath, pkgname, get_file_name(pkgname, version))
-
-
-  ret <- tryCatch({suppressWarnings(pkgInfo(pth))},
-                  error = function(e){NULL})
-
-
-
-  return(ret)
-
-}
-
-
+# Fix
 #' @noRd
 get_all_infos <- function(pkg, versions = NULL) {
 
@@ -541,13 +621,10 @@ get_all_infos <- function(pkg, versions = NULL) {
 
   for (ver in versions) {
 
-    if (ver == lVersion)
-      info <- get_latest_info(pkg)
-    else
-      info <- get_archive_info(pkg, ver)
+      info <- get_info_cran(pkg, ver)
 
     if (!is.null(info)) {
-      ret[[info$Version]] <- info
+      ret[[ver]] <- info
     }
   }
 
@@ -557,26 +634,27 @@ get_all_infos <- function(pkg, versions = NULL) {
 
 }
 
-#' @noRd
-get_fastest_info <- function(pkgname, version) {
+# @noRd
+# get_fastest_info <- function(pkgname, version) {
+#
+#   ret <- NULL
+#
+#   if (!is.na(github_packages(pkgname))) {
+#
+#     info <- github_package(pkgname)
+#     ret <- info$infos[[version]]
+#
+#   }
+#
+#   if (is.null(ret)) {
+#
+#     ret <- get_all_infos(pkgname, version)[[1]]
+#   }
+#
+#   return(ret)
+# }
 
-  ret <- NULL
-
-  if (!is.na(github_packages(pkgname))) {
-
-    info <- github_package(pkgname)
-    ret <- info$infos[[version]]
-
-  }
-
-  if (is.null(ret)) {
-
-    ret <- get_all_infos(pkgname, version)[[1]]
-  }
-
-  return(ret)
-}
-
+# Special case needed for two infos
 #' @noRd
 get_fastest_infos <- function(pkgname, v1, v2) {
 
@@ -597,12 +675,12 @@ get_fastest_infos <- function(pkgname, v1, v2) {
 
   if (is.null(inf1)) {
 
-    inf1 <- get_all_infos(pkgname, v1)[[1]]
+    inf1 <- get_info_cran(pkgname, v1)
   }
 
   if (is.null(inf2)) {
 
-    inf2 <- get_all_infos(pkgname, v2)[[1]]
+    inf2 <- get_info_cran(pkgname, v2)
   }
 
   ret[[v1]] <- inf1
@@ -639,7 +717,7 @@ github_package <- function(pkg) {
   # https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/data/procs.Rdata
   # https://github.com/dbosak01/pkgdiffdata/blob/main/data/procs.Rdata
   # pth <- "https://github.com/dbosak01/pkgdiffdata/blob/main/data"
-  pth <- "https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/data"
+  pth <- e$GithubPath
 
 
   fl <- file.path(pth, paste0(pkg, ".RData"))
@@ -662,4 +740,80 @@ github_versions <- function(pkg) {
 
 
 }
+
+
+# Global Lists ------------------------------------------------------------
+
+
+#' @noRd
+available_packages <- function() {
+
+  # Get available packages
+  flds1 <- c("Package", "Repository")
+  apkgs <- as.data.frame(available.packages())[ , flds1]
+
+  flds2 <- c("Package", "Version", "Date/Publication", "Maintainer",
+             "Description", "Title", "Depends", "LinkingTo", "Suggests",
+             "Enhances", "License")
+
+  # Get CRAN packages
+  dpkgs <- tools::CRAN_package_db()[ , flds2]
+
+  # Remove duplicates
+  dpkgs <- dpkgs[!duplicated(dpkgs$Package, fromLast = TRUE), ]
+
+  # Merge to add repository
+  ret <- merge(dpkgs, apkgs, by.x = c("Package"),
+               by.y = c("Package"))
+
+  # Format date
+  ret$ReleaseDate <- as.Date(ret$`Date/Publication`)
+
+  return(ret)
+}
+
+
+#' @noRd
+#' @import cranlogs
+is_popular <- function(pkg) {
+
+  dld <- sum(cranlogs::cran_downloads(pkg,
+                                      when = "last-month")[["count"]])
+
+  if (dld > 350)
+    ret <- TRUE
+  else
+    ret <- FALSE
+
+  return(ret)
+}
+
+
+# Other -------------------------------------------------------------------
+
+
+
+#' Extract R Package
+#' Untar an R package into a temp directory.
+#' @param x The compressed (tar.gz) build file of an R package, either local or
+#' URL.
+#' @return List of files extracted.
+#' @import utils
+#' @noRd
+unzip_package <- function(pth) {
+  td <- tempdir()
+  if(grepl('^https?:', pth)) {
+    url <- pth
+    pth <- file.path(td, basename(pth))
+    utils::download.file(url, destfile = pth, quiet = TRUE)
+  }
+  nm <- sub('\\.tar\\.gz', '', basename(pth))
+  dir <- file.path(td, nm)
+  utils::untar(pth, exdir = dir)
+  ret <-  list.files(dir, full.names = TRUE)
+
+  return(ret)
+}
+
+
 

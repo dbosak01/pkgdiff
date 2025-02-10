@@ -1,7 +1,7 @@
 Package: pkgdiff
 Type: Package
 Title: Identifies Package Changes
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
     person(
       "David", "Bosak",
@@ -26,7 +26,8 @@ Depends:
 Imports: rvest,
          common,
          crayon,
-         utils
+         utils,
+         cranlogs
 Suggests: 
     knitr,
     rmarkdown,

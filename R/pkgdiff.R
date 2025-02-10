@@ -24,5 +24,47 @@
 "_PACKAGE"
 
 
+# Globals -----------------------------------------------------------------
 
 
+e <- new.env(parent = emptyenv())
+e$LoadDate <- Sys.Date()
+e$GithubPath <- "https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/data"
+
+e$RStudioPath <- "https://cran.rstudio.com/src/contrib"
+e$CranArchivePath <- "https://cran.r-project.org/src/contrib/Archive"
+e$CranCurrentPath <- "https://cran.r-project.org/src/contrib/"
+e$CranPackagePath <- "https://cran.r-project.org/web/packages"
+e$AvailablePackages <- NULL
+e$SavedPackages <- NULL
+
+.onAttach <- function(...) {
+
+
+  refresh_package_lists()
+
+}
+
+
+# Utility -----------------------------------------------------------------
+
+
+
+#' @noRd
+refresh_package_lists <- function(force = FALSE) {
+
+  ret <- FALSE
+
+  ts <- Sys.Date() - e$LoadDate
+  if (is.null(e$AvailablePackages) ||
+      is.null(e$SavedPackages) || ts > 1 || force == TRUE) {
+
+    e$AvailablePackages <- available_packages()
+
+    e$SavedPackages <- github_packages()
+
+    ret <- TRUE
+  }
+
+  return(ret)
+}

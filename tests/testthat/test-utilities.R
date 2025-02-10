@@ -5,6 +5,8 @@ test_that("utilities1: get_archive_versions() works as expected.", {
 
   res <- get_archive_versions("fmtr")
 
+  res
+
   expect_equal(is.data.frame(res), TRUE)
 
   expect_equal(nrow(res) > 0, TRUE)
@@ -17,6 +19,8 @@ test_that("utilities1: get_archive_versions() works as expected.", {
   if (dev) {
 
     res <- get_archive_versions(c("fmtr", "common", "rvest"))
+
+    res
 
     expect_equal(is.data.frame(res), TRUE)
 
@@ -44,6 +48,13 @@ test_that("utilities2: get_latest_version() works as expected.", {
 
   expect_equal(length(res) == 3, TRUE)
 
+  res <- get_latest_version("Matrix")
+
+  expect_equal(is.data.frame(res), FALSE)
+
+  expect_equal(is.list(res), FALSE)
+
+  expect_equal(length(res) == 1, TRUE)
 
 })
 
@@ -151,12 +162,9 @@ test_that("utilities8: get_removed_functions() works as expected.", {
 
   if (dev) {
 
-    a1 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_0.12.3.tar.gz"
-    a2 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_1.0.0.tar.gz"
-
     # Lot of changes
-    info1 <- suppressWarnings(pkgInfo(a1))
-    info2 <- suppressWarnings(pkgInfo(a2))
+    info1 <- pkg_info("admiral", "0.12.3")
+    info2 <- pkg_info("admiral", "1.0.0")
 
     res <- get_removed_functions(info1, info2)
 
@@ -176,12 +184,9 @@ test_that("utilities9: get_removed_parameters() works as expected.", {
 
   if (dev) {
 
-    a1 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_0.12.3.tar.gz"
-    a2 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_1.0.0.tar.gz"
-
     # Lot of changes
-    info1 <- suppressWarnings(pkgInfo(a1))
-    info2 <- suppressWarnings(pkgInfo(a2))
+    info1 <- pkg_info("admiral", "0.12.3")
+    info2 <- pkg_info("admiral", "1.0.0")
 
     res <- get_removed_parameters(info1, info2)
 
@@ -199,12 +204,9 @@ test_that("utilities10: get_added_functions() works as expected.", {
 
   if (dev) {
 
-    a1 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_0.12.3.tar.gz"
-    a2 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_1.0.0.tar.gz"
-
     # Lot of changes
-    info1 <- suppressWarnings(pkgInfo(a1))
-    info2 <- suppressWarnings(pkgInfo(a2))
+    info1 <- pkg_info("admiral", "0.12.3")
+    info2 <- pkg_info("admiral", "1.0.0")
 
     res <- get_added_functions(info1, info2)
 
@@ -222,12 +224,9 @@ test_that("utilities11: get_added_parameters() works as expected.", {
 
   if (dev) {
 
-    a1 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_0.12.3.tar.gz"
-    a2 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_1.0.0.tar.gz"
-
     # Lot of changes
-    info1 <- suppressWarnings(pkgInfo(a1))
-    info2 <- suppressWarnings(pkgInfo(a2))
+    info1 <- pkg_info("admiral", "0.12.3")
+    info2 <- pkg_info("admiral", "1.0.0")
 
     res <- get_added_parameters(info1, info2)
 
@@ -245,12 +244,10 @@ test_that("utilities12: get_all_functions() works as expected.", {
 
   if (dev) {
 
-    a1 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_0.12.3.tar.gz"
-    a2 <- "https://cran.r-project.org/src/contrib/Archive/admiral/admiral_1.0.0.tar.gz"
 
     # Lot of changes
-    info1 <- suppressWarnings(pkgInfo(a1))
-    info2 <- suppressWarnings(pkgInfo(a2))
+    info1 <- pkg_info("admiral", "0.12.3")
+    info2 <- pkg_info("admiral", "1.0.0")
 
     res <- get_all_functions(info1, info2)
 
@@ -264,39 +261,41 @@ test_that("utilities12: get_all_functions() works as expected.", {
 
 })
 
-test_that("utilities13: get_latest_info() works as expected.", {
+test_that("utilities13: pkg_info() works as expected.", {
 
 
-  res <- get_latest_info("tibble")
+  res <- pkg_info("tibble", "latest")
 
   expect_equal(is.null(res), FALSE)
 
-  expect_equal("pkgInfo" %in% class(res), TRUE)
+  expect_equal("pinfo" %in% class(res), TRUE)
 
 })
 
 
-test_that("utilities14: get_archive_info() works as expected.", {
+test_that("utilities14: pkg_info() works as expected.", {
 
 
-  res <- get_archive_info("fmtr", "1.0.1")
+  res <- pkg_info("fmtr", "1.0.1")
 
   expect_equal(is.null(res), FALSE)
 
-  expect_equal("pkgInfo" %in% class(res), TRUE)
+  expect_equal("pinfo" %in% class(res), TRUE)
 
 })
 
 test_that("utilities15: get_all_parameters() works as expected.", {
 
 
-  inf <- get_archive_info("fmtr", "1.0.1")
+  inf <- pkg_info("fmtr", "1.0.1")
 
   res <- get_all_parameters(inf)
 
+  res
+
   expect_equal(is.null(res), FALSE)
 
-  expect_equal("pkgInfo" %in% class(inf), TRUE)
+  expect_equal("pinfo" %in% class(inf), TRUE)
 
   expect_equal(length(res) > 0, TRUE)
 
@@ -305,13 +304,15 @@ test_that("utilities15: get_all_parameters() works as expected.", {
 test_that("utilities16: get_parameter_count() works as expected.", {
 
 
-  inf <- get_archive_info("fmtr", "1.0.1")
+  inf <- pkg_info("fmtr", "1.0.1")
 
   res <- get_parameter_count(inf)
 
+  res
+
   expect_equal(is.null(res), FALSE)
 
-  expect_equal(res, 37)
+  expect_equal(res, 36)
 
 })
 
@@ -326,6 +327,8 @@ test_that("utilities17: get_archive_versions() for negative tests.", {
 
   res <- get_archive_versions("defineR")
 
+  res
+
   expect_equal(is.null(res), TRUE)
 
 })
@@ -339,7 +342,7 @@ test_that("utilities18: get_all_infos() works as expected.", {
 
   expect_equal(is.list(res), TRUE)
   expect_equal(length(res) > 0, TRUE)
-  expect_equal("pkgInfo" %in% class(res[[1]]), TRUE)
+  expect_equal("pinfo" %in% class(res[[1]]), TRUE)
 
   res <- get_all_infos("procs", c("1.0.3", "1.0.4"))
 
@@ -347,7 +350,7 @@ test_that("utilities18: get_all_infos() works as expected.", {
 
   expect_equal(is.list(res), TRUE)
   expect_equal(length(res) == 2, TRUE)
-  expect_equal("pkgInfo" %in% class(res[[1]]), TRUE)
+  expect_equal("pinfo" %in% class(res[[1]]), TRUE)
 
 })
 
@@ -373,6 +376,8 @@ test_that("utilities20: get_all_versions() works as expected.", {
 
   res <- get_all_versions("procs")
 
+  res
+
   expect_equal(is.data.frame(res), TRUE)
   expect_equal(nrow(res) > 0, TRUE)
   expect_equal(ncol(res), 5)
@@ -386,33 +391,33 @@ test_that("utilities21: github_package() works as expected.", {
 
   expect_equal(is.data.frame(res$stability), TRUE)
   expect_equal(nrow(res$stability) > 0, TRUE)
-  expect_equal("pkgInfo" %in% class(res$infos[[1]]), TRUE)
+  expect_equal("pinfo" %in% class(res$infos[[1]]), TRUE)
   expect_equal(length(res$infos) > 2, TRUE)
 
 })
 
 
-test_that("utilities22: get_fastest_info() works as expected.", {
-
-  if (dev) {
-    res <- get_fastest_info("procs", "1.0.6")
-
-    expect_equal("pkgInfo" %in% class(res), TRUE)
-
-    res <- get_fastest_info("procs", "1.0.5")
-
-    expect_equal("pkgInfo" %in% class(res), TRUE)
-
-    res <- get_fastest_info("ccRemover", "1.0.4")
-
-    expect_equal("pkgInfo" %in% class(res), TRUE)
-
-  } else {
-
-    expect_equal(TRUE, TRUE)
-  }
-
-})
+# test_that("utilities22: get_fastest_info() works as expected.", {
+#
+#   if (dev) {
+#     res <- get_fastest_info("procs", "1.0.6")
+#
+#     expect_equal("pinfo" %in% class(res), TRUE)
+#
+#     res <- get_fastest_info("procs", "1.0.5")
+#
+#     expect_equal("pinfo" %in% class(res), TRUE)
+#
+#     res <- get_fastest_info("ccRemover", "1.0.4")
+#
+#     expect_equal("pinfo" %in% class(res), TRUE)
+#
+#   } else {
+#
+#     expect_equal(TRUE, TRUE)
+#   }
+#
+# })
 
 
 test_that("utilities23: get_fastest_infos() works as expected.", {
@@ -421,11 +426,14 @@ test_that("utilities23: get_fastest_infos() works as expected.", {
 
     res <- get_fastest_infos("procs", "1.0.5", "1.0.6")
 
-    expect_equal("pkgInfo" %in% class(res), TRUE)
+    expect_equal(length(res), 2)
+    expect_equal("pinfo" %in% class(res[[1]]), TRUE)
 
+    # Why no functions?
     res <- get_fastest_infos("ccRemover", "1.0.3", "1.0.4")
 
-    expect_equal("pkgInfo" %in% class(res), TRUE)
+    expect_equal(length(res), 2)
+    expect_equal("pinfo" %in% class(res[[1]]), TRUE)
 
   } else {
 
@@ -435,4 +443,56 @@ test_that("utilities23: get_fastest_infos() works as expected.", {
 })
 
 
+test_that("utilities24: available_packages() works as expected.", {
+
+  res <- available_packages()
+
+  expect_equal(is.null(res), FALSE)
+  expect_equal(is.data.frame(res), TRUE)
+  expect_equal(nrow(res) > 0, TRUE)
+
+})
+
+test_that("utilities25: refresh_package_lists() works as expected.", {
+
+  if (dev) {
+
+    res <- refresh_package_lists()
+
+    # expect_equal(res, TRUE)
+    expect_equal(is.null(e$AvailablePackages), FALSE)
+    expect_equal(is.null(e$SavedPackages), FALSE)
+    expect_equal(nrow(e$AvailablePackages) > 0, TRUE)
+    expect_equal(length(e$SavedPackages) > 0, TRUE)
+
+  } else {
+
+    expect_equal(TRUE, TRUE)
+  }
+
+})
+
+test_that("utilities26: is_popular() works as expected.", {
+
+  if (dev) {
+
+    res <- is_popular("logr")
+
+    expect_equal(res, TRUE)
+
+    res <- is_popular("procs")
+
+    expect_equal(res, TRUE)
+
+    res <- is_popular("ards")
+
+    expect_equal(res, FALSE)
+  } else {
+
+    res <- is_popular("dplyr")
+
+    expect_equal(res, TRUE)
+  }
+
+})
 
