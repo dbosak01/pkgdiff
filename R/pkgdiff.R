@@ -53,6 +53,10 @@ e$SavedPackages <- NULL
 #' @noRd
 refresh_package_lists <- function(force = FALSE) {
 
+  mror <- utils::findCRANmirror("web")
+
+  options(repos = mror)
+
   ret <- FALSE
 
   ts <- Sys.Date() - e$LoadDate

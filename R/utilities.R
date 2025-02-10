@@ -748,9 +748,11 @@ github_versions <- function(pkg) {
 #' @noRd
 available_packages <- function() {
 
+  mror <- utils::findCRANmirror("web")
+
   # Get available packages
   flds1 <- c("Package", "Repository")
-  apkgs <- as.data.frame(available.packages())[ , flds1]
+  apkgs <- as.data.frame(available.packages(repos = mror))[ , flds1]
 
   flds2 <- c("Package", "Version", "Date/Publication", "Maintainer",
              "Description", "Title", "Depends", "LinkingTo", "Suggests",
