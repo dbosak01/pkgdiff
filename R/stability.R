@@ -157,7 +157,7 @@ pkg_stability <- function(pkgname, releases = NULL, months = NULL) {
   pk <- github_packages(pkgname)
   if (is.na(pk))
     dat <- get_cran_data(pkgname, releases, months)
-  else if (tolower(source) == "github")
+  else
     dat <- get_github_data(pkgname, releases, months)
 
   if (nrow(dat) == 1) {
