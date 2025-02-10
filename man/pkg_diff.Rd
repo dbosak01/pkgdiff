@@ -4,10 +4,10 @@
 \alias{pkg_diff}
 \title{Get a Package Difference Object}
 \usage{
-pkg_diff(pkgname, v1 = "current", v2 = "latest")
+pkg_diff(pkg, v1 = "current", v2 = "latest")
 }
 \arguments{
-\item{pkgname}{The package name.}
+\item{pkg}{The package name.}
 
 \item{v1}{The earlier package version.  Default is "current", which
 means the function will look up the currently installed version.}

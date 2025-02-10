@@ -133,7 +133,7 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #' \strong{pkgdiff} package.
 #' @section Performance:  Performance of the \code{pkg_stability} function
 #' can vary greatly depending on the package selected.  The
-#' @param pkgname The name of the package.
+#' @param pkg The name of the package.
 #' @param releases An integer indicating the number of releases to collect
 #' stability data for. For example, \code{releases = 10} will return stability
 #' data for the last 10 releases of the package. Default is NULL, which means
@@ -149,23 +149,23 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #' breaking releases.
 #' @family stability
 #' @export
-pkg_stability <- function(pkgname, releases = NULL, months = NULL) {
+pkg_stability <- function(pkg, releases = NULL, months = NULL) {
 
 
   d <- structure(list(), class = c("pdiff_score", "list"))
 
-  pk <- github_packages(pkgname)
+  pk <- github_packages(pkg)
   if (is.na(pk))
-    dat <- get_cran_data(pkgname, releases, months)
+    dat <- get_cran_data(pkg, releases, months)
   else
-    dat <- get_github_data(pkgname, releases, months)
+    dat <- get_github_data(pkg, releases, months)
 
   if (nrow(dat) == 1) {
 
     spn <- Sys.Date() - dat$Release[[nrow(dat)]]
 
     # Populate pdiff_score object
-    d$PackageName <- pkgname
+    d$PackageName <- pkg
     d$PackageAge <- sprintf("%0.2f years", spn / 30 / 12)
     d$FirstRelease <- dat$Release[[1]]
     d$LastRelease <- dat$Release[[1]]
@@ -189,7 +189,7 @@ pkg_stability <- function(pkgname, releases = NULL, months = NULL) {
     spn <- Sys.Date() - dat$Release[[nrow(dat)]]
 
     # Populate pdiff_score object
-    d$PackageName <- pkgname
+    d$PackageName <- pkg
     d$PackageAge <- sprintf("%0.2f years", spn / 30 / 12)
     d$FirstRelease <- dat$Release[[nrow(dat)]]
     d$LastRelease <- dat$Release[[1]]

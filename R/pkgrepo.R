@@ -6,9 +6,9 @@
 #' Combines information related to a package repository. The function
 #' retrieves all the packages in a repository for a specified version
 #' of R.  Results will list the package name and version.
-#' #' @param pkgs A vector of package names used to subset the repository list.
+#' @param pkgs A vector of package names used to subset the repository list.
 #' Default is NULL, which means all packages in the repository will be returned.
-#' @param version The R version of the repository. Default is "current",
+#' @param ver The R version of the repository. Default is "current",
 #' meaning the current version of the repository.  The value "latest"
 #' will return the latest version of the CRAN repository.
 #' If you have multiple repositories, you may also pass the R version number
@@ -23,19 +23,19 @@
 #' @family pdiff
 #' @import common
 #' @export
-pkg_repo <- function(pkgs = NULL, rversion = "current", libpaths = NULL) {
+pkg_repo <- function(pkgs = NULL, ver = "current", libpaths = NULL) {
 
-  ver <- NULL
+  mver <- NULL
 
-  if (rversion == "current") {
+  if (ver == "current") {
     lst <- installed_packages(pkgs, repos = libpaths)
 
     if (is.null(libpaths))
-      ver <- get_rversion()
+      mver <- get_rversion()
     else
-      ver <- NA
+      mver <- NA
 
-  } else if (rversion == "latest") {
+  } else if (ver == "latest") {
 
     if (is.null(pkgs))
       lst <- e$AvailablePackages[ , c("Package", "Version")]
@@ -50,16 +50,16 @@ pkg_repo <- function(pkgs = NULL, rversion = "current", libpaths = NULL) {
       libpaths <- .libPaths()
     }
 
-    if (!is.null(rversion)) {
+    if (!is.null(ver)) {
 
-      ver <- rversion
+      mver <- ver
 
       # Default repo
       bp <- get_base_paths(libpaths)
 
       vpths <- c()
 
-      sver <- split_version(rversion)
+      sver <- split_version(ver)
 
       idx <- 1
       for (pbp in bp) {
@@ -74,7 +74,7 @@ pkg_repo <- function(pkgs = NULL, rversion = "current", libpaths = NULL) {
 
 
         if (length(tmp) > 1) {
-          stop("Multiple releases found for R version ", rversion, ".\n",
+          stop("Multiple releases found for R version ", ver, ".\n",
                "Please use a three-level version specification:\n",
                paste(tmp, collapse = "\n"))
         }
@@ -101,8 +101,8 @@ pkg_repo <- function(pkgs = NULL, rversion = "current", libpaths = NULL) {
   ret <- lst
   class(ret) <- c("prepo", class(ret))
 
-  if (!is.null(ver))
-    attr(ret, "Version") <- ver
+  if (!is.null(mver))
+    attr(ret, "Version") <- mver
   if (!is.null(libpaths))
     attr(ret, "LibPaths") <- libpaths
 

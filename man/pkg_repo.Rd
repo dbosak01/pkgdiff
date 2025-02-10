@@ -4,19 +4,22 @@
 \alias{pkg_repo}
 \title{A Package Repository}
 \usage{
-pkg_repo(pkgs = NULL, rversion = "current", libpaths = NULL)
+pkg_repo(pkgs = NULL, ver = "current", libpaths = NULL)
 }
 \arguments{
-\item{libpaths}{A vector of paths specifying the locations of the repositories
-to query. Default
-is NULL, meaning the function will use the default R locations on the machine.
-These default paths are identified by the Base R function \code{.libPaths()}.}
+\item{pkgs}{A vector of package names used to subset the repository list.
+Default is NULL, which means all packages in the repository will be returned.}
 
-\item{version}{The R version of the repository. Default is "current",
+\item{ver}{The R version of the repository. Default is "current",
 meaning the current version of the repository.  The value "latest"
 will return the latest version of the CRAN repository.
 If you have multiple repositories, you may also pass the R version number
 of the desired repository.}
+
+\item{libpaths}{A vector of paths specifying the locations of the repositories
+to query. Default
+is NULL, meaning the function will use the default R locations on the machine.
+These default paths are identified by the Base R function \code{.libPaths()}.}
 }
 \value{
 An object of class "pkgrepo".  The object will contain the
@@ -27,8 +30,6 @@ version numbers.
 Combines information related to a package repository. The function
 retrieves all the packages in a repository for a specified version
 of R.  Results will list the package name and version.
-#' @param pkgs A vector of package names used to subset the repository list.
-Default is NULL, which means all packages in the repository will be returned.
 }
 \seealso{
 Other pdiff: 

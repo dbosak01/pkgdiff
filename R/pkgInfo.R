@@ -61,7 +61,7 @@
 #' class also makes a compact storage format for pre-processed package
 #' information.
 #' @param pkg The package name.
-#' @param version The package version.
+#' @param ver The package version.
 #' @param release The package release date.
 #' @param title The package title.
 #' @param description The package description.
@@ -76,7 +76,7 @@
 #' @returns An object of class "pinfo".
 #' @family pdiff
 #' @noRd
-pinfo <- function(pkg, version = "current", release = NULL, title = NULL, description = NULL,
+pinfo <- function(pkg, ver = "current", release = NULL, title = NULL, description = NULL,
                      maintainer = NULL,
                      depends = NULL, linkingto = NULL, imports = NULL,
                      suggests = NULL, enhances = NULL, license = NULL,
@@ -85,7 +85,7 @@ pinfo <- function(pkg, version = "current", release = NULL, title = NULL, descri
   inf <- structure(list(), class = c("pinfo", "list"))
 
   inf$PackageName <- pkg
-  inf$Version <- version
+  inf$Version <- ver
   inf$Title <- title
   inf$Description <- description
   inf$Maintainer <- maintainer
@@ -251,55 +251,55 @@ print.pfunction <- function(x, ..., verbose = FALSE) {
 #' class also makes a compact storage format for pre-processed package
 #' information.
 #' @param pkg The package name.
-#' @param pversion The package version. Special values are "current" and
+#' @param ver The package version. Special values are "current" and
 #' "latest".  The value "current" is the current version of the package
 #' running on the machine.  The value "latest" is the latest version
 #' of the package from CRAN.
 #' @family pdiff
 #' @export
-pkg_info <- function(pkg, pversion = "current") {
+pkg_info <- function(pkg, ver = "current") {
 
 
   tst <- github_packages(pkg)
 
-  if (is.null(pversion)) {
-    pversion <- get_current_version(pkg)
-  } else if (pversion == "current") {
+  if (is.null(ver)) {
+    ver <- get_current_version(pkg)
+  } else if (ver == "current") {
 
-    pversion <- get_current_version(pkg)
-  } else if (pversion == "latest") {
+    ver <- get_current_version(pkg)
+  } else if (ver == "latest") {
 
-    pversion <- get_latest_version(pkg)
+    ver <- get_latest_version(pkg)
   }
 
-  if (length(pversion) == 0)
-    pversion <- get_latest_version(pkg)
+  if (length(ver) == 0)
+    ver <- get_latest_version(pkg)
 
   if (!is.null(tst) && !is.na(tst)) {
-    ret <- get_info_github(pkg, pversion)
+    ret <- get_info_github(pkg, ver)
 
     if (is.null(ret)) {
 
-      ret <- get_info_cran(pkg, pversion)
+      ret <- get_info_cran(pkg, ver)
     }
 
   } else {
 
-    ret <- get_info_cran(pkg, pversion)
+    ret <- get_info_cran(pkg, ver)
   }
 
   return(ret)
 }
 
 #' @noRd
-get_info_github <- function(pkg, version) {
+get_info_github <- function(pkg, ver) {
 
   gpkg <- github_package(pkg)
 
   ret <- NULL
 
-  if (version %in% names(gpkg$infos)) {
-    ret <- gpkg$infos[[version]]
+  if (ver %in% names(gpkg$infos)) {
+    ret <- gpkg$infos[[ver]]
   }
 
   return(ret)
@@ -308,18 +308,18 @@ get_info_github <- function(pkg, version) {
 #' @import utils
 #' @import tools
 #' @noRd
-get_info_cran <- function(pkg, pversion) {
+get_info_cran <- function(pkg, ver) {
 
   # Construct path
-  if (get_latest_version(pkg) == pversion ) {
+  if (get_latest_version(pkg) == ver ) {
 
     currentpath = e$CranCurrentPath
 
-    pth <- file.path(e$CranCurrentPath, get_file_name(pkg, pversion))
+    pth <- file.path(e$CranCurrentPath, get_file_name(pkg, ver))
 
   } else {
 
-    pth <- file.path(e$CranArchivePath, pkg, get_file_name(pkg, pversion))
+    pth <- file.path(e$CranArchivePath, pkg, get_file_name(pkg, ver))
   }
 
   # Unzip package
@@ -351,7 +351,7 @@ get_info_cran <- function(pkg, pversion) {
     pd$Enhances <- gsub('\n', ' ', pd$Enhances)
 
   # Create package info
-  pi <- pinfo(pkg, pversion,
+  pi <- pinfo(pkg, ver,
               release = as.Date(pd$`Date/Publication`),
               title = pd$Title, description = pd$Description,
               maintainer = pd$Maintainer,
@@ -417,6 +417,36 @@ get_info_cran <- function(pkg, pversion) {
 
   return(pi)
 }
+
+
+#' @noRd
+get_functions <- function(filepath, funcs) {
+  code <- parse(filepath)
+  segs <- as.list(code)
+  ret <- list()
+
+  for (ii in seq_along(segs)) {
+    part <- segs[[ii]]
+    if (!is.null(part)) {
+      strf <- deparse1(part)
+      tokens <- strsplit(strf, " ", fixed = TRUE)[[1]]
+      nm <- gsub("`", "", tokens[[1]], fixed = TRUE)
+      if (nm %in% funcs) {
+        ne <- new.env()
+        tryCatch({eval(part, ne)},
+                 error = function(er){ne[[nm]] <- NULL})
+        if (is.function(ne[[nm]])) {
+          prms <- tryCatch({names(formals(ne[[nm]]))},
+                           error = function(er) {""})
+
+          ret[[nm]] <- prms
+        }
+      }
+    }
+  }
+  return(ret)
+}
+
 
 
 
@@ -583,63 +613,6 @@ get_info_cran <- function(pkg, pversion) {
 #   class(x) <- 'pkgInfo'
 #   x
 # }
-
-
-get_functions <- function(filepath, funcs) {
-  code <- parse(filepath)
-  segs <- as.list(code)
-  ret <- list()
-
-  for (ii in seq_along(segs)) {
-    part <- segs[[ii]]
-    if (!is.null(part)) {
-      strf <- deparse1(part)
-      tokens <- strsplit(strf, " ", fixed = TRUE)[[1]]
-      nm <- gsub("`", "", tokens[[1]], fixed = TRUE)
-      if (nm %in% funcs) {
-        ne <- new.env()
-        tryCatch({eval(part, ne)},
-                 error = function(er){ne[[nm]] <- NULL})
-        if (is.function(ne[[nm]])) {
-          prms <- tryCatch({names(formals(ne[[nm]]))},
-                           error = function(er) {""})
-
-          ret[[nm]] <- prms
-        }
-      }
-    }
-  }
-  return(ret)
-}
-
-
-
-get_calls <- function(filepath) {
-  code <- parse(filepath)
-  tokens <- as.list(code)
-  calls <- c()
-  # while (TRUE) {
-  #   any_unpacked <- FALSE
-    for (ii in seq_along(tokens)) {
-      part <- tokens[[ii]]
-      if (!is.null(part)) {
-        # Calls always have the function name as the first element
-        if (is.call(part)) {
-          fun_token <- part[[1]]
-          calls <- c(calls, deparse(fun_token))
-        }
-        # Expressions have a length
-        if (length(part) > 1) {
-          tokens[[ii]] <- as.list(part)
-          any_unpacked <- TRUE
-        }
-      }
-    }
-  #   tokens <- unlist(tokens)
-  #   if (!any_unpacked) break
-  # }
-  unique(calls)
-}
 
 
 

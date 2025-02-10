@@ -4,10 +4,10 @@
 \alias{pkg_stability}
 \title{Calculate Stability Score for a Package}
 \usage{
-pkg_stability(pkgname, releases = NULL, months = NULL)
+pkg_stability(pkg, releases = NULL, months = NULL)
 }
 \arguments{
-\item{pkgname}{The name of the package.}
+\item{pkg}{The name of the package.}
 
 \item{releases}{An integer indicating the number of releases to collect
 stability data for. For example, \code{releases = 10} will return stability

@@ -4,12 +4,12 @@
 \alias{pkg_info}
 \title{Get Information for a Package}
 \usage{
-pkg_info(pkg, pversion = "current")
+pkg_info(pkg, ver = "current")
 }
 \arguments{
 \item{pkg}{The package name.}
 
-\item{pversion}{The package version. Special values are "current" and
+\item{ver}{The package version. Special values are "current" and
 "latest".  The value "current" is the current version of the package
 running on the machine.  The value "latest" is the latest version
 of the package from CRAN.}
