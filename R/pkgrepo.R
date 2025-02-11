@@ -100,6 +100,7 @@ pkg_repo <- function(pkgs = NULL, ver = "current", libpaths = NULL) {
 
   ret <- lst
   class(ret) <- c("prepo", class(ret))
+  rownames(ret) <- NULL
 
   if (!is.null(mver))
     attr(ret, "Version") <- mver

@@ -58,6 +58,16 @@ test_that("repo4: pkg_repo() basic functionality no params.", {
   expect_equal(is.null(attr(res, "LibPaths")), TRUE)
   expect_equal(nrow(res) == 3, TRUE)
 
+  res <- pkg_repo(c("common", "rvest", "crayon"), ver = "latest")
+
+  res
+
+  expect_equal("data.frame" %in% class(res), TRUE)
+  expect_equal("prepo" %in% class(res), TRUE)
+  expect_equal(is.null(attr(res, "Version")), TRUE)
+  expect_equal(is.null(attr(res, "LibPaths")), TRUE)
+  expect_equal(nrow(res) == 3, TRUE)
+
 })
 
 
