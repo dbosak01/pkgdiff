@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgdiff</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
@@ -30,6 +30,9 @@
 </li>
 <li>
   <a href=".././articles/pkgdiff-faq.html">FAQ</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
 <li>
   <a href="https://github.com/dbosak01/pkgdiff/" class="external-link">
@@ -54,6 +57,10 @@
           <p class="section-desc"></p><p>Functions to compare two package versions and assess stability.</p>
         </th>
       </tr></tbody><tbody><tr><td>
+          <p><code><a href="pkg_info.html">pkg_info()</a></code> </p>
+        </td>
+        <td><p>Get Information for a Package</p></td>
+      </tr><tr><td>
           <p><code><a href="pkg_diff.html">pkg_diff()</a></code> </p>
         </td>
         <td><p>Get a Package Difference Object</p></td>
@@ -61,6 +68,10 @@
           <p><code><a href="pkg_stability.html">pkg_stability()</a></code> </p>
         </td>
         <td><p>Calculate Stability Score for a Package</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.pinfo.html">print(<i>&lt;pinfo&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print a Package Info Object</p></td>
       </tr><tr><td>
           <p><code><a href="print.pdiff.html">print(<i>&lt;pdiff&gt;</i>)</a></code> </p>
         </td>
@@ -74,21 +85,17 @@
           <p class="section-desc"></p><p>Functions to assess groups of packages.</p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="report_breakages.html">report_breakages()</a></code> </p>
+          <p><code><a href="pkg_repo.html">pkg_repo()</a></code> </p>
         </td>
-        <td><p>Generate a Report of Upgrade Breakages</p></td>
+        <td><p>A Package Repository</p></td>
       </tr><tr><td>
-          <p><code><a href="report_stability.html">report_stability()</a></code> </p>
+          <p><code><a href="repo_breakages.html">repo_breakages()</a></code> </p>
         </td>
-        <td><p>Generate a Stability Report</p></td>
-      </tr></tbody><tbody><tr><th colspan="2">
-          <h2 id="utility-functions">Utility Functions <a href="#utility-functions" class="anchor" aria-hidden="true"></a></h2>
-          <p class="section-desc"></p><p>Other useful functions.</p>
-        </th>
-      </tr></tbody><tbody><tr><td>
-          <p><code><a href="installed_packages.html">installed_packages()</a></code> </p>
+        <td><p>Identify Breakages for a Repository</p></td>
+      </tr><tr><td>
+          <p><code><a href="repo_stability.html">repo_stability()</a></code> </p>
         </td>
-        <td><p>Get Installed Packages and Versions</p></td>
+        <td><p>Generate Stability Scores</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

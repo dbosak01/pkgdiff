@@ -23,7 +23,6 @@ Other pdiff:
 \code{\link{pkg_info}()},
 \code{\link{pkg_repo}()},
 \code{\link{print.pdiff}()},
-\code{\link{print.pfunction}()},
 \code{\link{print.pinfo}()}
 }
 \concept{pdiff}

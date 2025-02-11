@@ -1,6 +1,9 @@
 
 
-#' @title Generate a Report of Upgrade Breakages
+#' @title Identify Breakages for a Repository
+#' @description
+#' The \code{repo_breakages} function generates a data frame
+#' of breakage information of a list of packages or entire repository.
 #' @param v1pkgs A data frame that identifies the source packages
 #' and versions.
 #' @param v2pkgs A data frame that identifies the target packages
@@ -8,7 +11,7 @@
 #' @family reports
 #' @import common
 #' @export
-report_breakages <- function(v1pkgs = "current", v2pkgs = "latest") {
+repo_breakages <- function(v1pkgs = "current", v2pkgs = "latest") {
 
   if (!is.data.frame(v1pkgs)) {
     if (v1pkgs == "current") {
@@ -83,12 +86,10 @@ report_breakages <- function(v1pkgs = "current", v2pkgs = "latest") {
 
 
 
-#' @title Generate a Stability Report
-#' @description The function generates a stability report
-#' for a vector of packages. Note that these stability assessments
-#' take time.  The function has to download and
-#' compare many packages. Therefore, be very cautious about how many
-#' packages you send into the function.  Also be prepared for the
+#' @title Generate Stability Scores
+#' @description The function generates stability scores
+#' for a vector of packages. If passing a large number of packages,
+#' be prepared for the
 #' function to run for a considerable amount of time.
 #' @param pkgs A data frame that identifies the source packages
 #' and versions.
@@ -100,7 +101,7 @@ report_breakages <- function(v1pkgs = "current", v2pkgs = "latest") {
 #' @family reports
 #' @import common
 #' @export
-report_stability <- function(pkgs, releases = NULL, months = NULL) {
+repo_stability <- function(pkgs, releases = NULL, months = NULL) {
 
   ret <- NULL
 

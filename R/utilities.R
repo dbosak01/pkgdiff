@@ -143,7 +143,7 @@ get_latest_data_back <- function(pkgs,
         # Get temp file name
         flnm <- tempfile()
 
-        currentpath = e$CranArchivePath
+        currentpath = e$CranCurrentPath
 
         # Get path to package
         url <- file.path(currentpath, src)
@@ -189,6 +189,7 @@ get_latest_data_back <- function(pkgs,
 #' @noRd
 get_latest_version <- function(pkgs) {
 
+  #browser()
   ret <- c()
 
   lst <- e$AvailablePackages[e$AvailablePackages$Package %in% pkgs, ]
@@ -196,7 +197,12 @@ get_latest_version <- function(pkgs) {
   pos <- 1
   for (pkg in pkgs) {
 
-    dat <- lst[lst$Package == pkg, "Version"]
+    if (nrow(lst) == 0) {
+      dat <- get_latest_data_back(pkg, skip_size = TRUE)[1, "Version"]
+    } else {
+
+      dat <- lst[lst$Package == pkg, "Version"]
+    }
 
     ret[pos] <- dat
 
@@ -744,11 +750,12 @@ github_versions <- function(pkg) {
 
 # Global Lists ------------------------------------------------------------
 
-
+#' @import utils
+#' @import tools
 #' @noRd
 available_packages <- function() {
 
-  mror <- utils::findCRANmirror("web")
+  mror <- e$Mirror
 
   # Get available packages
   flds1 <- c("Package", "Repository")

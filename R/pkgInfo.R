@@ -188,56 +188,56 @@ print.pinfo <- function(x, ..., verbose = FALSE) {
 
 
 
-#' @title A Package Function Object
-#' @param name The function name.
-#' @param parameters A vector of parameters for the function.
-#' @param code The code for this function, as single character string.
-#' @family pdiff
-#' @noRd
-pfunction <- function(name, parameters, code = NULL) {
-
-
- func <- structure(list(), class = c("pfunction", "list"))
-
- func$FunctionName <- name
- func$Parameters <- parameters
- func$Code <- code
-
- return(func)
-}
-
-
-
-#' @title Print a Package Function Object
-#' @param x The package function to print.
-#' @param ... Follow-on parameters to the print function.
-#' @param verbose Whether to print in summary or list-style.
-#' @family pdiff
-#' @import crayon
-#' @export
-print.pfunction <- function(x, ..., verbose = FALSE) {
-
-  if (verbose == TRUE) {
-
-    print(unclass(x))
-
-  } else {
-
-    # grey60 <- crayon::make_style(grey60 = "#999999")
-    # cat(grey60(paste0("# A package function: ",
-    #                   as.character(x$FunctionName), "\n")))
-
-    if (!is.null(x$Parameters))
-      cat(paste0("  - ", x$FunctionName, "(): ", paste0(x$Parameters, collapse = " "), "\n"))
-    else
-      cat(paste0("  - ", x$FunctionName, "() ", , "\n"))
+# @title A Package Function Object
+# @param name The function name.
+# @param parameters A vector of parameters for the function.
+# @param code The code for this function, as single character string.
+# @family pdiff
+# @noRd
+# pfunction <- function(name, parameters, code = NULL) {
+#
+#
+#  func <- structure(list(), class = c("pfunction", "list"))
+#
+#  func$FunctionName <- name
+#  func$Parameters <- parameters
+#  func$Code <- code
+#
+#  return(func)
+# }
 
 
 
-  }
-
-  invisible(x)
-}
+# @title Print a Package Function Object
+# @param x The package function to print.
+# @param ... Follow-on parameters to the print function.
+# @param verbose Whether to print in summary or list-style.
+# @family pdiff
+# @import crayon
+# @export
+# print.pfunction <- function(x, ..., verbose = FALSE) {
+#
+#   if (verbose == TRUE) {
+#
+#     print(unclass(x))
+#
+#   } else {
+#
+#     # grey60 <- crayon::make_style(grey60 = "#999999")
+#     # cat(grey60(paste0("# A package function: ",
+#     #                   as.character(x$FunctionName), "\n")))
+#
+#     if (!is.null(x$Parameters))
+#       cat(paste0("  - ", x$FunctionName, "(): ", paste0(x$Parameters, collapse = " "), "\n"))
+#     else
+#       cat(paste0("  - ", x$FunctionName, "() ", , "\n"))
+#
+#
+#
+#   }
+#
+#   invisible(x)
+# }
 
 
 # Get Info ----------------------------------------------------------------

@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   pkgdiff-faq: pkgdiff-faq.html
   pkgdiff: pkgdiff.html
-last_built: 2025-02-04T15:37Z
+last_built: 2025-02-11T00:08Z
 urls:
   reference: https://pkgdiff.r-sassy.org/reference
   article: https://pkgdiff.r-sassy.org/articles

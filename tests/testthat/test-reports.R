@@ -20,7 +20,7 @@ test_that("reports1: report_breakages() works as expected.", {
 
   lst2 <- get_latest_data(pkgs)[ , c("Package", "Version")]
 
-  res <- report_breakages(lst1, lst2)
+  res <- repo_breakages(lst1, lst2)
 
   expect_equal(is.data.frame(res$summary), TRUE)
 
@@ -41,7 +41,7 @@ test_that("reports2: report_stability() works as expected.", {
 
   }
 
-  res <- report_stability(pkgs)
+  res <- repo_stability(pkgs)
 
   expect_equal(is.data.frame(res), TRUE)
 

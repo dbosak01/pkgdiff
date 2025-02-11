@@ -5,19 +5,18 @@ reference:
 - title: Primary Functions
   desc: Functions to compare two package versions and assess stability.
   contents:
+  - pkg_info
   - pkg_diff
   - pkg_stability
+  - print.pinfo
   - print.pdiff
   - print.pdiff_score
 - title: Reporting Functions
   desc: Functions to assess groups of packages.
   contents:
-  - report_breakages
-  - report_stability
-- title: Utility Functions
-  desc: Other useful functions.
-  contents:
-  - installed_packages
+  - pkg_repo
+  - repo_breakages
+  - repo_stability
 
 
 navbar:

@@ -37,6 +37,7 @@ e$CranCurrentPath <- "https://cran.r-project.org/src/contrib/"
 e$CranPackagePath <- "https://cran.r-project.org/web/packages"
 e$AvailablePackages <- NULL
 e$SavedPackages <- NULL
+e$Mirror <- "https://cran.rstudio.com/"
 
 .onAttach <- function(...) {
 
@@ -49,11 +50,11 @@ e$SavedPackages <- NULL
 # Utility -----------------------------------------------------------------
 
 
-
+#' @import utils
 #' @noRd
 refresh_package_lists <- function(force = FALSE) {
 
-  mror <- utils::findCRANmirror("web")
+  mror <- e$Mirror
 
   options(repos = mror)
 
