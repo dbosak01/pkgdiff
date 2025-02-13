@@ -67,7 +67,7 @@ test_that("info4: get_functions() works as expected.", {
 
   pth <- file.path(base_path, "data/descriptions.R")
 
-  res <- get_functions(pth, fs)
+  res <- get_functions(pth, fs, NULL)
 
   expect_equal(is.null(res), FALSE)
   expect_equal(length(res), 2)
@@ -99,8 +99,10 @@ test_that("info5: pkg_info() default params cran.", {
 
 })
 
-test_that("info6: pkg_info() cache parameter works.", {
+test_that("info6: pkg_info() cache parameter, exportPatterns, and special cases.", {
 
+  # Ignore cache and take directly from CRAN
+  # Old versions had no functions.  Was using exportPattern ^[^\\.]
   res <- pkg_info("ggplot2", "0.8.9", cache = FALSE)
 
   res
@@ -108,9 +110,28 @@ test_that("info6: pkg_info() cache parameter works.", {
   expect_equal("pinfo" %in% class(res), TRUE)
   expect_equal(res$Package, "ggplot2")
   expect_equal(is.null(res$Version), FALSE)
+  expect_equal(length(res$Functions) > 0, TRUE)
 
-  # Old versions of ggplot did not publish functions in namespace.
-  expect_equal(length(res$Functions) == 0, TRUE)
+  # Had no functions.  Was using export pattern ^[[:alpha:]]+
+  res <- pkg_info("ccRemover", "latest", cache = FALSE)
+
+  res
+
+  expect_equal("pinfo" %in% class(res), TRUE)
+  expect_equal(res$Package, "ccRemover")
+  expect_equal(is.null(res$Version), FALSE)
+  expect_equal(length(res$Functions) > 0, TRUE)
+
+  # Had no functions.  Not sure what problem was.  Is working now.
+  res <- pkg_info("digest", "latest", cache = FALSE)
+
+  res
+
+  expect_equal("pinfo" %in% class(res), TRUE)
+  expect_equal(res$Package, "digest")
+  expect_equal(is.null(res$Version), FALSE)
+  expect_equal(length(res$Functions) > 0, TRUE)
+
 
 })
 

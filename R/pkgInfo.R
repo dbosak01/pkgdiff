@@ -409,14 +409,19 @@ get_info_cran <- function(pkg, ver) {
     funcs[[nm]] <- ""
   }
 
+  exppat <- NULL
+  if (length(nsf$exportPatterns) > 0)
+    exppat <- nsf$exportPatterns
+
   # Extract function parameters
   for (fl in code_files) {
     # print(fl)
-    tmp <- get_functions(fl, exp)
+    tmp <- get_functions(fl, exp, exppat)
     for (nm in names(tmp)) {
       funcs[[nm]] <- tmp[[nm]]
     }
   }
+
 
   pi$Functions <- funcs
 
@@ -424,8 +429,11 @@ get_info_cran <- function(pkg, ver) {
 }
 
 
+# Export Pattern: ^[^\\.]  or ^[[:alpha:]]+
+# Means export everything
+
 #' @noRd
-get_functions <- function(filepath, funcs) {
+get_functions <- function(filepath, funcs, exppat) {
   code <- parse(filepath)
   segs <- as.list(code)
   ret <- list()
@@ -436,9 +444,13 @@ get_functions <- function(filepath, funcs) {
       strf <- deparse1(part)
       tokens <- strsplit(strf, " ", fixed = TRUE)[[1]]
       nm <- gsub("`", "", tokens[[1]], fixed = TRUE)
-      if (nm %in% funcs) {
+      if (!is.null(exppat))
+        pat <- any(grepl(exppat, nm))
+      else
+        pat <- FALSE
+      if (nm %in% funcs || pat) {
         ne <- new.env()
-        tryCatch({eval(part, ne)},
+        tryCatch({suppressWarnings(eval(part, ne))},
                  error = function(er){ne[[nm]] <- NULL})
         if (is.function(ne[[nm]])) {
           prms <- tryCatch({names(formals(ne[[nm]]))},
