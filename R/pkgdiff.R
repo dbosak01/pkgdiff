@@ -32,12 +32,15 @@ e$LoadDate <- Sys.Date()
 e$GithubPath <- "https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/data"
 
 e$RStudioPath <- "https://cran.rstudio.com/src/contrib"
+e$Mirror <- "https://cran.rstudio.com/"
 e$CranArchivePath <- "https://cran.r-project.org/src/contrib/Archive"
 e$CranCurrentPath <- "https://cran.r-project.org/src/contrib/"
+e$MirrorArchivePath <- "https://cran.rstudio.com/src/contrib/Archive"
+e$MirrorCurrentPath <- "https://cran.rstudio.com/src/contrib/"
 e$CranPackagePath <- "https://cran.r-project.org/web/packages"
 e$AvailablePackages <- NULL
 e$SavedPackages <- NULL
-e$Mirror <- "https://cran.rstudio.com/"
+
 
 .onAttach <- function(...) {
 

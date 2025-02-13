@@ -125,7 +125,15 @@ you may still have breaking changes that are not identified by the
 
 \section{Performance}{
   Performance of the \code{pkg_stability} function
-can vary greatly depending on the package selected.  The
+can vary greatly depending on the package selected.  The information
+for some packages has been cached on Github, and can be retrieved very
+quickly.  For packages that have not been cached, the function must
+download each version of the package from the CRAN archive, and compare
+consecutive versions.  This process can take considerable time. The
+most popular packages on CRAN have been cached.  If there is a package
+that you query frequently that has not been cached, please submit
+an issue to the \strong{pkgdiff} issue log on Github, and request that
+the package be added to the cache.
 }
 
 \seealso{

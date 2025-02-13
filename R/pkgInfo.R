@@ -318,13 +318,11 @@ get_info_cran <- function(pkg, ver) {
   # Construct path
   if (get_latest_version(pkg) == ver ) {
 
-    currentpath = e$CranCurrentPath
-
-    pth <- file.path(e$CranCurrentPath, get_file_name(pkg, ver))
+    pth <- file.path(e$MirrorCurrentPath, get_file_name(pkg, ver))
 
   } else {
 
-    pth <- file.path(e$CranArchivePath, pkg, get_file_name(pkg, ver))
+    pth <- file.path(e$MirrorArchivePath, pkg, get_file_name(pkg, ver))
   }
 
   # Unzip package

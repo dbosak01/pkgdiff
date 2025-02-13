@@ -220,8 +220,9 @@ get_latest_version <- function(pkgs) {
 #' @noRd
 get_archive_versions <- function(pkgs) {
 
-  x <- "https://cran.rstudio.com/src/contrib/Archive/fmtr"
-  baseurl = "https://cran.r-project.org/src/contrib/Archive"
+
+  # baseurl = "https://cran.r-project.org/src/contrib/Archive"
+  baseurl <- e$CranArchivePath
 
   if (is.null(pkgs)) {
     stop("pkgs parameter cannot be NULL.")

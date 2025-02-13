@@ -4,6 +4,7 @@ articles:
 - title: Articles
   navbar: ~
   contents:
+  - pkgdiff-globals
   - pkgdiff-stability
   - pkgdiff-faq
 

@@ -28,6 +28,22 @@ information."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/lib
       <ul class="nav navbar-nav"></ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="../articles/pkgdiff.html">Get started</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/pkgdiff-globals.html">Global Options</a>
+    </li>
+    <li>
+      <a href="../articles/pkgdiff-stability.html">Stability Score</a>
+    </li>
+    <li>
+      <a href="../articles/pkgdiff-faq.html">pkgdiff-faq</a>
+    </li>
+  </ul></li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -65,7 +81,7 @@ information.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pkg_info</span><span class="op">(</span><span class="va">pkg</span>, ver <span class="op">=</span> <span class="st">"current"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pkg_info</span><span class="op">(</span><span class="va">pkg</span>, ver <span class="op">=</span> <span class="st">"current"</span>, cache <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -81,6 +97,14 @@ information.</p>
 "latest".  The value "current" is the current version of the package
 running on the machine.  The value "latest" is the latest version
 of the package from CRAN.</p></dd>
+
+
+<dt id="arg-cache">cache<a class="anchor" aria-label="anchor" href="#arg-cache"></a></dt>
+<dd><p>Whether to retrieve the info from the github cache, or
+from CRAN.  If TRUE, the function will first search the cache, and
+return the info if available.  If the info is not available in the
+github cache, or the cache parameter is set to FALSE, the info will be
+retrieved from CRAN.</p></dd>
 
 </dl></div>
     <div id="see-also">
