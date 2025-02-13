@@ -255,9 +255,14 @@ print.pinfo <- function(x, ..., verbose = FALSE) {
 #' "latest".  The value "current" is the current version of the package
 #' running on the machine.  The value "latest" is the latest version
 #' of the package from CRAN.
+#' @param cache Whether to retrieve the info from the github cache, or
+#' from CRAN.  If TRUE, the function will first search the cache, and
+#' return the info if available.  If the info is not available in the
+#' github cache, or the cache parameter is set to FALSE, the info will be
+#' retrieved from CRAN.
 #' @family pdiff
 #' @export
-pkg_info <- function(pkg, ver = "current") {
+pkg_info <- function(pkg, ver = "current", cache = TRUE) {
 
 
   tst <- github_packages(pkg)
@@ -275,7 +280,7 @@ pkg_info <- function(pkg, ver = "current") {
   if (length(ver) == 0)
     ver <- get_latest_version(pkg)
 
-  if (!is.null(tst) && !is.na(tst)) {
+  if (!is.null(tst) && !is.na(tst) && cache == TRUE) {
     ret <- get_info_github(pkg, ver)
 
     if (is.null(ret)) {

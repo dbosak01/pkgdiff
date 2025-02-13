@@ -99,6 +99,24 @@ test_that("info5: pkg_info() default params cran.", {
 
 })
 
+test_that("info6: pkg_info() cache parameter works.", {
+
+  res <- pkg_info("ggplot2", "0.8.9", cache = FALSE)
+
+  res
+
+  expect_equal("pinfo" %in% class(res), TRUE)
+  expect_equal(res$Package, "ggplot2")
+  expect_equal(is.null(res$Version), FALSE)
+
+  # Old versions of ggplot did not publish functions in namespace.
+  expect_equal(length(res$Functions) == 0, TRUE)
+
+})
+
+
+
+
 # Not doing good with S4 classes
 # pth <- "https://cran.r-project.org/src/contrib/Matrix_1.7-2.tar.gz"
 #

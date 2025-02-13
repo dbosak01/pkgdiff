@@ -4,7 +4,7 @@
 \alias{pkg_info}
 \title{Get Information for a Package}
 \usage{
-pkg_info(pkg, ver = "current")
+pkg_info(pkg, ver = "current", cache = TRUE)
 }
 \arguments{
 \item{pkg}{The package name.}
@@ -13,6 +13,12 @@ pkg_info(pkg, ver = "current")
 "latest".  The value "current" is the current version of the package
 running on the machine.  The value "latest" is the latest version
 of the package from CRAN.}
+
+\item{cache}{Whether to retrieve the info from the github cache, or
+from CRAN.  If TRUE, the function will first search the cache, and
+return the info if available.  If the info is not available in the
+github cache, or the cache parameter is set to FALSE, the info will be
+retrieved from CRAN.}
 }
 \description{
 Combines information related to a package. Objects of this class are

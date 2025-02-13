@@ -162,11 +162,11 @@ pkg_stability <- function(pkg, releases = NULL, months = NULL) {
 
   if (nrow(dat) == 1) {
 
-    spn <- Sys.Date() - dat$Release[[nrow(dat)]]
+    spn <- elapsed_months( dat$Release[[nrow(dat)]])
 
     # Populate pdiff_score object
     d$PackageName <- pkg
-    d$PackageAge <- sprintf("%0.2f years", spn / 30 / 12)
+    d$PackageAge <- sprintf("%0.2f years", spn / 12)
     d$FirstRelease <- dat$Release[[1]]
     d$LastRelease <- dat$Release[[1]]
     d$StabilityScore <- 1
@@ -184,13 +184,13 @@ pkg_stability <- function(pkg, releases = NULL, months = NULL) {
   } else {
 
     # Calculate stability score
-    scr <- 1 - (sum(dat$BC, na.rm = TRUE) / nrow(dat))
+    scr <- stability_score(dat)
 
-    spn <- Sys.Date() - dat$Release[[nrow(dat)]]
+    spn <- elapsed_months( dat$Release[[nrow(dat)]])
 
     # Populate pdiff_score object
     d$PackageName <- pkg
-    d$PackageAge <- sprintf("%0.2f years", spn / 30 / 12)
+    d$PackageAge <- sprintf("%0.2f years", spn / 12)
     d$FirstRelease <- dat$Release[[nrow(dat)]]
     d$LastRelease <- dat$Release[[1]]
     d$StabilityScore <- scr
@@ -612,6 +612,7 @@ get_info_data <- function(pkgname, pkginfos) {
 
 # Utilities ---------------------------------------------------------------
 
+#' @noRd
 get_stability_assessment <- function(score) {
 
   ret <- NULL
@@ -631,3 +632,41 @@ get_stability_assessment <- function(score) {
 
   return(ret)
 }
+
+#' @noRd
+elapsed_months <- Vectorize(function(start_date) {
+  ed <- as.POSIXlt(Sys.Date())
+  sd <- as.POSIXlt(start_date)
+  ret <- 12 * (ed$year - sd$year) + (ed$mon - sd$mon)
+  return(ret)
+})
+
+#' @noRd
+stability_score <- function(dat) {
+
+  # Calculate elapsed months for each release
+  el <- elapsed_months(dat$Release)
+
+  # After 10 years, don't count it
+  tm <- ifelse(el > 120, 0, 1)
+
+  # Get breaking releases
+  br <- dat$BC
+
+  # Weight each breaking release
+  clc <- ifelse(br == 1, el * .01, 0)
+
+  # Don't let weights go over 1
+  mx <- ifelse(clc > 1, 1, clc)
+
+  # Get numerator
+  nd <- sum(br - mx, na.rm = TRUE)
+
+  # Calculate percentage
+  ret <- 1 - (nd / sum(tm))
+
+  return(ret)
+}
+
+
+
