@@ -160,3 +160,26 @@ test_that("repo8: pkg_repo() version and libpaths parameter.", {
 })
 
 
+test_that("repo8: pkg_repo() non-CRAN package.", {
+
+
+  p <- c("common", "rvest", "forker")
+
+  res <-  pkg_repo(p)
+
+  expect_equal(nrow(res) == 3, TRUE)
+  expect_equal("forker" %in% res$Package, TRUE)
+
+  p <- c("forker")
+
+  res <-  pkg_repo(p)
+
+  expect_equal(nrow(res) == 1, TRUE)
+  expect_equal("forker" %in% res$Package, TRUE)
+
+
+})
+
+
+
+

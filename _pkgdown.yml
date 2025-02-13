@@ -1,9 +1,15 @@
 url: https://pkgdiff.r-sassy.org
 
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - pkgdiff-stability
+  - pkgdiff-faq
 
 reference:
-- title: Primary Functions
-  desc: Functions to compare two package versions and assess stability.
+- title: Single Package Functions
+  desc: Functions to assess versions of a single package.
   contents:
   - pkg_info
   - pkg_diff
@@ -11,7 +17,7 @@ reference:
   - print.pinfo
   - print.pdiff
   - print.pdiff_score
-- title: Reporting Functions
+- title: Repository Functions
   desc: Functions to assess groups of packages.
   contents:
   - pkg_repo
@@ -22,7 +28,7 @@ reference:
 navbar:
   type: inverse
   structure:
-    right: [home, intro, reference, faq, news, github]
+    right: [home, intro, articles, reference, faq, news, github]
     left: []
   components:
     faq:
