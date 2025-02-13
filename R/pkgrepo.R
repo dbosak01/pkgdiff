@@ -67,16 +67,16 @@ pkg_repo <- function(pkgs = NULL, ver = "current", libpaths = NULL) {
         if (is.null(tmp))
           tmp <- common::dir.find(pbp, sver$ver, up = 0, down = 2)
         else {
+
+          if (length(tmp) > 1) {
+            stop("Multiple releases found for R version ", ver, ".\n",
+                 "Please use a three-level version specification:\n",
+                 paste(tmp, collapse = "\n"))
+          }
+
           if (basename(tmp) != "library")
             tmp <- file.path(tmp, "library")
 
-        }
-
-
-        if (length(tmp) > 1) {
-          stop("Multiple releases found for R version ", ver, ".\n",
-               "Please use a three-level version specification:\n",
-               paste(tmp, collapse = "\n"))
         }
 
         if (!is.null(tmp)) {

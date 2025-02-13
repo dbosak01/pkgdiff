@@ -34,7 +34,6 @@ test_that("repo2: get_rversion() works as expected.", {
 })
 
 
-
 test_that("repo3: pkg_repo() basic functionality no params.", {
 
   res <- pkg_repo()
@@ -112,7 +111,7 @@ test_that("repo6: pkg_repo() rversion parameter.", {
 })
 
 
-test_that("repo6: pkg_repo() libpaths parameter.", {
+test_that("repo7: pkg_repo() libpaths parameter.", {
 
   if (dev) {
 
@@ -137,7 +136,7 @@ test_that("repo6: pkg_repo() libpaths parameter.", {
 })
 
 
-test_that("repo6: pkg_repo() version and libpaths parameter.", {
+test_that("repo8: pkg_repo() version and libpaths parameter.", {
 
   if (dev) {
 
@@ -159,3 +158,5 @@ test_that("repo6: pkg_repo() version and libpaths parameter.", {
   }
 
 })
+
+
