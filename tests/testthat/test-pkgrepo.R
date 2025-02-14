@@ -160,7 +160,7 @@ test_that("repo8: pkg_repo() version and libpaths parameter.", {
 })
 
 
-test_that("repo8: pkg_repo() non-CRAN package.", {
+test_that("repo9: pkg_repo() non-CRAN package.", {
 
 
   p <- c("common", "rvest", "forker")

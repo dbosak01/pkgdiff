@@ -132,6 +132,28 @@ test_that("info6: pkg_info() cache parameter, exportPatterns, and special cases.
   expect_equal(is.null(res$Version), FALSE)
   expect_equal(length(res$Functions) > 0, TRUE)
 
+  # R6 package.  Appears to be working good.
+  # All exported functions captured.
+  res <- pkg_info("tinkr", "latest", cache = FALSE)
+
+  res
+
+  expect_equal("pinfo" %in% class(res), TRUE)
+  expect_equal(res$Package, "tinkr")
+  expect_equal(is.null(res$Version), FALSE)
+  expect_equal(length(res$Functions) > 0, TRUE)
+  expect_equal(is.null(res$Functions[["yarn"]]), FALSE)
+
+  # S4 package.
+  res <- pkg_info("Matrix", "latest", cache = FALSE)
+
+  res
+
+  expect_equal("pinfo" %in% class(res), TRUE)
+  expect_equal(res$Package, "Matrix")
+  expect_equal(is.null(res$Version), FALSE)
+  expect_equal(length(res$Functions) > 0, TRUE)
+  expect_equal(is.null(res$Functions[["Schur"]]), FALSE)
 
 })
 

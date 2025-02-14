@@ -397,6 +397,9 @@ get_info_cran <- function(pkg, ver) {
   # }
   # exp <- sort(unique(exp))
 
+  if (length(nsf$exportMethods) > 0) {
+      exp <- c(exp, nsf$exportMethods)
+  }
 
   exp <- sort(unique(exp))
   # browser()
@@ -423,13 +426,17 @@ get_info_cran <- function(pkg, ver) {
 
   pi$Functions <- funcs
 
+
+  # Need to deal with S4 methods
+  # Somehow get method parameters
+  # nsf$exportClasses
+  # nsf$exportMethods
+
   return(pi)
 }
 
-
 # Export Pattern: ^[^\\.]  or ^[[:alpha:]]+
 # Means export everything
-
 #' @noRd
 get_functions <- function(filepath, funcs, exppat) {
   code <- parse(filepath)
