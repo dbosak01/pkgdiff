@@ -17,3 +17,38 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(pkgdiff)
 ```
+The purpose of **pkgdiff** is to identify changes between package versions,
+with the aim of assessing package stability.  Here is a list of the major
+functions in **pkgdiff**, and a short explanation of each:
+
+- [**pkg_info()**](#pkg_info): Displays general information about a package,
+including a list of all exported functions.
+- [**pkg_diff()**](#pkg_diff): Compares two versions of a package, and shows
+which functions have been added or removed.
+- [**pkg_stability()**](#pkg_stability): Looks at the entire history of a package,
+identifies breaking changes, and assesses the package for stability.
+- [**pkg_repo()**](#pkg_repo): Generates a list of the packages in a repository
+and their versions.
+- [**repo_breakages()**](#repo_breakages): Looks at a package repository and tries to identify
+which packages will break when upgraded.
+- [**repo_stability()**](#repo_stability): Looks at a package repository and calculates
+a stability score for each package.
+
+Below is a explanation and demo for each of the above functions.
+
+## General Package Information: pkg_info(){#pkg_info}
+
+
+## Comparing Package Versions: pkg_diff(){#pkg_diff}
+
+
+## Stability Assessment: pkg_stability(){#pkg_stability}
+
+
+## Listing Package Versions: pkg_repo(){#pkg_repo}
+
+## Anticipating Breakages: repo_breakages(){#repo_breakages}
+
+## Assessing Entire Repository: repo_stability(){#repo_stability}
+
+

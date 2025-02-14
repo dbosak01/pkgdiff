@@ -380,10 +380,15 @@ get_info_cran <- function(pkg, ver) {
   # Read namespace file
   nsf <- tryCatch({parseNamespaceFile(bp, dn)},
                   error = function(er) {
-                    warning(paste0("Package ", pkg, " version ", ver,
+                    message(paste0("Package ", pkg, " version ", ver,
                                    " has no namespace file."))
-                   list()
+                   NULL
                   })
+
+  if (is.null(nsf)) {
+     nsf <- list()
+     nsf$exportPatterns <- ""
+  }
 
   exp <- nsf$exports
 
@@ -414,7 +419,7 @@ get_info_cran <- function(pkg, ver) {
   # Prepare function list
   funcs <- list()
   for (nm in exp) {
-    funcs[[nm]] <- ""
+    funcs[[nm]] <- "^[^\\.]"  # Just export everything
   }
 
   exppat <- NULL
@@ -446,29 +451,36 @@ get_info_cran <- function(pkg, ver) {
 # Means export everything
 #' @noRd
 get_functions <- function(filepath, funcs, exppat) {
+  print("Debug 1")
   code <- parse(filepath)
   segs <- as.list(code)
   ret <- list()
-
+  print("Debug 2")
   for (ii in seq_along(segs)) {
     part <- segs[[ii]]
     if (!is.null(part)) {
       strf <- deparse1(part)
+      print("Debug 3")
       tokens <- strsplit(strf, " ", fixed = TRUE)[[1]]
       nm <- gsub("`", "", tokens[[1]], fixed = TRUE)
+      print("Debug 4")
       if (!is.null(exppat))
         pat <- any(grepl(exppat, nm))
       else
         pat <- FALSE
+
+      print("Debug 5")
       if (nm %in% funcs || pat) {
         ne <- new.env()
         tryCatch({suppressWarnings(eval(part, ne))},
                  error = function(er){ne[[nm]] <- NULL})
+        print("Debug 6")
         if (is.function(ne[[nm]])) {
           prms <- tryCatch({names(formals(ne[[nm]]))},
                            error = function(er) {""})
 
           ret[[nm]] <- prms
+          print("Debug 7")
         }
       }
     }
