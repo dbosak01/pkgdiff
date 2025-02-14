@@ -378,7 +378,12 @@ get_info_cran <- function(pkg, ver) {
   }
 
   # Read namespace file
-  nsf <- parseNamespaceFile(bp, dn)
+  nsf <- tryCatch({parseNamespaceFile(bp, dn)},
+                  error = function(er) {
+                    warning(paste0("Package ", pkg, " version ", ver,
+                                   " has no namespace file."))
+                   list()
+                  })
 
   exp <- nsf$exports
 
@@ -387,9 +392,11 @@ get_info_cran <- function(pkg, ver) {
   # patterns <- grep('Patterns', names(exp_list))
   # pat_list <- unname(unlist(exp_list[patterns]))
   # exp <- unname(unlist(exp_list[-patterns]))
-  if(nrow(nsf$S3methods)) {
-    s3_fun <- paste(nsf$S3methods[,1], nsf$S3methods[,2], sep = '.')
-    exp <- c(exp, s3_fun)
+  if(!is.null(nsf$S3methods)) {
+    if(nrow(nsf$S3methods)) {
+      s3_fun <- paste(nsf$S3methods[,1], nsf$S3methods[,2], sep = '.')
+      exp <- c(exp, s3_fun)
+    }
   }
   # if(length(pat_list)) {
   #   pat_fun <- fun[unlist(lapply(pat_list, grep, fun))]
