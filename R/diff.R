@@ -1,6 +1,4 @@
 
-# Rename to pkg_diff?
-
 
 #' @title Get a Package Difference Object
 #' @param pkg The package name.
@@ -62,9 +60,17 @@ pkg_diff <- function(pkg, v1 = "current",
     stop("Version '", v2, "' of package '", pkg, "' does not exist on CRAN.")
   }
 
-  infos <- get_fastest_infos(pkg, v1, v2)
-  v1_diff_info <- infos[[v1]]
-  v2_diff_info <- infos[[v2]]
+  if (is.null(v1_diff_info) && is.null(v2_diff_info)) {
+    infos <- get_fastest_infos(pkg, v1, v2)
+    v1_diff_info <- infos[[v1]]
+    v2_diff_info <- infos[[v2]]
+  }
+  if (is.null(v1_diff_info)) {
+    v1_diff_info <- pkg_info(pkg, v1, cache = FALSE)
+  }
+  if (is.null(v2_diff_info)) {
+    v2_diff_info <- pkg_info(pkg, v2, cache = FALSE)
+  }
 
   # print("Debug 5")
 

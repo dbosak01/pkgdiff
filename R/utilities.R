@@ -663,13 +663,13 @@ get_all_infos <- function(pkg, versions = NULL) {
 
 # Special case needed for two infos
 #' @noRd
-get_fastest_infos <- function(pkgname, v1, v2) {
+get_fastest_infos <- function(pkgname, v1, v2, cache = TRUE) {
 
   inf1 <- NULL
   inf2 <- NULL
   ret <- list()
 
-  if (!is.na(github_packages(pkgname))) {
+  if (!is.na(github_packages(pkgname)) && cache == TRUE) {
 
     info <- github_package(pkgname)
     if ("infos" %in% names(info)) {
