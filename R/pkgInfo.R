@@ -367,8 +367,8 @@ get_info_cran <- function(pkg, ver) {
               repository = pd$Repository)
 
   ## All functions
-  code_files <- tools::list_files_with_type(file.path(package, 'R'),
-                                            "code", full.names = TRUE)
+  code_files <- common::file.find(file.path(package, 'R'), "*.R", up = 0,
+                                  down = 2)
   # Collated functions
   coll <- pd$Collate
   if(!is.null(coll)) {
