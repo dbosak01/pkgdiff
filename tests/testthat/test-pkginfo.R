@@ -155,6 +155,16 @@ test_that("info6: pkg_info() cache parameter, exportPatterns, and special cases.
   expect_equal(length(res$Functions) > 0, TRUE)
   expect_equal(is.null(res$Functions[["Schur"]]), FALSE)
 
+  # Special characters causing errors
+  res <- pkg_info("R.oo", "1.4.2", cache = FALSE)
+
+  res
+
+  expect_equal("pinfo" %in% class(res), TRUE)
+  expect_equal(res$Package, "R.oo")
+  expect_equal(is.null(res$Version), FALSE)
+  expect_equal(length(res$Functions) > 0, TRUE)
+
 })
 
 
