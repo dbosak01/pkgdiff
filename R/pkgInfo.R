@@ -393,7 +393,7 @@ get_info_cran <- function(pkg, ver) {
 
   if (is.null(nsf)) {
      nsf <- list()
-     nsf$exportPatterns <- ""
+     nsf$exportPatterns <- "^[^\\.]"
   }
 
   exp <- nsf$exports
@@ -425,7 +425,7 @@ get_info_cran <- function(pkg, ver) {
   # Prepare function list
   funcs <- list()
   for (nm in exp) {
-    funcs[[nm]] <- "^[^\\.]"  # Just export everything
+    funcs[[nm]] <- ""  # Just export everything
   }
 
   exppat <- NULL
