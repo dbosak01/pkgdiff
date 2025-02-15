@@ -11,7 +11,9 @@
 
 \item{...}{Follow-on parameters to the print function.}
 
-\item{verbose}{Whether to print in summary or list-style.}
+\item{verbose}{Whether to print all function names or not.
+Default is FALSE.  When FALSE, only a count of the functions
+will be printed.}
 }
 \description{
 Print a Package Info Object

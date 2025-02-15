@@ -1,3 +1,8 @@
+# pkgdiff 0.1.2
+
+# Added documentation.
+# Lot of fixes related to package cache.
+
 # pkgdiff 0.1.1
 
 * Restructuring for new "pinfo" object.

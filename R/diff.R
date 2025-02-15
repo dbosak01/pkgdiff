@@ -143,11 +143,6 @@ print.pdiff <- function(x, ..., verbose = FALSE) {
 
 
 
-  if (verbose == TRUE) {
-
-    print(unclass(x))
-
-  } else {
 
     grey60 <- crayon::make_style(grey60 = "#999999")
     cat(grey60(paste0("# A difference object: ",
@@ -171,22 +166,38 @@ print.pdiff <- function(x, ..., verbose = FALSE) {
     if (!is.null(x$BreakingChanges))
       cat(paste0("- Breaking Changes: ", as.character(x$BreakingChanges), "\n"))
 
-    if (!is.null(x$AddedFunctions)) {
-      cat(paste0("- Added Functions: \n"))
 
-      for (nm in x$AddedFunctions) {
-        cat(paste0("  - ",  nm, "()\n"))
+    if (verbose == FALSE) {
+
+      if (!is.null(x$AddedFunctions))
+        cat(paste0("- Added Functions: ", length(x$AddedFunctions), "\n"))
+
+      if (!is.null(x$AddedParameters))
+        if (length(x$AddedParameters) > 0)
+          cat(paste0("- Added Parameters: ", length(x$AddedParameters), "\n"))
+
+    } else {
+
+
+      if (!is.null(x$AddedFunctions)) {
+        if (length(x$AddedFunctions > 0)) {
+          cat(paste0("- Added Functions: \n"))
+
+          for (nm in x$AddedFunctions) {
+            cat(paste0("  - ",  nm, "()\n"))
+          }
+        }
       }
-    }
 
-    if (!is.null(x$AddedParameters)) {
-      if (length(x$AddedParameters) > 0) {
-        cat(paste0("- Added Parameters: \n"))
+      if (!is.null(x$AddedParameters)) {
+        if (length(x$AddedParameters) > 0) {
+          cat(paste0("- Added Parameters: \n"))
 
-        nms <- names(x$AddedParameters)
-        for (nm in nms) {
-          parms <- paste(x$AddedParameters[[nm]], collapse = ", ")
-          cat(paste0("  - ",  nm, "(): ", parms, "\n"))
+          nms <- names(x$AddedParameters)
+          for (nm in nms) {
+            parms <- paste(x$AddedParameters[[nm]], collapse = ", ")
+            cat(paste0("  - ",  nm, "(): ", parms, "\n"))
+          }
         }
       }
     }
@@ -213,7 +224,7 @@ print.pdiff <- function(x, ..., verbose = FALSE) {
 
 
 
-  }
+
 
   invisible(x)
 }

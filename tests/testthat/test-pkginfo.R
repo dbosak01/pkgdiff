@@ -167,7 +167,19 @@ test_that("info6: pkg_info() cache parameter, exportPatterns, and special cases.
 
 })
 
+test_that("info7: print.pinfo() works as expected.", {
 
+  res <- pkg_info("logr")
+
+  print(res)
+
+
+  print(res, verbose = TRUE)
+
+
+  expect_equal(TRUE, TRUE)
+
+})
 
 
 # Not doing good with S4 classes

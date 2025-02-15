@@ -145,5 +145,27 @@ test_that("diff9: pkg_diff() with pkgInfo works.", {
 })
 
 
+test_that("diff10: print.pdiff() works as expected.", {
+
+  res <- pkg_diff("fmtr", "1.5.7", "1.5.8")
+
+  print(res)
+
+  print(res, verbose = TRUE)
+
+  expect_equal(TRUE, TRUE)
+
+  res <- pkg_diff("fmtr", "1.5.5", "1.5.7")
+
+  print(res)
+
+  print(res, verbose = TRUE)
+
+  expect_equal(TRUE, TRUE)
+})
+
+
+
+
 
 

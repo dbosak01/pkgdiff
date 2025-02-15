@@ -107,18 +107,16 @@ pinfo <- function(pkg, ver = "current", release = NULL, title = NULL, descriptio
 #' @title Print a Package Info Object
 #' @param x The package info to print.
 #' @param ... Follow-on parameters to the print function.
-#' @param verbose Whether to print in summary or list-style.
+#' @param verbose Whether to print all function names or not.
+#' Default is FALSE.  When FALSE, only a count of the functions
+#' will be printed.
 #' @family pdiff
 #' @import crayon
 #' @export
 print.pinfo <- function(x, ..., verbose = FALSE) {
 
 
-  if (verbose == TRUE) {
 
-    print(unclass(x))
-
-  } else {
 
     # pkg, version, release, title = NULL, description = NULL,
     # maintainer = NULL,
@@ -166,19 +164,27 @@ print.pinfo <- function(x, ..., verbose = FALSE) {
     if (!is.null(x$Suggests))
       cat(paste0("- Repository: ", as.character(x$Repository), "\n"))
 
-    if (!is.null(x$Functions)) {
-      cat(paste0("- Functions: \n"))
+    if (verbose == FALSE) {
 
-      for (nm in names(x$Functions)) {
-        prms <- paste0(x$Functions[[nm]], collapse = ", ")
-        if (nchar(prms) == 0)
-          cat(paste0("  - ", nm, "()\n"))
-        else
-          cat(paste0("  - ", nm, "(): ", prms, "\n"))
+      if (!is.null(x$Functions))
+        cat(paste0("- Functions: ", length(x$Functions), "\n"))
 
+    } else {
+
+      if (!is.null(x$Functions)) {
+        cat(paste0("- Functions: \n"))
+
+        for (nm in names(x$Functions)) {
+          prms <- paste0(x$Functions[[nm]], collapse = ", ")
+          if (nchar(prms) == 0)
+            cat(paste0("  - ", nm, "()\n"))
+          else
+            cat(paste0("  - ", nm, "(): ", prms, "\n"))
+
+        }
       }
     }
-  }
+
 
   invisible(x)
 }

@@ -1,12 +1,22 @@
 Package: pkgdiff
 Type: Package
 Title: Identifies Package Changes
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
     person(
       "David", "Bosak",
       email = "dbosak01@gmail.com",
       role = c("aut", "cre")
+    ),
+    person(
+      "Brian", "Varney",
+      email = "brian.varney@experis.com",
+      role = c("ctb")
+    ),
+    person(
+      "Kevin", "Putschko",
+      email = "kevin.putschko@experis.com",
+      role = c("ctb")
     )
   )
 Description: Contains a set of functions to identify changes between
