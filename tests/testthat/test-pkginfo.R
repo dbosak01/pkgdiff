@@ -154,6 +154,7 @@ test_that("info6: pkg_info() cache parameter, exportPatterns, and special cases.
   expect_equal(is.null(res$Version), FALSE)
   expect_equal(length(res$Functions) > 0, TRUE)
   expect_equal(is.null(res$Functions[["Schur"]]), FALSE)
+  expect_equal(length(res$Functions[["Schur"]]) > 0, TRUE)
 
   # Special characters causing errors
   res <- pkg_info("R.oo", "1.4.2", cache = FALSE)
@@ -164,6 +165,27 @@ test_that("info6: pkg_info() cache parameter, exportPatterns, and special cases.
   expect_equal(res$Package, "R.oo")
   expect_equal(is.null(res$Version), FALSE)
   expect_equal(length(res$Functions) > 0, TRUE)
+
+  # Errors creating package cache
+  res <- pkg_info("xtable", "1.0-1", cache = FALSE)
+
+  print(res, verbose = TRUE)
+
+  expect_equal("pinfo" %in% class(res), TRUE)
+  expect_equal(res$Package, "xtable")
+  expect_equal(is.null(res$Version), FALSE)
+  expect_equal(length(res$Functions) > 0, TRUE)
+
+  # Errors creating package cache
+  res <- pkg_info("gtools", "2.0.7", cache = FALSE)
+
+  print(res, verbose = TRUE)
+
+  expect_equal("pinfo" %in% class(res), TRUE)
+  expect_equal(res$Package, "gtools")
+  expect_equal(is.null(res$Version), FALSE)
+  expect_equal(length(res$Functions) > 0, TRUE)
+
 
 })
 
@@ -192,4 +214,21 @@ test_that("info7: print.pinfo() works as expected.", {
 # length(res2$ExportedFunctions)
 #
 # length(res2$FormalArgs)
+
+# mym <- ' setMethod("all.equal", c(target = "numLike", current = "abIndex"),
+#           function(target, current, ...) all.equal.abI(as(target, "abIndex"),
+#                                                        current, ...))'
+#
+# grepl("setMethod", mym, fixed = TRUE)
+#
+# myreg <- regexec('setMethod\\(\\s*"([^"]+)"', mym)
+#
+# rm <- regmatches(mym, myreg)
+#
+# if (length(rm[[1]]) > 1) {
+#
+#   nm <- rm[[1]][2]
+# }
+#
+# formals("all.equal")
 

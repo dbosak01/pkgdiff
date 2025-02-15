@@ -415,8 +415,10 @@ get_info_cran <- function(pkg, ver) {
   # }
   # exp <- sort(unique(exp))
 
+  mthds <- NULL
   if (length(nsf$exportMethods) > 0) {
       exp <- c(exp, nsf$exportMethods)
+      mthds <- nsf$exportMethods
   }
 
   exp <- sort(unique(exp))
@@ -435,7 +437,7 @@ get_info_cran <- function(pkg, ver) {
   # Extract function parameters
   for (fl in code_files) {
     # print(fl)
-    tmp <- get_functions(fl, exp, exppat)
+    tmp <- get_functions(fl, exp, exppat, mthds)
     for (nm in names(tmp)) {
       funcs[[nm]] <- tmp[[nm]]
     }
@@ -459,7 +461,7 @@ get_info_cran <- function(pkg, ver) {
 # . (everything except newline)
 
 #' @noRd
-get_functions <- function(filepath, funcs, exppat) {
+get_functions <- function(filepath, funcs, exppat, mthds = NULL) {
   # print("Debug 1")
   code <- tryCatch({parse(filepath)},
                    error = function(er) {
@@ -473,8 +475,26 @@ get_functions <- function(filepath, funcs, exppat) {
     if (!is.null(part)) {
       strf <- deparse1(part)
       # print("Debug 3")
-      tokens <- strsplit(strf, " ", fixed = TRUE)[[1]]
-      nm <- gsub("`", "", tokens[[1]], fixed = TRUE)
+      mflag <- FALSE
+      if (grepl('setMethod', strf, fixed = TRUE)) {
+        # Get method name
+        myreg <- regexec('setMethod\\(\\s*"([^"]+)"', strf)
+
+        rm <- regmatches(strf, myreg)
+
+        if (length(rm[[1]]) > 1) {
+
+          nm <- rm[[1]][2]
+        } else {
+          nm <- "-not found-"
+        }
+        nm <- sub("\"", "", nm)
+        mflag <- TRUE
+      } else {
+        # Get function name
+        tokens <- strsplit(strf, " ", fixed = TRUE)[[1]]
+        nm <- gsub("`", "", tokens[[1]], fixed = TRUE)
+      }
       # print("Debug 4")
       if (!is.null(exppat))
         pat <- any(grepl(exppat, nm))
@@ -484,6 +504,8 @@ get_functions <- function(filepath, funcs, exppat) {
       # print("Debug 5")
       if (nm %in% funcs || pat) {
         ne <- new.env()
+        # Not working on methods
+        # Functions are fine
         tryCatch({suppressWarnings(eval(part, ne))},
                  error = function(er){ne[[nm]] <- NULL})
         # print("Debug 6")
