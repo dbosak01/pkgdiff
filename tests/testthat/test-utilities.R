@@ -493,6 +493,12 @@ test_that("utilities26: is_popular() works as expected.", {
     res <- is_popular("ards")
 
     expect_equal(res, FALSE)
+
+    res <- is_popular("ards", 20)
+
+    expect_equal(res, TRUE)
+
+
   } else {
 
     res <- is_popular("dplyr")
