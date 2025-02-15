@@ -4,14 +4,17 @@
 \alias{print.pdiff}
 \title{Print a Package Difference Object}
 \usage{
-\method{print}{pdiff}(x, ..., verbose = FALSE)
+\method{print}{pdiff}(x, ..., verbose = TRUE)
 }
 \arguments{
 \item{x}{The package difference to print}
 
 \item{...}{Follow-on parameters to the print function}
 
-\item{verbose}{Whether to print in summary or list-style.}
+\item{verbose}{Whether to print all added and removed functions and
+and function parameters.  Default is TRUE.  If FALSE, the function
+will print removed functions and parameters, but only print
+counts of added functions and parameters.}
 }
 \description{
 Print a Package Difference Object

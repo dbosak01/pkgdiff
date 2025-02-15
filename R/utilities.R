@@ -195,6 +195,7 @@ get_latest_version <- function(pkgs) {
   lst <- e$AvailablePackages[e$AvailablePackages$Package %in% pkgs, ]
 
   pos <- 1
+  nfpkgs <- c()
   for (pkg in pkgs) {
 
     if (nrow(lst) == 0) {
@@ -204,12 +205,22 @@ get_latest_version <- function(pkgs) {
       dat <- lst[lst$Package == pkg, "Version"]
     }
 
-    ret[pos] <- dat
+    if (!is.null(dat)) {
+      if (length(dat) > 0) {
+        ret[pos] <- dat
+      } else {
+        nfpkgs[length(nfpkgs) + 1] <- pkg
+      }
+
+    } else {
+      nfpkgs[length(nfpkgs) + 1] <- pkg
+    }
 
     pos <- pos + 1
   }
 
-  names(ret) <- pkgs
+  if (!is.null(ret))
+    names(ret) <- pkgs[!pkgs %in% nfpkgs]
 
   return(ret)
 }

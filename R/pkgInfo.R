@@ -393,7 +393,7 @@ get_info_cran <- function(pkg, ver) {
 
   if (is.null(nsf)) {
      nsf <- list()
-     nsf$exportPatterns <- "^[^\\.]"
+     nsf$exportPatterns <- "."
   }
 
   exp <- nsf$exports
@@ -453,8 +453,11 @@ get_info_cran <- function(pkg, ver) {
   return(pi)
 }
 
-# Export Pattern: ^[^\\.]  or ^[[:alpha:]]+
-# Means export everything
+# Export Patterns:
+# ^[^\\.]  (starts with a dot)
+# ^[[:alpha:]]+ (starts with an alphabetic character)
+# . (everything except newline)
+
 #' @noRd
 get_functions <- function(filepath, funcs, exppat) {
   # print("Debug 1")

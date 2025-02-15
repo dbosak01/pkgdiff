@@ -352,6 +352,12 @@ test_that("utilities18: get_all_infos() works as expected.", {
   expect_equal(length(res) == 2, TRUE)
   expect_equal("pinfo" %in% class(res[[1]]), TRUE)
 
+  res <- get_all_infos("forker")
+
+  res
+
+  expect_equal(is.null(res), TRUE)
+
 })
 
 test_that("utilities19: github_packages() works as expected.", {

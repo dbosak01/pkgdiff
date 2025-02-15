@@ -147,7 +147,7 @@ test_that("info6: pkg_info() cache parameter, exportPatterns, and special cases.
   # S4 package.
   res <- pkg_info("Matrix", "latest", cache = FALSE)
 
-  res
+  print(res, verbose = TRUE)
 
   expect_equal("pinfo" %in% class(res), TRUE)
   expect_equal(res$Package, "Matrix")
@@ -158,7 +158,7 @@ test_that("info6: pkg_info() cache parameter, exportPatterns, and special cases.
   # Special characters causing errors
   res <- pkg_info("R.oo", "1.4.2", cache = FALSE)
 
-  res
+  print(res, verbose = TRUE)
 
   expect_equal("pinfo" %in% class(res), TRUE)
   expect_equal(res$Package, "R.oo")
