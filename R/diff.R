@@ -133,11 +133,14 @@ pkg_diff <- function(pkg, v1 = "current",
 #' @title Print a Package Difference Object
 #' @param x The package difference to print
 #' @param ... Follow-on parameters to the print function
-#' @param verbose Whether to print in summary or list-style.
+#' @param verbose Whether to print all added and removed functions and
+#' and function parameters.  Default is TRUE.  If FALSE, the function
+#' will print removed functions and parameters, but only print
+#' counts of added functions and parameters.
 #' @family pdiff
 #' @import crayon
 #' @export
-print.pdiff <- function(x, ..., verbose = FALSE) {
+print.pdiff <- function(x, ..., verbose = TRUE) {
 
 
 

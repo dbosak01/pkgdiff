@@ -151,7 +151,7 @@ test_that("diff10: print.pdiff() works as expected.", {
 
   print(res)
 
-  print(res, verbose = TRUE)
+  print(res, verbose = FALSE)
 
   expect_equal(TRUE, TRUE)
 
@@ -159,7 +159,7 @@ test_that("diff10: print.pdiff() works as expected.", {
 
   print(res)
 
-  print(res, verbose = TRUE)
+  print(res, verbose = FALSE)
 
   expect_equal(TRUE, TRUE)
 })
