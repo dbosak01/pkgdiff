@@ -21,34 +21,270 @@ The purpose of **pkgdiff** is to identify changes between package versions,
 with the aim of assessing package stability.  Here is a list of the major
 functions in **pkgdiff**, and a short explanation of each:
 
-- [**pkg_info()**](#pkg_info): Displays general information about a package,
+- `pkg_info()`: Displays general information about a package,
 including a list of all exported functions.
-- [**pkg_diff()**](#pkg_diff): Compares two versions of a package, and shows
-which functions have been added or removed.
-- [**pkg_stability()**](#pkg_stability): Looks at the entire history of a package,
+- `pkg_stability()`: Looks at the history of a package,
 identifies breaking changes, and assesses the package for stability.
-- [**pkg_repo()**](#pkg_repo): Generates a list of the packages in a repository
+- `pkg_diff()`: Compares two versions of a package, and shows
+which functions have been added or removed.
+- `pkg_repo()`: Generates a list of the packages in a repository
 and their versions.
-- [**repo_breakages()**](#repo_breakages): Looks at a package repository and tries to identify
+- `repo_breakages()`: Looks at a package repository and tries to identify
 which packages will break when upgraded.
-- [**repo_stability()**](#repo_stability): Looks at a package repository and calculates
+- `repo_stability()`: Looks at a package repository and calculates
 a stability score for each package.
 
-Below is a explanation and demo for each of the above functions.
+Below is a short explanation and demo for each of the above functions.
 
-## General Package Information: pkg_info(){#pkg_info}
+## General Package Information
+
+The firt thing you may want to do when exploring a package is to get
+some general information about it.  This general package information
+can be achieved using the `pkg_info()` function.  All you need to 
+pass is the package name, and the function will return basic 
+information such as the maintainer, description,
+and imported packages.  Here is a simple demonstration:
+
+```{r eval=FALSE, echo=TRUE}
+library(pkgdiff)
+
+# Examine fmtr package
+pkg_info("fmtr")
+# # A package info object: fmtr package
+# - Version: v1.6.5
+# - Release Date: 2024-06-13
+# - Title: Easily Apply Formats to Data
+# - Maintainer: David Bosak <dbosak01@gmail.com>
+# - License: CC0
+# - Description: Contains a set of functions that can be used to apply
+# formats to data frames or vectors.  The package aims to provide
+# functionality similar to that of SAS® formats. Formats are assigned to
+# the format attribute on data frame columns.  Then when the fdata()
+# function is called, a new data frame is created with the column data
+# formatted as specified.  The package also contains a value() function
+# to create a user-defined format, similar to a SAS® user-defined format.
+# - Depends: R (>= 4.0.0), common
+# - Linking To: Rcpp
+# - Imports: tibble, stats, crayon, Rcpp
+# - Suggests: testthat, knitr, rmarkdown, covr, logr, utils, dplyr, libr
+# - Repository: CRAN
+# - Functions: 49
+
+```
+
+```{r eval=FALSE, echo=TRUE}
+# Get package info
+res <- pkg_info("fmtr")
+
+# View functions
+print(res, verbose = TRUE)
+# # A package info object: fmtr package
+# - Version: v1.6.5
+# - Release Date: 2024-06-13
+# - Title: Easily Apply Formats to Data
+# - Maintainer: David Bosak <dbosak01@gmail.com>
+# - License: CC0
+# - Description: Contains a set of functions that can be used to apply
+# formats to data frames or vectors.  The package aims to provide
+# functionality similar to that of SAS® formats. Formats are assigned to
+# the format attribute on data frame columns.  Then when the fdata()
+# function is called, a new data frame is created with the column data
+# formatted as specified.  The package also contains a value() function
+# to create a user-defined format, similar to a SAS® user-defined format.
+# - Depends: R (>= 4.0.0), common
+# - Linking To: Rcpp
+# - Imports: tibble, stats, crayon, Rcpp
+# - Suggests: testthat, knitr, rmarkdown, covr, logr, utils, dplyr, libr
+# - Repository: CRAN
+# - Functions: 
+#   - as.data.frame.fcat(): x, row.names, optional, ...
+#   - as.data.frame.fmt(): x, row.names, optional, ..., name
+#   - as.data.frame.fmt_lst(): x, row.names, optional, ...
+#   - as.fcat(): x
+#   - as.fcat.data.frame(): x
+#   - as.fcat.fmt_lst(): x
+#   - as.fcat.list(): x
+#   - as.fcat.tbl_df(): x
+#   - as.flist(): x, type, lookup, simplify
+#   - as.flist.data.frame(): x, type, lookup, simplify
+#   - as.flist.fcat(): x, type, lookup, simplify
+#   - as.flist.list(): x, type, lookup, simplify
+#   - as.flist.tbl_df(): x, type, lookup, simplify
+#   - as.fmt(): x
+#   - as.fmt.data.frame(): x
+#   - condition(): expr, label, order
+#   - descriptions(): x
+#   - descriptions<-(): x, value
+#   - fapply(): x, format, width, justify
+#   - fapply2(): x1, x2, format1, format2, sep, width, justify
+#   - fattr(): x, format, width, justify, label, description, keep
+#   - fattr<-()
+#   - fcat(): ..., log
+#   - fdata(): x, ...
+#   - flist(): ..., type, lookup, simplify
+#   - fmt_cnt_pct(): x, denom, format, na, zero
+#   - fmt_mean_sd(): x, format, sd_format
+#   - fmt_median(): x, format
+#   - fmt_n(): x
+#   - fmt_quantile_range(): x, format, sep, lower, upper, type
+#   - fmt_range(): x, format, sep
+#   - formats(): x
+#   - formats<-(): x, value
+#   - is.fcat(): x
+#   - is.flist(): x
+#   - is.format(): x
+#   - justification(): x
+#   - justification<-(): x, value
+#   - labels.fmt(): object, ...
+#   - print.fcat(): x, ..., verbose
+#   - print.fmt(): x, ..., name, verbose
+#   - print.fmt_lst(): x, ..., verbose
+#   - read.fcat(): file_path
+#   - read.flist(): file_path
+#   - value(): ..., log, as.factor
+#   - widths(): x
+#   - widths<-(): x, value
+#   - write.fcat(): x, dir_path, file_name
+#   - write.flist(): x, dir_path, file_name
+
+```
 
 
-## Comparing Package Versions: pkg_diff(){#pkg_diff}
+## Stability Assessment
 
 
-## Stability Assessment: pkg_stability(){#pkg_stability}
+```{r eval=FALSE, echo=TRUE}
+
+# View package stability
+pkg_stability("fmtr")
+# # A stability score: fmtr package
+# - Age: 4.50 years
+# - Score: 96.5
+# - Assessment: Very Stable
+# - Version Range: 1.0.1/1.6.8
+# - Release Range: 2020-08-07/2025-01-28
+# - Release Count: 20
+# - Breaking Releases: 1
+# - Data: 
+#    Package Version          FileName    Release   Size AF AP RF RP BC TF
+# 1     fmtr   1.6.8 fmtr_1.6.8.tar.gz 2025-01-28 576.5K  0  1  0  0  0 49
+# 2     fmtr   1.6.5 fmtr_1.6.5.tar.gz 2024-06-14   575K  0  0  0  0  0 49
+# 3     fmtr   1.6.4 fmtr_1.6.4.tar.gz 2024-05-10   580K  2  0  0  0  0 49
+# 4     fmtr   1.6.3 fmtr_1.6.3.tar.gz 2024-01-09   574K  0  0  0  0  0 47
+# 5     fmtr   1.6.2 fmtr_1.6.2.tar.gz 2023-11-10   487K  0  1  0  0  0 47
+# 6     fmtr   1.6.0 fmtr_1.6.0.tar.gz 2023-09-10   486K  0  0  0  0  0 47
+# 7     fmtr   1.5.9 fmtr_1.5.9.tar.gz 2022-09-08   487K  0  3  0  0  0 47
+# 8     fmtr   1.5.8 fmtr_1.5.8.tar.gz 2022-08-08   419K  1  1  2  0  1 47
+# 9     fmtr   1.5.7 fmtr_1.5.7.tar.gz 2022-06-25   335K  0  0  0  0  0 48
+# 10    fmtr   1.5.5 fmtr_1.5.5.tar.gz 2022-01-14   337K  0  1  0  0  0 48
+# 11    fmtr   1.5.4 fmtr_1.5.4.tar.gz 2021-11-18   338K  0  0  0  0  0 48
+# 12    fmtr   1.5.3 fmtr_1.5.3.tar.gz 2021-10-09   232K  0  0  0  0  0 48
+# 13    fmtr   1.5.2 fmtr_1.5.2.tar.gz 2021-07-25   230K  0  0  0  0  0 48
+# 14    fmtr   1.5.1 fmtr_1.5.1.tar.gz 2021-06-21   229K  0  0  0  0  0 48
+# 15    fmtr   1.5.0 fmtr_1.5.0.tar.gz 2021-02-22   227K  2  0  0  0  0 48
+# 16    fmtr   1.4.1 fmtr_1.4.1.tar.gz 2021-01-06   224K  0  0  0  0  0 46
+# 17    fmtr   1.3.0 fmtr_1.3.0.tar.gz 2020-11-16    87K  6  1  0  0  0 46
+# 18    fmtr   1.2.2 fmtr_1.2.2.tar.gz 2020-10-10    82K 17  0  0  0  0 40
+# 19    fmtr   1.1.0 fmtr_1.1.0.tar.gz 2020-09-11    65K  6  1  0  0  0 23
+# 20    fmtr   1.0.1 fmtr_1.0.1.tar.gz 2020-08-07    59K 17 17  0  0  0 17
+
+```
+
+## Comparing Package Versions
 
 
-## Listing Package Versions: pkg_repo(){#pkg_repo}
+```{r eval=FALSE, echo=TRUE}
+# Compare package versions
+pkg_diff("fmtr", "1.5.7", "1.5.8")
+# # A difference object: fmtr package
+# - Comparing: v1.5.7/v1.5.8
+# - Breaking Changes: TRUE
+# - Added Functions: 
+#   - fapply2()
+# - Added Parameters: 
+#   - fmt_cnt_pct(): na, zero
+# - Removed Functions: 
+#   - labels.data.frame()
+#   - labels<-()
 
-## Anticipating Breakages: repo_breakages(){#repo_breakages}
+```
 
-## Assessing Entire Repository: repo_stability(){#repo_stability}
+
+
+## Listing Package Versions
+
+
+```{r eval=FALSE, echo=TRUE}
+
+# Create vector of packages
+v1 <- c("curl", "dplyr", "fmtr", "purrr")
+
+# Get current versions
+res1 <- pkg_repo(v1, ver = "current")
+#   Package Version
+# 1    curl   5.2.1
+# 2   dplyr   1.1.4
+# 3    fmtr   1.6.5
+# 4   purrr   1.0.2
+
+# Get latest versions
+res2 <- pkg_repo(v1, ver = "latest")
+#   Package Version
+# 1    curl   6.2.0
+# 2   dplyr   1.1.4
+# 3    fmtr   1.6.8
+# 4   purrr   1.0.4
+
+```
+
+## Anticipating Breakages
+
+
+
+```{r eval=FALSE, echo=TRUE}
+# View upgrade breakages
+repo_breakages(res1, res2) 
+# Comparing curl v5.2.1/v6.2.0
+# Comparing fmtr v1.6.5/v1.6.8
+# Comparing purrr v1.0.2/v1.0.4
+# $summary
+#   Package Version1 Version2 Breakages
+# 1    curl    5.2.1    6.2.0      TRUE
+# 2   dplyr    1.1.4    1.1.4     FALSE
+# 3    fmtr    1.6.5    1.6.8     FALSE
+# 4   purrr    1.0.2    1.0.4     FALSE
+# 
+# $details
+# $details$curl
+# # A difference object: curl package
+# - Comparing: v5.2.1/v6.2.0
+# - Breaking Changes: TRUE
+# - Added Functions: 
+#   - curl_parse_url()
+# - Added Parameters: 
+#   - multi_download(): multi_timeout
+#   - multi_set(): max_streams
+#   - new_pool(): max_streams
+# - Removed Parameters: 
+#   - multi_download(): timeout
+
+
+```
+
+
+
+## Assessing Entire Repository
+
+
+```{r eval=FALSE, echo=TRUE}
+
+repo_stability(v1)
+#   Package    FV    LV         FR         LR TR BR     Score        Assessment
+# 1    curl   0.2 6.2.0 2014-11-20 2025-01-23 50  1 0.9793617       Very Stable
+# 2   dplyr   0.1 1.1.4 2014-01-16 2023-11-17 45 20 0.8711429 Somewhat Unstable
+# 3    fmtr 1.0.1 1.6.8 2020-08-07 2025-01-28 20  1 0.9650000       Very Stable
+# 4   purrr 0.1.0 1.0.4 2015-09-28 2025-02-05 18  6 0.9183333            Stable
+
+```
 
 

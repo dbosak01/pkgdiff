@@ -164,6 +164,15 @@ print.pinfo <- function(x, ..., verbose = FALSE) {
     if (!is.null(x$Suggests))
       cat(paste0("- Repository: ", as.character(x$Repository), "\n"))
 
+    if (!is.null(x$PackageName)) {
+      ic <- github_packages(x$PackageName)
+      if (!is.na(ic)) {
+        cat(paste0("- Cached: ", as.character(TRUE), "\n"))
+      } else {
+        cat(paste0("- Cached: ", as.character(FALSE), "\n"))
+      }
+    }
+
     if (verbose == FALSE) {
 
       if (!is.null(x$Functions))

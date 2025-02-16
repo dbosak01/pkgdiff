@@ -216,3 +216,16 @@ test_that("stability14: pkg_stability() one release.", {
 
 })
 
+
+test_that("stability15: pkg_stability() package edge cases.", {
+
+  # Unknown package
+  res <- pkg_stability("forker")
+
+
+
+
+})
+
+
+

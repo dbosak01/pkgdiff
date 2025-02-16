@@ -167,52 +167,57 @@ pkg_stability <- function(pkg, releases = NULL, months = NULL) {
     dat <- get_cran_data(pkg, releases, months)
   else
     dat <- get_github_data(pkg, releases, months)
+  if (!is.null(dat)) {
+    if (nrow(dat) == 1) {
 
-  if (nrow(dat) == 1) {
+      spn <- elapsed_months( dat$Release[[nrow(dat)]])
 
-    spn <- elapsed_months( dat$Release[[nrow(dat)]])
+      # Populate pdiff_score object
+      d$PackageName <- pkg
+      d$PackageAge <- sprintf("%0.2f years", spn / 12)
+      d$FirstRelease <- dat$Release[[1]]
+      d$LastRelease <- dat$Release[[1]]
+      d$StabilityScore <- 1
+      d$Assessment <- get_stability_assessment(1)
+      d$NumReleases <- 1
+      d$BreakingReleases <- 0
+      d$FirstVersion <- dat$Version[[1]]
+      d$LastVersion <- dat$Version[[1]]
+      d$AddedFunctions <- 0
+      d$AddedParameters <- 0
+      d$RemovedFunctions <- 0
+      d$RemovedParameters <- 0
+      d$StabilityData <- dat
 
-    # Populate pdiff_score object
-    d$PackageName <- pkg
-    d$PackageAge <- sprintf("%0.2f years", spn / 12)
-    d$FirstRelease <- dat$Release[[1]]
-    d$LastRelease <- dat$Release[[1]]
-    d$StabilityScore <- 1
-    d$Assessment <- get_stability_assessment(1)
-    d$NumReleases <- 1
-    d$BreakingReleases <- 0
-    d$FirstVersion <- dat$Version[[1]]
-    d$LastVersion <- dat$Version[[1]]
-    d$AddedFunctions <- 0
-    d$AddedParameters <- 0
-    d$RemovedFunctions <- 0
-    d$RemovedParameters <- 0
-    d$StabilityData <- dat
+    } else {
 
+      # Calculate stability score
+      scr <- stability_score(dat)
+
+      spn <- elapsed_months( dat$Release[[nrow(dat)]])
+
+      # Populate pdiff_score object
+      d$PackageName <- pkg
+      d$PackageAge <- sprintf("%0.2f years", spn / 12)
+      d$FirstRelease <- dat$Release[[nrow(dat)]]
+      d$LastRelease <- dat$Release[[1]]
+      d$StabilityScore <- scr
+      d$Assessment <- get_stability_assessment(scr)
+      d$NumReleases <- nrow(dat)
+      d$BreakingReleases <- sum(dat$BC, na.rm = TRUE)
+      d$FirstVersion <- dat$Version[[nrow(dat)]]
+      d$LastVersion <- dat$Version[[1]]
+      d$AddedFunctions <- sum(dat$AF, na.rm = TRUE)
+      d$AddedParameters <- sum(dat$AP, na.rm = TRUE)
+      d$RemovedFunctions <- sum(dat$RF, na.rm = TRUE)
+      d$RemovedParameters <- sum(dat$RP, na.rm = TRUE)
+      d$StabilityData <- dat
+
+    }
   } else {
 
-    # Calculate stability score
-    scr <- stability_score(dat)
-
-    spn <- elapsed_months( dat$Release[[nrow(dat)]])
-
-    # Populate pdiff_score object
     d$PackageName <- pkg
-    d$PackageAge <- sprintf("%0.2f years", spn / 12)
-    d$FirstRelease <- dat$Release[[nrow(dat)]]
-    d$LastRelease <- dat$Release[[1]]
-    d$StabilityScore <- scr
-    d$Assessment <- get_stability_assessment(scr)
-    d$NumReleases <- nrow(dat)
-    d$BreakingReleases <- sum(dat$BC, na.rm = TRUE)
-    d$FirstVersion <- dat$Version[[nrow(dat)]]
-    d$LastVersion <- dat$Version[[1]]
-    d$AddedFunctions <- sum(dat$AF, na.rm = TRUE)
-    d$AddedParameters <- sum(dat$AP, na.rm = TRUE)
-    d$RemovedFunctions <- sum(dat$RF, na.rm = TRUE)
-    d$RemovedParameters <- sum(dat$RP, na.rm = TRUE)
-    d$StabilityData <- dat
-
+    d$Repository <- "?"
   }
 
   return(d)
@@ -237,6 +242,12 @@ print.pdiff_score <- function(x, ..., verbose = FALSE) {
     grey60 <- crayon::make_style(grey60 = "#999999")
     cat(grey60("# A stability score: " %+%
                  as.character(x$PackageName) %+% " package\n"))
+
+    if (!is.null(x$Repository)) {
+
+      cat(paste0("- Repository: ", x$Repository, "\n"))
+
+    }
 
     if (!is.null(x$PackageAge))
       cat(paste0("- Age: ", x$PackageAge, "\n"))
@@ -337,156 +348,162 @@ get_cran_data <- function(pkgname, releases = NULL, months = NULL) {
   ldat <- get_latest_data(pkgname)
   adat <- get_archive_versions(pkgname)
 
-  if (!is.null(adat))
-    dat <- rbind(ldat, adat)
-  else
-    dat <- ldat
-  dat$AF <- NA
-  dat$AP <- NA
-  dat$RF <- NA
-  dat$RP <- NA
-  dat$BC <- NA
-  dat$TF <- NA
+  if (!is.null(ldat) && !is.null(adat)) {
+    if (!is.null(adat))
+      dat <- rbind(ldat, adat)
+    else
+      dat <- ldat
+    dat$AF <- NA
+    dat$AP <- NA
+    dat$RF <- NA
+    dat$RP <- NA
+    dat$BC <- NA
+    dat$TF <- NA
 
-  rownames(dat) <- NULL
+    rownames(dat) <- NULL
 
-  if (!is.null(releases)) {
+    if (!is.null(releases)) {
 
-    if (nrow(dat) > releases)
-      dat <- dat[seq(1, releases + 1), ]
-  }
-
-  if (!is.null(months)) {
-    dm <- Sys.Date() - ((months + 1) * 30)
-
-    # Handle situation where last package release date
-    # is before the requested release range.
-    if (max(dat$Release) < dm) {
-      dat <- dat[1, ]
-    } else {
-      dat <- subset(dat, dat$Release >= dm)
+      if (nrow(dat) > releases)
+        dat <- dat[seq(1, releases + 1), ]
     }
-  }
 
-  if (nrow(dat) <= 1) {
+    if (!is.null(months)) {
+      dm <- Sys.Date() - ((months + 1) * 30)
 
-    dat <- ldat
+      # Handle situation where last package release date
+      # is before the requested release range.
+      if (max(dat$Release) < dm) {
+        dat <- dat[1, ]
+      } else {
+        dat <- subset(dat, dat$Release >= dm)
+      }
+    }
 
-    inf <- pkg_info(pkgname, "latest")
+    if (nrow(dat) <= 1) {
 
-    dat$AF <- length(inf$Functions)
-    dat$AP <- length(inf$Functions)
-    dat$RF <- 0
-    dat$RP <- 0
-    dat$BC <- 0
-    dat$TF <- length(inf$Functions)
+      dat <- ldat
 
+      inf <- pkg_info(pkgname, "latest")
+
+      dat$AF <- length(inf$Functions)
+      dat$AP <- length(inf$Functions)
+      dat$RF <- 0
+      dat$RP <- 0
+      dat$BC <- 0
+      dat$TF <- length(inf$Functions)
+
+    } else {
+
+      # browser()
+
+      idxs <- seq(1, nrow(dat) - 1)
+
+      laginfo <- NULL
+
+      for (idx in idxs) {
+
+        v2 <- dat[idx, "Version"]
+        v1 <- dat[idx + 1, "Version"]
+
+        cat(paste0("Comparing ", pkgname, " ", v1, "/", v2, "\n"))
+
+        if (is.null(laginfo)) {
+          diff <- tryCatch({
+            pkg_diff(pkgname, v1, v2)
+          }, error = function(e) {
+            NULL
+          })
+        } else {
+          diff <- tryCatch({
+            pkg_diff(pkgname, v1, laginfo)
+          }, error = function(e) {
+            NULL
+          })
+
+        }
+
+        if (!is.null(diff)) {
+
+          if (is.null(diff$AddedFunctions))
+            dat[idx, "AF"] <- 0
+          else
+            dat[idx, "AF"] <- length(diff$AddedFunctions)
+
+          if (is.null(diff$AddedParameters))
+            dat[idx, "AP"] <- 0
+          else
+            dat[idx, "AP"] <- length(diff$AddedParameters)
+
+          if (is.null(diff$RemovedFunctions))
+            dat[idx, "RF"] <- 0
+          else
+            dat[idx, "RF"] <- length(diff$RemovedFunctions)
+
+          if (is.null(diff$RemovedParameters))
+            dat[idx, "RP"] <- 0
+          else
+            dat[idx, "RP"] <- length(diff$RemovedParameters)
+
+          if (dat[idx, "RF"] > 0 | dat[idx, "RP"] > 0)
+            dat[idx, "BC"] <- 1
+          else
+            dat[idx, "BC"] <- 0
+
+          if (is.null(diff$AllFunctions))
+            dat[idx, "TF"] <- 0
+          else
+            dat[idx, "TF"] <- length(diff$AllFunctions)
+
+          laginfo <- diff$Version1DiffInfo
+
+        }
+
+
+      }
+
+    }
+
+
+    # Take out first release, as it will not be compared.
+    if (!is.null(releases)) {
+
+      if (nrow(dat) > releases)
+        dat <- dat[seq(1, releases), ]
+    }
+
+    if (nrow(dat) > 0) {
+
+      idx <- nrow(dat)
+      if (is.na(dat[[idx, "TF"]])) {
+        if (!is.na(dat[[idx, "Version"]])) {
+
+          v1 <- dat[[idx, "Version"]]
+
+          inf <- get_info_cran(pkgname, v1)
+          dat[[idx, "AF"]] <- length(inf$Functions)
+          dat[[idx, "AP"]] <- length(get_all_parameters(inf))
+          dat[[idx, "RF"]] <- 0
+          dat[[idx, "RP"]] <- 0
+          dat[[idx, "BC"]] <- 0
+          dat[[idx, "TF"]] <- length(inf$Functions)
+
+        }
+      }
+    }
+
+    # Add labels
+    common::labels(dat) <- list(AF = "Added Functions",
+                                AP = "Added Parameters",
+                                RF = "Removed Functions",
+                                RP = "Removed Parameters",
+                                BC = "Breaking Changes",
+                                TC = "Total Functions")
   } else {
 
-    # browser()
-
-    idxs <- seq(1, nrow(dat) - 1)
-
-    laginfo <- NULL
-
-    for (idx in idxs) {
-
-      v2 <- dat[idx, "Version"]
-      v1 <- dat[idx + 1, "Version"]
-
-      cat(paste0("Comparing ", pkgname, " ", v1, "/", v2, "\n"))
-
-      if (is.null(laginfo)) {
-        diff <- tryCatch({
-          pkg_diff(pkgname, v1, v2)
-        }, error = function(e) {
-          NULL
-        })
-      } else {
-        diff <- tryCatch({
-          pkg_diff(pkgname, v1, laginfo)
-        }, error = function(e) {
-          NULL
-        })
-
-      }
-
-      if (!is.null(diff)) {
-
-        if (is.null(diff$AddedFunctions))
-          dat[idx, "AF"] <- 0
-        else
-          dat[idx, "AF"] <- length(diff$AddedFunctions)
-
-        if (is.null(diff$AddedParameters))
-          dat[idx, "AP"] <- 0
-        else
-          dat[idx, "AP"] <- length(diff$AddedParameters)
-
-        if (is.null(diff$RemovedFunctions))
-          dat[idx, "RF"] <- 0
-        else
-          dat[idx, "RF"] <- length(diff$RemovedFunctions)
-
-        if (is.null(diff$RemovedParameters))
-          dat[idx, "RP"] <- 0
-        else
-          dat[idx, "RP"] <- length(diff$RemovedParameters)
-
-        if (dat[idx, "RF"] > 0 | dat[idx, "RP"] > 0)
-          dat[idx, "BC"] <- 1
-        else
-          dat[idx, "BC"] <- 0
-
-        if (is.null(diff$AllFunctions))
-          dat[idx, "TF"] <- 0
-        else
-          dat[idx, "TF"] <- length(diff$AllFunctions)
-
-        laginfo <- diff$Version1DiffInfo
-
-      }
-
-
-    }
-
+    # Package not found
+    dat <- NULL
   }
-
-
-  # Take out first release, as it will not be compared.
-  if (!is.null(releases)) {
-
-    if (nrow(dat) > releases)
-      dat <- dat[seq(1, releases), ]
-  }
-
-  if (nrow(dat) > 0) {
-
-    idx <- nrow(dat)
-    if (is.na(dat[[idx, "TF"]])) {
-      if (!is.na(dat[[idx, "Version"]])) {
-
-        v1 <- dat[[idx, "Version"]]
-
-        inf <- get_info_cran(pkgname, v1)
-        dat[[idx, "AF"]] <- length(inf$Functions)
-        dat[[idx, "AP"]] <- length(get_all_parameters(inf))
-        dat[[idx, "RF"]] <- 0
-        dat[[idx, "RP"]] <- 0
-        dat[[idx, "BC"]] <- 0
-        dat[[idx, "TF"]] <- length(inf$Functions)
-
-      }
-    }
-  }
-
-  # Add labels
-  common::labels(dat) <- list(AF = "Added Functions",
-                              AP = "Added Parameters",
-                              RF = "Removed Functions",
-                              RP = "Removed Parameters",
-                              BC = "Breaking Changes",
-                              TC = "Total Functions")
 
   return(dat)
 
