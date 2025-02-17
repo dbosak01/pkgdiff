@@ -753,10 +753,16 @@ github_package <- function(pkg) {
 }
 
 
-github_versions <- function(pkg) {
+github_update <- function() {
+
+  pth <- "https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/LastUpdate.RData"
+
+  murl <- url(pth)
+  ret <- get(load(gzcon(murl)))
+  close(murl)
 
 
-
+  return(ret)
 }
 
 

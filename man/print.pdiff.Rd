@@ -21,9 +21,11 @@ Print a Package Difference Object
 }
 \seealso{
 Other pdiff: 
+\code{\link{pkg_cache}()},
 \code{\link{pkg_diff}()},
 \code{\link{pkg_info}()},
 \code{\link{pkg_repo}()},
+\code{\link{print.pcache}()},
 \code{\link{print.pinfo}()}
 }
 \concept{pdiff}

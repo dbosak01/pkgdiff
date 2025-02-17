@@ -204,6 +204,60 @@ test_that("info7: print.pinfo() works as expected.", {
 })
 
 
+# test_that("info8: pkg_info() handles archived packages.", {
+#
+#   res <- pkg_info("grid")
+#
+#   print(res)
+#
+#
+#   print(res, verbose = TRUE)
+#
+#
+#   expect_equal(TRUE, TRUE)
+#
+# })
+
+
+test_that("info8: pkg_cache() works as expected.", {
+
+  # All exist
+  res <- pkg_cache(c("procs", "logr", "libr"))
+
+  res
+
+  expect_equal(nrow(res$data), 3)
+  expect_equal(any(is.na(res$data$Version)), FALSE)
+  expect_equal("POSIXct" %in% class(res$LastUpdated), TRUE)
+
+  # One doesn't exist
+  res <- pkg_cache(c("procs", "forker", "libr"))
+
+  res
+
+  expect_equal(nrow(res$data), 3)
+  expect_equal(any(is.na(res$data$Version)), TRUE)
+
+  # Only doesn't exist
+  res <- pkg_cache("forker")
+
+  res
+
+  expect_equal(nrow(res$data), 1)
+  expect_equal(any(is.na(res$data$Version)), TRUE)
+
+
+  # All
+  res <- pkg_cache()
+
+  res
+  expect_equal(nrow(res$data) > 10, TRUE)
+  expect_equal(any(is.na(res$data$Version)), FALSE)
+
+
+})
+
+
 # Not doing good with S4 classes
 # pth <- "https://cran.r-project.org/src/contrib/Matrix_1.7-2.tar.gz"
 #
@@ -231,4 +285,8 @@ test_that("info7: print.pinfo() works as expected.", {
 # }
 #
 # formals("all.equal")
+
+
+
+
 

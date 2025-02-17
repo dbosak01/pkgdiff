@@ -133,7 +133,9 @@ test_that("stability10: get_stability_data() boundry conditions.", {
   # Unknown package
   pkgs <- c("definer")
 
-  expect_error(suppressWarnings(get_stability_data(pkgs)))
+
+  res <- get_stability_data(pkgs)
+  expect_equal(is.null(res), TRUE)
 
 
   # No archive data
@@ -220,7 +222,11 @@ test_that("stability14: pkg_stability() one release.", {
 test_that("stability15: pkg_stability() package edge cases.", {
 
   # Unknown package
+  # Should not give an error
   res <- pkg_stability("forker")
+
+  res
+  expect_equal(is.null(res), FALSE)
 
 
 

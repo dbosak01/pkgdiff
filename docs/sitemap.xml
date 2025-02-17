@@ -1,6 +1,7 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://pkgdiff.r-sassy.org/404.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/articles/index.html</loc></url>
+<url><loc>https://pkgdiff.r-sassy.org/articles/pkgdiff-cache.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/articles/pkgdiff-diff.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/articles/pkgdiff-faq.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/articles/pkgdiff-globals.html</loc></url>
@@ -17,10 +18,12 @@
 <url><loc>https://pkgdiff.r-sassy.org/reference/installed_packages.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/lfwtr.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/pkgdiff.html</loc></url>
+<url><loc>https://pkgdiff.r-sassy.org/reference/pkg_cache.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/pkg_diff.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/pkg_info.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/pkg_repo.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/pkg_stability.html</loc></url>
+<url><loc>https://pkgdiff.r-sassy.org/reference/print.pcache.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/print.pdiff.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/print.pdiff_score.html</loc></url>
 <url><loc>https://pkgdiff.r-sassy.org/reference/print.pinfo.html</loc></url>

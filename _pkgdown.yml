@@ -6,6 +6,7 @@ articles:
   contents:
   - pkgdiff-globals
   - pkgdiff-stability
+  - pkgdiff-cache
   - pkgdiff-faq
 
 reference:
@@ -24,6 +25,11 @@ reference:
   - pkg_repo
   - repo_breakages
   - repo_stability
+- title: Cache Functions
+  desc: Functions to query the package cache.
+  contents:
+  - pkg_cache
+  - print.pcache
 
 
 navbar:

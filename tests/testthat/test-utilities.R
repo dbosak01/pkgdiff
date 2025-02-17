@@ -508,3 +508,11 @@ test_that("utilities26: is_popular() works as expected.", {
 
 })
 
+
+test_that("utilities27: github_update() works as expected.", {
+
+  res <- github_update()
+
+  expect_equal("POSIXct" %in% class(res), TRUE)
+
+})

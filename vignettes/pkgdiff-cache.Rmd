@@ -1,8 +1,8 @@
 ---
-title: "Global Options"
+title: "Package Cache"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Global Options}
+  %\VignetteIndexEntry{Package Cache}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

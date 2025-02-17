@@ -199,60 +199,72 @@ print.pinfo <- function(x, ..., verbose = FALSE) {
 }
 
 
-# Package Function --------------------------------------------------------
+# Package Cache --------------------------------------------------------
 
 
 
-# @title A Package Function Object
-# @param name The function name.
-# @param parameters A vector of parameters for the function.
-# @param code The code for this function, as single character string.
-# @family pdiff
-# @noRd
-# pfunction <- function(name, parameters, code = NULL) {
-#
-#
-#  func <- structure(list(), class = c("pfunction", "list"))
-#
-#  func$FunctionName <- name
-#  func$Parameters <- parameters
-#  func$Code <- code
-#
-#  return(func)
-# }
+#' @title Returns Information on the Package Cache
+#' @description
+#' The \code{pkg_cache} function queries the package cache, and
+#' returns information on whether or not the package is part of the cache.
+#' The function also returns the last version of the package cached.
+#' @param pkgs A vector of package names to retrieve cache information about.
+#' Default is NULL, which means to return all packages in the cache.
+#' @returns An data frame showing the package name and latest package
+#' version stored in the cache.  If the package is not stored in the cache,
+#' the package version will be NA.
+#' @family pdiff
+#' @export
+pkg_cache <- function(pkgs = NULL) {
+
+
+  pc <- structure(list(), class = c("pcache", "list"))
+
+
+  ov <- github_packages(pkgs)
+
+  nms <- names(ov)
+  names(ov) <- NULL
+
+  if (is.null(pkgs)) {
+    ret <- data.frame(Package = nms, Version = ov)
+  } else {
+    ret <- data.frame(Package = pkgs, Version = ov)
+  }
+
+
+  pc$LastUpdated <- github_update()
+  pc$data <- ret
+
+  return(pc)
+}
 
 
 
-# @title Print a Package Function Object
-# @param x The package function to print.
-# @param ... Follow-on parameters to the print function.
-# @param verbose Whether to print in summary or list-style.
-# @family pdiff
-# @import crayon
-# @export
-# print.pfunction <- function(x, ..., verbose = FALSE) {
-#
-#   if (verbose == TRUE) {
-#
-#     print(unclass(x))
-#
-#   } else {
-#
-#     # grey60 <- crayon::make_style(grey60 = "#999999")
-#     # cat(grey60(paste0("# A package function: ",
-#     #                   as.character(x$FunctionName), "\n")))
-#
-#     if (!is.null(x$Parameters))
-#       cat(paste0("  - ", x$FunctionName, "(): ", paste0(x$Parameters, collapse = " "), "\n"))
-#     else
-#       cat(paste0("  - ", x$FunctionName, "() ", , "\n"))
-#
-#
-#
-#   }
-#
-#   invisible(x)
-# }
+#' @title Print a Package Cache Object
+#' @param x The package cache to print.
+#' @param ... Follow-on parameters to the print function.
+#' @family pdiff
+#' @import crayon
+#' @export
+print.pcache <- function(x, ...) {
+
+  grey60 <- crayon::make_style(grey60 = "#999999")
+  cat(grey60(paste0("# A package cache object\n")))
+
+  if (!is.null(x$LastUpdate)) {
+    tmstmp <- format(x$LastUpdate, format = "%Y-%m-%d %H:%M UTC")
+    cat(paste0("- Last Update: ", tmstmp , "\n"))
+
+  }
+
+  if (!is.null(x$data)) {
+    cat(paste0("- Packages:\n"))
+    print(x$data)
+  }
+
+  invisible(x)
+}
 
 
 # Get Info ----------------------------------------------------------------

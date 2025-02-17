@@ -56,6 +56,9 @@
       <a href="../articles/pkgdiff-stability.html">Stability Score</a>
     </li>
     <li>
+      <a href="../articles/pkgdiff-cache.html">Package Cache</a>
+    </li>
+    <li>
       <a href="../articles/pkgdiff-faq.html">pkgdiff-faq</a>
     </li>
   </ul>
@@ -106,53 +109,255 @@ Here is a list of the major functions in <strong>pkgdiff</strong>, and a
 short explanation of each:</p>
 <ul>
 <li>
-<a href="#pkg_info"><strong>pkg_info()</strong></a>: Displays
-general information about a package, including a list of all exported
-functions.</li>
+<code><a href="../reference/pkg_info.html">pkg_info()</a></code>: Displays general information about a
+package, including a list of all exported functions.</li>
 <li>
-<a href="#pkg_diff"><strong>pkg_diff()</strong></a>: Compares two
-versions of a package, and shows which functions have been added or
-removed.</li>
+<code><a href="../reference/pkg_stability.html">pkg_stability()</a></code>: Looks at the history of a package,
+identifies breaking changes, and assesses the package for
+stability.</li>
 <li>
-<a href="#pkg_stability"><strong>pkg_stability()</strong></a>: Looks
-at the entire history of a package, identifies breaking changes, and
-assesses the package for stability.</li>
+<code><a href="../reference/pkg_diff.html">pkg_diff()</a></code>: Compares two versions of a package, and
+shows which functions have been added or removed.</li>
 <li>
-<a href="#pkg_repo"><strong>pkg_repo()</strong></a>: Generates a
-list of the packages in a repository and their versions.</li>
+<code><a href="../reference/pkg_repo.html">pkg_repo()</a></code>: Generates a list of the packages in a
+repository and their versions.</li>
 <li>
-<a href="#repo_breakages"><strong>repo_breakages()</strong></a>:
-Looks at a package repository and tries to identify which packages will
-break when upgraded.</li>
+<code><a href="../reference/repo_breakages.html">repo_breakages()</a></code>: Looks at a package repository and
+tries to identify which packages will break when upgraded.</li>
 <li>
-<a href="#repo_stability"><strong>repo_stability()</strong></a>:
-Looks at a package repository and calculates a stability score for each
-package.</li>
+<code><a href="../reference/repo_stability.html">repo_stability()</a></code>: Looks at a package repository and
+calculates a stability score for each package.</li>
 </ul>
-<p>Below is a explanation and demo for each of the above functions.</p>
+<p>Below is a short explanation and demo for each of the above
+functions.</p>
 <div class="section level2">
-<h2 id="pkg_info">General Package Information: pkg_info()<a class="anchor" aria-label="anchor" href="#pkg_info"></a>
+<h2 id="general-package-information">General Package Information<a class="anchor" aria-label="anchor" href="#general-package-information"></a>
 </h2>
+<p>The firt thing you may want to do when exploring a package is to get
+some general information about it. This general package information can
+be achieved using the <code><a href="../reference/pkg_info.html">pkg_info()</a></code> function. All you need to
+pass is the package name, and the function will return basic information
+such as the maintainer, description, and imported packages. Here is a
+simple demonstration:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkgdiff.r-sassy.org">pkgdiff</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Examine fmtr package</span></span>
+<span><span class="fu"><a href="../reference/pkg_info.html">pkg_info</a></span><span class="op">(</span><span class="st">"fmtr"</span><span class="op">)</span></span>
+<span><span class="co"># # A package info object: fmtr package</span></span>
+<span><span class="co"># - Version: v1.6.5</span></span>
+<span><span class="co"># - Release Date: 2024-06-13</span></span>
+<span><span class="co"># - Title: Easily Apply Formats to Data</span></span>
+<span><span class="co"># - Maintainer: David Bosak &lt;dbosak01@gmail.com&gt;</span></span>
+<span><span class="co"># - License: CC0</span></span>
+<span><span class="co"># - Description: Contains a set of functions that can be used to apply</span></span>
+<span><span class="co"># formats to data frames or vectors.  The package aims to provide</span></span>
+<span><span class="co"># functionality similar to that of SAS® formats. Formats are assigned to</span></span>
+<span><span class="co"># the format attribute on data frame columns.  Then when the fdata()</span></span>
+<span><span class="co"># function is called, a new data frame is created with the column data</span></span>
+<span><span class="co"># formatted as specified.  The package also contains a value() function</span></span>
+<span><span class="co"># to create a user-defined format, similar to a SAS® user-defined format.</span></span>
+<span><span class="co"># - Depends: R (&gt;= 4.0.0), common</span></span>
+<span><span class="co"># - Linking To: Rcpp</span></span>
+<span><span class="co"># - Imports: tibble, stats, crayon, Rcpp</span></span>
+<span><span class="co"># - Suggests: testthat, knitr, rmarkdown, covr, logr, utils, dplyr, libr</span></span>
+<span><span class="co"># - Repository: CRAN</span></span>
+<span><span class="co"># - Functions: 49</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Get package info</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_info.html">pkg_info</a></span><span class="op">(</span><span class="st">"fmtr"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># View functions</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co"># # A package info object: fmtr package</span></span>
+<span><span class="co"># - Version: v1.6.5</span></span>
+<span><span class="co"># - Release Date: 2024-06-13</span></span>
+<span><span class="co"># - Title: Easily Apply Formats to Data</span></span>
+<span><span class="co"># - Maintainer: David Bosak &lt;dbosak01@gmail.com&gt;</span></span>
+<span><span class="co"># - License: CC0</span></span>
+<span><span class="co"># - Description: Contains a set of functions that can be used to apply</span></span>
+<span><span class="co"># formats to data frames or vectors.  The package aims to provide</span></span>
+<span><span class="co"># functionality similar to that of SAS® formats. Formats are assigned to</span></span>
+<span><span class="co"># the format attribute on data frame columns.  Then when the fdata()</span></span>
+<span><span class="co"># function is called, a new data frame is created with the column data</span></span>
+<span><span class="co"># formatted as specified.  The package also contains a value() function</span></span>
+<span><span class="co"># to create a user-defined format, similar to a SAS® user-defined format.</span></span>
+<span><span class="co"># - Depends: R (&gt;= 4.0.0), common</span></span>
+<span><span class="co"># - Linking To: Rcpp</span></span>
+<span><span class="co"># - Imports: tibble, stats, crayon, Rcpp</span></span>
+<span><span class="co"># - Suggests: testthat, knitr, rmarkdown, covr, logr, utils, dplyr, libr</span></span>
+<span><span class="co"># - Repository: CRAN</span></span>
+<span><span class="co"># - Functions: </span></span>
+<span><span class="co">#   - as.data.frame.fcat(): x, row.names, optional, ...</span></span>
+<span><span class="co">#   - as.data.frame.fmt(): x, row.names, optional, ..., name</span></span>
+<span><span class="co">#   - as.data.frame.fmt_lst(): x, row.names, optional, ...</span></span>
+<span><span class="co">#   - as.fcat(): x</span></span>
+<span><span class="co">#   - as.fcat.data.frame(): x</span></span>
+<span><span class="co">#   - as.fcat.fmt_lst(): x</span></span>
+<span><span class="co">#   - as.fcat.list(): x</span></span>
+<span><span class="co">#   - as.fcat.tbl_df(): x</span></span>
+<span><span class="co">#   - as.flist(): x, type, lookup, simplify</span></span>
+<span><span class="co">#   - as.flist.data.frame(): x, type, lookup, simplify</span></span>
+<span><span class="co">#   - as.flist.fcat(): x, type, lookup, simplify</span></span>
+<span><span class="co">#   - as.flist.list(): x, type, lookup, simplify</span></span>
+<span><span class="co">#   - as.flist.tbl_df(): x, type, lookup, simplify</span></span>
+<span><span class="co">#   - as.fmt(): x</span></span>
+<span><span class="co">#   - as.fmt.data.frame(): x</span></span>
+<span><span class="co">#   - condition(): expr, label, order</span></span>
+<span><span class="co">#   - descriptions(): x</span></span>
+<span><span class="co">#   - descriptions&lt;-(): x, value</span></span>
+<span><span class="co">#   - fapply(): x, format, width, justify</span></span>
+<span><span class="co">#   - fapply2(): x1, x2, format1, format2, sep, width, justify</span></span>
+<span><span class="co">#   - fattr(): x, format, width, justify, label, description, keep</span></span>
+<span><span class="co">#   - fattr&lt;-()</span></span>
+<span><span class="co">#   - fcat(): ..., log</span></span>
+<span><span class="co">#   - fdata(): x, ...</span></span>
+<span><span class="co">#   - flist(): ..., type, lookup, simplify</span></span>
+<span><span class="co">#   - fmt_cnt_pct(): x, denom, format, na, zero</span></span>
+<span><span class="co">#   - fmt_mean_sd(): x, format, sd_format</span></span>
+<span><span class="co">#   - fmt_median(): x, format</span></span>
+<span><span class="co">#   - fmt_n(): x</span></span>
+<span><span class="co">#   - fmt_quantile_range(): x, format, sep, lower, upper, type</span></span>
+<span><span class="co">#   - fmt_range(): x, format, sep</span></span>
+<span><span class="co">#   - formats(): x</span></span>
+<span><span class="co">#   - formats&lt;-(): x, value</span></span>
+<span><span class="co">#   - is.fcat(): x</span></span>
+<span><span class="co">#   - is.flist(): x</span></span>
+<span><span class="co">#   - is.format(): x</span></span>
+<span><span class="co">#   - justification(): x</span></span>
+<span><span class="co">#   - justification&lt;-(): x, value</span></span>
+<span><span class="co">#   - labels.fmt(): object, ...</span></span>
+<span><span class="co">#   - print.fcat(): x, ..., verbose</span></span>
+<span><span class="co">#   - print.fmt(): x, ..., name, verbose</span></span>
+<span><span class="co">#   - print.fmt_lst(): x, ..., verbose</span></span>
+<span><span class="co">#   - read.fcat(): file_path</span></span>
+<span><span class="co">#   - read.flist(): file_path</span></span>
+<span><span class="co">#   - value(): ..., log, as.factor</span></span>
+<span><span class="co">#   - widths(): x</span></span>
+<span><span class="co">#   - widths&lt;-(): x, value</span></span>
+<span><span class="co">#   - write.fcat(): x, dir_path, file_name</span></span>
+<span><span class="co">#   - write.flist(): x, dir_path, file_name</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="pkg_diff">Comparing Package Versions: pkg_diff()<a class="anchor" aria-label="anchor" href="#pkg_diff"></a>
+<h2 id="stability-assessment">Stability Assessment<a class="anchor" aria-label="anchor" href="#stability-assessment"></a>
 </h2>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># View package stability</span></span>
+<span><span class="fu"><a href="../reference/pkg_stability.html">pkg_stability</a></span><span class="op">(</span><span class="st">"fmtr"</span><span class="op">)</span></span>
+<span><span class="co"># # A stability score: fmtr package</span></span>
+<span><span class="co"># - Age: 4.50 years</span></span>
+<span><span class="co"># - Score: 96.5</span></span>
+<span><span class="co"># - Assessment: Very Stable</span></span>
+<span><span class="co"># - Version Range: 1.0.1/1.6.8</span></span>
+<span><span class="co"># - Release Range: 2020-08-07/2025-01-28</span></span>
+<span><span class="co"># - Release Count: 20</span></span>
+<span><span class="co"># - Breaking Releases: 1</span></span>
+<span><span class="co"># - Data: </span></span>
+<span><span class="co">#    Package Version          FileName    Release   Size AF AP RF RP BC TF</span></span>
+<span><span class="co"># 1     fmtr   1.6.8 fmtr_1.6.8.tar.gz 2025-01-28 576.5K  0  1  0  0  0 49</span></span>
+<span><span class="co"># 2     fmtr   1.6.5 fmtr_1.6.5.tar.gz 2024-06-14   575K  0  0  0  0  0 49</span></span>
+<span><span class="co"># 3     fmtr   1.6.4 fmtr_1.6.4.tar.gz 2024-05-10   580K  2  0  0  0  0 49</span></span>
+<span><span class="co"># 4     fmtr   1.6.3 fmtr_1.6.3.tar.gz 2024-01-09   574K  0  0  0  0  0 47</span></span>
+<span><span class="co"># 5     fmtr   1.6.2 fmtr_1.6.2.tar.gz 2023-11-10   487K  0  1  0  0  0 47</span></span>
+<span><span class="co"># 6     fmtr   1.6.0 fmtr_1.6.0.tar.gz 2023-09-10   486K  0  0  0  0  0 47</span></span>
+<span><span class="co"># 7     fmtr   1.5.9 fmtr_1.5.9.tar.gz 2022-09-08   487K  0  3  0  0  0 47</span></span>
+<span><span class="co"># 8     fmtr   1.5.8 fmtr_1.5.8.tar.gz 2022-08-08   419K  1  1  2  0  1 47</span></span>
+<span><span class="co"># 9     fmtr   1.5.7 fmtr_1.5.7.tar.gz 2022-06-25   335K  0  0  0  0  0 48</span></span>
+<span><span class="co"># 10    fmtr   1.5.5 fmtr_1.5.5.tar.gz 2022-01-14   337K  0  1  0  0  0 48</span></span>
+<span><span class="co"># 11    fmtr   1.5.4 fmtr_1.5.4.tar.gz 2021-11-18   338K  0  0  0  0  0 48</span></span>
+<span><span class="co"># 12    fmtr   1.5.3 fmtr_1.5.3.tar.gz 2021-10-09   232K  0  0  0  0  0 48</span></span>
+<span><span class="co"># 13    fmtr   1.5.2 fmtr_1.5.2.tar.gz 2021-07-25   230K  0  0  0  0  0 48</span></span>
+<span><span class="co"># 14    fmtr   1.5.1 fmtr_1.5.1.tar.gz 2021-06-21   229K  0  0  0  0  0 48</span></span>
+<span><span class="co"># 15    fmtr   1.5.0 fmtr_1.5.0.tar.gz 2021-02-22   227K  2  0  0  0  0 48</span></span>
+<span><span class="co"># 16    fmtr   1.4.1 fmtr_1.4.1.tar.gz 2021-01-06   224K  0  0  0  0  0 46</span></span>
+<span><span class="co"># 17    fmtr   1.3.0 fmtr_1.3.0.tar.gz 2020-11-16    87K  6  1  0  0  0 46</span></span>
+<span><span class="co"># 18    fmtr   1.2.2 fmtr_1.2.2.tar.gz 2020-10-10    82K 17  0  0  0  0 40</span></span>
+<span><span class="co"># 19    fmtr   1.1.0 fmtr_1.1.0.tar.gz 2020-09-11    65K  6  1  0  0  0 23</span></span>
+<span><span class="co"># 20    fmtr   1.0.1 fmtr_1.0.1.tar.gz 2020-08-07    59K 17 17  0  0  0 17</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="pkg_stability">Stability Assessment: pkg_stability()<a class="anchor" aria-label="anchor" href="#pkg_stability"></a>
+<h2 id="comparing-package-versions">Comparing Package Versions<a class="anchor" aria-label="anchor" href="#comparing-package-versions"></a>
 </h2>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Compare package versions</span></span>
+<span><span class="fu"><a href="../reference/pkg_diff.html">pkg_diff</a></span><span class="op">(</span><span class="st">"fmtr"</span>, <span class="st">"1.5.7"</span>, <span class="st">"1.5.8"</span><span class="op">)</span></span>
+<span><span class="co"># # A difference object: fmtr package</span></span>
+<span><span class="co"># - Comparing: v1.5.7/v1.5.8</span></span>
+<span><span class="co"># - Breaking Changes: TRUE</span></span>
+<span><span class="co"># - Added Functions: </span></span>
+<span><span class="co">#   - fapply2()</span></span>
+<span><span class="co"># - Added Parameters: </span></span>
+<span><span class="co">#   - fmt_cnt_pct(): na, zero</span></span>
+<span><span class="co"># - Removed Functions: </span></span>
+<span><span class="co">#   - labels.data.frame()</span></span>
+<span><span class="co">#   - labels&lt;-()</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="pkg_repo">Listing Package Versions: pkg_repo()<a class="anchor" aria-label="anchor" href="#pkg_repo"></a>
+<h2 id="listing-package-versions">Listing Package Versions<a class="anchor" aria-label="anchor" href="#listing-package-versions"></a>
 </h2>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Create vector of packages</span></span>
+<span><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"curl"</span>, <span class="st">"dplyr"</span>, <span class="st">"fmtr"</span>, <span class="st">"purrr"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Get current versions</span></span>
+<span><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_repo.html">pkg_repo</a></span><span class="op">(</span><span class="va">v1</span>, ver <span class="op">=</span> <span class="st">"current"</span><span class="op">)</span></span>
+<span><span class="co">#   Package Version</span></span>
+<span><span class="co"># 1    curl   5.2.1</span></span>
+<span><span class="co"># 2   dplyr   1.1.4</span></span>
+<span><span class="co"># 3    fmtr   1.6.5</span></span>
+<span><span class="co"># 4   purrr   1.0.2</span></span>
+<span></span>
+<span><span class="co"># Get latest versions</span></span>
+<span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_repo.html">pkg_repo</a></span><span class="op">(</span><span class="va">v1</span>, ver <span class="op">=</span> <span class="st">"latest"</span><span class="op">)</span></span>
+<span><span class="co">#   Package Version</span></span>
+<span><span class="co"># 1    curl   6.2.0</span></span>
+<span><span class="co"># 2   dplyr   1.1.4</span></span>
+<span><span class="co"># 3    fmtr   1.6.8</span></span>
+<span><span class="co"># 4   purrr   1.0.4</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="repo_breakages">Anticipating Breakages: repo_breakages()<a class="anchor" aria-label="anchor" href="#repo_breakages"></a>
+<h2 id="anticipating-breakages">Anticipating Breakages<a class="anchor" aria-label="anchor" href="#anticipating-breakages"></a>
 </h2>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># View upgrade breakages</span></span>
+<span><span class="fu"><a href="../reference/repo_breakages.html">repo_breakages</a></span><span class="op">(</span><span class="va">res1</span>, <span class="va">res2</span><span class="op">)</span> </span>
+<span><span class="co"># Comparing curl v5.2.1/v6.2.0</span></span>
+<span><span class="co"># Comparing fmtr v1.6.5/v1.6.8</span></span>
+<span><span class="co"># Comparing purrr v1.0.2/v1.0.4</span></span>
+<span><span class="co"># $summary</span></span>
+<span><span class="co">#   Package Version1 Version2 Breakages</span></span>
+<span><span class="co"># 1    curl    5.2.1    6.2.0      TRUE</span></span>
+<span><span class="co"># 2   dplyr    1.1.4    1.1.4     FALSE</span></span>
+<span><span class="co"># 3    fmtr    1.6.5    1.6.8     FALSE</span></span>
+<span><span class="co"># 4   purrr    1.0.2    1.0.4     FALSE</span></span>
+<span><span class="co"># </span></span>
+<span><span class="co"># $details</span></span>
+<span><span class="co"># $details$curl</span></span>
+<span><span class="co"># # A difference object: curl package</span></span>
+<span><span class="co"># - Comparing: v5.2.1/v6.2.0</span></span>
+<span><span class="co"># - Breaking Changes: TRUE</span></span>
+<span><span class="co"># - Added Functions: </span></span>
+<span><span class="co">#   - curl_parse_url()</span></span>
+<span><span class="co"># - Added Parameters: </span></span>
+<span><span class="co">#   - multi_download(): multi_timeout</span></span>
+<span><span class="co">#   - multi_set(): max_streams</span></span>
+<span><span class="co">#   - new_pool(): max_streams</span></span>
+<span><span class="co"># - Removed Parameters: </span></span>
+<span><span class="co">#   - multi_download(): timeout</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="repo_stability">Assessing Entire Repository: repo_stability()<a class="anchor" aria-label="anchor" href="#repo_stability"></a>
+<h2 id="assessing-entire-repository">Assessing Entire Repository<a class="anchor" aria-label="anchor" href="#assessing-entire-repository"></a>
 </h2>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="../reference/repo_stability.html">repo_stability</a></span><span class="op">(</span><span class="va">v1</span><span class="op">)</span></span>
+<span><span class="co">#   Package    FV    LV         FR         LR TR BR     Score        Assessment</span></span>
+<span><span class="co"># 1    curl   0.2 6.2.0 2014-11-20 2025-01-23 50  1 0.9793617       Very Stable</span></span>
+<span><span class="co"># 2   dplyr   0.1 1.1.4 2014-01-16 2023-11-17 45 20 0.8711429 Somewhat Unstable</span></span>
+<span><span class="co"># 3    fmtr 1.0.1 1.6.8 2020-08-07 2025-01-28 20  1 0.9650000       Very Stable</span></span>
+<span><span class="co"># 4   purrr 0.1.0 1.0.4 2015-09-28 2025-02-05 18  6 0.9183333            Stable</span></span></code></pre></div>
 </div>
   </div>
 
