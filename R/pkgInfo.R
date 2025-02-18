@@ -173,6 +173,9 @@ print.pinfo <- function(x, ..., verbose = FALSE) {
       }
     }
 
+    if (!is.null(x$Archived))
+      cat(paste0("- Archived: ", as.character(x$Archived), "\n"))
+
     if (verbose == FALSE) {
 
       if (!is.null(x$Functions))
@@ -291,7 +294,7 @@ print.pcache <- function(x, ...) {
 #' @export
 pkg_info <- function(pkg, ver = "current", cache = TRUE) {
 
-
+  archived <- NULL
   tst <- github_packages(pkg)
 
   if (is.null(ver)) {
@@ -299,6 +302,7 @@ pkg_info <- function(pkg, ver = "current", cache = TRUE) {
   } else if (ver == "current") {
 
     ver <- get_current_version(pkg)
+
   } else if (ver == "latest") {
 
     ver <- get_latest_version(pkg)
@@ -306,6 +310,19 @@ pkg_info <- function(pkg, ver = "current", cache = TRUE) {
 
   if (length(ver) == 0)
     ver <- get_latest_version(pkg)
+
+  if (ver == "archived") {
+
+    tmp <- get_archive_versions(pkg)
+
+    if (nrow(tmp) > 0) {
+
+      ver <- tmp[1, "Version"]
+      archived <- TRUE
+
+    }
+
+  }
 
   if (!is.null(tst) && !is.na(tst) && cache == TRUE) {
     ret <- get_info_github(pkg, ver)
@@ -317,8 +334,11 @@ pkg_info <- function(pkg, ver = "current", cache = TRUE) {
 
   } else {
 
-    ret <- get_info_cran(pkg, ver)
+      ret <- get_info_cran(pkg, ver)
+
   }
+
+  ret$Archived <- archived
 
   return(ret)
 }

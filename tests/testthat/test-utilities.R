@@ -56,6 +56,16 @@ test_that("utilities2: get_latest_version() works as expected.", {
 
   expect_equal(length(res) == 1, TRUE)
 
+  res <- get_latest_version("grid")
+
+  expect_equal(is.data.frame(res), FALSE)
+
+  expect_equal(is.list(res), FALSE)
+
+  expect_equal(length(res) == 1, TRUE)
+
+  expect_equal(res[[1]] == "archived", TRUE)
+
 })
 
 test_that("utilities3: get_version() works as expected.", {

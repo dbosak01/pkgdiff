@@ -112,12 +112,31 @@ get_latest_data_back <- function(pkgs,
     # Read and parse page into data frame
     page <- tryCatch({rvest::read_html(url)},
                      error = function(e){NULL})
+
+    if (!is.null(page)) {
+      removed <- grepl("archive", page, fixed = TRUE)[[1]]
+      archived <- grepl("archive", page, fixed = TRUE)[[1]]
+      tables <- html_elements(page, "table")
+    } else {
+      removed <- FALSE
+      archived <- FALSE
+      tables <- NULL
+    }
+
+
     if (is.null(page)) {
 
       message(paste0("Package data for '", pkg, "' not found."))
+
+    } else if (removed && archived && length(tables) == 0) {
+
+      message(paste0("Package data for '", pkg, "' has been archived."))
+
+      ret <- data.frame(Package = pkg, Version = "archived")
+
+
     } else {
 
-      tables <- html_elements(page, "table")
       table1 <- html_table(tables[1], fill = TRUE)[[1]]
       table3 <- html_table(tables[3], fill = TRUE)[[1]]
 
@@ -172,7 +191,7 @@ get_latest_data_back <- function(pkgs,
       # Create data from from captured info
       rw <- data.frame(Package = pkg, Version = ver, FileName = src,
                        "Release" = as.Date(date, origin = '1970-01-01'),
-                       "Size" = sz)
+                       "Size" = sz, Archived = archived)
 
       if (is.null(ret)) {
         ret <- rw

@@ -204,22 +204,18 @@ test_that("info7: print.pinfo() works as expected.", {
 })
 
 
-# test_that("info8: pkg_info() handles archived packages.", {
-#
-#   res <- pkg_info("grid")
-#
-#   print(res)
-#
-#
-#   print(res, verbose = TRUE)
-#
-#
-#   expect_equal(TRUE, TRUE)
-#
-# })
+test_that("info8: pkg_info() handles archived packages.", {
+
+  res <- pkg_info("grid")
+
+  res
+
+  expect_equal(res$Archived, TRUE)
+
+})
 
 
-test_that("info8: pkg_cache() works as expected.", {
+test_that("info9: pkg_cache() works as expected.", {
 
   # All exist
   res <- pkg_cache(c("procs", "logr", "libr"))
