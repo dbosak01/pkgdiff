@@ -17,3 +17,5 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(pkgdiff)
 ```
+
+Top 20% of CRAN packages.  Over 1000 downloads per month.

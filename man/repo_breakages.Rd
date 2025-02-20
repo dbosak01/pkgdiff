@@ -4,14 +4,17 @@
 \alias{repo_breakages}
 \title{Identify Breakages for a Repository}
 \usage{
-repo_breakages(v1pkgs = "current", v2pkgs = "latest")
+repo_breakages(r1 = "current", r2 = "latest")
 }
 \arguments{
-\item{v1pkgs}{A data frame that identifies the source packages
-and versions.}
+\item{r1}{A data frame that identifies the source repository packages
+and versions. The default value is "current", which means
+the function will use the current versions of all package in
+the current R repository.}
 
-\item{v2pkgs}{A data frame that identifies the target packages
-and versions.  By default,}
+\item{r2}{A data frame that identifies the target repository packages
+and versions. The default value is "latest", which means
+the function will use the latest versions of all packages on CRAN.}
 }
 \description{
 The \code{repo_breakages} function generates a data frame

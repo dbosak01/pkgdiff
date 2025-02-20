@@ -345,14 +345,23 @@ get_cran_data <- function(pkgname, releases = NULL, months = NULL) {
 
   #browser()
 
+  # Get latest package data
   ldat <- get_latest_data(pkgname)
+
+  # Get archive data
   adat <- get_archive_versions(pkgname)
 
-  if (!is.null(ldat) && !is.null(adat)) {
-    if (!is.null(adat))
+  if (!is.null(ldat) || !is.null(adat)) {
+
+    # Initialize data
+    if (!is.null(adat) && !is.null(ldat))
       dat <- rbind(ldat, adat)
-    else
+    else if (!is.null(ldat))
       dat <- ldat
+    else if (!is.null(adat))
+      dat <- adat
+
+    # Initialize count columns
     dat$AF <- NA
     dat$AP <- NA
     dat$RF <- NA
@@ -360,8 +369,10 @@ get_cran_data <- function(pkgname, releases = NULL, months = NULL) {
     dat$BC <- NA
     dat$TF <- NA
 
+    # Clear out rownames
     rownames(dat) <- NULL
 
+    # Deal with releases parameter
     if (!is.null(releases)) {
 
       if (nrow(dat) > releases)
@@ -397,12 +408,15 @@ get_cran_data <- function(pkgname, releases = NULL, months = NULL) {
 
       # browser()
 
+      # Set up loop counter
       idxs <- seq(1, nrow(dat) - 1)
 
+      # Lag earlier info for performance
       laginfo <- NULL
 
       for (idx in idxs) {
 
+        # Get version strings
         v2 <- dat[idx, "Version"]
         v1 <- dat[idx + 1, "Version"]
 
@@ -472,6 +486,7 @@ get_cran_data <- function(pkgname, releases = NULL, months = NULL) {
         dat <- dat[seq(1, releases), ]
     }
 
+    # Special handling for first release
     if (nrow(dat) > 0) {
 
       idx <- nrow(dat)
@@ -640,19 +655,21 @@ get_info_data <- function(pkgname, pkginfos) {
 #' @noRd
 get_stability_assessment <- function(score) {
 
-  ret <- NULL
-  if (score == 1) {
-    ret <- "Perfect"
-  } else if (score >= .95) {
-    ret <- "Very Stable"
-  } else if (score >= .9) {
+  ret <- "Unknown"
+  if (!is.nan(score)) {
+    if (score == 1) {
+      ret <- "Perfect"
+    } else if (score >= .95) {
+      ret <- "Very Stable"
+    } else if (score >= .9) {
 
-    ret <- "Stable"
-  } else if (score >= .8) {
-    ret <- "Somewhat Unstable"
-  } else {
+      ret <- "Stable"
+    } else if (score >= .8) {
+      ret <- "Somewhat Unstable"
+    } else {
 
-    ret <- "Unstable"
+      ret <- "Unstable"
+    }
   }
 
   return(ret)
@@ -687,8 +704,15 @@ stability_score <- function(dat) {
   # Get numerator
   nd <- sum(br - mx, na.rm = TRUE)
 
-  # Calculate percentage
-  ret <- 1 - (nd / sum(tm))
+  if (sum(tm) == 0)
+    # Denominator is zero
+    # Return 100%
+    ret <- 1
+  else {
+
+    # Calculate percentage
+    ret <- 1 - (nd / sum(tm))
+  }
 
   return(ret)
 }

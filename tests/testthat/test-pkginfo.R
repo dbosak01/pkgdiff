@@ -212,6 +212,12 @@ test_that("info8: pkg_info() handles archived packages.", {
 
   expect_equal(res$Archived, TRUE)
 
+  res <- pkg_info("maptools")
+
+  res
+
+  expect_equal(res$Archived, TRUE)
+
 })
 
 

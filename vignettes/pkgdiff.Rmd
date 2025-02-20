@@ -240,6 +240,7 @@ res2 <- pkg_repo(v1, ver = "latest")
 ## Anticipating Breakages
 
 
+### Small list of packages
 
 ```{r eval=FALSE, echo=TRUE}
 # View upgrade breakages
@@ -267,7 +268,131 @@ repo_breakages(res1, res2)
 #   - new_pool(): max_streams
 # - Removed Parameters: 
 #   - multi_download(): timeout
+```
 
+### Entire Repository
+```{r eval=FALSE, echo=TRUE}
+
+# Get current versions from local repo
+r1 <- pkg_repo(ver = "current")
+
+# View Results
+r1
+#            Package              Version
+# 1            abind                1.4-5
+# 2          admiral               0.10.1
+# 3       admiraldev                0.3.0
+# 4      admiralonco                0.3.0
+# 5             ards                0.1.0
+# 6            arrow             11.0.0.3
+# 7          askpass                  1.1
+# 8       assertthat                0.2.1
+# 9           aws.s3               0.3.21
+# 10   aws.signature                0.6.0
+# 11       backports                1.4.1
+# 12       base64enc                0.1-3
+# 13             bit                4.0.4
+# 14           bit64                4.0.5
+# 15          bitops                1.0-7
+# 16            blob                1.2.3
+# ...
+
+# Get latest versions of current repo
+r2 <- pkg_repo(r1$Package, ver = "latest")
+
+# View Results
+r2
+#            Package    Version
+# 1            abind      1.4-8
+# 2          admiral      1.2.0
+# 3       admiraldev      1.2.0
+# 4      admiralonco      1.2.0
+# 5             ards      0.1.1
+# 6            arrow   18.1.0.1
+# 7          askpass      1.2.1
+# 8       assertthat      0.2.1
+# 9           aws.s3     0.3.21
+# 10   aws.signature      0.6.0
+# 11       backports      1.5.0
+# 12       base64enc      0.1-3
+# 13             bit    4.5.0.1
+# 14           bit64    4.6.0-1
+# 15          bitops      1.0-9
+# 16            blob      1.2.4
+# ...
+
+
+# Check for breakages on whole repository
+res <- repo_breakages(r1, r2)
+# Comparing abind v1.4-5/v1.4-8
+# Comparing admiral v0.10.1/v1.2.0
+# Comparing admiraldev v0.3.0/v1.2.0
+# Comparing admiralonco v0.3.0/v1.2.0
+# Comparing ards v0.1.0/v0.1.1
+# Archive versions of 'ards' not available.
+# Comparing arrow v11.0.0.3/v18.1.0.1
+# Comparing askpass v1.1/v1.2.1
+# Comparing backports v1.4.1/v1.5.0
+# Comparing bit v4.0.4/v4.5.0.1
+# Comparing bit64 v4.0.5/v4.6.0-1
+# Comparing bitops v1.0-7/v1.0-9
+# Comparing blob v1.2.3/v1.2.4
+# Comparing box v1.1.3/v1.2.0
+# Comparing brew v1.0-8/v1.0-10
+# Comparing brio v1.1.3/v1.1.5
+# Comparing broom v1.0.1/v1.0.7
+# Comparing bslib v0.4.0/v0.9.0
+# Comparing cachem v1.0.6/v1.1.0
+# Comparing callr v3.7.3/v3.7.6
+```
+
+
+
+```{r eval=FALSE, echo=TRUE}
+# View Summary Table
+res$summary
+#            Package             Version1   Version2 Breakages
+# 1            abind                1.4-5      1.4-8     FALSE
+# 2          admiral               0.10.1      1.2.0      TRUE
+# 3       admiraldev                0.3.0      1.2.0      TRUE
+# 4      admiralonco                0.3.0      1.2.0      TRUE
+# 5             ards                0.1.0      0.1.1        NA
+# 6            arrow             11.0.0.3   18.1.0.1     FALSE
+# 7          askpass                  1.1      1.2.1     FALSE
+# 8       assertthat                0.2.1      0.2.1     FALSE
+# 9           aws.s3               0.3.21     0.3.21     FALSE
+# 10   aws.signature                0.6.0      0.6.0     FALSE
+# 11       backports                1.4.1      1.5.0     FALSE
+# 12       base64enc                0.1-3      0.1-3     FALSE
+# 13             bit                4.0.4    4.5.0.1     FALSE
+# 14           bit64                4.0.5    4.6.0-1      TRUE
+# 15          bitops                1.0-7      1.0-9     FALSE
+# 16            blob                1.2.3      1.2.4     FALSE
+# ...
+
+# View Difference Details
+res$details$admiralonco
+# # A difference object: admiralonco package
+# - Comparing: v0.3.0/v1.2.0
+# - Breaking Changes: TRUE
+# - Added Functions: 
+#   - bor_cr()
+#   - bor_ne()
+#   - bor_non_crpd()
+#   - bor_pd()
+#   - bor_pr()
+#   - bor_sd()
+#   - cb_y()
+#   - cbor_cr()
+#   - cbor_pr()
+#   - crsp_y_cr()
+#   - crsp_y_pr()
+#   - no_data_missing()
+#   - no_data_n()
+#   - rsp_y()
+# - Removed Functions: 
+#   - call_aval_fun()
+#   - derive_param_lasta()
 
 ```
 

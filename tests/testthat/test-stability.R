@@ -229,7 +229,24 @@ test_that("stability15: pkg_stability() package edge cases.", {
   expect_equal(is.null(res), FALSE)
 
 
+  # Score coming out NaN
+  res <- pkg_stability("KMsurv")
 
+  res
+  expect_equal(res$StabilityScore == 1, TRUE)
+
+
+  # Only one release
+  res <- pkg_stability("ards")
+
+  expect_equal(res$StabilityScore == 1, TRUE)
+
+  # No score because no archive versions.
+  # Should still be stability 1.
+  # Not sure why it isn't coming out.
+  res <- pkg_stability("concatenate")
+
+  expect_equal(res$StabilityScore == 1, TRUE)
 
 })
 
