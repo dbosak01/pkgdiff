@@ -645,6 +645,8 @@ get_info_data <- function(pkgname, pkginfos, skip_first = FALSE) {
                               BC = "Breaking Changes",
                               TC = "Total Functions")
 
+  rownames(dat) <- NULL
+
   return(dat)
 
 }

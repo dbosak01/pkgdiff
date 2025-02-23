@@ -91,7 +91,7 @@ get_latest_data <- function(pkgs,
   return(ret)
 }
 
-
+# Retrieve latest info for a package from CRAN
 #' @import rvest
 #' @import utils
 #' @noRd
@@ -206,6 +206,7 @@ get_latest_data_back <- function(pkgs, skip_size = FALSE) {
   return(ret)
 }
 
+# Retrieve a table of info for latest version of a package
 #' @noRd
 get_latest_version <- function(pkgs) {
 
@@ -247,7 +248,7 @@ get_latest_version <- function(pkgs) {
   return(ret)
 }
 
-
+# Retrieve the archive versions of a package as a table
 #' @import rvest
 #' @import common
 #' @noRd
@@ -320,6 +321,7 @@ get_archive_versions <- function(pkgs) {
   return(ret)
 }
 
+# Get a table of all versions of a package
 get_all_versions <- function(pkg, skip_size = FALSE) {
 
   refresh_package_lists()
@@ -340,6 +342,8 @@ get_all_versions <- function(pkg, skip_size = FALSE) {
 
     ret <- adat
   }
+
+  rownames(ret) <- NULL
 
   return(ret)
 }
