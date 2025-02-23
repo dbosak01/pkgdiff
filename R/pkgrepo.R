@@ -27,6 +27,8 @@ pkg_repo <- function(pkgs = NULL, ver = "current", libpaths = NULL) {
 
   mver <- NULL
 
+  refresh_package_lists()
+
   if (ver == "current") {
     lst <- installed_packages(pkgs, repos = libpaths)
 

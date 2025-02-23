@@ -19,6 +19,8 @@ get_latest_data <- function(pkgs,
 
   ret <- NULL
 
+  refresh_package_lists()
+
   lst <- e$AvailablePackages[e$AvailablePackages$Package %in% pkgs, ]
 
   for(pkg in pkgs) {
@@ -210,6 +212,8 @@ get_latest_version <- function(pkgs) {
   #browser()
   ret <- c()
 
+  refresh_package_lists()
+
   lst <- e$AvailablePackages[e$AvailablePackages$Package %in% pkgs, ]
 
   pos <- 1
@@ -317,6 +321,8 @@ get_archive_versions <- function(pkgs) {
 }
 
 get_all_versions <- function(pkg, skip_size = FALSE) {
+
+  refresh_package_lists()
 
   ldat <- get_latest_data(pkg, skip_size = skip_size)
   adat <- get_archive_versions(pkg)

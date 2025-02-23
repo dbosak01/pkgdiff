@@ -187,7 +187,7 @@ test_that("stability12: get_github_data() works as expected.", {
 
 test_that("stability13: get_info_data() works as expected.", {
 
-  infos <-  get_all_infos("procs")
+  infos <- get_all_infos("procs")
 
   res <- get_info_data("procs", infos)
 

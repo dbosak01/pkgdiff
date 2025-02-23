@@ -529,7 +529,7 @@ get_cran_data <- function(pkgname, releases = NULL, months = NULL) {
 # Assume versions are in proper order.
 #' @import common
 #' @noRd
-get_info_data <- function(pkgname, pkginfos) {
+get_info_data <- function(pkgname, pkginfos, skip_first = FALSE) {
 
   # browser()
 
@@ -617,7 +617,7 @@ get_info_data <- function(pkgname, pkginfos) {
   }
 
   # Deal with first release
-  if (nrow(dat) > 0) {
+  if (nrow(dat) > 0 && !skip_first) {
 
     idx <- nrow(dat)
     if (is.na(dat[[idx, "TF"]])) {
