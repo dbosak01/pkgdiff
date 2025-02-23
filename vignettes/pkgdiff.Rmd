@@ -38,39 +38,53 @@ Below is a short explanation and demo for each of the above functions.
 
 ## General Package Information
 
-The firt thing you may want to do when exploring a package is to get
-some general information about it.  This general package information
+The first thing you may want to do when exploring a package is to get
+some general information about it.  General information about a package
 can be achieved using the `pkg_info()` function.  All you need to 
-pass is the package name, and the function will return basic 
+pass is the package name. The function will then return basic 
 information such as the maintainer, description,
 and imported packages.  Here is a simple demonstration:
 
 ```{r eval=FALSE, echo=TRUE}
 library(pkgdiff)
 
-# Examine fmtr package
-pkg_info("fmtr")
-# # A package info object: fmtr package
-# - Version: v1.6.5
-# - Release Date: 2024-06-13
-# - Title: Easily Apply Formats to Data
-# - Maintainer: David Bosak <dbosak01@gmail.com>
-# - License: CC0
-# - Description: Contains a set of functions that can be used to apply
-# formats to data frames or vectors.  The package aims to provide
-# functionality similar to that of SAS® formats. Formats are assigned to
-# the format attribute on data frame columns.  Then when the fdata()
-# function is called, a new data frame is created with the column data
-# formatted as specified.  The package also contains a value() function
-# to create a user-defined format, similar to a SAS® user-defined format.
-# - Depends: R (>= 4.0.0), common
-# - Linking To: Rcpp
-# - Imports: tibble, stats, crayon, Rcpp
-# - Suggests: testthat, knitr, rmarkdown, covr, logr, utils, dplyr, libr
+# Examine tidymodels package
+pkg_info("tidymodels")
+# # A package info object: tidymodels package
+# - Version: v1.2.0
+# - Release Date: 2024-03-25
+# - Title: Easily Install and Load the 'Tidymodels' Packages
+# - Maintainer: Max Kuhn <max@posit.co>
+# - License: MIT + file LICENSE
+# - Description: The tidy modeling "verse" is a collection of packages for
+# modeling and statistical analysis that share the underlying design
+# philosophy, grammar, and data structures of the tidyverse.
+# - Depends: R (>= 3.6)
+# - Imports: broom (>= 1.0.5), cli (>= 3.6.2), conflicted (>= 1.2.0), dials (>= 1.2.1), dplyr (>= 1.1.4), ggplot2 (>= 3.5.0), hardhat (>= 1.3.1), infer (>= 1.0.6), modeldata (>= 1.3.0), parsnip (>= 1.2.1), purrr (>= 1.0.2), recipes (>= 1.0.10), rlang (>= 1.1.3), rsample (>= 1.2.1), rstudioapi (>= 0.16.0), tibble (>= 3.2.1), tidyr (>= 1.3.1), tune (>= 1.2.0), workflows (>= 1.1.4), workflowsets (>= 1.1.0), yardstick (>= 1.3.1)
+# - Suggests: covr, glue, knitr, rmarkdown, testthat (>= 3.0.0), xml2
 # - Repository: CRAN
-# - Functions: 49
+# - Cached: TRUE
+# - Functions: 9
 
 ```
+The return value of this function is actually an object that can be manipulated
+programmatically.  Here we will extract some of the data values from this object:
+
+```{r eval=FALSE, echo=TRUE}
+# Capture package info object
+res <- pkg_info("tidymodels")
+
+# View version
+res$Version
+
+# View title
+res$Title
+
+# View functions
+res$Functions
+
+```
+
 
 ```{r eval=FALSE, echo=TRUE}
 # Get package info

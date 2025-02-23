@@ -1,0 +1,31 @@
+---
+title: "Rmarkdown Reports"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Rmarkdown Reports}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(pkgdiff)
+```
+
+
+```{r eval=TRUE, echo=TRUE}
+
+# View package information
+pkg_info("logr")
+
+
+# Assess package stability
+pkg_stability("logr")
+
+```

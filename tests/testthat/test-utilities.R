@@ -390,7 +390,7 @@ test_that("utilities19: github_packages() works as expected.", {
 
 test_that("utilities20: get_all_versions() works as expected.", {
 
-  res <- get_all_versions("procs")
+  res <- get_all_versions("zoo")
 
   res
 

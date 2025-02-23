@@ -46,7 +46,7 @@ get_latest_data <- function(pkgs,
         # Get temp file name
         flnm <- tempfile()
 
-        currentpath = e$CranCurrentPath
+        currentpath = e$MirrorCurrentPath
 
         # Get path to package
         url <- file.path(currentpath, src)
@@ -93,8 +93,7 @@ get_latest_data <- function(pkgs,
 #' @import rvest
 #' @import utils
 #' @noRd
-get_latest_data_back <- function(pkgs,
-                            skip_size = FALSE) {
+get_latest_data_back <- function(pkgs, skip_size = FALSE) {
 
   baseurl = e$CranPackagePath
 
@@ -317,17 +316,23 @@ get_archive_versions <- function(pkgs) {
   return(ret)
 }
 
-get_all_versions <- function(pkg) {
+get_all_versions <- function(pkg, skip_size = FALSE) {
 
-  ldat <- get_latest_data(pkg)
+  ldat <- get_latest_data(pkg, skip_size = skip_size)
   adat <- get_archive_versions(pkg)
 
 
-  ret <- ldat
+  ret <- NULL
 
-  if (!is.null(adat)) {
+  if (!is.null(adat) && !is.null(ldat)) {
 
-    ret <- rbind(ret, adat)
+    ret <- rbind(ldat, adat)
+  } else if (!is.null(ldat)) {
+
+    ret <- ldat
+  } else if (!is.null(adat)) {
+
+    ret <- adat
   }
 
   return(ret)

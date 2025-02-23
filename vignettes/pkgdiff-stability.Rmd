@@ -29,7 +29,7 @@ describes how the stability score is calculated.
 
 Before describing how the stability score is calculated, we first have to 
 understand what is meant by a "breaking change".  In the context of **pkgdiff**,
-a "breaking change" is a function that exists in one release, but removed in the next.
+a "breaking change" is a function that exists in one release, but is removed in the next.
 It can also be a function parameter that exists in one release, but is removed
 in the next.  There are, therefore, two kinds of breaking changes tracked
 by the package: removed functions and removed parameters.  Either one of these
@@ -52,7 +52,9 @@ version is called a "non-breaking release".
 
 The Stability Score is calculated as the percentage of non-breaking releases.  
 In other words, the Stability Score is the number of breaking releases 
-divided by the total number of releases, subtracted from one.  
+divided by the total number of releases, subtracted from one.  The basic 
+formula for the stability score is thus: 1 - (BR / TR), where 
+BR is Breaking Releases and TR is Total Releases.
 
 For example, if a package has 10 releases, and one of them is a breaking 
 release, the Stability Score will be .9 or 90%.
@@ -68,22 +70,22 @@ a breaking release two years ago will count as 1 - (.01 * 24) = 0.76.
 
 Observe that this weighting over time will eventually cause the breaking release
 to not be counted at all.  The discarding of a breaking release occurs at 8.333
-years.  Breaking releases older than 8.333 years will not be added to the 
-Stability Score.
+years.  That means breaking releases older than 8.333 years will not be considered
+in the Stability Score.
 
 ### Other Considerations
 
 Also note that the number of releases eventually age out of the calculation. 
 Any release older
 than 10 years from the current date will be discarded from the Stability Score.
-These releases will still be shown in the Stability Data for informational
-purposes.  These older releases help to give you an accurate view of the package.
+These releases will still be shown in the Stability Data, however, as these older 
+releases help to give you an accurate understanding of the package history.
 
 ## Stability Assessment
 
-In addition to the above Stability Score, the `pkg_stability()` also provides
-a Stability Assessment.  The Stability Assessment is a categorization of
-the Stability Score.  The Stability Assessment is a way to give you an
+In addition to the above Stability Score, the `pkg_stability()` function also provides
+a \strong{Stability Assessment}.  The \strong{Stability Assessment} is a categorization of
+the \strong{Stability Score}.  The Stability Assessment is a way to give you an
 English interpretation of the Stability Score.  The Stability Assessment is 
 determined as follows:
 
@@ -93,8 +95,11 @@ determined as follows:
   - >= 80%: Somewhat Unstable
   - < 80%: Unstable
   
-The above categorization was designed to promote stability and encourage
-developers to reduce the number of breaking changes in their packages.  It 
-sets a high bar.  The purpose of setting a high bar is simply to bring the 
+The above categorization sets a high bar. The purpose of setting a high bar is 
+simply to bring the 
 R Open Source language up to the stability level of proprietary 
-languages. 
+languages.  It was designed to promote stability and encourage package
+developers to reduce the number of breaking changes in their Open Source packages.
+A high stability score is something that package developers should be proud of, 
+and programmers should look for when selecting packages to use in their programs.
+

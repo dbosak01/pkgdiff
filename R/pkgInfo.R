@@ -161,17 +161,14 @@ print.pinfo <- function(x, ..., verbose = FALSE) {
     if (!is.null(x$Enhances))
       cat(paste0("- Enhances: ", as.character(x$Enhances), "\n"))
 
+    if (!is.null(x$LastMonthDownloads))
+      cat(paste0("- Downloads/Month: ", as.character(x$LastMonthDownloads), "\n"))
+
     if (!is.null(x$Suggests))
       cat(paste0("- Repository: ", as.character(x$Repository), "\n"))
 
-    if (!is.null(x$PackageName)) {
-      ic <- github_packages(x$PackageName)
-      if (!is.na(ic)) {
-        cat(paste0("- Cached: ", as.character(TRUE), "\n"))
-      } else {
-        cat(paste0("- Cached: ", as.character(FALSE), "\n"))
-      }
-    }
+    if (!is.null(x$Cached))
+        cat(paste0("- Cached: ", as.character(x$Cached), "\n"))
 
     if (!is.null(x$Archived))
       cat(paste0("- Archived: ", as.character(x$Archived), "\n"))
@@ -338,7 +335,21 @@ pkg_info <- function(pkg, ver = "current", cache = TRUE) {
 
   }
 
-  ret$Archived <- archived
+  if (is.null(archived)) {
+    dm  <- cranlogs::cran_downloads(pkg, when = "last-month")
+    ret$LastMonthDownloads <- sum(dm$count)
+
+    cs <- github_packages(pkg)
+
+    if (!is.na(cs))
+      ret$Cached <- TRUE
+    else
+      ret$Cached <- FALSE
+
+  } else {
+
+    ret$Archived <- archived
+  }
 
   return(ret)
 }
