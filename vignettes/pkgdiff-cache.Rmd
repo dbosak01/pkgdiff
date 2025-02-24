@@ -18,4 +18,30 @@ knitr::opts_chunk$set(
 library(pkgdiff)
 ```
 
-Top 20% of CRAN packages.  Over 1000 downloads per month.
+To improve performance of difference operations, and especially 
+of stability scores, **pkgdiff** uses a cache of pre-processed package
+information on Github.  This cache greatly speeds up the operation
+of **pkgdiff** functions.  The cache is created by a periodic process
+that extracts information from packages on CRAN, and stores it in a way
+that the information can be quickly retrieved when a **pkgdiff** function
+is called.
+
+Note the following about the **pkgdiff** cache:
+1) To access the cache, the computer **pkgdiff** is running on must have 
+access to the internet and, specifically, Github.  If your machines is 
+isolated from the internet, or blocked from Github, **pkgdiff** will not run.
+2) The cache does not contain all CRAN packages.  It contains packages that
+exceed 1000 downloads per month.  These packages constitute approximately 16%
+of the top CRAN downloads, or about 3500 packages. For most R users, any package 
+you might be interested in will be included in this subset.  
+3) If a package is not in the cache, all **pkgdiff** functions will still 
+work on that package.  However, they will be much slower than packages
+that are included in the cache. 
+4) You may request that a package be added to the cache by submitting 
+an issue to the **pkgdiff** issue log 
+[here](https://github.com/dbosak01/pkgdiff/issues).
+
+To get a list of which packages are in the **pkgdiff** cache, 
+you may call the function `pkg_cache()`. See the documentation of that
+function for additional information.
+

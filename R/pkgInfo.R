@@ -217,10 +217,6 @@ print.pinfo <- function(x, ..., verbose = FALSE) {
 #' @export
 pkg_cache <- function(pkgs = NULL) {
 
-
-  pc <- structure(list(), class = c("pcache", "list"))
-
-
   ov <- github_packages(pkgs)
 
   nms <- names(ov)
@@ -232,11 +228,11 @@ pkg_cache <- function(pkgs = NULL) {
     ret <- data.frame(Package = pkgs, Version = ov)
   }
 
+  attr(ret, "LastUpdated") <- github_update()
 
-  pc$LastUpdated <- github_update()
-  pc$data <- ret
+  class(ret) <- c("pcache", "data.frame", "list")
 
-  return(pc)
+  return(ret)
 }
 
 
@@ -252,15 +248,18 @@ print.pcache <- function(x, ...) {
   grey60 <- crayon::make_style(grey60 = "#999999")
   cat(grey60(paste0("# A package cache object\n")))
 
-  if (!is.null(x$LastUpdate)) {
-    tmstmp <- format(x$LastUpdate, format = "%Y-%m-%d %H:%M UTC")
+
+  lu <- attr(x, "LastUpdate")
+
+  if (!is.null(lu)) {
+    tmstmp <- format(lu, format = "%Y-%m-%d %H:%M UTC")
     cat(paste0("- Last Update: ", tmstmp , "\n"))
 
   }
 
-  if (!is.null(x$data)) {
+  if (!is.null(x)) {
     cat(paste0("- Packages:\n"))
-    print(x$data)
+    print(as.data.frame(x))
   }
 
   invisible(x)

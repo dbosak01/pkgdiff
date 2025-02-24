@@ -836,12 +836,12 @@ available_packages <- function() {
 
 #' @noRd
 #' @import cranlogs
-is_popular <- function(pkg, count = 350) {
+is_popular <- function(pkg, count = 1000) {
 
   dld <- sum(cranlogs::cran_downloads(pkg,
                                       when = "last-month")[["count"]])
 
-  if (dld > count)
+  if (dld >= count)
     ret <- TRUE
   else
     ret <- FALSE

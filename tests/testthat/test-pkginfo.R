@@ -228,33 +228,33 @@ test_that("info9: pkg_cache() works as expected.", {
 
   res
 
-  expect_equal(nrow(res$data), 3)
-  expect_equal(any(is.na(res$data$Version)), FALSE)
-  expect_equal("POSIXct" %in% class(res$LastUpdated), TRUE)
+  expect_equal(nrow(res), 3)
+  expect_equal(any(is.na(res$Version)), FALSE)
+  expect_equal("POSIXct" %in% class(attr(res, "LastUpdated")), TRUE)
 
   # One doesn't exist
   res <- pkg_cache(c("procs", "forker", "libr"))
 
   res
 
-  expect_equal(nrow(res$data), 3)
-  expect_equal(any(is.na(res$data$Version)), TRUE)
+  expect_equal(nrow(res), 3)
+  expect_equal(any(is.na(res$Version)), TRUE)
 
   # Only doesn't exist
   res <- pkg_cache("forker")
 
   res
 
-  expect_equal(nrow(res$data), 1)
-  expect_equal(any(is.na(res$data$Version)), TRUE)
+  expect_equal(nrow(res), 1)
+  expect_equal(any(is.na(res$Version)), TRUE)
 
 
   # All
   res <- pkg_cache()
 
   res
-  expect_equal(nrow(res$data) > 10, TRUE)
-  expect_equal(any(is.na(res$data$Version)), FALSE)
+  expect_equal(nrow(res) > 10, TRUE)
+  expect_equal(any(is.na(res$Version)), FALSE)
 
 
 })
