@@ -1,6 +1,6 @@
 Package: pkgdiff
 Type: Package
-Title: Identifies Package Changes
+Title: Identifies Package Differences
 Version: 0.1.2
 Authors@R: c(
     person(
@@ -19,11 +19,12 @@ Authors@R: c(
       role = c("ctb")
     )
   )
-Description: Contains a set of functions to identify changes between
-    versions of a package.  Specifically, the functions help 
+Description: Contains a set of functions to identify differences between
+    versions of a package.  Specifically, the functions help
     determine if there are breaking changes from one package version
-    to the next.  The package also works with a vector of package names,
-    so that you can identify changes for an entire repository.
+    to the next.  The package also includes a stability assessment,
+    to help you determine the overall stability of a package, or even
+    an entire repository.
 License: CC0
 Encoding: UTF-8
 LazyData: true

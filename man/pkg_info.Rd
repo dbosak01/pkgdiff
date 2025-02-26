@@ -14,17 +14,89 @@ pkg_info(pkg, ver = "current", cache = TRUE)
 running on the machine.  The value "latest" is the latest version
 of the package from CRAN.}
 
-\item{cache}{Whether to retrieve the info from the github cache, or
+\item{cache}{Whether to retrieve the info from the Github cache, or
 from CRAN.  If TRUE, the function will first search the cache, and
 return the info if available.  If the info is not available in the
-github cache, or the cache parameter is set to FALSE, the info will be
+Github cache, or the cache parameter is set to FALSE, the info will be
 retrieved from CRAN.}
+}
+\value{
+A package information object.  This object contains
+a set of general information about the package, such as the version,
+release date, maintainer, title, etc.  Most of this information comes
+from the package description file.  In addition, the info object also
+contains a list of functions in the package and their parameters.
 }
 \description{
 Combines information related to a package. Objects of this class are
 used in several other functions in the \strong{pkgdiff} system.  This
 class also makes a compact storage format for pre-processed package
 information.
+}
+\examples{
+# View package info
+pkg_info("glue")
+# A package info object: glue package
+# - Version: v1.7.0
+# - Release Date: 2024-01-09
+# - Title: Interpreted String Literals
+# - Maintainer: Jennifer Bryan &lt;jenny&commat;posit.co&gt;
+# - License: MIT + file LICENSE
+# - Description: An implementation of interpreted string literals, inspired by
+# Python's Literal String Interpolation
+# &lt;https://www.python.org/dev/peps/pep-0498/&gt; and Docstrings
+# &lt;https://www.python.org/dev/peps/pep-0257/&gt; and Julia's Triple-Quoted
+# String Literals
+# &lt;https://docs.julialang.org/en/v1.3/manual/strings/#Triple-Quoted-String-Literals-1&gt;.
+#   - Depends: R (&gt;= 3.6)
+# - Imports: methods
+# - Suggests: crayon, DBI (&gt;= 1.2.0), dplyr, knitr, magrittr, rlang,
+rmarkdown, RSQLite, testthat (&gt;= 3.2.0), vctrs (&gt;= 0.3.0),
+waldo (&gt;= 0.3.0), withr
+# - Downloads/Month: 1463244
+# - Repository: CRAN
+# - Cached: TRUE
+# - Functions: 24
+
+# Get info object
+res <- pkg_info("tidymodels")
+
+# Extract package version
+res$Version
+# [1] "1.3.0"
+
+# Extract maintainer
+res$Maintainer
+# [1] "Max Kuhn &lt;max&commat;posit.co&gt;"
+
+# Extract function list
+res$Functions
+# $pkg_deps
+# [1] "x"         "recursive"
+#
+# $print.tidymodels_conflicts
+# [1] "x"       "..."     "startup"
+#
+# $tag_attach
+# [1] "tag"
+#
+# $tag_show
+# [1] ""
+#
+# $tag_update
+# [1] "tag"
+#
+# $tidymodels_conflicts
+# [1] ""
+#
+# $tidymodels_packages
+# [1] "include_self"
+#
+# $tidymodels_prefer
+# [1] "quiet"
+#
+# $tidymodels_update
+# [1] "pkg"       "recursive" "..."
 }
 \seealso{
 Other pdiff: 

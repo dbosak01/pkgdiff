@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>pkgdiff-faq • pkgdiff</title>
+<title>Frequently Asked Questions • pkgdiff</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="pkgdiff-faq">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Frequently Asked Questions">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -50,19 +50,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/pkgdiff-globals.html">Global Options</a>
-    </li>
-    <li>
       <a href="../articles/pkgdiff-stability.html">Stability Score</a>
     </li>
     <li>
       <a href="../articles/pkgdiff-cache.html">Package Cache</a>
     </li>
     <li>
-      <a href="../articles/pkgdiff-rmarkdown.html">Rmarkdown Reports</a>
-    </li>
-    <li>
-      <a href="../articles/pkgdiff-faq.html">pkgdiff-faq</a>
+      <a href="../articles/pkgdiff-faq.html">Frequently Asked Questions</a>
     </li>
   </ul>
 </li>
@@ -94,7 +88,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>pkgdiff-faq</h1>
+      <h1 data-toc-skip>Frequently Asked Questions</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/dbosak01/pkgdiff/blob/HEAD/vignettes/pkgdiff-faq.Rmd" class="external-link"><code>vignettes/pkgdiff-faq.Rmd</code></a></small>
@@ -104,7 +98,242 @@
 
     
     
-
+<p>Below are some frequently asked questions about the
+<strong>pkgdiff</strong> package. Click on the links below to navigate
+to the full question and answer content.</p>
+<div class="section level2">
+<h2 id="top">Index<a class="anchor" aria-label="anchor" href="#top"></a>
+</h2>
+<ul>
+<li><a href="#overview">What is <strong>pkgdiff</strong>?</a></li>
+<li><a href="#internet">Do I need internet access to use
+<strong>pkgdiff</strong>?</a></li>
+<li><a href="#comparisons">How are you doing the version
+comparisons?</a></li>
+<li><a href="#sequential">Do package comparisons have to be between
+sequential versions?</a></li>
+<li><a href="#breaks">What counts as a breaking change?</a></li>
+<li><a href="#stability">How is the stability score calculated?</a></li>
+<li><a href="#performance">Why is pkg_stability() so slow?</a></li>
+<li><a href="#cache">Which packages are in the cache?</a></li>
+<li><a href="#location">Where is the cache located?</a></li>
+<li><a href="#addcache">How can I add a package to the cache?</a></li>
+<li><a href="#report">Can I create a report with pkgdiff?</a></li>
+<li><a href="#github">Can I use <strong>pkgdiff</strong> with packages
+that are not on CRAN?</a></li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="content">Content<a class="anchor" aria-label="anchor" href="#content"></a>
+</h2>
+<div class="section level3">
+<h3 id="overview">What is <strong>pkgdiff</strong>?<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h3>
+<p><strong>Q:</strong> I don’t quite understand this package. What it is
+for? Why would anyone care about differences between two versions of a
+package?</p>
+<p><strong>A:</strong> The <strong>pkgdiff</strong> package arose as an
+attempt to deal with the problem of breaking changes. A breaking change
+occurs when a function or function parameter exists in one version of a
+package, but is then removed in a subsequent version. If you happen to
+be using that function in a program, the removal breaks your code.</p>
+<p>Breaking changes are especially problematic when you have large
+numbers of programs that use many R packages. In this situation,
+upgrading your R repository can cause a cascade of breaking changes that
+can cripple your entire system.</p>
+<p>One aim of <strong>pkgdiff</strong> is to help identify stable
+packages. The most sure way to avoid breaking changes is to avoid using
+unstable packages in the first place. The functions
+<code><a href="../reference/pkg_info.html">pkg_info()</a></code>, <code><a href="../reference/pkg_stability.html">pkg_stability()</a></code>, and
+<code><a href="../reference/repo_stability.html">repo_stability()</a></code> can help you assess the stability of your
+packages.</p>
+<p>The second aim of <strong>pkgdiff</strong> is to anticipate breaking
+changes for the packages already in your repository. The functions
+<code><a href="../reference/pkg_diff.html">pkg_diff()</a></code> and <code><a href="../reference/repo_breakages.html">repo_breakages()</a></code> let you know
+if a package is going to break when it is upgraded, and specifically
+which functions or parameters will be removed. This information will
+allow you determine what the impact of a version upgrade will be to your
+system. Knowing the potential impact will allow you to plan your upgrade
+more effectively.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="internet">Do I need internet access to use <strong>pkgdiff</strong>?<a class="anchor" aria-label="anchor" href="#internet"></a>
+</h3>
+<p><strong>Q:</strong> At my company the R server we use is offline, and
+not connected to the internet. Can I use <strong>pkgdiff</strong> on an
+offline system? Do I have to have an internet connection?</p>
+<p><strong>A:</strong> Yes. <strong>pkgdiff</strong> requires an
+internet connection. It uses the connection to pull package information
+from CRAN, the RStudio CRAN mirror, and Github. In this scenario, you
+should use <strong>pkgdiff</strong> on a connected system to run queries
+about the packages on your disconnected system.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="comparisons">How are you doing the version comparisons?<a class="anchor" aria-label="anchor" href="#comparisons"></a>
+</h3>
+<p><strong>Q:</strong> When you compare package versions, what exactly
+are you comparing? Is this a full code comparison? What about the
+documentation, etc.?</p>
+<p><strong>A:</strong> Package comparisons are focused on two things:
+exported functions and exported function parameters. The comparison does
+not look at anything else. It does not look at code or documentation.
+The goal of the comparison is to come up with a list of functions and
+parameters that have been added or removed between releases. These items
+can directly affect any programs that rely on that package.</p>
+<p>Note that sometimes code changes can cause a breaking change, even
+when the function itself is not removed or the parameters altered.
+<strong>pkgdiff</strong> currently cannot detect this type of change.
+This feature may be included in a future release.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="sequential">Do package comparisons have to be between sequential versions?<a class="anchor" aria-label="anchor" href="#sequential"></a>
+</h3>
+<p><strong>Q:</strong> I’ve been using the same version of a package for
+over a year, and now I want to upgrade. There have been three releases
+in the last year. Can I still get differences for releases that are not
+sequential?</p>
+<p><strong>A:</strong> Yes. The <code><a href="../reference/pkg_diff.html">pkg_diff()</a></code> function will
+compare any two versions of a package. The versions do not have to be
+sequential.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="breaks">What counts as a breaking change?<a class="anchor" aria-label="anchor" href="#breaks"></a>
+</h3>
+<p><strong>Q:</strong> What do you mean by a breaking change? What
+exactly counts as a breaking change?</p>
+<p><strong>A:</strong> There are two types of breaking change tracked by
+<strong>pkgdiff</strong>: a) a removed function, and b) a removed
+function parameter. Either one counts as a breaking change. If the
+function code changes but the signature stays the same, it does not
+count as a breaking change. Likewise, if a function parameter is added
+to the end of the signature, and no parameters are removed, it does not
+count as a breaking change.</p>
+<p>Also note that a “breaking release” is any release with at least one
+breaking change. Whether a release has one function removed or 10
+functions removed, it still counts as one breaking release.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="stability">How is the stability score calculated?<a class="anchor" aria-label="anchor" href="#stability"></a>
+</h3>
+<p><strong>Q:</strong> It’s not clear how you came up with the stability
+score. What goes into this calculation?</p>
+<p><strong>A:</strong> The stability score is the percentage of
+non-breaking releases. <strong>pkgdiff</strong> looks at the entire
+history of a package, counts how many releases there are, and determines
+how many of them were breaking releases. The stability score is the
+number of breaking releases divided by the total number of releases.
+Some adjustments are made for the age of the breaking release. See the
+vignette <code>pkgdiff-stability</code> for a complete description of
+how the stability score is calculated.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="performance">Why is <code>pkg_stability()</code> so slow?<a class="anchor" aria-label="anchor" href="#performance"></a>
+</h3>
+<p><strong>Q:</strong> For most packages I’m looking at,
+<code><a href="../reference/pkg_stability.html">pkg_stability()</a></code> runs pretty fast. For a few packages, it is
+very slow, and appears to be doing a lot of additional processing. What
+is going on?</p>
+<p><strong>A:</strong> The difference is that some packages have been
+cached, and some have not. About 16% of the top CRAN downloads have been
+cached. This subset constitutes the most commonly used R packages, with
+over 1000 downloads per month. For packages with less than 1000
+downloads per month, the <strong>pkgdiff</strong> functions will still
+run. But the package information has to be downloaded and extracted from
+the CRAN mirror. The additional processing slows down
+<code><a href="../reference/pkg_stability.html">pkg_stability()</a></code> significantly.</p>
+<p>For more information on the package cache, see the vignette
+“pkgdiff-cache”.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="cache">Which packages are in the cache?<a class="anchor" aria-label="anchor" href="#cache"></a>
+</h3>
+<p><strong>Q:</strong> I understand that some packages have been cached,
+and some have not. How do I know which packages have been cached? Is
+there a list someplace?</p>
+<p><strong>A:</strong> You can get a list of cached packages by running
+the function <code><a href="../reference/pkg_cache.html">pkg_cache()</a></code>. If you have a specific package in
+mind, and want to know if that package is in the cache, you can pass the
+package name to <code><a href="../reference/pkg_cache.html">pkg_cache()</a></code> as the first parameter. If the
+package exists in the cache, the version number will be shown in the
+“Version” column. If the package does not exist in the cache, the
+version will be NA.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="location">Where is the cache located?<a class="anchor" aria-label="anchor" href="#location"></a>
+</h3>
+<p><strong>Q:</strong> Reading the documentation for
+<strong>pkgdiff</strong>, it appears that some package information has
+been cached to speed up the queries. Where exactly is this cache
+located?</p>
+<p><strong>A:</strong> The <strong>pkgdiff</strong> package cache is
+located on Github. The URL is “<a href="https://github.com/dbosak01/pkgdiffdata" class="external-link uri">https://github.com/dbosak01/pkgdiffdata</a>”. The package
+cache is usually updated on a daily basis.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="addcache">How can I add a package to the cache?<a class="anchor" aria-label="anchor" href="#addcache"></a>
+</h3>
+<p><strong>Q:</strong> I have a package that I want to run a stability
+score on, but that package is not in the cache, and runs too slow. Is
+there any way to add the package to the cache?</p>
+<p><strong>A:</strong> Yes. You may request that the package be added to
+the cache. Use the <strong>pkgdiff</strong> issue list located <a href="https://github.com/dbosak01/pkgdiff/issues" class="external-link">here</a>.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="report">Can I create a report with pkgdiff?<a class="anchor" aria-label="anchor" href="#report"></a>
+</h3>
+<p><strong>Q:</strong> I like the console output from
+<strong>pkgdiff</strong>. But I want to create a permanent report. Is
+there a way to get a permanent report that I can save and print?</p>
+<p><strong>A:</strong> Yes. Use <strong>Quarto</strong> or
+<strong>RMarkdown</strong>. You can call <strong>pkgdiff</strong>
+functions from within a markdown document. Then when you knit the
+document, the console output will be emitted as text. The document can
+then be saved and printed as desired.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="github">Can I use <strong>pkgdiff</strong> with packages that are not on
+CRAN?<a class="anchor" aria-label="anchor" href="#github"></a>
+</h3>
+<p><strong>Q:</strong> My company uses some packages on Github, and also
+has a couple packages that have been developed internally. Can I use
+<strong>pkgdiff</strong> for these packages?</p>
+<p><strong>A:</strong> No. <strong>pkgdiff</strong> only works with
+packages published on CRAN. The reason is that CRAN retains all releases
+of a package in an archive. <strong>pkgdiff</strong> uses this archive
+to retrieve information about a specific version of a package, and
+calculate stability scores. Packages on Github or locally developed
+packages do not have a predictable and easily accessible archive.</p>
+<p>Note that there is another package on CRAN called
+<strong>packageDiff</strong> that allows you to compare two packages
+locally. This package can generated version differences. It will not,
+however, generate stability scores, or assess an entire repository.</p>
+<p><a href="#top">top</a></p>
+<hr>
+<!-- ### How do I format a data frame? {#overview} --><!-- **Q:** I have a data frame with different types of variables: --><!-- numbers, dates, character values.  How can I format them without messing --><!-- up the original data? --><!-- **A:** With the **fmtr** package you can assign the formats to the  --><!-- "format" attribute of the dataframe, and the apply the formats using the  --><!-- `fdata()` function, returning the result to a new data frame.  Here is  --><!-- a simple example: --><!-- ```{r eval=FALSE, echo=TRUE} --><!-- # Create sample data --><!-- dat <- data.frame(SUBJ = c(1, 2, 3), --><!--                   BDATE = c(as.Date("1945-10-17"),  --><!--                             as.Date("1967-09-04"), --><!--                             as.Date("1998-04-28")), --><!--                   SEX = c("M", "F", "M"), --><!--                   WEIGHT = c(77.1107, 64.2848, 85.9842)) --><!-- # View data                   --><!-- dat --><!-- #   SUBJ      BDATE SEX  WEIGHT --><!-- # 1    1 1945-10-17   M 77.1107 --><!-- # 2    2 1967-09-04   F 64.2848 --><!-- # 3    3 1998-04-28   M 85.9842 --><!-- # Assign formats --><!-- formats(dat) <- list(BDATE = "%Y/%m/%d", --><!--                      SEX = c("M" = "Male", "F" = "Female"), --><!--                      WEIGHT = "%1.1f kg") --><!-- # Apply formats to new data frame --><!-- dat2 <- fdata(dat) --><!-- # View new data frame --><!-- dat2 --><!-- #   SUBJ      BDATE    SEX  WEIGHT --><!-- # 1    1 1945/10/17   Male 77.1 kg --><!-- # 2    2 1967/09/04 Female 64.3 kg --><!-- # 3    3 1998/04/28   Male 86.0 kg --><!-- ``` --><!-- [top](#top)  --><!-- ****** -->
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

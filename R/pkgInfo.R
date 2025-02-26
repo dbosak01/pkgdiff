@@ -203,7 +203,7 @@ print.pinfo <- function(x, ..., verbose = FALSE) {
 
 
 
-#' @title Returns Information on the Package Cache
+#' @title Queries the Package Cache
 #' @description
 #' The \code{pkg_cache} function queries the package cache, and
 #' returns information on which packages are included in the cache.
@@ -213,12 +213,52 @@ print.pinfo <- function(x, ..., verbose = FALSE) {
 #' Information about each package is pre-processed and stored in the cache
 #' on Github.  The functions then retrieve this pre-processed information
 #' instead of pulling packages down from CRAN.  To learn more about the cache,
-#' refer to \code{vignette('Package Cache')}.
+#' refer to \code{vignette('pkgdiff-cache')}.
 #' @param pkgs A vector of package names to retrieve cache information about.
 #' Default is NULL, which means to return all packages in the cache.
 #' @returns An data frame showing the package name and latest package
 #' version stored in the cache.  If the package is not stored in the cache,
-#' the package version will be NA.
+#' the package version will be NA.  The "Last Update" timestamp is the
+#' last day and time the entire cache was updated.
+#' @examples
+#' # View single package
+#' pkg_cache("dplyr")
+#' # # A package cache object
+#' # - Last Update: 2025-02-25 14:58 UTC
+#' # - Packages:
+#' #   Package Version
+#' # 1   dplyr   1.1.4
+#'
+#' # View multiple packages
+#' pkgs <- c("dplyr", "tidyr", "stringr")
+#' pkg_cache(pkgs)
+#' # # A package cache object
+#' # - Last Update: 2025-02-25 14:58 UTC
+#' # - Packages:
+#' #   Package Version
+#' # 1   dplyr   1.1.4
+#' # 2   tidyr   1.3.1
+#' # 3 stringr   1.5.1
+#'
+#' # Get all packages
+#' res <- pkg_cache()
+#'
+#' # View first 10
+#' res[1:10, ]
+#' # A package cache object
+#' # - Last Update: 2025-02-25 14:58 UTC
+#' # - Packages:
+#' #   Package Version
+#' # 1           A3   1.0.0
+#' # 2   abbreviate     0.1
+#' # 3     abc.data     1.1
+#' # 4          abc   2.2.2
+#' # 5  ABCanalysis   1.2.1
+#' # 6          abd   0.2-8
+#' # 7        abind   1.4-8
+#' # 8      acepack   1.6.1
+#' # 9       actuar   3.3-5
+#' # 10         ada   2.0-5
 #' @family pdiff
 #' @export
 pkg_cache <- function(pkgs = NULL) {
@@ -287,11 +327,80 @@ print.pcache <- function(x, ...) {
 #' "latest".  The value "current" is the current version of the package
 #' running on the machine.  The value "latest" is the latest version
 #' of the package from CRAN.
-#' @param cache Whether to retrieve the info from the github cache, or
+#' @param cache Whether to retrieve the info from the Github cache, or
 #' from CRAN.  If TRUE, the function will first search the cache, and
 #' return the info if available.  If the info is not available in the
-#' github cache, or the cache parameter is set to FALSE, the info will be
+#' Github cache, or the cache parameter is set to FALSE, the info will be
 #' retrieved from CRAN.
+#' @returns A package information object.  This object contains
+#' a set of general information about the package, such as the version,
+#' release date, maintainer, title, etc.  Most of this information comes
+#' from the package description file.  In addition, the info object also
+#' contains a list of functions in the package and their parameters.
+#' @examples
+#' # View package info
+#' pkg_info("glue")
+#' # A package info object: glue package
+#' # - Version: v1.7.0
+#' # - Release Date: 2024-01-09
+#' # - Title: Interpreted String Literals
+#' # - Maintainer: Jennifer Bryan &lt;jenny&commat;posit.co&gt;
+#' # - License: MIT + file LICENSE
+#' # - Description: An implementation of interpreted string literals, inspired by
+#' # Python's Literal String Interpolation
+#' # &lt;https://www.python.org/dev/peps/pep-0498/&gt; and Docstrings
+#' # &lt;https://www.python.org/dev/peps/pep-0257/&gt; and Julia's Triple-Quoted
+#' # String Literals
+#' # &lt;https://docs.julialang.org/en/v1.3/manual/strings/#Triple-Quoted-String-Literals-1&gt;.
+#' #   - Depends: R (&gt;= 3.6)
+#' # - Imports: methods
+#' # - Suggests: crayon, DBI (&gt;= 1.2.0), dplyr, knitr, magrittr, rlang,
+#' rmarkdown, RSQLite, testthat (&gt;= 3.2.0), vctrs (&gt;= 0.3.0),
+#' waldo (&gt;= 0.3.0), withr
+#' # - Downloads/Month: 1463244
+#' # - Repository: CRAN
+#' # - Cached: TRUE
+#' # - Functions: 24
+#'
+#' # Get info object
+#' res <- pkg_info("tidymodels")
+#'
+#' # Extract package version
+#' res$Version
+#' # [1] "1.3.0"
+#'
+#' # Extract maintainer
+#' res$Maintainer
+#' # [1] "Max Kuhn &lt;max&commat;posit.co&gt;"
+#'
+#' # Extract function list
+#' res$Functions
+#' # $pkg_deps
+#' # [1] "x"         "recursive"
+#' #
+#' # $print.tidymodels_conflicts
+#' # [1] "x"       "..."     "startup"
+#' #
+#' # $tag_attach
+#' # [1] "tag"
+#' #
+#' # $tag_show
+#' # [1] ""
+#' #
+#' # $tag_update
+#' # [1] "tag"
+#' #
+#' # $tidymodels_conflicts
+#' # [1] ""
+#' #
+#' # $tidymodels_packages
+#' # [1] "include_self"
+#' #
+#' # $tidymodels_prefer
+#' # [1] "quiet"
+#' #
+#' # $tidymodels_update
+#' # [1] "pkg"       "recursive" "..."
 #' @family pdiff
 #' @export
 pkg_info <- function(pkg, ver = "current", cache = TRUE) {

@@ -1,8 +1,8 @@
 ---
-title: "pkgdiff-faq"
+title: "Frequently Asked Questions"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{pkgdiff-faq}
+  %\VignetteIndexEntry{FAQ}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,4 +12,297 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+options(rmarkdown.html_vignette.check_title = FALSE)
+
 ```
+Below are some frequently asked questions about the **pkgdiff** package. Click
+on the links below to navigate to the full question and answer content.
+
+## Index{#top}
+
+* [What is **pkgdiff**?](#overview)
+* [Do I need internet access to use **pkgdiff**?](#internet)
+* [How are you doing the version comparisons?](#comparisons)
+* [Do package comparisons have to be between sequential versions?](#sequential)
+* [What counts as a breaking change?](#breaks)
+* [How is the stability score calculated?](#stability)
+* [Why is pkg_stability() so slow?](#performance)
+* [Which packages are in the cache?](#cache)
+* [Where is the cache located?](#location)
+* [How can I add a package to the cache?](#addcache)
+* [Can I create a report with pkgdiff?](#report)
+* [Can I use **pkgdiff** with packages that are not on CRAN?](#github)
+
+
+## Content
+
+### What is **pkgdiff**? {#overview}
+
+**Q:** I don't quite understand this package.  What it is for?  Why 
+would anyone care about differences between two versions of a package?
+
+**A:** The **pkgdiff** package arose as an attempt to deal with the 
+problem of breaking changes.  A breaking change occurs when 
+a function or function parameter exists in one version of a package,
+but is then removed in a subsequent version.  If you happen to be using
+that function in a program, the removal breaks your code.  
+
+Breaking changes 
+are especially problematic when you have large numbers
+of programs that use many R packages. In this situation, upgrading
+your R repository can cause a cascade of breaking changes that can
+cripple your entire system.  
+
+One aim of **pkgdiff** is to help identify stable packages.
+The most sure way to avoid breaking changes is to avoid using unstable packages
+in the first place.  The functions `pkg_info()`, `pkg_stability()`, and
+`repo_stability()` can
+help you assess the stability of your packages.
+
+The second aim of **pkgdiff** is to anticipate 
+breaking changes for the packages already in your repository. The functions 
+`pkg_diff()` and `repo_breakages()` let you know if a package is going to break
+when it is upgraded, and specifically which functions or parameters will
+be removed.  This information will allow you determine what the impact 
+of a version upgrade will be to your system.  Knowing the potential impact
+will allow you to plan your upgrade more effectively.
+
+[top](#top) 
+
+******
+
+### Do I need internet access to use **pkgdiff**? {#internet}
+
+**Q:** At my company the R server we use is offline, and not connected
+to the internet.  Can I use **pkgdiff** on an offline system? Do I have
+to have an internet connection?
+
+**A:** Yes. **pkgdiff** requires an internet connection.  It uses the
+connection to pull package information from CRAN, the RStudio CRAN
+mirror, and Github. In this scenario, you should use **pkgdiff** 
+on a connected system to run queries about the packages on your 
+disconnected system.
+
+[top](#top) 
+
+******
+
+### How are you doing the version comparisons? {#comparisons}
+
+**Q:** When you compare package versions, what exactly are you comparing?
+Is this a full code comparison?  What about the documentation, etc.?
+
+**A:** Package comparisons are focused on two things: exported functions and 
+exported function parameters.  The comparison does not look at anything else.
+It does not look at code or documentation. The goal of the comparison 
+is to come up with a list of functions and parameters that have been added or 
+removed between releases.  These items can directly affect any programs
+that rely on that package.
+
+Note that sometimes code changes can cause a breaking change, even when
+the function itself is not removed or the parameters altered.  **pkgdiff** currently
+cannot detect this type of change.  This feature may be included
+in a future release.
+
+[top](#top) 
+
+******
+
+### Do package comparisons have to be between sequential versions? {#sequential}
+
+**Q:** I've been using the same version of a package for over a year, and 
+now I want to upgrade.  There have been three releases in the last year.  Can 
+I still get differences for releases that are not sequential?
+
+**A:** Yes.  The `pkg_diff()` function will compare any two versions of a package.
+The versions do not have to be sequential.
+
+[top](#top) 
+
+******
+
+### What counts as a breaking change? {#breaks}
+
+**Q:** What do you mean by a breaking change?  What exactly counts as a 
+breaking change?
+
+**A:** There are two types of breaking change tracked by **pkgdiff**: a)
+a removed function, and b) a removed function parameter.  Either one
+counts as a breaking change.  If the function code changes but the
+signature stays the same, it does not 
+count as a breaking change. Likewise, if a function parameter is added 
+to the end of the signature, and no parameters are removed, it does not 
+count as a breaking change.
+
+Also note that a "breaking release" is any release with at least one
+breaking change. Whether a release has one function removed or 10 functions
+removed, it still counts as one breaking release.
+
+[top](#top) 
+
+******
+
+### How is the stability score calculated? {#stability}
+
+**Q:** It's not clear how you came up with the stability score. What goes into
+this calculation?
+
+**A:** The stability score is the percentage of non-breaking releases.  **pkgdiff**
+looks at the entire history of a package, counts how many releases there
+are, and determines how many of them were breaking releases. 
+The stability score is the number of breaking releases divided by the 
+total number of releases.  Some adjustments are made for the age of the 
+breaking release.  See the vignette `pkgdiff-stability` for a complete 
+description of how the stability score is calculated. 
+
+[top](#top) 
+
+******
+
+### Why is `pkg_stability()` so slow? {#performance}
+
+**Q:** For most packages I'm looking at, `pkg_stability()` runs pretty fast.
+For a few packages, it is very slow, and appears to be doing a lot of additional
+processing.  What is going on?
+
+**A:** The difference is that some packages have been cached, and some have not.
+About 16% of the top CRAN downloads have been cached.  This subset constitutes
+the most commonly used R packages, with over 1000 downloads per month.  For 
+packages with less than 1000 downloads per month, the **pkgdiff** functions
+will still run. But the package information has to be downloaded and extracted
+from the CRAN mirror. The additional processing slows down `pkg_stability()`
+significantly.  
+
+For more information on the package cache, 
+see the vignette "pkgdiff-cache".
+
+[top](#top) 
+
+******
+
+### Which packages are in the cache? {#cache}
+
+**Q:** I understand that some packages have been cached, and some have not.
+How do I know which packages have been cached?  Is there a list someplace?
+
+**A:** You can get a list of cached packages by running the function
+`pkg_cache()`.  If you have a specific package in mind, and want to know 
+if that package is in the cache, you can pass the package name to 
+`pkg_cache()` as the first parameter.  If the package exists in the cache, 
+the version number will be shown in the "Version" column.  If the package
+does not exist in the cache, the version will be NA.
+
+[top](#top) 
+
+******
+
+### Where is the cache located? {#location}
+
+**Q:** Reading the documentation for **pkgdiff**, it appears that some
+package information has been cached to speed up the queries.  Where
+exactly is this cache located?
+
+**A:** The **pkgdiff** package cache is located on Github. The 
+URL is "https://github.com/dbosak01/pkgdiffdata". The package cache is 
+usually updated on a daily basis.  
+
+[top](#top) 
+
+******
+
+### How can I add a package to the cache? {#addcache}
+
+**Q:** I have a package that I want to run a stability score on,
+but that package is not in the cache, and runs too slow.  Is there
+any way to add the package to the cache?
+
+**A:** Yes. You may request that the package be added to the cache.
+Use the **pkgdiff** issue list located 
+[here](https://github.com/dbosak01/pkgdiff/issues).
+
+[top](#top) 
+
+******
+
+### Can I create a report with pkgdiff? {#report}
+
+**Q:** I like the console output from **pkgdiff**. But I want to create
+a permanent report.  Is there a way to get a permanent report that I can 
+save and print?
+
+**A:** Yes. Use **Quarto** or **RMarkdown**.  You can call **pkgdiff**
+functions from within a markdown document.  Then when you knit the document,
+the console output will be emitted as text. The document can then be saved and 
+printed as desired.
+
+[top](#top) 
+
+******
+
+### Can I use **pkgdiff** with packages that are not on CRAN? {#github}
+
+**Q:** My company uses some packages on Github, and also has a couple 
+packages that have been developed internally.  Can I use **pkgdiff**
+for these packages?
+
+**A:** No.  **pkgdiff** only works with packages published on CRAN. The reason
+is that CRAN retains all releases of a package in an archive. **pkgdiff**
+uses this archive to retrieve information about a specific version of a 
+package, and calculate stability scores.  Packages on Github or 
+locally developed packages do not have a predictable and easily accessible archive.
+
+Note that there is another package on CRAN called **packageDiff** that allows you
+to compare two packages locally. This package can generated version differences.
+It will not, however, generate stability scores, or assess an entire repository.
+
+[top](#top) 
+
+******
+
+
+<!-- ### How do I format a data frame? {#overview} -->
+
+<!-- **Q:** I have a data frame with different types of variables: -->
+<!-- numbers, dates, character values.  How can I format them without messing -->
+<!-- up the original data? -->
+
+
+<!-- **A:** With the **fmtr** package you can assign the formats to the  -->
+<!-- "format" attribute of the dataframe, and the apply the formats using the  -->
+<!-- `fdata()` function, returning the result to a new data frame.  Here is  -->
+<!-- a simple example: -->
+<!-- ```{r eval=FALSE, echo=TRUE} -->
+<!-- # Create sample data -->
+<!-- dat <- data.frame(SUBJ = c(1, 2, 3), -->
+<!--                   BDATE = c(as.Date("1945-10-17"),  -->
+<!--                             as.Date("1967-09-04"), -->
+<!--                             as.Date("1998-04-28")), -->
+<!--                   SEX = c("M", "F", "M"), -->
+<!--                   WEIGHT = c(77.1107, 64.2848, 85.9842)) -->
+
+<!-- # View data                   -->
+<!-- dat -->
+<!-- #   SUBJ      BDATE SEX  WEIGHT -->
+<!-- # 1    1 1945-10-17   M 77.1107 -->
+<!-- # 2    2 1967-09-04   F 64.2848 -->
+<!-- # 3    3 1998-04-28   M 85.9842 -->
+
+<!-- # Assign formats -->
+<!-- formats(dat) <- list(BDATE = "%Y/%m/%d", -->
+<!--                      SEX = c("M" = "Male", "F" = "Female"), -->
+<!--                      WEIGHT = "%1.1f kg") -->
+
+<!-- # Apply formats to new data frame -->
+<!-- dat2 <- fdata(dat) -->
+
+<!-- # View new data frame -->
+<!-- dat2 -->
+<!-- #   SUBJ      BDATE    SEX  WEIGHT -->
+<!-- # 1    1 1945/10/17   Male 77.1 kg -->
+<!-- # 2    2 1967/09/04 Female 64.3 kg -->
+<!-- # 3    3 1998/04/28   Male 86.0 kg -->
+<!-- ``` -->
+<!-- [top](#top)  -->
+
+<!-- ****** -->

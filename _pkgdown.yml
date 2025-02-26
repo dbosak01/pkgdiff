@@ -4,10 +4,8 @@ articles:
 - title: Articles
   navbar: ~
   contents:
-  - pkgdiff-globals
   - pkgdiff-stability
   - pkgdiff-cache
-  - pkgdiff-rmarkdown
   - pkgdiff-faq
 
 reference:

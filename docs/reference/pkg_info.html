@@ -35,19 +35,13 @@ information."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/lib
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/pkgdiff-globals.html">Global Options</a>
-    </li>
-    <li>
       <a href="../articles/pkgdiff-stability.html">Stability Score</a>
     </li>
     <li>
       <a href="../articles/pkgdiff-cache.html">Package Cache</a>
     </li>
     <li>
-      <a href="../articles/pkgdiff-rmarkdown.html">Rmarkdown Reports</a>
-    </li>
-    <li>
-      <a href="../articles/pkgdiff-faq.html">pkgdiff-faq</a>
+      <a href="../articles/pkgdiff-faq.html">Frequently Asked Questions</a>
     </li>
   </ul></li>
 <li>
@@ -106,13 +100,21 @@ of the package from CRAN.</p></dd>
 
 
 <dt id="arg-cache">cache<a class="anchor" aria-label="anchor" href="#arg-cache"></a></dt>
-<dd><p>Whether to retrieve the info from the github cache, or
+<dd><p>Whether to retrieve the info from the Github cache, or
 from CRAN.  If TRUE, the function will first search the cache, and
 return the info if available.  If the info is not available in the
-github cache, or the cache parameter is set to FALSE, the info will be
+Github cache, or the cache parameter is set to FALSE, the info will be
 retrieved from CRAN.</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    <p>A package information object.  This object contains
+a set of general information about the package, such as the version,
+release date, maintainer, title, etc.  Most of this information comes
+from the package description file.  In addition, the info object also
+contains a list of functions in the package and their parameters.</p>
+    </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other pdiff:
@@ -124,6 +126,10 @@ retrieved from CRAN.</p></dd>
 <code><a href="print.pinfo.html">print.pinfo</a>()</code></p></div>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

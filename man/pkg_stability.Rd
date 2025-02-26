@@ -24,7 +24,8 @@ data from all releases.}
 An stability score object of class "pdiff_score".  The object
 contains the stability score, plus other useful information such as
 the release and version ranges, the number of releases, and number of
-breaking releases.
+breaking releases. All of these items can be accessed using dollar sign ($)
+syntax.
 }
 \description{
 The \code{pkg_stablity} function calculates a stability score for
@@ -56,10 +57,11 @@ assessment has 5 categories:
 had a breaking release in its entire history.
 }
 \item {\strong{Very Stable}: Stability score between 95 and 100. Package
-has had a breaking release, but very rarely.
+has had a breaking release, but very rarely: less than 1 in 20 releases.
 }
 \item {\strong{Stable}: Stability score between 90 and 95.  The package
-has had some breaking releases, but it is still rather rare.
+has had some breaking releases, but it is still rather rare: less than
+1 in 10 releases.
 }
 \item {\strong{Somewhat unstable}: Stability score between 80 and 90. The
 package sometimes has a breaking release, at a rate of about 1 in 5.
@@ -80,6 +82,8 @@ The data frame will contain one row for each release.  Each row will
 contains comparison information against the prior release.  The
 columns are organized as follows:
 \itemize{
+\item {\strong{Package}: The package name.
+}
 \item {\strong{Version}: The version number of the release.
 }
 \item {\strong{FileName}: The file name of the package.
@@ -88,23 +92,27 @@ columns are organized as follows:
 }
 \item {\strong{Size}: The size of the package file on disk.
 }
-\item {\strong{AF}: The number of added functions.
+\item {\strong{AF}: The number of functions added from the previous release.
 }
-\item {\strong{AP}: The number of added parameters.
+\item {\strong{AP}: The number of functions that had parameters from the
+previous release.
 }
-\item {\strong{RF}: The number of removed functions.
+\item {\strong{RF}: The number of functions removed from the previous release.
 }
-\item {\strong{RP}: The number of removed parameters.
+\item {\strong{RP}: The number of function that had parameters removed from
+the previous release.
 }
 \item {\strong{BC}: Whether the release had any breaking changes.
 Breaking changes are removed functions or removed parameters.  Values
-are zero or one.  The value one means the release had breaking changes.
+are zero or one.  The value one (1) means the release had breaking changes.
+The value zero (0) means the release had no breaking changes.
 }
 \item {\strong{TF}: The total number of functions in the package.
 }
 }
-The above data will be included in the function print out.  It an also be
-accessed on the returned object.
+The above data will be included in the function print out.  It can also be
+accessed on the returned object from the "data" list item, i.e.
+\code{obj$data}.
 }
 
 \section{Disclaimers}{
@@ -116,7 +124,7 @@ between removed
 functions and removed parameters. They are both considered "breaking", and
 counted equally.
 
-Current methodology also does not factor in
+The methodology also does not factor in
 changed functions.  The reason is simply that it is much more difficult to
 identify whether or not a changed function is breaking.  That is to say,
 you may still have breaking changes that are not identified by the
@@ -134,6 +142,11 @@ most popular packages on CRAN have been cached.  If there is a package
 that you query frequently that has not been cached, please submit
 an issue to the \strong{pkgdiff} issue log on Github, and request that
 the package be added to the cache.
+
+For more information on the package cache, see \code{vignette("pkgdiff-cache")}.
+
+For more information about how the stability score and assessment are
+calculated, see \code{vignette("pkgdiff-stability")}.
 }
 
 \seealso{

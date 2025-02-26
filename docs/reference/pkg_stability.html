@@ -37,19 +37,13 @@ This data can be useful for review or even custom analytics."><!-- mathjax --><s
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/pkgdiff-globals.html">Global Options</a>
-    </li>
-    <li>
       <a href="../articles/pkgdiff-stability.html">Stability Score</a>
     </li>
     <li>
       <a href="../articles/pkgdiff-cache.html">Package Cache</a>
     </li>
     <li>
-      <a href="../articles/pkgdiff-rmarkdown.html">Rmarkdown Reports</a>
-    </li>
-    <li>
-      <a href="../articles/pkgdiff-faq.html">pkgdiff-faq</a>
+      <a href="../articles/pkgdiff-faq.html">Frequently Asked Questions</a>
     </li>
   </ul></li>
 <li>
@@ -122,7 +116,8 @@ data from all releases.</p></dd>
     <p>An stability score object of class "pdiff_score".  The object
 contains the stability score, plus other useful information such as
 the release and version ranges, the number of releases, and number of
-breaking releases.</p>
+breaking releases. All of these items can be accessed using dollar sign ($)
+syntax.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -142,9 +137,10 @@ whether it is stable or unstable.  The
 assessment has 5 categories:</p><ul><li><p><strong>Perfect</strong>: Stability score of 100.  Package has never
 had a breaking release in its entire history.</p></li>
 <li><p><strong>Very Stable</strong>: Stability score between 95 and 100. Package
-has had a breaking release, but very rarely.</p></li>
+has had a breaking release, but very rarely: less than 1 in 20 releases.</p></li>
 <li><p><strong>Stable</strong>: Stability score between 90 and 95.  The package
-has had some breaking releases, but it is still rather rare.</p></li>
+has had some breaking releases, but it is still rather rare: less than
+1 in 10 releases.</p></li>
 <li><p><strong>Somewhat unstable</strong>: Stability score between 80 and 90. The
 package sometimes has a breaking release, at a rate of about 1 in 5.</p></li>
 <li><p><strong>Unstable</strong>: Stability score below 80.  The package breaks
@@ -160,20 +156,25 @@ package stability, and discourage the number of breaking changes.</p>
 data frame of stability information gathered from each package release.
 The data frame will contain one row for each release.  Each row will
 contains comparison information against the prior release.  The
-columns are organized as follows:</p><ul><li><p><strong>Version</strong>: The version number of the release.</p></li>
+columns are organized as follows:</p><ul><li><p><strong>Package</strong>: The package name.</p></li>
+<li><p><strong>Version</strong>: The version number of the release.</p></li>
 <li><p><strong>FileName</strong>: The file name of the package.</p></li>
 <li><p><strong>Release</strong>: The release date of the package.</p></li>
 <li><p><strong>Size</strong>: The size of the package file on disk.</p></li>
-<li><p><strong>AF</strong>: The number of added functions.</p></li>
-<li><p><strong>AP</strong>: The number of added parameters.</p></li>
-<li><p><strong>RF</strong>: The number of removed functions.</p></li>
-<li><p><strong>RP</strong>: The number of removed parameters.</p></li>
+<li><p><strong>AF</strong>: The number of functions added from the previous release.</p></li>
+<li><p><strong>AP</strong>: The number of functions that had parameters from the
+previous release.</p></li>
+<li><p><strong>RF</strong>: The number of functions removed from the previous release.</p></li>
+<li><p><strong>RP</strong>: The number of function that had parameters removed from
+the previous release.</p></li>
 <li><p><strong>BC</strong>: Whether the release had any breaking changes.
 Breaking changes are removed functions or removed parameters.  Values
-are zero or one.  The value one means the release had breaking changes.</p></li>
+are zero or one.  The value one (1) means the release had breaking changes.
+The value zero (0) means the release had no breaking changes.</p></li>
 <li><p><strong>TF</strong>: The total number of functions in the package.</p></li>
-</ul><p>The above data will be included in the function print out.  It an also be
-accessed on the returned object.</p>
+</ul><p>The above data will be included in the function print out.  It can also be
+accessed on the returned object from the "data" list item, i.e.
+<code>obj$data</code>.</p>
     </div>
     <div id="disclaimers">
     <h2>Disclaimers</h2>
@@ -184,7 +185,7 @@ functions within a release.  Current methodology also does not differentiate
 between removed
 functions and removed parameters. They are both considered "breaking", and
 counted equally.</p>
-<p>Current methodology also does not factor in
+<p>The methodology also does not factor in
 changed functions.  The reason is simply that it is much more difficult to
 identify whether or not a changed function is breaking.  That is to say,
 you may still have breaking changes that are not identified by the
@@ -202,6 +203,9 @@ most popular packages on CRAN have been cached.  If there is a package
 that you query frequently that has not been cached, please submit
 an issue to the <strong>pkgdiff</strong> issue log on Github, and request that
 the package be added to the cache.</p>
+<p>For more information on the package cache, see <code><a href="../articles/pkgdiff-cache.html">vignette("pkgdiff-cache")</a></code>.</p>
+<p>For more information about how the stability score and assessment are
+calculated, see <code><a href="../articles/pkgdiff-stability.html">vignette("pkgdiff-stability")</a></code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

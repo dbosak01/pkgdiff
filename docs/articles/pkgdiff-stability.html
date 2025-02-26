@@ -50,19 +50,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/pkgdiff-globals.html">Global Options</a>
-    </li>
-    <li>
       <a href="../articles/pkgdiff-stability.html">Stability Score</a>
     </li>
     <li>
       <a href="../articles/pkgdiff-cache.html">Package Cache</a>
     </li>
     <li>
-      <a href="../articles/pkgdiff-rmarkdown.html">Rmarkdown Reports</a>
-    </li>
-    <li>
-      <a href="../articles/pkgdiff-faq.html">pkgdiff-faq</a>
+      <a href="../articles/pkgdiff-faq.html">Frequently Asked Questions</a>
     </li>
   </ul>
 </li>
@@ -104,43 +98,37 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkgdiff.r-sassy.org">pkgdiff</a></span><span class="op">)</span></span></code></pre></div>
-<div class="section level2">
-<h2 id="stability-score">Stability Score<a class="anchor" aria-label="anchor" href="#stability-score"></a>
-</h2>
-<p>The function <code><a href="../reference/pkg_stability.html">pkg_stability()</a></code> provides a stability score
-for a selected package. This function looks at the entire history of
-package releases, and compares them to identify breaking changes. It
-then uses the number of breaking changes to calculate a stability score.
-This vignette describes how the stability score is calculated.</p>
+<p>The function <code><a href="../reference/pkg_stability.html">pkg_stability()</a></code> provides a
+<strong>Stability Score</strong> for a selected package. This function
+looks at the entire history of package releases, and compares them to
+identify breaking changes. It then uses the number of breaking changes
+to calculate a <strong>Stability Score</strong>. This vignette describes
+how the score is calculated.</p>
 <div class="section level3">
 <h3 id="breaking-changes">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes"></a>
 </h3>
-<p>Before describing how the stability score is calculated, we first
-have to understand what is meant by a “breaking change”. In the context
-of <strong>pkgdiff</strong>, a “breaking change” is a function that
-exists in one release, but is removed in the next. It can also be a
-function parameter that exists in one release, but is removed in the
-next. There are, therefore, two kinds of breaking changes tracked by the
-package: removed functions and removed parameters. Either one of these
-will count as a breaking change.</p>
+<p>Before describing how the <strong>Stability Score</strong> is
+calculated, we first have to understand what is meant by a “breaking
+change”. In the context of <strong>pkgdiff</strong>, a “breaking change”
+is a function that exists in one release, but is removed in the next. It
+can also be a function parameter that exists in one release, but is
+removed in the next. There are, therefore, two kinds of breaking changes
+tracked by the package: removed functions and removed parameters. Either
+one of these will count as a breaking change.</p>
 <p>Note that there are other kinds of changes not tracked by
 <strong>pkgdiff</strong>. Functions that are changed, but not removed,
 are not tracked. Also, functions that are deprecated, but not removed,
 are not tracked. That means you can start getting a deprecation warning
 on a function, but as long as it is not actually removed,
 <strong>pkgdiff</strong> does not count that as a breaking change.</p>
-<p>Therefore, the breaking change indicator in <strong>pkgdiff</strong>
-is not foolproof. It will, however, identify the most egregious types of
-breakages.</p>
 </div>
 <div class="section level3">
 <h3 id="percentage-of-non-breaking-changes">Percentage of Non-Breaking Changes<a class="anchor" aria-label="anchor" href="#percentage-of-non-breaking-changes"></a>
 </h3>
-<p>A package version with breaking changes from the previous version is
-called a “breaking release”. A package version that is compatible with
-the previous version is called a “non-breaking release”.</p>
+<p>A package version with at least one breaking change from the previous
+version is called a “breaking release”. A package version that is
+compatible with the previous version is called a “non-breaking
+release”.</p>
 <p>The Stability Score is calculated as the percentage of non-breaking
 releases.<br>
 In other words, the Stability Score is the number of breaking releases
@@ -148,22 +136,24 @@ divided by the total number of releases, subtracted from one. The basic
 formula for the stability score is thus: 1 - (BR / TR), where BR is
 Breaking Releases and TR is Total Releases.</p>
 <p>For example, if a package has 10 releases, and one of them is a
-breaking release, the Stability Score will be .9 or 90%.</p>
+breaking release, the <strong>Stability Score</strong> will be .9 or
+90%.</p>
 </div>
 <div class="section level3">
 <h3 id="weighting-over-time">Weighting Over Time<a class="anchor" aria-label="anchor" href="#weighting-over-time"></a>
 </h3>
 <p>Breaking releases are weighted over time. This consideration reflects
 the perception that breaking releases many years ago matter less than
-breaking releases in the last year. Breaking releases therefore start
-with a value of one (1), and that value is reduced by .01 for each month
-away from the present date. That means a breaking release in the last
-month will count as 1, and a breaking release two years ago will count
-as 1 - (.01 * 24) = 0.76.</p>
+recent breaking releases. Breaking releases therefore start with a value
+of one (1), and that value is reduced by .01 for each month away from
+the present date. That means a breaking release in the last month will
+count as 1, and a breaking release two years ago will count as 1 - (.01
+* 24) = 0.76.</p>
 <p>Observe that this weighting over time will eventually cause the
-breaking release to not be counted at all. The discarding of a breaking
+breaking release to not be counted at all. The discounting of a breaking
 release occurs at 8.333 years. That means breaking releases older than
-8.333 years will not be considered in the Stability Score.</p>
+8.333 years will not be considered in the <strong>Stability
+Score</strong>.</p>
 </div>
 <div class="section level3">
 <h3 id="other-considerations">Other Considerations<a class="anchor" aria-label="anchor" href="#other-considerations"></a>
@@ -171,29 +161,23 @@ release occurs at 8.333 years. That means breaking releases older than
 <p>Also note that the number of releases eventually age out of the
 calculation. Any release older than 10 years from the current date will
 be discarded from the Stability Score. These releases will still be
-shown in the Stability Data, however, as these older releases help to
-give you an accurate understanding of the package history.</p>
-</div>
+shown in the Stability Data. Keeping them in the data helps to give you
+an accurate understanding of the package history.</p>
 </div>
 <div class="section level2">
 <h2 id="stability-assessment">Stability Assessment<a class="anchor" aria-label="anchor" href="#stability-assessment"></a>
 </h2>
 <p>In addition to the above Stability Score, the
-<code><a href="../reference/pkg_stability.html">pkg_stability()</a></code> function also provides a . The is a
-categorization of the . The Stability Assessment is a way to give you an
-English interpretation of the Stability Score. The Stability Assessment
-is determined as follows:</p>
+<code><a href="../reference/pkg_stability.html">pkg_stability()</a></code> function also provides a <strong>Stability
+Assessment</strong>. The <strong>Stability Assessment</strong> is a
+categorization of the <strong>Stability Score</strong>. The Stability
+Assessment is a way to give you an English interpretation of the
+Stability Score. The Stability Assessment is determined as follows:</p>
 <ul>
 <li>100%: Perfect</li>
-<li><blockquote>
-<p>= 95%: Very Stable</p>
-</blockquote></li>
-<li><blockquote>
-<p>= 90%: Stable</p>
-</blockquote></li>
-<li><blockquote>
-<p>= 80%: Somewhat Unstable</p>
-</blockquote></li>
+<li>&gt;= 95%: Very Stable</li>
+<li>&gt;= 90%: Stable</li>
+<li>&gt;= 80%: Somewhat Unstable</li>
 <li>&lt; 80%: Unstable</li>
 </ul>
 <p>The above categorization sets a high bar. The purpose of setting a
@@ -201,8 +185,19 @@ high bar is simply to bring the R Open Source language up to the
 stability level of proprietary languages. It was designed to promote
 stability and encourage package developers to reduce the number of
 breaking changes in their Open Source packages. A high stability score
-is something that package developers should be proud of, and programmers
-should look for when selecting packages to use in their programs.</p>
+is something that R package developers should be proud of, and R users
+should look for when selecting packages to include in their
+programs.</p>
+</div>
+<div class="section level2">
+<h2 id="cran-packages">CRAN Packages<a class="anchor" aria-label="anchor" href="#cran-packages"></a>
+</h2>
+<p>The <strong>Stability Score</strong> and <strong>Stability
+Assessment</strong> only work with packages published on CRAN. The
+reason is because CRAN preserves all releases of a package, and those
+archived releases are easily available to <strong>pkgdiff</strong>.
+Releases on Github are not reliable, as they are subject to whether the
+package developer remembers to create a release version or not.</p>
 </div>
   </div>
 
