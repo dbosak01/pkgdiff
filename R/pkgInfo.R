@@ -206,8 +206,14 @@ print.pinfo <- function(x, ..., verbose = FALSE) {
 #' @title Returns Information on the Package Cache
 #' @description
 #' The \code{pkg_cache} function queries the package cache, and
-#' returns information on whether or not the package is part of the cache.
+#' returns information on which packages are included in the cache.
 #' The function also returns the last version of the package cached.
+#' @details
+#' The \strong{pkgdiff} cache is used to speed up \strong{pkgdiff} functions.
+#' Information about each package is pre-processed and stored in the cache
+#' on Github.  The functions then retrieve this pre-processed information
+#' instead of pulling packages down from CRAN.  To learn more about the cache,
+#' refer to \code{vignette('Package Cache')}.
 #' @param pkgs A vector of package names to retrieve cache information about.
 #' Default is NULL, which means to return all packages in the cache.
 #' @returns An data frame showing the package name and latest package

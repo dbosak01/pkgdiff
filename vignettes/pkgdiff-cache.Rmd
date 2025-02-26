@@ -40,8 +40,11 @@ that are included in the cache.
 4) You may request that a package be added to the cache by submitting 
 an issue to the **pkgdiff** issue log 
 [here](https://github.com/dbosak01/pkgdiff/issues).
-
-To get a list of which packages are in the **pkgdiff** cache, 
+5) Also observe that the `pkg_info()` function returns a parameter
+on whether or not the selected package is in the cache.  It is recommended
+to run `pkg_info()` first, and check if the package is in the cache before
+running `pkg_stability()`.
+6) To find out which packages are in the **pkgdiff** cache, 
 you may call the function `pkg_cache()`. See the documentation of that
 function for additional information.
 

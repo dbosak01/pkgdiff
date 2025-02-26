@@ -59,6 +59,9 @@
       <a href="../articles/pkgdiff-cache.html">Package Cache</a>
     </li>
     <li>
+      <a href="../articles/pkgdiff-rmarkdown.html">Rmarkdown Reports</a>
+    </li>
+    <li>
       <a href="../articles/pkgdiff-faq.html">pkgdiff-faq</a>
     </li>
   </ul>
@@ -110,14 +113,15 @@ short explanation of each:</p>
 <ul>
 <li>
 <code><a href="../reference/pkg_info.html">pkg_info()</a></code>: Displays general information about a
-package, including a list of all exported functions.</li>
+package, including the description, maintainer, and number of downloads
+in the last month.</li>
 <li>
 <code><a href="../reference/pkg_stability.html">pkg_stability()</a></code>: Looks at the history of a package,
 identifies breaking changes, and assesses the package for
 stability.</li>
 <li>
 <code><a href="../reference/pkg_diff.html">pkg_diff()</a></code>: Compares two versions of a package, and
-shows which functions have been added or removed.</li>
+shows which functions and parameters have been added or removed.</li>
 <li>
 <code><a href="../reference/pkg_repo.html">pkg_repo()</a></code>: Generates a list of the packages in a
 repository and their versions.</li>
@@ -128,175 +132,273 @@ tries to identify which packages will break when upgraded.</li>
 <code><a href="../reference/repo_stability.html">repo_stability()</a></code>: Looks at a package repository and
 calculates a stability score for each package.</li>
 </ul>
-<p>Below is a short explanation and demo for each of the above
+<p>Below is a further explanation and demo for each of the above
 functions.</p>
 <div class="section level2">
 <h2 id="general-package-information">General Package Information<a class="anchor" aria-label="anchor" href="#general-package-information"></a>
 </h2>
-<p>The firt thing you may want to do when exploring a package is to get
-some general information about it. This general package information can
-be achieved using the <code><a href="../reference/pkg_info.html">pkg_info()</a></code> function. All you need to
-pass is the package name, and the function will return basic information
-such as the maintainer, description, and imported packages. Here is a
-simple demonstration:</p>
+<p>The first thing you may want to do when exploring a package is to get
+some general information about it. General information about a package
+can be achieved using the <code><a href="../reference/pkg_info.html">pkg_info()</a></code> function. All you need
+to pass is the package name. The function will then return basic
+information such as the maintainer, description, and imported packages.
+Here is a simple demonstration:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkgdiff.r-sassy.org">pkgdiff</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Examine fmtr package</span></span>
-<span><span class="fu"><a href="../reference/pkg_info.html">pkg_info</a></span><span class="op">(</span><span class="st">"fmtr"</span><span class="op">)</span></span>
-<span><span class="co"># # A package info object: fmtr package</span></span>
-<span><span class="co"># - Version: v1.6.5</span></span>
-<span><span class="co"># - Release Date: 2024-06-13</span></span>
-<span><span class="co"># - Title: Easily Apply Formats to Data</span></span>
-<span><span class="co"># - Maintainer: David Bosak &lt;dbosak01@gmail.com&gt;</span></span>
-<span><span class="co"># - License: CC0</span></span>
-<span><span class="co"># - Description: Contains a set of functions that can be used to apply</span></span>
-<span><span class="co"># formats to data frames or vectors.  The package aims to provide</span></span>
-<span><span class="co"># functionality similar to that of SAS® formats. Formats are assigned to</span></span>
-<span><span class="co"># the format attribute on data frame columns.  Then when the fdata()</span></span>
-<span><span class="co"># function is called, a new data frame is created with the column data</span></span>
-<span><span class="co"># formatted as specified.  The package also contains a value() function</span></span>
-<span><span class="co"># to create a user-defined format, similar to a SAS® user-defined format.</span></span>
-<span><span class="co"># - Depends: R (&gt;= 4.0.0), common</span></span>
-<span><span class="co"># - Linking To: Rcpp</span></span>
-<span><span class="co"># - Imports: tibble, stats, crayon, Rcpp</span></span>
-<span><span class="co"># - Suggests: testthat, knitr, rmarkdown, covr, logr, utils, dplyr, libr</span></span>
+<span><span class="co"># Examine tidymodels package</span></span>
+<span><span class="fu"><a href="../reference/pkg_info.html">pkg_info</a></span><span class="op">(</span><span class="st">"tidymodels"</span><span class="op">)</span></span>
+<span><span class="co"># # A package info object: tidymodels package</span></span>
+<span><span class="co"># - Version: v1.2.0</span></span>
+<span><span class="co"># - Release Date: 2024-03-25</span></span>
+<span><span class="co"># - Title: Easily Install and Load the 'Tidymodels' Packages</span></span>
+<span><span class="co"># - Maintainer: Max Kuhn &lt;max@posit.co&gt;</span></span>
+<span><span class="co"># - License: MIT + file LICENSE</span></span>
+<span><span class="co"># - Description: The tidy modeling "verse" is a collection of packages for</span></span>
+<span><span class="co"># modeling and statistical analysis that share the underlying design</span></span>
+<span><span class="co"># philosophy, grammar, and data structures of the tidyverse.</span></span>
+<span><span class="co"># - Depends: R (&gt;= 3.6)</span></span>
+<span><span class="co"># - Imports: broom (&gt;= 1.0.5), cli (&gt;= 3.6.2), conflicted (&gt;= 1.2.0), dials (&gt;= 1.2.1), dplyr (&gt;= 1.1.4), ggplot2 (&gt;= 3.5.0), hardhat (&gt;= 1.3.1), infer (&gt;= 1.0.6), modeldata (&gt;= 1.3.0), parsnip (&gt;= 1.2.1), purrr (&gt;= 1.0.2), recipes (&gt;= 1.0.10), rlang (&gt;= 1.1.3), rsample (&gt;= 1.2.1), rstudioapi (&gt;= 0.16.0), tibble (&gt;= 3.2.1), tidyr (&gt;= 1.3.1), tune (&gt;= 1.2.0), workflows (&gt;= 1.1.4), workflowsets (&gt;= 1.1.0), yardstick (&gt;= 1.3.1)</span></span>
+<span><span class="co"># - Suggests: covr, glue, knitr, rmarkdown, testthat (&gt;= 3.0.0), xml2</span></span>
 <span><span class="co"># - Repository: CRAN</span></span>
-<span><span class="co"># - Functions: 49</span></span></code></pre></div>
+<span><span class="co"># - Cached: TRUE</span></span>
+<span><span class="co"># - Functions: 9</span></span></code></pre></div>
+<p>The return value of this function is actually an object that can be
+manipulated programmatically. Here we will extract some of the data
+values from this object:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Capture package info object</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_info.html">pkg_info</a></span><span class="op">(</span><span class="st">"tidymodels"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># View version</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">Version</span></span>
+<span><span class="co"># [1] "1.3.0"</span></span>
+<span></span>
+<span><span class="co"># View title</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">Title</span></span>
+<span><span class="co"># [1] "Easily Install and Load the 'Tidymodels' Packages"</span></span>
+<span></span>
+<span><span class="co"># View functions</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">ReleaseDate</span></span>
+<span><span class="co"># [1] "2025-02-21"</span></span></code></pre></div>
+<p>Note that, by default, the version of the package returned is the
+version of the package located on the current machine, in the current
+version of the R repository. If the package is not installed on in the
+current R respository, the function will return the latest version on
+CRAN.</p>
+<p>Also note that the object contains a complete list of all exported
+package functions. This list can be accessed programatically, and also
+viewed using the <code>verbose</code> parameter of the
+<code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> function:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get package info</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_info.html">pkg_info</a></span><span class="op">(</span><span class="st">"fmtr"</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_info.html">pkg_info</a></span><span class="op">(</span><span class="st">"tidymodels"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># View functions</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co"># # A package info object: fmtr package</span></span>
-<span><span class="co"># - Version: v1.6.5</span></span>
-<span><span class="co"># - Release Date: 2024-06-13</span></span>
-<span><span class="co"># - Title: Easily Apply Formats to Data</span></span>
-<span><span class="co"># - Maintainer: David Bosak &lt;dbosak01@gmail.com&gt;</span></span>
-<span><span class="co"># - License: CC0</span></span>
-<span><span class="co"># - Description: Contains a set of functions that can be used to apply</span></span>
-<span><span class="co"># formats to data frames or vectors.  The package aims to provide</span></span>
-<span><span class="co"># functionality similar to that of SAS® formats. Formats are assigned to</span></span>
-<span><span class="co"># the format attribute on data frame columns.  Then when the fdata()</span></span>
-<span><span class="co"># function is called, a new data frame is created with the column data</span></span>
-<span><span class="co"># formatted as specified.  The package also contains a value() function</span></span>
-<span><span class="co"># to create a user-defined format, similar to a SAS® user-defined format.</span></span>
-<span><span class="co"># - Depends: R (&gt;= 4.0.0), common</span></span>
-<span><span class="co"># - Linking To: Rcpp</span></span>
-<span><span class="co"># - Imports: tibble, stats, crayon, Rcpp</span></span>
-<span><span class="co"># - Suggests: testthat, knitr, rmarkdown, covr, logr, utils, dplyr, libr</span></span>
+<span><span class="co"># # A package info object: tidymodels package</span></span>
+<span><span class="co"># - Version: v1.3.0</span></span>
+<span><span class="co"># - Release Date: 2025-02-21</span></span>
+<span><span class="co"># - Title: Easily Install and Load the 'Tidymodels' Packages</span></span>
+<span><span class="co"># - Maintainer: Max Kuhn &lt;max@posit.co&gt;</span></span>
+<span><span class="co"># - License: MIT + file LICENSE</span></span>
+<span><span class="co"># - Description: The tidy modeling "verse" is a collection of packages for</span></span>
+<span><span class="co"># modeling and statistical analysis that share the underlying design</span></span>
+<span><span class="co"># philosophy, grammar, and data structures of the tidyverse.</span></span>
+<span><span class="co"># - Depends: R (&gt;= 3.6)</span></span>
+<span><span class="co"># - Imports: broom (&gt;= 1.0.7), cli (&gt;= 3.6.4), conflicted (&gt;= 1.2.0), dials (&gt;= 1.4.0), dplyr (&gt;= 1.1.4), ggplot2 (&gt;= 3.5.1), hardhat (&gt;= 1.4.1), infer (&gt;= 1.0.7), modeldata (&gt;= 1.4.0), parsnip (&gt;= 1.3.0), purrr (&gt;= 1.0.4), recipes (&gt;= 1.1.1), rlang (&gt;= 1.1.5), rsample (&gt;= 1.2.1), rstudioapi (&gt;= 0.17.1), tibble (&gt;= 3.2.1), tidyr (&gt;= 1.3.1), tune (&gt;= 1.3.0), workflows (&gt;= 1.2.0), workflowsets (&gt;= 1.1.0), yardstick (&gt;= 1.3.2)</span></span>
+<span><span class="co"># - Suggests: covr, glue, knitr, rmarkdown, testthat (&gt;= 3.0.0), xml2</span></span>
+<span><span class="co"># - Downloads/Month: 31789</span></span>
 <span><span class="co"># - Repository: CRAN</span></span>
+<span><span class="co"># - Cached: TRUE</span></span>
 <span><span class="co"># - Functions: </span></span>
-<span><span class="co">#   - as.data.frame.fcat(): x, row.names, optional, ...</span></span>
-<span><span class="co">#   - as.data.frame.fmt(): x, row.names, optional, ..., name</span></span>
-<span><span class="co">#   - as.data.frame.fmt_lst(): x, row.names, optional, ...</span></span>
-<span><span class="co">#   - as.fcat(): x</span></span>
-<span><span class="co">#   - as.fcat.data.frame(): x</span></span>
-<span><span class="co">#   - as.fcat.fmt_lst(): x</span></span>
-<span><span class="co">#   - as.fcat.list(): x</span></span>
-<span><span class="co">#   - as.fcat.tbl_df(): x</span></span>
-<span><span class="co">#   - as.flist(): x, type, lookup, simplify</span></span>
-<span><span class="co">#   - as.flist.data.frame(): x, type, lookup, simplify</span></span>
-<span><span class="co">#   - as.flist.fcat(): x, type, lookup, simplify</span></span>
-<span><span class="co">#   - as.flist.list(): x, type, lookup, simplify</span></span>
-<span><span class="co">#   - as.flist.tbl_df(): x, type, lookup, simplify</span></span>
-<span><span class="co">#   - as.fmt(): x</span></span>
-<span><span class="co">#   - as.fmt.data.frame(): x</span></span>
-<span><span class="co">#   - condition(): expr, label, order</span></span>
-<span><span class="co">#   - descriptions(): x</span></span>
-<span><span class="co">#   - descriptions&lt;-(): x, value</span></span>
-<span><span class="co">#   - fapply(): x, format, width, justify</span></span>
-<span><span class="co">#   - fapply2(): x1, x2, format1, format2, sep, width, justify</span></span>
-<span><span class="co">#   - fattr(): x, format, width, justify, label, description, keep</span></span>
-<span><span class="co">#   - fattr&lt;-()</span></span>
-<span><span class="co">#   - fcat(): ..., log</span></span>
-<span><span class="co">#   - fdata(): x, ...</span></span>
-<span><span class="co">#   - flist(): ..., type, lookup, simplify</span></span>
-<span><span class="co">#   - fmt_cnt_pct(): x, denom, format, na, zero</span></span>
-<span><span class="co">#   - fmt_mean_sd(): x, format, sd_format</span></span>
-<span><span class="co">#   - fmt_median(): x, format</span></span>
-<span><span class="co">#   - fmt_n(): x</span></span>
-<span><span class="co">#   - fmt_quantile_range(): x, format, sep, lower, upper, type</span></span>
-<span><span class="co">#   - fmt_range(): x, format, sep</span></span>
-<span><span class="co">#   - formats(): x</span></span>
-<span><span class="co">#   - formats&lt;-(): x, value</span></span>
-<span><span class="co">#   - is.fcat(): x</span></span>
-<span><span class="co">#   - is.flist(): x</span></span>
-<span><span class="co">#   - is.format(): x</span></span>
-<span><span class="co">#   - justification(): x</span></span>
-<span><span class="co">#   - justification&lt;-(): x, value</span></span>
-<span><span class="co">#   - labels.fmt(): object, ...</span></span>
-<span><span class="co">#   - print.fcat(): x, ..., verbose</span></span>
-<span><span class="co">#   - print.fmt(): x, ..., name, verbose</span></span>
-<span><span class="co">#   - print.fmt_lst(): x, ..., verbose</span></span>
-<span><span class="co">#   - read.fcat(): file_path</span></span>
-<span><span class="co">#   - read.flist(): file_path</span></span>
-<span><span class="co">#   - value(): ..., log, as.factor</span></span>
-<span><span class="co">#   - widths(): x</span></span>
-<span><span class="co">#   - widths&lt;-(): x, value</span></span>
-<span><span class="co">#   - write.fcat(): x, dir_path, file_name</span></span>
-<span><span class="co">#   - write.flist(): x, dir_path, file_name</span></span></code></pre></div>
+<span><span class="co">#   - pkg_deps(): x, recursive</span></span>
+<span><span class="co">#   - print.tidymodels_conflicts(): x, ..., startup</span></span>
+<span><span class="co">#   - tag_attach(): tag</span></span>
+<span><span class="co">#   - tag_show()</span></span>
+<span><span class="co">#   - tag_update(): tag</span></span>
+<span><span class="co">#   - tidymodels_conflicts()</span></span>
+<span><span class="co">#   - tidymodels_packages(): include_self</span></span>
+<span><span class="co">#   - tidymodels_prefer(): quiet</span></span>
+<span><span class="co">#   - tidymodels_update(): pkg, recursive, ...</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="stability-assessment">Stability Assessment<a class="anchor" aria-label="anchor" href="#stability-assessment"></a>
 </h2>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>Besides general information about a package, you may also view the
+“stability” of a package. The <code><a href="../reference/pkg_stability.html">pkg_stability()</a></code> function
+looks at the entire history of the package, and attempts to assess its
+overall stability in terms of breaking changes. Here, a “breaking
+change” means either a removed function or removed function parameter.
+This function is very useful when you are writing production code, and
+want to select the most stable packages possible. The results of this
+function can help you make that determination:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># View package stability</span></span>
-<span><span class="fu"><a href="../reference/pkg_stability.html">pkg_stability</a></span><span class="op">(</span><span class="st">"fmtr"</span><span class="op">)</span></span>
-<span><span class="co"># # A stability score: fmtr package</span></span>
-<span><span class="co"># - Age: 4.50 years</span></span>
-<span><span class="co"># - Score: 96.5</span></span>
-<span><span class="co"># - Assessment: Very Stable</span></span>
-<span><span class="co"># - Version Range: 1.0.1/1.6.8</span></span>
-<span><span class="co"># - Release Range: 2020-08-07/2025-01-28</span></span>
-<span><span class="co"># - Release Count: 20</span></span>
-<span><span class="co"># - Breaking Releases: 1</span></span>
+<span><span class="fu"><a href="../reference/pkg_stability.html">pkg_stability</a></span><span class="op">(</span><span class="st">"tidymodels"</span><span class="op">)</span></span>
+<span><span class="co"># # A stability score: tidymodels package</span></span>
+<span><span class="co"># - Age: 6.58 years</span></span>
+<span><span class="co"># - Score: 100.0</span></span>
+<span><span class="co"># - Assessment: Perfect</span></span>
+<span><span class="co"># - Version Range: 0.0.1/1.3.0</span></span>
+<span><span class="co"># - Release Range: 2018-07-27/2025-02-21</span></span>
+<span><span class="co"># - Release Count: 14</span></span>
+<span><span class="co"># - Breaking Releases: 0</span></span>
 <span><span class="co"># - Data: </span></span>
-<span><span class="co">#    Package Version          FileName    Release   Size AF AP RF RP BC TF</span></span>
-<span><span class="co"># 1     fmtr   1.6.8 fmtr_1.6.8.tar.gz 2025-01-28 576.5K  0  1  0  0  0 49</span></span>
-<span><span class="co"># 2     fmtr   1.6.5 fmtr_1.6.5.tar.gz 2024-06-14   575K  0  0  0  0  0 49</span></span>
-<span><span class="co"># 3     fmtr   1.6.4 fmtr_1.6.4.tar.gz 2024-05-10   580K  2  0  0  0  0 49</span></span>
-<span><span class="co"># 4     fmtr   1.6.3 fmtr_1.6.3.tar.gz 2024-01-09   574K  0  0  0  0  0 47</span></span>
-<span><span class="co"># 5     fmtr   1.6.2 fmtr_1.6.2.tar.gz 2023-11-10   487K  0  1  0  0  0 47</span></span>
-<span><span class="co"># 6     fmtr   1.6.0 fmtr_1.6.0.tar.gz 2023-09-10   486K  0  0  0  0  0 47</span></span>
-<span><span class="co"># 7     fmtr   1.5.9 fmtr_1.5.9.tar.gz 2022-09-08   487K  0  3  0  0  0 47</span></span>
-<span><span class="co"># 8     fmtr   1.5.8 fmtr_1.5.8.tar.gz 2022-08-08   419K  1  1  2  0  1 47</span></span>
-<span><span class="co"># 9     fmtr   1.5.7 fmtr_1.5.7.tar.gz 2022-06-25   335K  0  0  0  0  0 48</span></span>
-<span><span class="co"># 10    fmtr   1.5.5 fmtr_1.5.5.tar.gz 2022-01-14   337K  0  1  0  0  0 48</span></span>
-<span><span class="co"># 11    fmtr   1.5.4 fmtr_1.5.4.tar.gz 2021-11-18   338K  0  0  0  0  0 48</span></span>
-<span><span class="co"># 12    fmtr   1.5.3 fmtr_1.5.3.tar.gz 2021-10-09   232K  0  0  0  0  0 48</span></span>
-<span><span class="co"># 13    fmtr   1.5.2 fmtr_1.5.2.tar.gz 2021-07-25   230K  0  0  0  0  0 48</span></span>
-<span><span class="co"># 14    fmtr   1.5.1 fmtr_1.5.1.tar.gz 2021-06-21   229K  0  0  0  0  0 48</span></span>
-<span><span class="co"># 15    fmtr   1.5.0 fmtr_1.5.0.tar.gz 2021-02-22   227K  2  0  0  0  0 48</span></span>
-<span><span class="co"># 16    fmtr   1.4.1 fmtr_1.4.1.tar.gz 2021-01-06   224K  0  0  0  0  0 46</span></span>
-<span><span class="co"># 17    fmtr   1.3.0 fmtr_1.3.0.tar.gz 2020-11-16    87K  6  1  0  0  0 46</span></span>
-<span><span class="co"># 18    fmtr   1.2.2 fmtr_1.2.2.tar.gz 2020-10-10    82K 17  0  0  0  0 40</span></span>
-<span><span class="co"># 19    fmtr   1.1.0 fmtr_1.1.0.tar.gz 2020-09-11    65K  6  1  0  0  0 23</span></span>
-<span><span class="co"># 20    fmtr   1.0.1 fmtr_1.0.1.tar.gz 2020-08-07    59K 17 17  0  0  0 17</span></span></code></pre></div>
+<span><span class="co">#       Package Version                FileName    Release  Size AF AP RF RP BC TF</span></span>
+<span><span class="co"># 1  tidymodels   1.3.0 tidymodels_1.3.0.tar.gz 2025-02-21 46.4K  0  0  0  0  0  9</span></span>
+<span><span class="co"># 2  tidymodels   1.2.0 tidymodels_1.2.0.tar.gz 2024-03-25 49.6K  0  0  0  0  0  9</span></span>
+<span><span class="co"># 3  tidymodels   1.1.1 tidymodels_1.1.1.tar.gz 2023-08-24   50K  0  0  0  0  0  9</span></span>
+<span><span class="co"># 4  tidymodels   1.1.0 tidymodels_1.1.0.tar.gz 2023-05-01   49K  0  0  0  0  0  9</span></span>
+<span><span class="co"># 5  tidymodels   1.0.0 tidymodels_1.0.0.tar.gz 2022-07-13   75K  0  0  0  0  0  9</span></span>
+<span><span class="co"># 6  tidymodels   0.2.0 tidymodels_0.2.0.tar.gz 2022-03-19   75K  0  0  0  0  0  9</span></span>
+<span><span class="co"># 7  tidymodels   0.1.4 tidymodels_0.1.4.tar.gz 2021-10-01   17K  0  0  0  0  0  9</span></span>
+<span><span class="co"># 8  tidymodels   0.1.3 tidymodels_0.1.3.tar.gz 2021-04-19   15K  1  0  0  0  0  9</span></span>
+<span><span class="co"># 9  tidymodels   0.1.2 tidymodels_0.1.2.tar.gz 2020-11-22   26K  0  0  0  0  0  8</span></span>
+<span><span class="co"># 10 tidymodels   0.1.1 tidymodels_0.1.1.tar.gz 2020-07-14   25K  0  0  0  0  0  8</span></span>
+<span><span class="co"># 11 tidymodels   0.1.0 tidymodels_0.1.0.tar.gz 2020-02-16   57K  0  0  0  0  0  8</span></span>
+<span><span class="co"># 12 tidymodels   0.0.3 tidymodels_0.0.3.tar.gz 2019-10-05   19K  0  0  0  0  0  8</span></span>
+<span><span class="co"># 13 tidymodels   0.0.2 tidymodels_0.0.2.tar.gz 2018-11-27   18K  0  0  0  0  0  8</span></span>
+<span><span class="co"># 14 tidymodels   0.0.1 tidymodels_0.0.1.tar.gz 2018-07-27   18K  8  8  0  0  0  8</span></span></code></pre></div>
+<p>The stability score is calculated generally as the percentage of
+non-breaking changes. Breaking changes are also weighted to reduce their
+impact over time. The above score of 100 for <strong>tidymodels</strong>
+means that the package has never had a breaking change. It is therefore
+given a stability assessment of “Perfect”.</p>
+<p>Now let’s look at a package with more breaking changes:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># View package stability</span></span>
+<span><span class="fu"><a href="../reference/pkg_stability.html">pkg_stability</a></span><span class="op">(</span><span class="st">"dbplyr"</span><span class="op">)</span></span>
+<span><span class="co"># # A stability score: dbplyr package</span></span>
+<span><span class="co"># - Age: 7.67 years</span></span>
+<span><span class="co"># - Score: 73.7</span></span>
+<span><span class="co"># - Assessment: Unstable</span></span>
+<span><span class="co"># - Version Range: 1.0.0/2.5.0</span></span>
+<span><span class="co"># - Release Range: 2017-06-09/2024-03-19</span></span>
+<span><span class="co"># - Release Count: 23</span></span>
+<span><span class="co"># - Breaking Releases: 10</span></span>
+<span><span class="co"># - Data: </span></span>
+<span><span class="co">#    Package Version            FileName    Release   Size  AF  AP RF RP BC  TF</span></span>
+<span><span class="co"># 1   dbplyr   2.5.0 dbplyr_2.5.0.tar.gz 2024-03-19 752.6K  32   6 12  0  1 611</span></span>
+<span><span class="co"># 2   dbplyr   2.4.0 dbplyr_2.4.0.tar.gz 2023-10-26   743K  74  80 45 33  1 591</span></span>
+<span><span class="co"># 3   dbplyr   2.3.4 dbplyr_2.3.4.tar.gz 2023-09-27   706K   0   0  0  0  0 562</span></span>
+<span><span class="co"># 4   dbplyr   2.3.3 dbplyr_2.3.3.tar.gz 2023-07-07   706K   0   0  0  0  0 562</span></span>
+<span><span class="co"># 5   dbplyr   2.3.2 dbplyr_2.3.2.tar.gz 2023-03-21   707K   0   1  0  1  1 562</span></span>
+<span><span class="co"># 6   dbplyr   2.3.1 dbplyr_2.3.1.tar.gz 2023-02-24   707K   5   6  1  0  1 562</span></span>
+<span><span class="co"># 7   dbplyr   2.3.0 dbplyr_2.3.0.tar.gz 2023-01-16   688K  33  16  5  1  1 558</span></span>
+<span><span class="co"># 8   dbplyr   2.2.1 dbplyr_2.2.1.tar.gz 2022-06-27   655K   4   0  0  0  0 530</span></span>
+<span><span class="co"># 9   dbplyr   2.2.0 dbplyr_2.2.0.tar.gz 2022-06-05   655K 136  47 53  1  1 526</span></span>
+<span><span class="co"># 10  dbplyr   2.1.1 dbplyr_2.1.1.tar.gz 2021-04-06   568K   5   0  0  0  0 443</span></span>
+<span><span class="co"># 11  dbplyr   2.1.0 dbplyr_2.1.0.tar.gz 2021-02-03   566K  15   2  0  0  0 438</span></span>
+<span><span class="co"># 12  dbplyr   2.0.0 dbplyr_2.0.0.tar.gz 2020-11-03   522K 139  33 94 11  1 423</span></span>
+<span><span class="co"># 13  dbplyr   1.4.4 dbplyr_1.4.4.tar.gz 2020-05-27   417K   5   0  0  0  0 378</span></span>
+<span><span class="co"># 14  dbplyr   1.4.3 dbplyr_1.4.3.tar.gz 2020-04-19   413K   9   3  2  2  1 373</span></span>
+<span><span class="co"># 15  dbplyr   1.4.2 dbplyr_1.4.2.tar.gz 2019-06-17   296K   1   0  0  0  0 366</span></span>
+<span><span class="co"># 16  dbplyr   1.4.1 dbplyr_1.4.1.tar.gz 2019-06-06   296K   1   0  0  0  0 365</span></span>
+<span><span class="co"># 17  dbplyr   1.4.0 dbplyr_1.4.0.tar.gz 2019-04-24   295K  24  30 17 13  1 364</span></span>
+<span><span class="co"># 18  dbplyr   1.3.0 dbplyr_1.3.0.tar.gz 2019-01-09   263K   2   0  0  0  0 357</span></span>
+<span><span class="co"># 19  dbplyr   1.2.2 dbplyr_1.2.2.tar.gz 2018-07-25   258K   0   0  0  0  0 355</span></span>
+<span><span class="co"># 20  dbplyr   1.2.1 dbplyr_1.2.1.tar.gz 2018-02-19   257K   0   0  0  0  0 355</span></span>
+<span><span class="co"># 21  dbplyr   1.2.0 dbplyr_1.2.0.tar.gz 2018-01-03   257K  43   6  2  2  1 355</span></span>
+<span><span class="co"># 22  dbplyr   1.1.0 dbplyr_1.1.0.tar.gz 2017-06-27   241K  23   2  0  0  0 314</span></span>
+<span><span class="co"># 23  dbplyr   1.0.0 dbplyr_1.0.0.tar.gz 2017-06-09   235K 291 291  0  0  0 291</span></span></code></pre></div>
+<p>As seen above, the <strong>dbplyr</strong> package has had a lot of
+breaking changes. Which releases had breaking changes are shown the the
+“BC” column of the data grid. The “AF” and “AP” columns stand for “Added
+Functions” and “Added Parameters”, while “RF” and “RP” mean “Removed
+Functions” and “Removed Parameters”. “TF” is the total number of
+exported functions in that version of the package.</p>
+<p>Since this package has issued breaking changes in 10 out of 23
+releases, it gets a stability score of 73.7 and an assessment of
+“Unstable”. A stability assessment of “Unstable” does not necessarily
+mean you should not use the package. Whether or not you use the package
+depends on your situation. The <code><a href="../reference/pkg_stability.html">pkg_stability()</a></code> function
+merely contributes information on which you can make your own
+decisions.</p>
 </div>
 <div class="section level2">
 <h2 id="comparing-package-versions">Comparing Package Versions<a class="anchor" aria-label="anchor" href="#comparing-package-versions"></a>
 </h2>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p>If you find a package with breaking changes, you would then want to
+know what those breaking changes are. The breaking changes between
+package versions can be discovered with the <code><a href="../reference/pkg_diff.html">pkg_diff()</a></code>
+function. This function accepts a package name, and the two version of
+the package you wish to compare.<br>
+Looking at our stability data above, let’s examine the breaking changes
+between versions “2.4.0” and “2.5.0” of <strong>dbplyr</strong>:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compare package versions</span></span>
-<span><span class="fu"><a href="../reference/pkg_diff.html">pkg_diff</a></span><span class="op">(</span><span class="st">"fmtr"</span>, <span class="st">"1.5.7"</span>, <span class="st">"1.5.8"</span><span class="op">)</span></span>
-<span><span class="co"># # A difference object: fmtr package</span></span>
-<span><span class="co"># - Comparing: v1.5.7/v1.5.8</span></span>
+<span><span class="fu"><a href="../reference/pkg_diff.html">pkg_diff</a></span><span class="op">(</span><span class="st">"dbplyr"</span>, <span class="st">"2.4.0"</span>, <span class="st">"2.5.0"</span><span class="op">)</span></span>
+<span><span class="co"># # A difference object: dbplyr package</span></span>
+<span><span class="co"># - Comparing: v2.4.0/v2.5.0</span></span>
 <span><span class="co"># - Breaking Changes: TRUE</span></span>
 <span><span class="co"># - Added Functions: </span></span>
-<span><span class="co">#   - fapply2()</span></span>
+<span><span class="co">#   - [.dbplyr_table_path()</span></span>
+<span><span class="co">#   - [[.dbplyr_table_path()</span></span>
+<span><span class="co">#   - as_table_path()</span></span>
+<span><span class="co">#   - c.dbplyr_table_path()</span></span>
+<span><span class="co">#   - check_table_path()</span></span>
+<span><span class="co">#   - complete.tbl_lazy()</span></span>
+<span><span class="co">#   - db_explain.Oracle()</span></span>
+<span><span class="co">#   - db_explain.OraConnection()</span></span>
+<span><span class="co">#   - db_sql_render.Microsoft SQL Server()</span></span>
+<span><span class="co">#   - escape.dbplyr_table_path()</span></span>
+<span><span class="co">#   - escape.default()</span></span>
+<span><span class="co">#   - expand.tbl_lazy()</span></span>
+<span><span class="co">#   - fill.tbl_lazy()</span></span>
+<span><span class="co">#   - group_by_drop_default.tbl_lazy()</span></span>
+<span><span class="co">#   - intersect.tbl_lazy()</span></span>
+<span><span class="co">#   - is_table_path()</span></span>
+<span><span class="co">#   - pivot_longer.tbl_lazy()</span></span>
+<span><span class="co">#   - pivot_wider.tbl_lazy()</span></span>
+<span><span class="co">#   - print.dbplyr_table_path()</span></span>
+<span><span class="co">#   - reframe.tbl_lazy()</span></span>
+<span><span class="co">#   - replace_na.tbl_lazy()</span></span>
+<span><span class="co">#   - setdiff.OraConnection()</span></span>
+<span><span class="co">#   - setdiff.tbl_lazy()</span></span>
+<span><span class="co">#   - setdiff.tbl_Oracle()</span></span>
+<span><span class="co">#   - simulate_mariadb()</span></span>
+<span><span class="co">#   - sql_escape_ident.default()</span></span>
+<span><span class="co">#   - sql_escape_ident.MySQLConnection()</span></span>
+<span><span class="co">#   - sql_escape_string.default()</span></span>
+<span><span class="co">#   - table_path_components()</span></span>
+<span><span class="co">#   - table_path_components.default()</span></span>
+<span><span class="co">#   - table_path_name()</span></span>
+<span><span class="co">#   - union.tbl_lazy()</span></span>
 <span><span class="co"># - Added Parameters: </span></span>
-<span><span class="co">#   - fmt_cnt_pct(): na, zero</span></span>
+<span><span class="co">#   - flatten_query.base_query(): con</span></span>
+<span><span class="co">#   - flatten_query.multi_join_query(): con</span></span>
+<span><span class="co">#   - flatten_query.select_query(): con</span></span>
+<span><span class="co">#   - flatten_query.union_query(): con</span></span>
+<span><span class="co">#   - flatten_query.values_query(): con</span></span>
+<span><span class="co">#   - sql_translation.MySQL(): con</span></span>
 <span><span class="co"># - Removed Functions: </span></span>
-<span><span class="co">#   - labels.data.frame()</span></span>
-<span><span class="co">#   - labels&lt;-()</span></span></code></pre></div>
+<span><span class="co">#   - as_table_ident.character()</span></span>
+<span><span class="co">#   - as_table_ident.dbplyr_catalog()</span></span>
+<span><span class="co">#   - as_table_ident.dbplyr_schema()</span></span>
+<span><span class="co">#   - as_table_ident.dbplyr_table_ident()</span></span>
+<span><span class="co">#   - as_table_ident.Id()</span></span>
+<span><span class="co">#   - as_table_ident.ident()</span></span>
+<span><span class="co">#   - as_table_ident.ident_q()</span></span>
+<span><span class="co">#   - as_table_ident.sql()</span></span>
+<span><span class="co">#   - escape.dbplyr_table_ident()</span></span>
+<span><span class="co">#   - format.dbplyr_table_ident()</span></span>
+<span><span class="co">#   - sql_escape_ident.DBIConnection()</span></span>
+<span><span class="co">#   - sql_escape_string.DBIConnection()</span></span></code></pre></div>
+<p>As you can see, many new functions and function parameter have been
+added between these two versions. In addition, there are 12 functions
+that have been removed. It is up to you to determine whether and how
+these removals will affect your programs. It is very convenient,
+however, to have an accurate accounting of package changes. These
+changes can help you plan your version upgrades and anticipate
+breakages.</p>
 </div>
 <div class="section level2">
 <h2 id="listing-package-versions">Listing Package Versions<a class="anchor" aria-label="anchor" href="#listing-package-versions"></a>
 </h2>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Create vector of packages</span></span>
 <span><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"curl"</span>, <span class="st">"dplyr"</span>, <span class="st">"fmtr"</span>, <span class="st">"purrr"</span><span class="op">)</span></span>
@@ -320,7 +422,10 @@ simple demonstration:</p>
 <div class="section level2">
 <h2 id="anticipating-breakages">Anticipating Breakages<a class="anchor" aria-label="anchor" href="#anticipating-breakages"></a>
 </h2>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="section level3">
+<h3 id="small-list-of-packages">Small list of packages<a class="anchor" aria-label="anchor" href="#small-list-of-packages"></a>
+</h3>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># View upgrade breakages</span></span>
 <span><span class="fu"><a href="../reference/repo_breakages.html">repo_breakages</a></span><span class="op">(</span><span class="va">res1</span>, <span class="va">res2</span><span class="op">)</span> </span>
 <span><span class="co"># Comparing curl v5.2.1/v6.2.0</span></span>
@@ -347,10 +452,133 @@ simple demonstration:</p>
 <span><span class="co"># - Removed Parameters: </span></span>
 <span><span class="co">#   - multi_download(): timeout</span></span></code></pre></div>
 </div>
+<div class="section level3">
+<h3 id="entire-repository">Entire Repository<a class="anchor" aria-label="anchor" href="#entire-repository"></a>
+</h3>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Get current versions from local repo</span></span>
+<span><span class="va">r1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_repo.html">pkg_repo</a></span><span class="op">(</span>ver <span class="op">=</span> <span class="st">"current"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># View Results</span></span>
+<span><span class="va">r1</span></span>
+<span><span class="co">#            Package              Version</span></span>
+<span><span class="co"># 1            abind                1.4-5</span></span>
+<span><span class="co"># 2          admiral               0.10.1</span></span>
+<span><span class="co"># 3       admiraldev                0.3.0</span></span>
+<span><span class="co"># 4      admiralonco                0.3.0</span></span>
+<span><span class="co"># 5             ards                0.1.0</span></span>
+<span><span class="co"># 6            arrow             11.0.0.3</span></span>
+<span><span class="co"># 7          askpass                  1.1</span></span>
+<span><span class="co"># 8       assertthat                0.2.1</span></span>
+<span><span class="co"># 9           aws.s3               0.3.21</span></span>
+<span><span class="co"># 10   aws.signature                0.6.0</span></span>
+<span><span class="co"># 11       backports                1.4.1</span></span>
+<span><span class="co"># 12       base64enc                0.1-3</span></span>
+<span><span class="co"># 13             bit                4.0.4</span></span>
+<span><span class="co"># 14           bit64                4.0.5</span></span>
+<span><span class="co"># 15          bitops                1.0-7</span></span>
+<span><span class="co"># 16            blob                1.2.3</span></span>
+<span><span class="co"># ...</span></span>
+<span></span>
+<span><span class="co"># Get latest versions of current repo</span></span>
+<span><span class="va">r2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_repo.html">pkg_repo</a></span><span class="op">(</span><span class="va">r1</span><span class="op">$</span><span class="va">Package</span>, ver <span class="op">=</span> <span class="st">"latest"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># View Results</span></span>
+<span><span class="va">r2</span></span>
+<span><span class="co">#            Package    Version</span></span>
+<span><span class="co"># 1            abind      1.4-8</span></span>
+<span><span class="co"># 2          admiral      1.2.0</span></span>
+<span><span class="co"># 3       admiraldev      1.2.0</span></span>
+<span><span class="co"># 4      admiralonco      1.2.0</span></span>
+<span><span class="co"># 5             ards      0.1.1</span></span>
+<span><span class="co"># 6            arrow   18.1.0.1</span></span>
+<span><span class="co"># 7          askpass      1.2.1</span></span>
+<span><span class="co"># 8       assertthat      0.2.1</span></span>
+<span><span class="co"># 9           aws.s3     0.3.21</span></span>
+<span><span class="co"># 10   aws.signature      0.6.0</span></span>
+<span><span class="co"># 11       backports      1.5.0</span></span>
+<span><span class="co"># 12       base64enc      0.1-3</span></span>
+<span><span class="co"># 13             bit    4.5.0.1</span></span>
+<span><span class="co"># 14           bit64    4.6.0-1</span></span>
+<span><span class="co"># 15          bitops      1.0-9</span></span>
+<span><span class="co"># 16            blob      1.2.4</span></span>
+<span><span class="co"># ...</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Check for breakages on whole repository</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/repo_breakages.html">repo_breakages</a></span><span class="op">(</span><span class="va">r1</span>, <span class="va">r2</span><span class="op">)</span></span>
+<span><span class="co"># Comparing abind v1.4-5/v1.4-8</span></span>
+<span><span class="co"># Comparing admiral v0.10.1/v1.2.0</span></span>
+<span><span class="co"># Comparing admiraldev v0.3.0/v1.2.0</span></span>
+<span><span class="co"># Comparing admiralonco v0.3.0/v1.2.0</span></span>
+<span><span class="co"># Comparing ards v0.1.0/v0.1.1</span></span>
+<span><span class="co"># Archive versions of 'ards' not available.</span></span>
+<span><span class="co"># Comparing arrow v11.0.0.3/v18.1.0.1</span></span>
+<span><span class="co"># Comparing askpass v1.1/v1.2.1</span></span>
+<span><span class="co"># Comparing backports v1.4.1/v1.5.0</span></span>
+<span><span class="co"># Comparing bit v4.0.4/v4.5.0.1</span></span>
+<span><span class="co"># Comparing bit64 v4.0.5/v4.6.0-1</span></span>
+<span><span class="co"># Comparing bitops v1.0-7/v1.0-9</span></span>
+<span><span class="co"># Comparing blob v1.2.3/v1.2.4</span></span>
+<span><span class="co"># Comparing box v1.1.3/v1.2.0</span></span>
+<span><span class="co"># Comparing brew v1.0-8/v1.0-10</span></span>
+<span><span class="co"># Comparing brio v1.1.3/v1.1.5</span></span>
+<span><span class="co"># Comparing broom v1.0.1/v1.0.7</span></span>
+<span><span class="co"># Comparing bslib v0.4.0/v0.9.0</span></span>
+<span><span class="co"># Comparing cachem v1.0.6/v1.1.0</span></span>
+<span><span class="co"># Comparing callr v3.7.3/v3.7.6</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># View Summary Table</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">summary</span></span>
+<span><span class="co">#            Package             Version1   Version2 Breakages</span></span>
+<span><span class="co"># 1            abind                1.4-5      1.4-8     FALSE</span></span>
+<span><span class="co"># 2          admiral               0.10.1      1.2.0      TRUE</span></span>
+<span><span class="co"># 3       admiraldev                0.3.0      1.2.0      TRUE</span></span>
+<span><span class="co"># 4      admiralonco                0.3.0      1.2.0      TRUE</span></span>
+<span><span class="co"># 5             ards                0.1.0      0.1.1        NA</span></span>
+<span><span class="co"># 6            arrow             11.0.0.3   18.1.0.1     FALSE</span></span>
+<span><span class="co"># 7          askpass                  1.1      1.2.1     FALSE</span></span>
+<span><span class="co"># 8       assertthat                0.2.1      0.2.1     FALSE</span></span>
+<span><span class="co"># 9           aws.s3               0.3.21     0.3.21     FALSE</span></span>
+<span><span class="co"># 10   aws.signature                0.6.0      0.6.0     FALSE</span></span>
+<span><span class="co"># 11       backports                1.4.1      1.5.0     FALSE</span></span>
+<span><span class="co"># 12       base64enc                0.1-3      0.1-3     FALSE</span></span>
+<span><span class="co"># 13             bit                4.0.4    4.5.0.1     FALSE</span></span>
+<span><span class="co"># 14           bit64                4.0.5    4.6.0-1      TRUE</span></span>
+<span><span class="co"># 15          bitops                1.0-7      1.0-9     FALSE</span></span>
+<span><span class="co"># 16            blob                1.2.3      1.2.4     FALSE</span></span>
+<span><span class="co"># ...</span></span>
+<span></span>
+<span><span class="co"># View Difference Details</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">details</span><span class="op">$</span><span class="va">admiralonco</span></span>
+<span><span class="co"># # A difference object: admiralonco package</span></span>
+<span><span class="co"># - Comparing: v0.3.0/v1.2.0</span></span>
+<span><span class="co"># - Breaking Changes: TRUE</span></span>
+<span><span class="co"># - Added Functions: </span></span>
+<span><span class="co">#   - bor_cr()</span></span>
+<span><span class="co">#   - bor_ne()</span></span>
+<span><span class="co">#   - bor_non_crpd()</span></span>
+<span><span class="co">#   - bor_pd()</span></span>
+<span><span class="co">#   - bor_pr()</span></span>
+<span><span class="co">#   - bor_sd()</span></span>
+<span><span class="co">#   - cb_y()</span></span>
+<span><span class="co">#   - cbor_cr()</span></span>
+<span><span class="co">#   - cbor_pr()</span></span>
+<span><span class="co">#   - crsp_y_cr()</span></span>
+<span><span class="co">#   - crsp_y_pr()</span></span>
+<span><span class="co">#   - no_data_missing()</span></span>
+<span><span class="co">#   - no_data_n()</span></span>
+<span><span class="co">#   - rsp_y()</span></span>
+<span><span class="co"># - Removed Functions: </span></span>
+<span><span class="co">#   - call_aval_fun()</span></span>
+<span><span class="co">#   - derive_param_lasta()</span></span></code></pre></div>
+</div>
+</div>
 <div class="section level2">
 <h2 id="assessing-entire-repository">Assessing Entire Repository<a class="anchor" aria-label="anchor" href="#assessing-entire-repository"></a>
 </h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/repo_stability.html">repo_stability</a></span><span class="op">(</span><span class="va">v1</span><span class="op">)</span></span>
 <span><span class="co">#   Package    FV    LV         FR         LR TR BR     Score        Assessment</span></span>

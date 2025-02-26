@@ -42,6 +42,9 @@ of breakage information of a list of packages or entire repository."><!-- mathja
       <a href="../articles/pkgdiff-cache.html">Package Cache</a>
     </li>
     <li>
+      <a href="../articles/pkgdiff-rmarkdown.html">Rmarkdown Reports</a>
+    </li>
+    <li>
       <a href="../articles/pkgdiff-faq.html">pkgdiff-faq</a>
     </li>
   </ul></li>
@@ -80,21 +83,24 @@ of breakage information of a list of packages or entire repository.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">repo_breakages</span><span class="op">(</span>v1pkgs <span class="op">=</span> <span class="st">"current"</span>, v2pkgs <span class="op">=</span> <span class="st">"latest"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">repo_breakages</span><span class="op">(</span>r1 <span class="op">=</span> <span class="st">"current"</span>, r2 <span class="op">=</span> <span class="st">"latest"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
 
 
-<dl><dt id="arg-v-pkgs">v1pkgs<a class="anchor" aria-label="anchor" href="#arg-v-pkgs"></a></dt>
-<dd><p>A data frame that identifies the source packages
-and versions.</p></dd>
+<dl><dt id="arg-r-">r1<a class="anchor" aria-label="anchor" href="#arg-r-"></a></dt>
+<dd><p>A data frame that identifies the source repository packages
+and versions. The default value is "current", which means
+the function will use the current versions of all package in
+the current R repository.</p></dd>
 
 
-<dt id="arg-v-pkgs">v2pkgs<a class="anchor" aria-label="anchor" href="#arg-v-pkgs"></a></dt>
-<dd><p>A data frame that identifies the target packages
-and versions.  By default,</p></dd>
+<dt id="arg-r-">r2<a class="anchor" aria-label="anchor" href="#arg-r-"></a></dt>
+<dd><p>A data frame that identifies the target repository packages
+and versions. The default value is "latest", which means
+the function will use the latest versions of all packages on CRAN.</p></dd>
 
 </dl></div>
     <div id="see-also">

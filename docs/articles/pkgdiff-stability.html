@@ -59,6 +59,9 @@
       <a href="../articles/pkgdiff-cache.html">Package Cache</a>
     </li>
     <li>
+      <a href="../articles/pkgdiff-rmarkdown.html">Rmarkdown Reports</a>
+    </li>
+    <li>
       <a href="../articles/pkgdiff-faq.html">pkgdiff-faq</a>
     </li>
   </ul>
@@ -117,7 +120,7 @@ This vignette describes how the stability score is calculated.</p>
 <p>Before describing how the stability score is calculated, we first
 have to understand what is meant by a “breaking change”. In the context
 of <strong>pkgdiff</strong>, a “breaking change” is a function that
-exists in one release, but removed in the next. It can also be a
+exists in one release, but is removed in the next. It can also be a
 function parameter that exists in one release, but is removed in the
 next. There are, therefore, two kinds of breaking changes tracked by the
 package: removed functions and removed parameters. Either one of these
@@ -141,7 +144,9 @@ the previous version is called a “non-breaking release”.</p>
 <p>The Stability Score is calculated as the percentage of non-breaking
 releases.<br>
 In other words, the Stability Score is the number of breaking releases
-divided by the total number of releases, subtracted from one.</p>
+divided by the total number of releases, subtracted from one. The basic
+formula for the stability score is thus: 1 - (BR / TR), where BR is
+Breaking Releases and TR is Total Releases.</p>
 <p>For example, if a package has 10 releases, and one of them is a
 breaking release, the Stability Score will be .9 or 90%.</p>
 </div>
@@ -157,8 +162,8 @@ month will count as 1, and a breaking release two years ago will count
 as 1 - (.01 * 24) = 0.76.</p>
 <p>Observe that this weighting over time will eventually cause the
 breaking release to not be counted at all. The discarding of a breaking
-release occurs at 8.333 years. Breaking releases older than 8.333 years
-will not be added to the Stability Score.</p>
+release occurs at 8.333 years. That means breaking releases older than
+8.333 years will not be considered in the Stability Score.</p>
 </div>
 <div class="section level3">
 <h3 id="other-considerations">Other Considerations<a class="anchor" aria-label="anchor" href="#other-considerations"></a>
@@ -166,19 +171,18 @@ will not be added to the Stability Score.</p>
 <p>Also note that the number of releases eventually age out of the
 calculation. Any release older than 10 years from the current date will
 be discarded from the Stability Score. These releases will still be
-shown in the Stability Data for informational purposes. These older
-releases help to give you an accurate view of the package.</p>
+shown in the Stability Data, however, as these older releases help to
+give you an accurate understanding of the package history.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="stability-assessment">Stability Assessment<a class="anchor" aria-label="anchor" href="#stability-assessment"></a>
 </h2>
 <p>In addition to the above Stability Score, the
-<code><a href="../reference/pkg_stability.html">pkg_stability()</a></code> also provides a Stability Assessment. The
-Stability Assessment is a categorization of the Stability Score. The
-Stability Assessment is a way to give you an English interpretation of
-the Stability Score. The Stability Assessment is determined as
-follows:</p>
+<code><a href="../reference/pkg_stability.html">pkg_stability()</a></code> function also provides a . The is a
+categorization of the . The Stability Assessment is a way to give you an
+English interpretation of the Stability Score. The Stability Assessment
+is determined as follows:</p>
 <ul>
 <li>100%: Perfect</li>
 <li><blockquote>
@@ -192,11 +196,13 @@ follows:</p>
 </blockquote></li>
 <li>&lt; 80%: Unstable</li>
 </ul>
-<p>The above categorization was designed to promote stability and
-encourage developers to reduce the number of breaking changes in their
-packages. It sets a high bar. The purpose of setting a high bar is
-simply to bring the R Open Source language up to the stability level of
-proprietary languages.</p>
+<p>The above categorization sets a high bar. The purpose of setting a
+high bar is simply to bring the R Open Source language up to the
+stability level of proprietary languages. It was designed to promote
+stability and encourage package developers to reduce the number of
+breaking changes in their Open Source packages. A high stability score
+is something that package developers should be proud of, and programmers
+should look for when selecting packages to use in their programs.</p>
 </div>
   </div>
 

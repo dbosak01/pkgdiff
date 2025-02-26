@@ -5,9 +5,10 @@ articles:
   pkgdiff-cache: pkgdiff-cache.html
   pkgdiff-faq: pkgdiff-faq.html
   pkgdiff-globals: pkgdiff-globals.html
+  pkgdiff-rmarkdown: pkgdiff-rmarkdown.html
   pkgdiff-stability: pkgdiff-stability.html
   pkgdiff: pkgdiff.html
-last_built: 2025-02-17T16:34Z
+last_built: 2025-02-26T13:26Z
 urls:
   reference: https://pkgdiff.r-sassy.org/reference
   article: https://pkgdiff.r-sassy.org/articles
