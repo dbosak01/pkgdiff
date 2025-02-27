@@ -15,6 +15,7 @@ reference:
   - pkg_info
   - pkg_diff
   - pkg_stability
+  - pkg_versions
   - print.pinfo
   - print.pdiff
   - print.pdiff_score

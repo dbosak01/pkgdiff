@@ -260,6 +260,19 @@ test_that("info9: pkg_cache() works as expected.", {
 })
 
 
+test_that("info10: pkg_versions() works as expected.", {
+
+
+  res <- pkg_versions("common")
+
+  res
+  expect_equal(is.null(res), FALSE)
+  expect_equal(is.data.frame(res), TRUE)
+  expect_equal(nrow(res) > 0, TRUE)
+
+})
+
+
 # Not doing good with S4 classes
 # pth <- "https://cran.r-project.org/src/contrib/Matrix_1.7-2.tar.gz"
 #

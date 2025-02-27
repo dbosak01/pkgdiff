@@ -9,20 +9,30 @@ pkg_diff(pkg, v1 = "current", v2 = "latest")
 \arguments{
 \item{pkg}{The package name.}
 
-\item{v1}{The earlier package version.  Default is "current", which
-means the function will look up the currently installed version.}
+\item{v1}{The earlier package version. Pass the version value as a quoted string.
+Default is "current", which means the function will look up the currently
+installed version.}
 
-\item{v2}{The later package version.  The default is "latest", which is the
+\item{v2}{The later package version. Pass the version value as a quoted string.
+The default is "latest", which is the
 latest version of the package available on CRAN.}
 }
 \description{
-Get a Package Difference Object
+dkdk
+}
+\details{
+Here are some details.
+}
+\examples{
+# example code
+
 }
 \seealso{
 Other pdiff: 
 \code{\link{pkg_cache}()},
 \code{\link{pkg_info}()},
 \code{\link{pkg_repo}()},
+\code{\link{pkg_versions}()},
 \code{\link{print.pcache}()},
 \code{\link{print.pdiff}()},
 \code{\link{print.pinfo}()}

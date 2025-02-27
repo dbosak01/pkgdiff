@@ -715,6 +715,50 @@ get_functions <- function(filepath, funcs, exppat, mthds = NULL) {
 
 
 
+# Package Version ---------------------------------------------------------
+
+#' @title Retrieves All Versions of a Package
+#' @description
+#' The \code{pkg_versions} function queries the CRAN archive,
+#' and returns a data frame of package version information for
+#' all releases of the package. This function may be used to understand
+#' what versions of a package are available. It is often used in
+#' conjunction with \code{\link{pkg_info}} to get a general overview
+#' of a package.
+#' @param pkg A package name to return versions of.  Pass the package
+#' name as a quoted string.  This parameter is required.
+#' @returns An data frame with one row per package release, showing the
+#' version and date of each release. If the package is not found on CRAN,
+#' a message will be generated and the function will return NULL.
+#' @examples
+#' # View package versions
+#' pkg_versions("rsample")
+#' #    Package Version             FileName    Release   Size
+#' # 1  rsample   1.2.1 rsample_1.2.1.tar.gz 2024-03-25 320.9K
+#' # 2  rsample   1.2.0 rsample_1.2.0.tar.gz 2023-08-23   321K
+#' # 3  rsample   1.1.1 rsample_1.1.1.tar.gz 2022-12-07   318K
+#' # 4  rsample   1.1.0 rsample_1.1.0.tar.gz 2022-08-08   306K
+#' # 5  rsample   1.0.0 rsample_1.0.0.tar.gz 2022-06-24   268K
+#' # 6  rsample   0.1.1 rsample_0.1.1.tar.gz 2021-11-08   274K
+#' # 7  rsample   0.1.0 rsample_0.1.0.tar.gz 2021-05-08   274K
+#' # 8  rsample   0.0.9 rsample_0.0.9.tar.gz 2021-02-17   269K
+#' # 9  rsample   0.0.8 rsample_0.0.8.tar.gz 2020-09-23   261K
+#' # 10 rsample   0.0.7 rsample_0.0.7.tar.gz 2020-06-04   248K
+#' # 11 rsample   0.0.6 rsample_0.0.6.tar.gz 2020-03-31   299K
+#' # 12 rsample   0.0.5 rsample_0.0.5.tar.gz 2019-07-13   297K
+#' # 13 rsample   0.0.4 rsample_0.0.4.tar.gz 2019-01-07   254K
+#' # 14 rsample   0.0.3 rsample_0.0.3.tar.gz 2018-11-20   254K
+#' # 15 rsample   0.0.2 rsample_0.0.2.tar.gz 2017-11-12   339K
+#' # 16 rsample   0.0.1 rsample_0.0.1.tar.gz 2017-07-08   180K
+#' @family pdiff
+#' @export
+pkg_versions <- function(pkg) {
+
+  ret <- get_all_versions(pkg)
+
+  return(ret)
+}
+
 
 # Legacy ------------------------------------------------------------------
 

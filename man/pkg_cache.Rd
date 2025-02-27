@@ -56,7 +56,7 @@ res[1:10, ]
 # A package cache object
 # - Last Update: 2025-02-25 14:58 UTC
 # - Packages:
-#   Package Version
+#        Package Version
 # 1           A3   1.0.0
 # 2   abbreviate     0.1
 # 3     abc.data     1.1
@@ -73,6 +73,7 @@ Other pdiff:
 \code{\link{pkg_diff}()},
 \code{\link{pkg_info}()},
 \code{\link{pkg_repo}()},
+\code{\link{pkg_versions}()},
 \code{\link{print.pcache}()},
 \code{\link{print.pdiff}()},
 \code{\link{print.pinfo}()}

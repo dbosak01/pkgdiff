@@ -36,6 +36,7 @@ Other pdiff:
 \code{\link{pkg_cache}()},
 \code{\link{pkg_diff}()},
 \code{\link{pkg_info}()},
+\code{\link{pkg_versions}()},
 \code{\link{print.pcache}()},
 \code{\link{print.pdiff}()},
 \code{\link{print.pinfo}()}

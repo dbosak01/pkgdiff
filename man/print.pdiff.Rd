@@ -25,6 +25,7 @@ Other pdiff:
 \code{\link{pkg_diff}()},
 \code{\link{pkg_info}()},
 \code{\link{pkg_repo}()},
+\code{\link{pkg_versions}()},
 \code{\link{print.pcache}()},
 \code{\link{print.pinfo}()}
 }

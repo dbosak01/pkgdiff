@@ -129,12 +129,12 @@ on a function, but as long as it is not actually removed,
 version is called a “breaking release”. A package version that is
 compatible with the previous version is called a “non-breaking
 release”.</p>
-<p>The Stability Score is calculated as the percentage of non-breaking
-releases.<br>
-In other words, the Stability Score is the number of breaking releases
-divided by the total number of releases, subtracted from one. The basic
-formula for the stability score is thus: 1 - (BR / TR), where BR is
-Breaking Releases and TR is Total Releases.</p>
+<p>The <strong>Stability Score</strong> is calculated as the percentage
+of non-breaking releases. In other words, the <strong>Stability
+Score</strong> is the number of breaking releases divided by the total
+number of releases, subtracted from one. The basic formula for the
+stability score is thus: 1 - (BR / TR), where BR is Breaking Releases
+and TR is Total Releases.</p>
 <p>For example, if a package has 10 releases, and one of them is a
 breaking release, the <strong>Stability Score</strong> will be .9 or
 90%.</p>
@@ -170,9 +170,9 @@ an accurate understanding of the package history.</p>
 <p>In addition to the above Stability Score, the
 <code><a href="../reference/pkg_stability.html">pkg_stability()</a></code> function also provides a <strong>Stability
 Assessment</strong>. The <strong>Stability Assessment</strong> is a
-categorization of the <strong>Stability Score</strong>. The Stability
-Assessment is a way to give you an English interpretation of the
-Stability Score. The Stability Assessment is determined as follows:</p>
+categorization of the Stability Score. The Stability Assessment is a way
+to give you an English interpretation of the Stability Score. The
+Stability Assessment is determined as follows:</p>
 <ul>
 <li>100%: Perfect</li>
 <li>&gt;= 95%: Very Stable</li>
@@ -190,7 +190,7 @@ should look for when selecting packages to include in their
 programs.</p>
 </div>
 <div class="section level2">
-<h2 id="cran-packages">CRAN Packages<a class="anchor" aria-label="anchor" href="#cran-packages"></a>
+<h2 id="cran-packages-only">CRAN Packages Only<a class="anchor" aria-label="anchor" href="#cran-packages-only"></a>
 </h2>
 <p>The <strong>Stability Score</strong> and <strong>Stability
 Assessment</strong> only work with packages published on CRAN. The
