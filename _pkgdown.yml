@@ -25,6 +25,7 @@ reference:
   - pkg_repo
   - repo_breakages
   - repo_stability
+  - print.prepo
 - title: Cache Functions
   desc: Functions to query the package cache.
   contents:

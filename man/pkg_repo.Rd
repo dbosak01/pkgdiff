@@ -10,11 +10,10 @@ pkg_repo(pkgs = NULL, ver = "current", libpaths = NULL)
 \item{pkgs}{A vector of package names used to subset the repository list.
 Default is NULL, which means all packages in the repository will be returned.}
 
-\item{ver}{The R version of the repository. Default is "current",
-meaning the current version of the repository.  The value "latest"
-will return the latest version of the CRAN repository.
-If you have multiple repositories, you may also pass the R version number
-of the desired repository.}
+\item{ver}{The R version of the repository. Pass the R version
+as a quoted string. Default is "current",
+meaning the current version of the repository. The value "latest"
+will return the latest versions on CRAN.}
 
 \item{libpaths}{A vector of paths specifying the locations of the repositories
 to query. Default
@@ -22,14 +21,28 @@ is NULL, meaning the function will use the default R locations on the machine.
 These default paths are identified by the Base R function \code{.libPaths()}.}
 }
 \value{
-An object of class "pkgrepo".  The object will contain the
-location of the repo, and a table of R packages with corresponding
-version numbers.
+An object of class "prepo".  The object will contain a data
+table of R packages with corresponding version numbers.  This table
+may then be passed to \code{\link{repo_breakages}} or
+\code{\link{repo_stability}}.
 }
 \description{
 Combines information related to a package repository. The function
 retrieves all the packages in a repository for a specified version
 of R.  Results will list the package name and version.
+}
+\examples{
+# Create vector of packages
+pkgs <- c("common", "dplyr", "rvest", "stringr")
+
+# Retrieve latest versions
+pkg_repo(pkgs, ver = "latest")
+#   Package Version
+# 1  common   1.1.3
+# 2   dplyr   1.1.4
+# 3   rvest   1.0.4
+# 4 stringr   1.5.1
+
 }
 \seealso{
 Other pdiff: 
@@ -39,6 +52,7 @@ Other pdiff:
 \code{\link{pkg_versions}()},
 \code{\link{print.pcache}()},
 \code{\link{print.pdiff}()},
-\code{\link{print.pinfo}()}
+\code{\link{print.pinfo}()},
+\code{\link{print.prepo}()}
 }
 \concept{pdiff}

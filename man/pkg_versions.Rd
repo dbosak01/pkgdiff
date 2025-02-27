@@ -52,6 +52,7 @@ Other pdiff:
 \code{\link{pkg_repo}()},
 \code{\link{print.pcache}()},
 \code{\link{print.pdiff}()},
-\code{\link{print.pinfo}()}
+\code{\link{print.pinfo}()},
+\code{\link{print.prepo}()}
 }
 \concept{pdiff}

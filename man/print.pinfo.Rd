@@ -26,6 +26,7 @@ Other pdiff:
 \code{\link{pkg_repo}()},
 \code{\link{pkg_versions}()},
 \code{\link{print.pcache}()},
-\code{\link{print.pdiff}()}
+\code{\link{print.pdiff}()},
+\code{\link{print.prepo}()}
 }
 \concept{pdiff}

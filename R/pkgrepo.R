@@ -1,5 +1,8 @@
 
 
+# Package Repo ------------------------------------------------------------
+
+
 
 #' @title A Package Repository
 #' @description
@@ -8,18 +11,30 @@
 #' of R.  Results will list the package name and version.
 #' @param pkgs A vector of package names used to subset the repository list.
 #' Default is NULL, which means all packages in the repository will be returned.
-#' @param ver The R version of the repository. Default is "current",
-#' meaning the current version of the repository.  The value "latest"
-#' will return the latest version of the CRAN repository.
-#' If you have multiple repositories, you may also pass the R version number
-#' of the desired repository.
+#' @param ver The R version of the repository. Pass the R version
+#' as a quoted string. Default is "current",
+#' meaning the current version of the repository. The value "latest"
+#' will return the latest versions on CRAN.
 #' @param libpaths A vector of paths specifying the locations of the repositories
 #' to query. Default
 #' is NULL, meaning the function will use the default R locations on the machine.
 #' These default paths are identified by the Base R function \code{.libPaths()}.
-#' @returns An object of class "pkgrepo".  The object will contain the
-#' location of the repo, and a table of R packages with corresponding
-#' version numbers.
+#' @returns An object of class "prepo".  The object will contain a data
+#' table of R packages with corresponding version numbers.  This table
+#' may then be passed to \code{\link{repo_breakages}} or
+#' \code{\link{repo_stability}}.
+#' @examples
+#' # Create vector of packages
+#' pkgs <- c("common", "dplyr", "rvest", "stringr")
+#'
+#' # Retrieve latest versions
+#' pkg_repo(pkgs, ver = "latest")
+#' #   Package Version
+#' # 1  common   1.1.3
+#' # 2   dplyr   1.1.4
+#' # 3   rvest   1.0.4
+#' # 4 stringr   1.5.1
+#'
 #' @family pdiff
 #' @import common
 #' @export
@@ -35,7 +50,7 @@ pkg_repo <- function(pkgs = NULL, ver = "current", libpaths = NULL) {
     if (is.null(libpaths))
       mver <- get_rversion()
     else
-      mver <- NA
+      mver <- "current"
 
   } else if (ver == "latest") {
 
@@ -44,6 +59,8 @@ pkg_repo <- function(pkgs = NULL, ver = "current", libpaths = NULL) {
     else
       lst <- e$AvailablePackages[e$AvailablePackages$Package %in% pkgs,
                                  c("Package", "Version")]
+
+    mver <- ver
 
   } else {
 
@@ -118,6 +135,45 @@ pkg_repo <- function(pkgs = NULL, ver = "current", libpaths = NULL) {
 
   return(ret)
 }
+
+
+#' @title Print a Package Repo Object
+#' @param x The package repo to print.
+#' @param ... Follow-on parameters to the print function.
+#' @family pdiff
+#' @import crayon
+#' @export
+print.prepo <- function(x, ...) {
+
+  grey60 <- crayon::make_style(grey60 = "#999999")
+  cat(grey60(paste0("# A package repo object\n")))
+
+
+  ver <- attr(x, "Version")
+
+  if (!is.null(ver)) {
+    cat(paste0("- Version: ", ver , "\n"))
+  }
+
+  pths <- attr(x, "LibPaths")
+
+  if (!is.null(pths)) {
+    cat(paste0("- Lib Paths:\n"))
+    cat(paste0("  ", pths, "\n"))
+  }
+
+  if (!is.null(x)) {
+    cat(paste0("- Packages:\n"))
+    print(as.data.frame(x))
+  }
+
+  invisible(x)
+}
+
+
+# Utilities ---------------------------------------------------------------
+
+
 
 get_base_paths <- function(pths) {
 
