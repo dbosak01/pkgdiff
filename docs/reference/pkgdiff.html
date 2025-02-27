@@ -86,14 +86,26 @@ help with package upgrades.</p>
 
 
 <p>The main functions included in the <strong>pkgdiff</strong> package are
-as follows:</p><ul><li><p><code><a href="pkg_diff.html">pkg_diff</a></code>: Compares two package versions, and
-returns an object that contains information about the differences.
-Information returned from this function is relatively high level.</p></li>
+as follows:</p><ul><li><p><code><a href="pkg_info.html">pkg_info</a></code>: Retrieves general information about a package,
+mostly from the package description file.</p></li>
+<li><p><code><a href="pkg_versions.html">pkg_versions</a></code>: Gets a data frame containing all
+versions of a package and the release date for each.</p></li>
+<li><p><code><a href="pkg_diff.html">pkg_diff</a></code>: Compares two package versions, and
+returns an object that contains the differences in terms of exported
+function signatures.</p></li>
 <li><p><code><a href="pkg_stability.html">pkg_stability</a></code>: Compiles information on package
 stability over time, and calculates a score based on this information.
-This function is useful when making package selection choices.
-to a vector.</p></li>
-</ul></div>
+This function is useful when making package selection choices.</p></li>
+<li><p><code><a href="pkg_repo.html">pkg_repo</a></code>: Fetches package names and versions for
+packages in a specified repository.</p></li>
+<li><p><code><a href="repo_breakages.html">repo_breakages</a></code>: Identifies breakages when
+upgrading from one version of a repository to another.</p></li>
+<li><p><code><a href="repo_stability.html">repo_stability</a></code>: Performs a stability assessment
+on multiple packages, even an entire repository.</p></li>
+</ul><p>For additional information on <strong>pkgdiff</strong>, see the package vignette
+<code><a href="../articles/pkgdiff.html">vignette('pkgdiff')</a></code>, or visit the package web site
+<a href="https://pkgdiff.r-sassy.org/index.html">here</a>.</p>
+    </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Useful links:</p><ul><li><p><a href="https://pkgdiff.r-sassy.org">https://pkgdiff.r-sassy.org</a></p></li>

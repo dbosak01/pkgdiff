@@ -90,8 +90,4 @@ res
 # 4 tidymodels 0.0.1 1.3.0 2018-07-27 2025-02-21 14  0 1.0000000           Perfect
 
 }
-\seealso{
-Other reports: 
-\code{\link{repo_breakages}()}
-}
 \concept{reports}

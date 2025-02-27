@@ -24,10 +24,11 @@ functions in **pkgdiff**, and a short explanation of each:
 - `pkg_info()`: Displays general information about a package,
 including the description, maintainer, and number of downloads in
 the last month.
-- `pkg_stability()`: Looks at the history of a package,
-identifies breaking changes, and assesses the package for stability.
+- `pkg_versions()`: Returns a data frame of all versions of a package.
 - `pkg_diff()`: Compares two versions of a package, and shows
 which functions and parameters have been added or removed.
+- `pkg_stability()`: Looks at the history of a package,
+identifies breaking changes, and assesses the package for stability.
 - `pkg_repo()`: Generates a list of the packages in a repository
 and their versions.
 - `repo_breakages()`: Looks at a package repository and tries to identify
@@ -307,7 +308,7 @@ pkg_diff("dbplyr", "2.4.0", "2.5.0")
 #   - sql_escape_string.DBIConnection()
 
 ```
-As you can see, many new functions and function parameter have been added
+As you can see, many new functions and function parameters have been added
 between these two versions.  In addition, there are 12 functions that 
 have been removed.  It is up to you to determine whether and how these 
 removals will affect your programs.  It is very convenient, however,

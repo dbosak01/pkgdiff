@@ -110,12 +110,15 @@ short explanation of each:</p>
 package, including the description, maintainer, and number of downloads
 in the last month.</li>
 <li>
-<code><a href="../reference/pkg_stability.html">pkg_stability()</a></code>: Looks at the history of a package,
-identifies breaking changes, and assesses the package for
-stability.</li>
+<code><a href="../reference/pkg_versions.html">pkg_versions()</a></code>: Returns a data frame of all versions of
+a package.</li>
 <li>
 <code><a href="../reference/pkg_diff.html">pkg_diff()</a></code>: Compares two versions of a package, and
 shows which functions and parameters have been added or removed.</li>
+<li>
+<code><a href="../reference/pkg_stability.html">pkg_stability()</a></code>: Looks at the history of a package,
+identifies breaking changes, and assesses the package for
+stability.</li>
 <li>
 <code><a href="../reference/pkg_repo.html">pkg_repo()</a></code>: Generates a list of the packages in a
 repository and their versions.</li>
@@ -391,7 +394,7 @@ between versions “2.4.0” and “2.5.0” of <strong>dbplyr</strong>:</p>
 <span><span class="co">#   - format.dbplyr_table_ident()</span></span>
 <span><span class="co">#   - sql_escape_ident.DBIConnection()</span></span>
 <span><span class="co">#   - sql_escape_string.DBIConnection()</span></span></code></pre></div>
-<p>As you can see, many new functions and function parameter have been
+<p>As you can see, many new functions and function parameters have been
 added between these two versions. In addition, there are 12 functions
 that have been removed. It is up to you to determine whether and how
 these removals will affect your programs. It is very convenient,

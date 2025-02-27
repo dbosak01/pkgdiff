@@ -16,12 +16,85 @@ the current R repository.}
 and versions. The default value is "latest", which means
 the function will use the latest versions of all packages on CRAN.}
 }
+\value{
+A list containing a summary table and a list of difference
+objects. The summary table will contain one row for each package. The
+columns show the package name, source and target versions, and whether
+there are any breaking changes between the specified versions.  If
+breaking changes are found, the difference object for that package
+will be included in the details list.
+}
 \description{
 The \code{repo_breakages} function generates a data frame
-of breakage information of a list of packages or entire repository.
+of breakage information for multiple packages.  This function can be used
+to identify breakages for small set of packages, or even an entire repository.
+}
+\details{
+The \code{repo_breakages} function aims to help with repository upgrades.
+The purpose is to identify packages that will break if you upgrade
+your repository.
+
+The function accepts two data frames as input.
+Each data frame should have two columns: "Package" and "Version".
+The "r1" data frame is for your current repo.  The "r2" data frame
+is for the upgrade repo.
+
+When executed, \code{repo_breakages} will then match up the
+source and target versions, run a difference operation for each package,
+and look for breaking changes.
+
+The result will be a table of package names, the source and target version,
+and whether or not there are any breakages. If there are
+breakages, the difference object for that package will be
+added to a "details" list.  This difference object can show you
+exactly which functions or function parameters were removed.
+
+The \code{repo_breakages} function is one of primary motivations for
+the \strong{pkgdiff} package.  This mass-comparison ability did not
+exist in any other R package prior to \strong{pkgdiff}.
+}
+\examples{
+# Create package vector
+pkgs <- c("curl", "dplyr", "purrr", "stringr")
+
+# Get backdated versions
+r1 <- data.frame(Package = pkgs,
+                 Version = c("5.2.1", "1.1.4", "1.0.2", "1.5.0"))
+
+# Get latest versions from CRAN
+r2 <- pkg_repo(pkgs, "latest")
+
+# Find any breaking changes
+res <- repo_breakages(r1, r2)
+# Comparing curl v5.2.1/v6.2.1
+# Comparing purrr v1.0.2/v1.0.4
+# Comparing stringr v1.5.0/v1.5.1
+
+# View results
+res
+# $summary
+#   Package Version1 Version2 Breakages
+# 1    curl    5.2.1    6.2.1      TRUE
+# 2   dplyr    1.1.4    1.1.4     FALSE
+# 3   purrr    1.0.2    1.0.4     FALSE
+# 4 stringr    1.5.0    1.5.1     FALSE
+#
+# $details
+# $details$curl
+# # A difference object: curl package
+# - Comparing: v5.2.1/v6.2.1
+# - Breaking Changes: TRUE
+# - Added Functions:
+#   - curl_parse_url()
+# - Added Parameters:
+#   - multi_download(): multi_timeout
+# - multi_set(): max_streams
+# - new_pool(): max_streams
+# - Removed Parameters:
+#   - multi_download(): timeout
 }
 \seealso{
-Other reports: 
-\code{\link{repo_stability}()}
+Use the \code{\link{pkg_repo}} function to help gather
+version information for each package set.  Also see \code{\link{repo_stability}}
+to collect stability information on multiple packages.
 }
-\concept{reports}

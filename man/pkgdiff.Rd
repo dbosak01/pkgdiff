@@ -16,14 +16,26 @@ help with package upgrades.
 The main functions included in the \strong{pkgdiff} package are
 as follows:
 \itemize{
+\item {\code{\link{pkg_info}}: Retrieves general information about a package,
+mostly from the package description file.}
+\item {\code{\link{pkg_versions}}: Gets a data frame containing all
+versions of a package and the release date for each.}
 \item {\code{\link{pkg_diff}}: Compares two package versions, and
-returns an object that contains information about the differences.
-Information returned from this function is relatively high level.}
+returns an object that contains the differences in terms of exported
+function signatures.}
 \item {\code{\link{pkg_stability}}: Compiles information on package
 stability over time, and calculates a score based on this information.
-This function is useful when making package selection choices.
-to a vector.}
+This function is useful when making package selection choices.}
+\item {\code{\link{pkg_repo}}: Fetches package names and versions for
+packages in a specified repository.}
+\item {\code{\link{repo_breakages}}: Identifies breakages when
+upgrading from one version of a repository to another.}
+\item {\code{\link{repo_stability}}: Performs a stability assessment
+on multiple packages, even an entire repository.}
 }
+For additional information on \strong{pkgdiff}, see the package vignette
+\code{vignette('pkgdiff')}, or visit the package web site
+\href{https://pkgdiff.r-sassy.org/index.html}{here}.
 }
 
 \seealso{
