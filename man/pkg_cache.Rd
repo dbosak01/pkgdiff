@@ -13,8 +13,8 @@ Default is NULL, which means to return all packages in the cache.}
 \value{
 An data frame showing the package name and latest package
 version stored in the cache.  If the package is not stored in the cache,
-the package version will be NA.  The "Last Update" timestamp is the
-last day and time the entire cache was updated.
+the package version will be NA.  The "Last Update" time stamp is the
+last day and time the cache was updated.
 }
 \description{
 The \code{pkg_cache} function queries the package cache, and

@@ -58,5 +58,14 @@ by reducing the comparison period to 36 months instead of the entire 10 years.
 Do note, however, that such scope reductions may also have an effect on 
 the calculated score and assessment.
 
+8) The package cache is updated periodically, usually every day.  The update 
+looks for new versions of packages that are already in the cache.  If a new
+version is found, the update routine will add the new version to the stored
+infos for that package, and also update the stability data.  The update
+routine also looks for new packages that have recently met the 1000 downloads per month
+threshold.  If such a package is found, it will be added to the cache automatically.
+Packages that fall below the 1000 downloads per month threshold are not removed.
+Once a package has been added to the cache, it will be retained indefinitely.
+
 
 

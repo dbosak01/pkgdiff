@@ -42,8 +42,8 @@ A package version with at least one breaking change from the previous version is
 a "breaking release". A package version that is compatible with the previous 
 version is called a "non-breaking release".  
 
-The Stability Score is calculated as the percentage of non-breaking releases.  
-In other words, the Stability Score is the number of breaking releases 
+The **Stability Score** is calculated as the percentage of non-breaking releases.
+In other words, the **Stability Score** is the number of breaking releases 
 divided by the total number of releases, subtracted from one.  The basic 
 formula for the stability score is thus: 1 - (BR / TR), where 
 BR is Breaking Releases and TR is Total Releases.
@@ -77,7 +77,7 @@ the data helps to give you an accurate understanding of the package history.
 
 In addition to the above Stability Score, the `pkg_stability()` function also provides
 a **Stability Assessment**.  The **Stability Assessment** is a categorization of
-the **Stability Score**.  The Stability Assessment is a way to give you an
+the Stability Score.  The Stability Assessment is a way to give you an
 English interpretation of the Stability Score.  The Stability Assessment is 
 determined as follows:
 
@@ -95,7 +95,7 @@ developers to reduce the number of breaking changes in their Open Source package
 A high stability score is something that R package developers should be proud of, 
 and R users should look for when selecting packages to include in their programs.
 
-## CRAN Packages
+## CRAN Packages Only
 
 The **Stability Score** and **Stability Assessment** only work with packages 
 published on CRAN.

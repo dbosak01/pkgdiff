@@ -1,11 +1,20 @@
 
 
 #' @title Get a Package Difference Object
+#' @description
+#' dkdk
+#' @details
+#' Here are some details.
 #' @param pkg The package name.
-#' @param v1 The earlier package version.  Default is "current", which
-#' means the function will look up the currently installed version.
-#' @param v2 The later package version.  The default is "latest", which is the
+#' @param v1 The earlier package version. Pass the version value as a quoted string.
+#' Default is "current", which means the function will look up the currently
+#' installed version.
+#' @param v2 The later package version. Pass the version value as a quoted string.
+#' The default is "latest", which is the
 #' latest version of the package available on CRAN.
+#' @examples
+#' # example code
+#'
 #' @family pdiff
 #' @export
 pkg_diff <- function(pkg, v1 = "current",

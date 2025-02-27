@@ -218,8 +218,8 @@ print.pinfo <- function(x, ..., verbose = FALSE) {
 #' Default is NULL, which means to return all packages in the cache.
 #' @returns An data frame showing the package name and latest package
 #' version stored in the cache.  If the package is not stored in the cache,
-#' the package version will be NA.  The "Last Update" timestamp is the
-#' last day and time the entire cache was updated.
+#' the package version will be NA.  The "Last Update" time stamp is the
+#' last day and time the cache was updated.
 #' @examples
 #' # View single package
 #' pkg_cache("dplyr")
@@ -248,7 +248,7 @@ print.pinfo <- function(x, ..., verbose = FALSE) {
 #' # A package cache object
 #' # - Last Update: 2025-02-25 14:58 UTC
 #' # - Packages:
-#' #   Package Version
+#' #        Package Version
 #' # 1           A3   1.0.0
 #' # 2   abbreviate     0.1
 #' # 3     abc.data     1.1
@@ -322,8 +322,33 @@ print.pcache <- function(x, ...) {
 #' used in several other functions in the \strong{pkgdiff} system.  This
 #' class also makes a compact storage format for pre-processed package
 #' information.
+#' @details
+#' Package information is unique for each version of a package.  Since
+#' a package can have multiple versions, you must select which version
+#' you wish to return information for.  By default, the version
+#' returned is the current version of the package on the current machine.
+#' You may also specify a previous version number from the CRAN archive.
+#' Another option is to specify the latest version on CRAN.  See the
+#' "ver" parameter for additional details on how to select these
+#' different package versions.
+#'
+#' The package info object contains a list of functions and function
+#' parameters associated with the specified version of the package.
+#' You may access this list using the \code{$Functions} item name.
+#'
+#' Most other information contained in the info object is retrieved
+#' from the package description file. One exception is the downloads
+#' per month.  This information is retrieved from the CRAN logs.
+#'
+#' In addition, the package cache status is appended to the info object.
+#' The package cache status indicates whether the package info
+#' has been stored in the \strong{pkgdiff} Github cache.  Packages that
+#' have been stored in the cache enjoy faster results from
+#' \strong{pkgdiff} functions.
 #' @param pkg The package name.
-#' @param ver The package version. Special values are "current" and
+#' @param ver The version of the package to retrieve information for.
+#' Pass the version as a quoted string.
+#' Special values are "current" and
 #' "latest".  The value "current" is the current version of the package
 #' running on the machine.  The value "latest" is the latest version
 #' of the package from CRAN.
@@ -344,19 +369,19 @@ print.pcache <- function(x, ...) {
 #' # - Version: v1.7.0
 #' # - Release Date: 2024-01-09
 #' # - Title: Interpreted String Literals
-#' # - Maintainer: Jennifer Bryan &lt;jenny&commat;posit.co&gt;
+#' # - Maintainer: Jennifer Bryan <jenny@posit.co>
 #' # - License: MIT + file LICENSE
 #' # - Description: An implementation of interpreted string literals, inspired by
 #' # Python's Literal String Interpolation
-#' # &lt;https://www.python.org/dev/peps/pep-0498/&gt; and Docstrings
-#' # &lt;https://www.python.org/dev/peps/pep-0257/&gt; and Julia's Triple-Quoted
+#' # <https://www.python.org/dev/peps/pep-0498/> and Docstrings
+#' # <https://www.python.org/dev/peps/pep-0257/> and Julia's Triple-Quoted
 #' # String Literals
-#' # &lt;https://docs.julialang.org/en/v1.3/manual/strings/#Triple-Quoted-String-Literals-1&gt;.
-#' #   - Depends: R (&gt;= 3.6)
+#' # <https://docs.julialang.org/en/v1.3/manual/strings/#Triple-Quoted-String-Literals-1>.
+#' #   - Depends: R (>= 3.6)
 #' # - Imports: methods
-#' # - Suggests: crayon, DBI (&gt;= 1.2.0), dplyr, knitr, magrittr, rlang,
-#' rmarkdown, RSQLite, testthat (&gt;= 3.2.0), vctrs (&gt;= 0.3.0),
-#' waldo (&gt;= 0.3.0), withr
+#' # - Suggests: crayon, DBI (>= 1.2.0), dplyr, knitr, magrittr, rlang,
+#' # rmarkdown, RSQLite, testthat (>= 3.2.0), vctrs (>= 0.3.0),
+#' # waldo (>= 0.3.0), withr
 #' # - Downloads/Month: 1463244
 #' # - Repository: CRAN
 #' # - Cached: TRUE
@@ -371,7 +396,7 @@ print.pcache <- function(x, ...) {
 #'
 #' # Extract maintainer
 #' res$Maintainer
-#' # [1] "Max Kuhn &lt;max&commat;posit.co&gt;"
+#' # [1] "Max Kuhn <max@posit.co>"
 #'
 #' # Extract function list
 #' res$Functions

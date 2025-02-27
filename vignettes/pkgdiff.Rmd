@@ -61,7 +61,12 @@ pkg_info("tidymodels")
 # modeling and statistical analysis that share the underlying design
 # philosophy, grammar, and data structures of the tidyverse.
 # - Depends: R (>= 3.6)
-# - Imports: broom (>= 1.0.5), cli (>= 3.6.2), conflicted (>= 1.2.0), dials (>= 1.2.1), dplyr (>= 1.1.4), ggplot2 (>= 3.5.0), hardhat (>= 1.3.1), infer (>= 1.0.6), modeldata (>= 1.3.0), parsnip (>= 1.2.1), purrr (>= 1.0.2), recipes (>= 1.0.10), rlang (>= 1.1.3), rsample (>= 1.2.1), rstudioapi (>= 0.16.0), tibble (>= 3.2.1), tidyr (>= 1.3.1), tune (>= 1.2.0), workflows (>= 1.1.4), workflowsets (>= 1.1.0), yardstick (>= 1.3.1)
+# - Imports: broom (>= 1.0.5), cli (>= 3.6.2), conflicted (>= 1.2.0), 
+# dials (>= 1.2.1), dplyr (>= 1.1.4), ggplot2 (>= 3.5.0), hardhat (>= 1.3.1), 
+# infer (>= 1.0.6), modeldata (>= 1.3.0), parsnip (>= 1.2.1), purrr (>= 1.0.2), 
+# recipes (>= 1.0.10), rlang (>= 1.1.3), rsample (>= 1.2.1), rstudioapi (>= 0.16.0), 
+# tibble (>= 3.2.1), tidyr (>= 1.3.1), tune (>= 1.2.0), workflows (>= 1.1.4), 
+# workflowsets (>= 1.1.0), yardstick (>= 1.3.1)
 # - Suggests: covr, glue, knitr, rmarkdown, testthat (>= 3.0.0), xml2
 # - Repository: CRAN
 # - Cached: TRUE
@@ -113,7 +118,12 @@ print(res, verbose = TRUE)
 # modeling and statistical analysis that share the underlying design
 # philosophy, grammar, and data structures of the tidyverse.
 # - Depends: R (>= 3.6)
-# - Imports: broom (>= 1.0.7), cli (>= 3.6.4), conflicted (>= 1.2.0), dials (>= 1.4.0), dplyr (>= 1.1.4), ggplot2 (>= 3.5.1), hardhat (>= 1.4.1), infer (>= 1.0.7), modeldata (>= 1.4.0), parsnip (>= 1.3.0), purrr (>= 1.0.4), recipes (>= 1.1.1), rlang (>= 1.1.5), rsample (>= 1.2.1), rstudioapi (>= 0.17.1), tibble (>= 3.2.1), tidyr (>= 1.3.1), tune (>= 1.3.0), workflows (>= 1.2.0), workflowsets (>= 1.1.0), yardstick (>= 1.3.2)
+# - Imports: broom (>= 1.0.7), cli (>= 3.6.4), conflicted (>= 1.2.0), 
+# dials (>= 1.4.0), dplyr (>= 1.1.4), ggplot2 (>= 3.5.1), hardhat (>= 1.4.1), 
+# infer (>= 1.0.7), modeldata (>= 1.4.0), parsnip (>= 1.3.0), purrr (>= 1.0.4), 
+# recipes (>= 1.1.1), rlang (>= 1.1.5), rsample (>= 1.2.1), rstudioapi (>= 0.17.1), 
+# tibble (>= 3.2.1), tidyr (>= 1.3.1), tune (>= 1.3.0), workflows (>= 1.2.0), 
+# workflowsets (>= 1.1.0), yardstick (>= 1.3.2)
 # - Suggests: covr, glue, knitr, rmarkdown, testthat (>= 3.0.0), xml2
 # - Downloads/Month: 31789
 # - Repository: CRAN
