@@ -51,7 +51,7 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #' @details
 #' The \code{pkg_stability} function is used to get an overall feel for the
 #' stability of a package.  The stability score and other information returned
-#' by the function are based on data retrived from CRAN.  The function
+#' by the function are based on data retrieved from CRAN.  The function
 #' compares each version of a package and determines if any functions or
 #' function parameters have been removed from the previous release.
 #' If a release removes functions or parameters contained in the previous release,
@@ -59,7 +59,7 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #'
 #' The stability score is calculated as the percentage of non-breaking releases.
 #' For example, if a package has 10 releases, and one breaking release,
-#' the stability score will be .9, or 90\%.
+#' the stability score will be .9, or 90%.
 #'
 #' The stability assessment is a categorization of the stability score. The
 #' aim of the assessment is to provide a general evaluation of the package,
@@ -90,7 +90,7 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #'
 #' @section Stability Data: Stability calculations are based on a
 #' data frame of stability information gathered from each package release.
-#' The data frame will contain one row for each release.  Each row will
+#' The data frame has one row per release.  Each row
 #' contains comparison information against the prior release.  The
 #' columns are organized as follows:
 #' \itemize{
@@ -106,12 +106,12 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #'   }
 #'   \item {\strong{AF}: The number of functions added from the previous release.
 #'   }
-#'   \item {\strong{AP}: The number of functions that had parameters from the
+#'   \item {\strong{AP}: The number of functions that had parameters added from the
 #'   previous release.
 #'   }
 #'   \item {\strong{RF}: The number of functions removed from the previous release.
 #'   }
-#'   \item {\strong{RP}: The number of function that had parameters removed from
+#'   \item {\strong{RP}: The number of functions that had parameters removed from
 #'   the previous release.
 #'   }
 #'   \item {\strong{BC}: Whether the release had any breaking changes.
@@ -145,9 +145,9 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #' download each version of the package from the CRAN archive, and compare
 #' consecutive versions.  This process can take considerable time. The
 #' most popular packages on CRAN have been cached.  If there is a package
-#' that you query frequently that has not been cached, please submit
-#' an issue to the \strong{pkgdiff} issue log on Github, and request that
-#' the package be added to the cache.
+#' you query frequently that has not been cached, please submit
+#' an issue to the \strong{pkgdiff} issue log on Github. In the issue description
+#' simply request that the package be added to the cache.
 #'
 #' For more information on the package cache, see \code{vignette("pkgdiff-cache")}.
 #'
@@ -168,7 +168,7 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #' the release and version ranges, the number of releases, and number of
 #' breaking releases. All of these items can be accessed using dollar sign ($)
 #' syntax.
-#' @family stability
+#' @family pdiff
 #' @export
 pkg_stability <- function(pkg, releases = NULL, months = NULL) {
 
@@ -241,7 +241,7 @@ pkg_stability <- function(pkg, releases = NULL, months = NULL) {
 #' @param x The package difference to print
 #' @param ... Follow-on parameters to the print function
 #' @param verbose Whether to print in summary or list-style.
-#' @family stability
+#' @family pdiff
 #' @import crayon
 #' @export
 print.pdiff_score <- function(x, ..., verbose = FALSE) {

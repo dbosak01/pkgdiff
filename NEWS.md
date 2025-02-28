@@ -1,3 +1,7 @@
+# pkgdiff 0.1.3
+
+* Initial release to CRAN.
+
 # pkgdiff 0.1.2
 
 * Added documentation.

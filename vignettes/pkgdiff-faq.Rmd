@@ -153,7 +153,7 @@ looks at the entire history of a package, counts how many releases there
 are, and determines how many of them were breaking releases. 
 The stability score is the number of breaking releases divided by the 
 total number of releases.  Some adjustments are made for the age of the 
-breaking release.  See the vignette `pkgdiff-stability` for a complete 
+breaking release.  See `vignette("pkgdiff-stability")` for a complete 
 description of how the stability score is calculated. 
 
 [top](#top) 
@@ -175,7 +175,7 @@ from the CRAN mirror. The additional processing slows down `pkg_stability()`
 significantly.  
 
 For more information on the package cache, 
-see the vignette "pkgdiff-cache".
+see `vignette("pkgdiff-cache")`.
 
 [top](#top) 
 

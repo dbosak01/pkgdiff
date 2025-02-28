@@ -10,21 +10,21 @@
 
 # Introduction to **pkgdiff**
 
-Open Source languages have a reputation of being unstable.  Package developers
+Open Source languages have a reputation for being unstable.  Package developers
 can remove a function or parameter at any time, potentially breaking thousands
 of programs that were using that function. The situation is quite
-different from languages like SAS or C, which make great effort to provide
+different from languages like SAS or C, which are famous for their
 stability and backward compatibility. 
 
-The purpose of **pkgdiff** is to offer a quantifiable approach 
-to anticipating and avoiding
+The purpose of **pkgdiff** is to offer an objective approach 
+for anticipating and avoiding
 breaking changes in R.  It gives you a tool to evaluate packages in terms
 of overall stability, and provides a way to identify and plan for future
 breakages.
 
 The hope is that organizations will have a better way of selecting stable
 packages for their programmers, and programmers will cultivate higher standards
-for the packages they use.  The end goal is to enable Rs use in large scale,
+for the packages they use.  The end goal is to enable R's use in large scale,
 production environments, reduce maintenance costs, and increased confidence
 in the programs we write with R.
 

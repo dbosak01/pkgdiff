@@ -4,7 +4,7 @@
 #' @description
 #' The \code{repo_breakages} function generates a data frame
 #' of breakage information for multiple packages.  This function can be used
-#' to identify breakages for small set of packages, or even an entire repository.
+#' to identify breakages for a small set of packages, or even an entire repository.
 #' @details
 #' The \code{repo_breakages} function aims to help with repository upgrades.
 #' The purpose is to identify packages that will break if you upgrade
@@ -30,7 +30,7 @@
 #' exist in any other R package prior to \strong{pkgdiff}.
 #' @param r1 A data frame that identifies the source repository packages
 #' and versions. The default value is "current", which means
-#' the function will use the current versions of all package in
+#' the function will use the current versions of all packages in
 #' the current R repository.
 #' @param r2 A data frame that identifies the target repository packages
 #' and versions. The default value is "latest", which means
@@ -44,6 +44,7 @@
 #' @seealso Use the \code{\link{pkg_repo}} function to help gather
 #' version information for each package set.  Also see \code{\link{repo_stability}}
 #' to collect stability information on multiple packages.
+#' @family prepo
 #' @examples
 #' # Create package vector
 #' pkgs <- c("curl", "dplyr", "purrr", "stringr")
@@ -228,7 +229,7 @@ repo_breakages <- function(r1 = "current", r2 = "latest") {
 #' number of months.
 #' @returns A data frame of information regarding the stability of
 #' each package in the input vector.
-#' @family reports
+#' @family prepo
 #' @import common
 #' @examples
 #' # Create vector of packages
@@ -241,7 +242,7 @@ repo_breakages <- function(r1 = "current", r2 = "latest") {
 #' # Getting stability score for package 'rvest'...
 #' # Getting stability score for package 'tidymodels'...
 #'
-#' # View stability scores
+#' # View stability results
 #' res
 #' #      Package    FV    LV         FR         LR TR BR     Score        Assessment
 #' # 1       curl   0.2 6.2.1 2014-11-20 2025-02-19 51  1 0.9797917       Very Stable

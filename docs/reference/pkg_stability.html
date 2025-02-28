@@ -22,7 +22,7 @@ This data can be useful for review or even custom analytics."><!-- mathjax --><s
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgdiff</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.3</span>
       </span>
     </div>
 
@@ -123,14 +123,14 @@ syntax.</p>
     <h2>Details</h2>
     <p>The <code>pkg_stability</code> function is used to get an overall feel for the
 stability of a package.  The stability score and other information returned
-by the function are based on data retrived from CRAN.  The function
+by the function are based on data retrieved from CRAN.  The function
 compares each version of a package and determines if any functions or
 function parameters have been removed from the previous release.
 If a release removes functions or parameters contained in the previous release,
 it is flagged as a "breaking release" or "breaking change".</p>
 <p>The stability score is calculated as the percentage of non-breaking releases.
 For example, if a package has 10 releases, and one breaking release,
-the stability score will be .9, or 90\<!-- %. --></p>
+the stability score will be .9, or 90%.</p>
 <p>The stability assessment is a categorization of the stability score. The
 aim of the assessment is to provide a general evaluation of the package,
 whether it is stable or unstable.  The
@@ -154,7 +154,7 @@ package stability, and discourage the number of breaking changes.</p>
     <h2>Stability Data</h2>
     <p>Stability calculations are based on a
 data frame of stability information gathered from each package release.
-The data frame will contain one row for each release.  Each row will
+The data frame has one row per release.  Each row
 contains comparison information against the prior release.  The
 columns are organized as follows:</p><ul><li><p><strong>Package</strong>: The package name.</p></li>
 <li><p><strong>Version</strong>: The version number of the release.</p></li>
@@ -162,10 +162,10 @@ columns are organized as follows:</p><ul><li><p><strong>Package</strong>: The pa
 <li><p><strong>Release</strong>: The release date of the package.</p></li>
 <li><p><strong>Size</strong>: The size of the package file on disk.</p></li>
 <li><p><strong>AF</strong>: The number of functions added from the previous release.</p></li>
-<li><p><strong>AP</strong>: The number of functions that had parameters from the
+<li><p><strong>AP</strong>: The number of functions that had parameters added from the
 previous release.</p></li>
 <li><p><strong>RF</strong>: The number of functions removed from the previous release.</p></li>
-<li><p><strong>RP</strong>: The number of function that had parameters removed from
+<li><p><strong>RP</strong>: The number of functions that had parameters removed from
 the previous release.</p></li>
 <li><p><strong>BC</strong>: Whether the release had any breaking changes.
 Breaking changes are removed functions or removed parameters.  Values
@@ -200,17 +200,24 @@ quickly.  For packages that have not been cached, the function must
 download each version of the package from the CRAN archive, and compare
 consecutive versions.  This process can take considerable time. The
 most popular packages on CRAN have been cached.  If there is a package
-that you query frequently that has not been cached, please submit
-an issue to the <strong>pkgdiff</strong> issue log on Github, and request that
-the package be added to the cache.</p>
+you query frequently that has not been cached, please submit
+an issue to the <strong>pkgdiff</strong> issue log on Github. In the issue description
+simply request that the package be added to the cache.</p>
 <p>For more information on the package cache, see <code><a href="../articles/pkgdiff-cache.html">vignette("pkgdiff-cache")</a></code>.</p>
 <p>For more information about how the stability score and assessment are
 calculated, see <code><a href="../articles/pkgdiff-stability.html">vignette("pkgdiff-stability")</a></code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p>Other stability:
-<code><a href="print.pdiff_score.html">print.pdiff_score</a>()</code></p></div>
+    <div class="dont-index"><p>Other pdiff:
+<code><a href="pkg_cache.html">pkg_cache</a>()</code>,
+<code><a href="pkg_diff.html">pkg_diff</a>()</code>,
+<code><a href="pkg_info.html">pkg_info</a>()</code>,
+<code><a href="pkg_versions.html">pkg_versions</a>()</code>,
+<code><a href="print.pcache.html">print.pcache</a>()</code>,
+<code><a href="print.pdiff.html">print.pdiff</a>()</code>,
+<code><a href="print.pdiff_score.html">print.pdiff_score</a>()</code>,
+<code><a href="print.pinfo.html">print.pinfo</a>()</code></p></div>
     </div>
 
   </div>

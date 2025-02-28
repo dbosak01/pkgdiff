@@ -7,11 +7,11 @@
 pkg_versions(pkg)
 }
 \arguments{
-\item{pkg}{A package name to return versions of.  Pass the package
+\item{pkg}{A package name to return versions for.  Pass the package
 name as a quoted string.  This parameter is required.}
 }
 \value{
-An data frame with one row per package release, showing the
+A data frame with one row per package release, showing the
 version and date of each release. If the package is not found on CRAN,
 a message will be generated and the function will return NULL.
 }
@@ -49,10 +49,10 @@ Other pdiff:
 \code{\link{pkg_cache}()},
 \code{\link{pkg_diff}()},
 \code{\link{pkg_info}()},
-\code{\link{pkg_repo}()},
+\code{\link{pkg_stability}()},
 \code{\link{print.pcache}()},
 \code{\link{print.pdiff}()},
-\code{\link{print.pinfo}()},
-\code{\link{print.prepo}()}
+\code{\link{print.pdiff_score}()},
+\code{\link{print.pinfo}()}
 }
 \concept{pdiff}

@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgdiff</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.3</span>
       </span>
     </div>
 
@@ -120,7 +120,7 @@ shows which functions and parameters have been added or removed.</li>
 identifies breaking changes, and assesses the package for
 stability.</li>
 <li>
-<code><a href="../reference/pkg_repo.html">pkg_repo()</a></code>: Generates a list of the packages in a
+<code><a href="../reference/pkg_repo.html">pkg_repo()</a></code>: Generates a table of the packages in a
 repository and their versions.</li>
 <li>
 <code><a href="../reference/repo_breakages.html">repo_breakages()</a></code>: Looks at a package repository and
@@ -129,7 +129,7 @@ tries to identify which packages will break when upgraded.</li>
 <code><a href="../reference/repo_stability.html">repo_stability()</a></code>: Looks at a package repository and
 calculates a stability score for each package.</li>
 </ul>
-<p>Below is a further explanation and demo for each of the above
+<p>Below is a further elaboration and demo for each of the above
 functions.</p>
 <div class="section level2">
 <h2 id="general-package-information">General Package Information<a class="anchor" aria-label="anchor" href="#general-package-information"></a>
@@ -141,8 +141,7 @@ to pass is the package name. The function will then return basic
 information such as the maintainer, description, and imported packages.
 Here is a simple demonstration:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkgdiff.r-sassy.org">pkgdiff</a></span><span class="op">)</span></span>
-<span></span>
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Examine tidymodels package</span></span>
 <span><span class="fu"><a href="../reference/pkg_info.html">pkg_info</a></span><span class="op">(</span><span class="st">"tidymodels"</span><span class="op">)</span></span>
 <span><span class="co"># # A package info object: tidymodels package</span></span>
@@ -185,13 +184,13 @@ values from this object:</p>
 <span><span class="co"># [1] "2025-02-21"</span></span></code></pre></div>
 <p>Note that, by default, the version of the package returned is the
 version of the package located on the current machine, in the current
-version of the R repository. If the package is not installed on in the
-current R respository, the function will return the latest version on
+version of the R repository. If the package is not installed in the
+current R repository, the function will return the latest version on
 CRAN.</p>
-<p>Also note that the object contains a complete list of all exported
-package functions. This list can be accessed programatically, and also
-viewed using the <code>verbose</code> parameter of the
-<code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> function:</p>
+<p>Also note that the object provides a complete list of all functions
+exported by the package. The function list can be accessed
+programmatically, and also viewed using the <code>verbose</code>
+parameter of the <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> function:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get package info</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_info.html">pkg_info</a></span><span class="op">(</span><span class="st">"tidymodels"</span><span class="op">)</span></span>
@@ -269,11 +268,12 @@ function can help you make that determination:</p>
 <span><span class="co"># 13 tidymodels   0.0.2 tidymodels_0.0.2.tar.gz 2018-11-27   18K  0  0  0  0  0  8</span></span>
 <span><span class="co"># 14 tidymodels   0.0.1 tidymodels_0.0.1.tar.gz 2018-07-27   18K  8  8  0  0  0  8</span></span></code></pre></div>
 <p>The stability score is calculated generally as the percentage of
-non-breaking changes. Breaking changes are also weighted to reduce their
-impact over time. The above score of 100 for <strong>tidymodels</strong>
-means that the package has never had a breaking change. It is therefore
-given a stability assessment of “Perfect”.</p>
-<p>Now let’s look at a package with more breaking changes:</p>
+non-breaking releases. Breaking releases are also weighted to reduce
+their impact over time. The above score of 100 for
+<strong>tidymodels</strong> means that the package has never had a
+breaking change. It is therefore given a stability assessment of
+“Perfect”.</p>
+<p>Now let’s look at a package with some breaking changes:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># View package stability</span></span>
@@ -312,18 +312,16 @@ given a stability assessment of “Perfect”.</p>
 <span><span class="co"># 22  dbplyr   1.1.0 dbplyr_1.1.0.tar.gz 2017-06-27   241K  23   2  0  0  0 314</span></span>
 <span><span class="co"># 23  dbplyr   1.0.0 dbplyr_1.0.0.tar.gz 2017-06-09   235K 291 291  0  0  0 291</span></span></code></pre></div>
 <p>As seen above, the <strong>dbplyr</strong> package has had a lot of
-breaking changes. Which releases had breaking changes are shown the the
+breaking changes. Which releases had breaking changes are shown in the
 “BC” column of the data grid. The “AF” and “AP” columns stand for “Added
 Functions” and “Added Parameters”, while “RF” and “RP” mean “Removed
 Functions” and “Removed Parameters”. “TF” is the total number of
 exported functions in that version of the package.</p>
 <p>Since this package has issued breaking changes in 10 out of 23
-releases, it gets a stability score of 73.7 and an assessment of
+releases, it gets a stability score of 73.7, and an assessment of
 “Unstable”. A stability assessment of “Unstable” does not necessarily
 mean you should not use the package. Whether or not you use the package
-depends on your situation. The <code><a href="../reference/pkg_stability.html">pkg_stability()</a></code> function
-merely contributes information on which you can make your own
-decisions.</p>
+depends on your situation, and the amount of risk you can tolerate.</p>
 </div>
 <div class="section level2">
 <h2 id="comparing-package-versions">Comparing Package Versions<a class="anchor" aria-label="anchor" href="#comparing-package-versions"></a>
@@ -331,10 +329,11 @@ decisions.</p>
 <p>If you find a package with breaking changes, you would then want to
 know what those breaking changes are. The breaking changes between
 package versions can be discovered with the <code><a href="../reference/pkg_diff.html">pkg_diff()</a></code>
-function. This function accepts a package name, and the two version of
-the package you wish to compare.<br>
-Looking at our stability data above, let’s examine the breaking changes
-between versions “2.4.0” and “2.5.0” of <strong>dbplyr</strong>:</p>
+function. This function accepts a package name, and the two versions of
+the package you wish to compare.</p>
+<p>Looking at our stability data above, let’s examine the breaking
+changes between versions “2.4.0” and “2.5.0” of
+<strong>dbplyr</strong>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compare package versions</span></span>
 <span><span class="fu"><a href="../reference/pkg_diff.html">pkg_diff</a></span><span class="op">(</span><span class="st">"dbplyr"</span>, <span class="st">"2.4.0"</span>, <span class="st">"2.5.0"</span><span class="op">)</span></span>
@@ -399,19 +398,74 @@ added between these two versions. In addition, there are 12 functions
 that have been removed. It is up to you to determine whether and how
 these removals will affect your programs. It is very convenient,
 however, to have an accurate accounting of package changes. These
-changes can help you plan your version upgrades and anticipate
+changes can help you plan your package upgrades and anticipate
 breakages.</p>
 </div>
 <div class="section level2">
 <h2 id="listing-package-versions">Listing Package Versions<a class="anchor" aria-label="anchor" href="#listing-package-versions"></a>
 </h2>
+<p>Another question you may ask when evaluating a package is: How many
+versions of a package are there? <strong>pkgdiff</strong> provides two
+tools to find version information: <code><a href="../reference/pkg_versions.html">pkg_versions()</a></code> and
+<code><a href="../reference/pkg_repo.html">pkg_repo()</a></code>.</p>
+<p><code><a href="../reference/pkg_versions.html">pkg_versions()</a></code> returns all the versions of a package in
+a data frame, along with release dates for each version. It works like
+this:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Get package versions</span></span>
+<span><span class="fu"><a href="../reference/pkg_versions.html">pkg_versions</a></span><span class="op">(</span><span class="st">"stringr"</span><span class="op">)</span></span>
+<span><span class="co">#    Package Version              FileName    Release   Size</span></span>
+<span><span class="co"># 1  stringr   1.5.1  stringr_1.5.1.tar.gz 2023-11-14 172.5K</span></span>
+<span><span class="co"># 2  stringr   1.5.0  stringr_1.5.0.tar.gz 2022-12-02   172K</span></span>
+<span><span class="co"># 3  stringr   1.4.1  stringr_1.4.1.tar.gz 2022-08-21   133K</span></span>
+<span><span class="co"># 4  stringr   1.4.0  stringr_1.4.0.tar.gz 2019-02-10   133K</span></span>
+<span><span class="co"># 5  stringr   1.3.1  stringr_1.3.1.tar.gz 2018-05-10   116K</span></span>
+<span><span class="co"># 6  stringr   1.3.0  stringr_1.3.0.tar.gz 2018-02-19   116K</span></span>
+<span><span class="co"># 7  stringr   1.2.0  stringr_1.2.0.tar.gz 2017-02-18    92K</span></span>
+<span><span class="co"># 8  stringr   1.1.0  stringr_1.1.0.tar.gz 2016-08-19    62K</span></span>
+<span><span class="co"># 9  stringr   1.0.0  stringr_1.0.0.tar.gz 2015-04-30    34K</span></span>
+<span><span class="co"># 10 stringr   0.6.2  stringr_0.6.2.tar.gz 2012-12-06    20K</span></span>
+<span><span class="co"># 11 stringr   0.6.1  stringr_0.6.1.tar.gz 2012-07-25    20K</span></span>
+<span><span class="co"># 12 stringr     0.6    stringr_0.6.tar.gz 2011-12-08    20K</span></span>
+<span><span class="co"># 13 stringr     0.5    stringr_0.5.tar.gz 2011-06-30    18K</span></span>
+<span><span class="co"># 14 stringr     0.4    stringr_0.4.tar.gz 2010-08-24    16K</span></span>
+<span><span class="co"># 15 stringr     0.3    stringr_0.3.tar.gz 2010-02-15    11K</span></span>
+<span><span class="co"># 16 stringr     0.2    stringr_0.2.tar.gz 2009-11-16    10K</span></span>
+<span><span class="co"># 17 stringr  0.1.10 stringr_0.1.10.tar.gz 2009-11-09   6.8K</span></span></code></pre></div>
+<p>Observe that the <strong>stringr</strong> package has had 17
+releases. The first release was in 2009, and the most recent in 2023.
+This information is scraped from the CRAN archive site. It is useful for
+understanding the release history of a package, and knowing which
+versions of a package are available.</p>
+<p>Next, you may want to know which versions of packages you have
+installed in your R repository. This information can be queried using
+the <code><a href="../reference/pkg_repo.html">pkg_repo()</a></code> function. Let’s take a look:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Check version in repo</span></span>
+<span><span class="fu"><a href="../reference/pkg_repo.html">pkg_repo</a></span><span class="op">(</span><span class="st">"stringr"</span><span class="op">)</span></span>
+<span><span class="co"># # A package repo object</span></span>
+<span><span class="co"># - Version: 4.4</span></span>
+<span><span class="co"># - Packages:</span></span>
+<span><span class="co">#   Package Version</span></span>
+<span><span class="co"># 1 stringr   1.5.1</span></span></code></pre></div>
+<p>Base on the above information, it appears we have the latest version
+of <strong>stringr</strong> installed. Good to know!</p>
+<p>Can <code><a href="../reference/pkg_repo.html">pkg_repo()</a></code> be used to get versions for multiple
+packages? Yes! Here is how:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Create vector of packages</span></span>
 <span><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"curl"</span>, <span class="st">"dplyr"</span>, <span class="st">"fmtr"</span>, <span class="st">"purrr"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Get current versions</span></span>
 <span><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_repo.html">pkg_repo</a></span><span class="op">(</span><span class="va">v1</span>, ver <span class="op">=</span> <span class="st">"current"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># View results</span></span>
+<span><span class="va">res1</span></span>
+<span><span class="co"># # A package repo object</span></span>
+<span><span class="co"># - Version: 4.4</span></span>
+<span><span class="co"># - Packages:</span></span>
 <span><span class="co">#   Package Version</span></span>
 <span><span class="co"># 1    curl   5.2.1</span></span>
 <span><span class="co"># 2   dplyr   1.1.4</span></span>
@@ -420,19 +474,49 @@ breakages.</p>
 <span></span>
 <span><span class="co"># Get latest versions</span></span>
 <span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_repo.html">pkg_repo</a></span><span class="op">(</span><span class="va">v1</span>, ver <span class="op">=</span> <span class="st">"latest"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># View results</span></span>
+<span><span class="va">res2</span></span>
+<span><span class="co"># # A package repo object</span></span>
+<span><span class="co"># - Version: latest</span></span>
+<span><span class="co"># - Packages:</span></span>
 <span><span class="co">#   Package Version</span></span>
-<span><span class="co"># 1    curl   6.2.0</span></span>
+<span><span class="co"># 1    curl   6.2.1</span></span>
 <span><span class="co"># 2   dplyr   1.1.4</span></span>
 <span><span class="co"># 3    fmtr   1.6.8</span></span>
 <span><span class="co"># 4   purrr   1.0.4</span></span></code></pre></div>
+<p>Moreover, if you run <code><a href="../reference/pkg_repo.html">pkg_repo()</a></code> without any parameters,
+it will return all the R packages you have installed, along with their
+versions. Nice!</p>
+<p>The <code><a href="../reference/pkg_repo.html">pkg_repo()</a></code> function is very useful when dealing with
+large numbers of packages. This function feeds directly into the next
+two topics, which discuss operations on entire repositories.</p>
 </div>
 <div class="section level2">
 <h2 id="anticipating-breakages">Anticipating Breakages<a class="anchor" aria-label="anchor" href="#anticipating-breakages"></a>
 </h2>
+<p>One of the main motivations for creating <strong>pkgdiff</strong> was
+to find a way to better handle repository upgrades. As it stands,
+repository upgrades can be a chaotic experience. When you have several
+hundred packages in your repository, you will surely have some of them
+break when you go to upgrade. Wouldn’t it be nice to at least know which
+packages are going to break? That is the topic of this next section.</p>
 <div class="section level3">
-<h3 id="small-list-of-packages">Small list of packages<a class="anchor" aria-label="anchor" href="#small-list-of-packages"></a>
+<h3 id="small-set-of-packages">Small Set of Packages<a class="anchor" aria-label="anchor" href="#small-set-of-packages"></a>
 </h3>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p>First, let’s see how we can anticipate breaking changes on a small
+number of packages.</p>
+<p>For this exercise, we will use the <code>res1</code> and
+<code>res2</code> data frames from the previous section. These data
+frames were created using <code><a href="../reference/pkg_repo.html">pkg_repo()</a></code>, and contain version
+numbers for four R packages. These data frames are in fact perfect
+inputs to our next function: <code><a href="../reference/repo_breakages.html">repo_breakages()</a></code>.</p>
+<p>The <code><a href="../reference/repo_breakages.html">repo_breakages()</a></code> function can compare packages in
+bulk. It will perform difference operations on any number of packages,
+and tell you whether or not there will be any breaking changes. As you
+can imagine, this function is well suited for repository upgrades. Here
+is an example:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># View upgrade breakages</span></span>
 <span><span class="fu"><a href="../reference/repo_breakages.html">repo_breakages</a></span><span class="op">(</span><span class="va">res1</span>, <span class="va">res2</span><span class="op">)</span> </span>
 <span><span class="co"># Comparing curl v5.2.1/v6.2.0</span></span>
@@ -458,11 +542,24 @@ breakages.</p>
 <span><span class="co">#   - new_pool(): max_streams</span></span>
 <span><span class="co"># - Removed Parameters: </span></span>
 <span><span class="co">#   - multi_download(): timeout</span></span></code></pre></div>
+<p>The <code><a href="../reference/repo_breakages.html">repo_breakages()</a></code> function returns a list with two
+major items: “summary” and “details”. The “summary” item is a data frame
+showing the input packages, the input package versions, and a TRUE or
+FALSE flag that describes whether there are any breaking changes between
+the two package versions. The “details” list item then provides the
+difference object for any package that had a breaking change. This
+function tells you exactly what you need to know before a repository
+upgrade. If desired, you can then use the difference information to scan
+your code, and determine whether those removals will break anything.</p>
 </div>
 <div class="section level3">
 <h3 id="entire-repository">Entire Repository<a class="anchor" aria-label="anchor" href="#entire-repository"></a>
 </h3>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<p>The above demonstration showed how to use
+<code><a href="../reference/repo_breakages.html">repo_breakages()</a></code> on a small number of packages. Now let’s
+see how to use the function on a large number of packages. In fact, we
+will perform an upgrade analyse on our entire R repository:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Get current versions from local repo</span></span>
 <span><span class="va">r1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_repo.html">pkg_repo</a></span><span class="op">(</span>ver <span class="op">=</span> <span class="st">"current"</span><span class="op">)</span></span>
@@ -488,7 +585,7 @@ breakages.</p>
 <span><span class="co"># 16            blob                1.2.3</span></span>
 <span><span class="co"># ...</span></span>
 <span></span>
-<span><span class="co"># Get latest versions of current repo</span></span>
+<span><span class="co"># Get latest versions of current repo on CRAN</span></span>
 <span><span class="va">r2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_repo.html">pkg_repo</a></span><span class="op">(</span><span class="va">r1</span><span class="op">$</span><span class="va">Package</span>, ver <span class="op">=</span> <span class="st">"latest"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># View Results</span></span>
@@ -534,8 +631,11 @@ breakages.</p>
 <span><span class="co"># Comparing broom v1.0.1/v1.0.7</span></span>
 <span><span class="co"># Comparing bslib v0.4.0/v0.9.0</span></span>
 <span><span class="co"># Comparing cachem v1.0.6/v1.1.0</span></span>
-<span><span class="co"># Comparing callr v3.7.3/v3.7.6</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<span><span class="co"># Comparing callr v3.7.3/v3.7.6</span></span>
+<span><span class="co"># ...</span></span></code></pre></div>
+<p>When the processing finishes, you can examine the results using
+dollar sign ($) notation:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># View Summary Table</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">summary</span></span>
 <span><span class="co">#            Package             Version1   Version2 Breakages</span></span>
@@ -580,19 +680,63 @@ breakages.</p>
 <span><span class="co"># - Removed Functions: </span></span>
 <span><span class="co">#   - call_aval_fun()</span></span>
 <span><span class="co">#   - derive_param_lasta()</span></span></code></pre></div>
+<p>What is convenient is that you can run these functions before any new
+package versions are downloaded and installed.<br>
+They work on archive packages stored on CRAN, not on your local machine.
+In this way, prior to any actual upgrade, you can make a determination
+as to a) whether to proceed with the upgrade or not, and b) how much
+effort it might take to fix any breakages.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="assessing-entire-repository">Assessing Entire Repository<a class="anchor" aria-label="anchor" href="#assessing-entire-repository"></a>
 </h2>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="../reference/repo_stability.html">repo_stability</a></span><span class="op">(</span><span class="va">v1</span><span class="op">)</span></span>
+<p>In addition to anticipating breakages for a large number of packages,
+<strong>pkgdiff</strong> also allows you to gather stability scores for
+a large number of packages. Bulk stability scores are achieved using
+<code><a href="../reference/repo_stability.html">repo_stability()</a></code>. Here is how to do it:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create vector of packages</span></span>
+<span><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"curl"</span>, <span class="st">"dplyr"</span>, <span class="st">"dbplyr"</span>, <span class="st">"purrr"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Assess stability </span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/repo_stability.html">repo_stability</a></span><span class="op">(</span><span class="va">v1</span><span class="op">)</span></span>
+<span><span class="co"># Getting stability score for package 'curl'...</span></span>
+<span><span class="co"># Getting stability score for package 'dplyr'...</span></span>
+<span><span class="co"># Getting stability score for package 'dbplyr'...</span></span>
+<span><span class="co"># Getting stability score for package 'purrr'...</span></span>
+<span></span>
+<span><span class="co"># View results</span></span>
+<span><span class="va">res</span></span>
 <span><span class="co">#   Package    FV    LV         FR         LR TR BR     Score        Assessment</span></span>
-<span><span class="co"># 1    curl   0.2 6.2.0 2014-11-20 2025-01-23 50  1 0.9793617       Very Stable</span></span>
+<span><span class="co"># 1    curl   0.2 6.2.1 2014-11-20 2025-02-19 51  1 0.9797917       Very Stable</span></span>
 <span><span class="co"># 2   dplyr   0.1 1.1.4 2014-01-16 2023-11-17 45 20 0.8711429 Somewhat Unstable</span></span>
-<span><span class="co"># 3    fmtr 1.0.1 1.6.8 2020-08-07 2025-01-28 20  1 0.9650000       Very Stable</span></span>
+<span><span class="co"># 3  dbplyr 1.0.0 2.5.0 2017-06-09 2024-03-19 23 10 0.7369565          Unstable</span></span>
 <span><span class="co"># 4   purrr 0.1.0 1.0.4 2015-09-28 2025-02-05 18  6 0.9183333            Stable</span></span></code></pre></div>
+<p>The above result shows each package on the input vector, the first
+and last versions, the first and last release dates, and the total
+number of releases. It also shows the number of breaking releases, a
+stability score, and a stablity assessment for each package. This
+information is very helpful to get an overall sense of the stability of
+your repository, and where breaking changes might occur when they
+do.</p>
+<p>Like <code><a href="../reference/repo_breakages.html">repo_breakages()</a></code>, <code><a href="../reference/repo_stability.html">repo_stability()</a></code> can
+be used to assess an entire repository. Simply use
+<code><a href="../reference/pkg_repo.html">pkg_repo()</a></code> to get the packages in your current repo, and
+pass the “Packages” column into <code><a href="../reference/repo_stability.html">repo_stability()</a></code>. Remember
+to give <code><a href="../reference/repo_stability.html">repo_stability()</a></code> plenty of uninterrupted processing
+time if you are assessing a large number of packages.</p>
+</div>
+<div class="section level2">
+<h2 id="next-steps">Next Steps<a class="anchor" aria-label="anchor" href="#next-steps"></a>
+</h2>
+<p>For addition research on <strong>pkgdiff</strong>, you may wish to
+browse the following articles:</p>
+<ul>
+<li><a href="pkgdiff-stability.html">Stability Score</a></li>
+<li><a href="pkgdiff-cache.html">Package Cache</a></li>
+<li><a href="pkgdiff-faq.html">Frequently Asked Questions</a></li>
+</ul>
 </div>
   </div>
 

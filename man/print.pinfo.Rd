@@ -23,10 +23,10 @@ Other pdiff:
 \code{\link{pkg_cache}()},
 \code{\link{pkg_diff}()},
 \code{\link{pkg_info}()},
-\code{\link{pkg_repo}()},
+\code{\link{pkg_stability}()},
 \code{\link{pkg_versions}()},
 \code{\link{print.pcache}()},
 \code{\link{print.pdiff}()},
-\code{\link{print.prepo}()}
+\code{\link{print.pdiff_score}()}
 }
 \concept{pdiff}

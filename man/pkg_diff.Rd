@@ -19,8 +19,8 @@ latest version of the package available on CRAN.}
 }
 \value{
 An object of class "pdiff", which contains information regarding
-the difference between two versions of a package.  The object includes
-a list of function that were added, a list of function parameters that were added,
+the differences between two versions of a package.  The object includes
+a list of functions that were added, a list of function parameters that were added,
 a list of functions removed, and a list of function parameters that
 were removed.  The object also contains some general information like
 the package versions examined, and a TRUE or FALSE flag indicating whether
@@ -29,7 +29,7 @@ there were any breaking changes.
 \description{
 The \code{pkg_diff} function is used to compare two different versions of
 a package.  The function returns an object that contains the differences.
-Difference include any functions added or removed. The object may
+Differences include any functions added or removed. The object may
 be printed directly, or stored in a variable and examined programmatically.
 }
 \details{
@@ -142,11 +142,11 @@ pkg_diff("rsample", "1.1.1", "1.2.0")
 Other pdiff: 
 \code{\link{pkg_cache}()},
 \code{\link{pkg_info}()},
-\code{\link{pkg_repo}()},
+\code{\link{pkg_stability}()},
 \code{\link{pkg_versions}()},
 \code{\link{print.pcache}()},
 \code{\link{print.pdiff}()},
-\code{\link{print.pinfo}()},
-\code{\link{print.prepo}()}
+\code{\link{print.pdiff_score}()},
+\code{\link{print.pinfo}()}
 }
 \concept{pdiff}

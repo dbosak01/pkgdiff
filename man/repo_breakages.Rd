@@ -9,7 +9,7 @@ repo_breakages(r1 = "current", r2 = "latest")
 \arguments{
 \item{r1}{A data frame that identifies the source repository packages
 and versions. The default value is "current", which means
-the function will use the current versions of all package in
+the function will use the current versions of all packages in
 the current R repository.}
 
 \item{r2}{A data frame that identifies the target repository packages
@@ -27,7 +27,7 @@ will be included in the details list.
 \description{
 The \code{repo_breakages} function generates a data frame
 of breakage information for multiple packages.  This function can be used
-to identify breakages for small set of packages, or even an entire repository.
+to identify breakages for a small set of packages, or even an entire repository.
 }
 \details{
 The \code{repo_breakages} function aims to help with repository upgrades.
@@ -97,4 +97,10 @@ res
 Use the \code{\link{pkg_repo}} function to help gather
 version information for each package set.  Also see \code{\link{repo_stability}}
 to collect stability information on multiple packages.
+
+Other prepo: 
+\code{\link{pkg_repo}()},
+\code{\link{print.prepo}()},
+\code{\link{repo_stability}()}
 }
+\concept{prepo}

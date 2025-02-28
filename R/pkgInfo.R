@@ -725,9 +725,9 @@ get_functions <- function(filepath, funcs, exppat, mthds = NULL) {
 #' what versions of a package are available. It is often used in
 #' conjunction with \code{\link{pkg_info}} to get a general overview
 #' of a package.
-#' @param pkg A package name to return versions of.  Pass the package
+#' @param pkg A package name to return versions for.  Pass the package
 #' name as a quoted string.  This parameter is required.
-#' @returns An data frame with one row per package release, showing the
+#' @returns A data frame with one row per package release, showing the
 #' version and date of each release. If the package is not found on CRAN,
 #' a message will be generated and the function will return NULL.
 #' @examples

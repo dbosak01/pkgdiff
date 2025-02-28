@@ -2,7 +2,7 @@
 % Please edit documentation in R/pkgrepo.R
 \name{pkg_repo}
 \alias{pkg_repo}
-\title{A Package Repository}
+\title{Retrieve Package Versions from a Repository}
 \usage{
 pkg_repo(pkgs = NULL, ver = "current", libpaths = NULL)
 }
@@ -45,14 +45,9 @@ pkg_repo(pkgs, ver = "latest")
 
 }
 \seealso{
-Other pdiff: 
-\code{\link{pkg_cache}()},
-\code{\link{pkg_diff}()},
-\code{\link{pkg_info}()},
-\code{\link{pkg_versions}()},
-\code{\link{print.pcache}()},
-\code{\link{print.pdiff}()},
-\code{\link{print.pinfo}()},
-\code{\link{print.prepo}()}
+Other prepo: 
+\code{\link{print.prepo}()},
+\code{\link{repo_breakages}()},
+\code{\link{repo_stability}()}
 }
-\concept{pdiff}
+\concept{prepo}

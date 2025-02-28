@@ -72,11 +72,11 @@ res[1:10, ]
 Other pdiff: 
 \code{\link{pkg_diff}()},
 \code{\link{pkg_info}()},
-\code{\link{pkg_repo}()},
+\code{\link{pkg_stability}()},
 \code{\link{pkg_versions}()},
 \code{\link{print.pcache}()},
 \code{\link{print.pdiff}()},
-\code{\link{print.pinfo}()},
-\code{\link{print.prepo}()}
+\code{\link{print.pdiff_score}()},
+\code{\link{print.pinfo}()}
 }
 \concept{pdiff}

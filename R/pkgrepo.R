@@ -4,7 +4,7 @@
 
 
 
-#' @title A Package Repository
+#' @title Retrieve Package Versions from a Repository
 #' @description
 #' Combines information related to a package repository. The function
 #' retrieves all the packages in a repository for a specified version
@@ -35,7 +35,7 @@
 #' # 3   rvest   1.0.4
 #' # 4 stringr   1.5.1
 #'
-#' @family pdiff
+#' @family prepo
 #' @import common
 #' @export
 pkg_repo <- function(pkgs = NULL, ver = "current", libpaths = NULL) {
@@ -140,7 +140,7 @@ pkg_repo <- function(pkgs = NULL, ver = "current", libpaths = NULL) {
 #' @title Print a Package Repo Object
 #' @param x The package repo to print.
 #' @param ... Follow-on parameters to the print function.
-#' @family pdiff
+#' @family prepo
 #' @import crayon
 #' @export
 print.prepo <- function(x, ...) {

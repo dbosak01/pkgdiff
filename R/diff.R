@@ -4,7 +4,7 @@
 #' @description
 #' The \code{pkg_diff} function is used to compare two different versions of
 #' a package.  The function returns an object that contains the differences.
-#' Difference include any functions added or removed. The object may
+#' Differences include any functions added or removed. The object may
 #' be printed directly, or stored in a variable and examined programmatically.
 #' @details
 #' The difference operation only compares functions that are exported
@@ -26,8 +26,8 @@
 #' The default is "latest", which is the
 #' latest version of the package available on CRAN.
 #' @returns An object of class "pdiff", which contains information regarding
-#' the difference between two versions of a package.  The object includes
-#' a list of function that were added, a list of function parameters that were added,
+#' the differences between two versions of a package.  The object includes
+#' a list of functions that were added, a list of function parameters that were added,
 #' a list of functions removed, and a list of function parameters that
 #' were removed.  The object also contains some general information like
 #' the package versions examined, and a TRUE or FALSE flag indicating whether
@@ -251,7 +251,7 @@ pkg_diff <- function(pkg, v1 = "current",
 #' @title Print a Package Difference Object
 #' @param x The package difference to print
 #' @param ... Follow-on parameters to the print function
-#' @param verbose Whether to print all added and removed functions and
+#' @param verbose Whether to print all added and removed functions
 #' and function parameters.  Default is TRUE.  If FALSE, the function
 #' will print removed functions and parameters, but only print
 #' counts of added functions and parameters.
@@ -261,25 +261,9 @@ pkg_diff <- function(pkg, v1 = "current",
 print.pdiff <- function(x, ..., verbose = TRUE) {
 
 
-
-
-
-
     grey60 <- crayon::make_style(grey60 = "#999999")
     cat(grey60(paste0("# A difference object: ",
                  as.character(x$PackageName), " package\n")))
-
-    # if (!is.null(x$PackageAge))
-    #   cat(paste0("- Age: ", x$PackageAge, "\n"))
-    #
-    # if (!is.null(x$FirstRelease))
-    #   cat(paste0("- First Release: ", x$FirstRelease, "\n"))
-    #
-    # if (!is.null(x$LastRelease))
-    #   cat(paste0("- Last Release: ", x$LastRelease, "\n"))
-    #
-    # if (!is.null(x$NumReleases))
-    #   cat(paste0("- Release Count: ", as.character(x$NumReleases), "\n"))
 
     if (!is.null(x$Version1))
       cat(paste0("- Comparing: ", "v", x$Version1, "/v", x$Version2, "\n"))
@@ -342,10 +326,6 @@ print.pdiff <- function(x, ..., verbose = TRUE) {
         }
       }
     }
-
-
-
-
 
   invisible(x)
 }

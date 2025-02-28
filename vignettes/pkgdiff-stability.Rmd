@@ -27,7 +27,7 @@ understand what is meant by a "breaking change".  In the context of **pkgdiff**,
 a "breaking change" is a function that exists in one release, but is removed in the next.
 It can also be a function parameter that exists in one release, but is removed
 in the next.  There are, therefore, two kinds of breaking changes tracked
-by the package: removed functions and removed parameters.  Either one of these
+by **pkgdiff**: removed functions and removed parameters.  Either one of these
 will count as a breaking change.
 
 Note that there are other kinds of changes not tracked by **pkgdiff**.  Functions

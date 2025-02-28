@@ -81,7 +81,7 @@ res <- repo_stability(vct)
 # Getting stability score for package 'rvest'...
 # Getting stability score for package 'tidymodels'...
 
-# View stability scores
+# View stability results
 res
 #      Package    FV    LV         FR         LR TR BR     Score        Assessment
 # 1       curl   0.2 6.2.1 2014-11-20 2025-02-19 51  1 0.9797917       Very Stable
@@ -90,4 +90,10 @@ res
 # 4 tidymodels 0.0.1 1.3.0 2018-07-27 2025-02-21 14  0 1.0000000           Perfect
 
 }
-\concept{reports}
+\seealso{
+Other prepo: 
+\code{\link{pkg_repo}()},
+\code{\link{print.prepo}()},
+\code{\link{repo_breakages}()}
+}
+\concept{prepo}

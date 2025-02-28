@@ -11,7 +11,7 @@
 
 \item{...}{Follow-on parameters to the print function}
 
-\item{verbose}{Whether to print all added and removed functions and
+\item{verbose}{Whether to print all added and removed functions
 and function parameters.  Default is TRUE.  If FALSE, the function
 will print removed functions and parameters, but only print
 counts of added functions and parameters.}
@@ -24,10 +24,10 @@ Other pdiff:
 \code{\link{pkg_cache}()},
 \code{\link{pkg_diff}()},
 \code{\link{pkg_info}()},
-\code{\link{pkg_repo}()},
+\code{\link{pkg_stability}()},
 \code{\link{pkg_versions}()},
 \code{\link{print.pcache}()},
-\code{\link{print.pinfo}()},
-\code{\link{print.prepo}()}
+\code{\link{print.pdiff_score}()},
+\code{\link{print.pinfo}()}
 }
 \concept{pdiff}

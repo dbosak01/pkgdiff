@@ -15,14 +15,9 @@
 Print a Package Repo Object
 }
 \seealso{
-Other pdiff: 
-\code{\link{pkg_cache}()},
-\code{\link{pkg_diff}()},
-\code{\link{pkg_info}()},
+Other prepo: 
 \code{\link{pkg_repo}()},
-\code{\link{pkg_versions}()},
-\code{\link{print.pcache}()},
-\code{\link{print.pdiff}()},
-\code{\link{print.pinfo}()}
+\code{\link{repo_breakages}()},
+\code{\link{repo_stability}()}
 }
-\concept{pdiff}
+\concept{prepo}

@@ -38,7 +38,7 @@ This data can be useful for review or even custom analytics.
 \details{
 The \code{pkg_stability} function is used to get an overall feel for the
 stability of a package.  The stability score and other information returned
-by the function are based on data retrived from CRAN.  The function
+by the function are based on data retrieved from CRAN.  The function
 compares each version of a package and determines if any functions or
 function parameters have been removed from the previous release.
 If a release removes functions or parameters contained in the previous release,
@@ -46,7 +46,7 @@ it is flagged as a "breaking release" or "breaking change".
 
 The stability score is calculated as the percentage of non-breaking releases.
 For example, if a package has 10 releases, and one breaking release,
-the stability score will be .9, or 90\\%.
+the stability score will be .9, or 90\%.
 
 The stability assessment is a categorization of the stability score. The
 aim of the assessment is to provide a general evaluation of the package,
@@ -78,7 +78,7 @@ package stability, and discourage the number of breaking changes.
 \section{Stability Data}{
  Stability calculations are based on a
 data frame of stability information gathered from each package release.
-The data frame will contain one row for each release.  Each row will
+The data frame has one row per release.  Each row
 contains comparison information against the prior release.  The
 columns are organized as follows:
 \itemize{
@@ -94,12 +94,12 @@ columns are organized as follows:
 }
 \item {\strong{AF}: The number of functions added from the previous release.
 }
-\item {\strong{AP}: The number of functions that had parameters from the
+\item {\strong{AP}: The number of functions that had parameters added from the
 previous release.
 }
 \item {\strong{RF}: The number of functions removed from the previous release.
 }
-\item {\strong{RP}: The number of function that had parameters removed from
+\item {\strong{RP}: The number of functions that had parameters removed from
 the previous release.
 }
 \item {\strong{BC}: Whether the release had any breaking changes.
@@ -139,9 +139,9 @@ quickly.  For packages that have not been cached, the function must
 download each version of the package from the CRAN archive, and compare
 consecutive versions.  This process can take considerable time. The
 most popular packages on CRAN have been cached.  If there is a package
-that you query frequently that has not been cached, please submit
-an issue to the \strong{pkgdiff} issue log on Github, and request that
-the package be added to the cache.
+you query frequently that has not been cached, please submit
+an issue to the \strong{pkgdiff} issue log on Github. In the issue description
+simply request that the package be added to the cache.
 
 For more information on the package cache, see \code{vignette("pkgdiff-cache")}.
 
@@ -150,7 +150,14 @@ calculated, see \code{vignette("pkgdiff-stability")}.
 }
 
 \seealso{
-Other stability: 
-\code{\link{print.pdiff_score}()}
+Other pdiff: 
+\code{\link{pkg_cache}()},
+\code{\link{pkg_diff}()},
+\code{\link{pkg_info}()},
+\code{\link{pkg_versions}()},
+\code{\link{print.pcache}()},
+\code{\link{print.pdiff}()},
+\code{\link{print.pdiff_score}()},
+\code{\link{print.pinfo}()}
 }
-\concept{stability}
+\concept{pdiff}
