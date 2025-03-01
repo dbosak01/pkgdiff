@@ -72,24 +72,20 @@ res <- repo_breakages(r1, r2)
 
 # View results
 res
-# $Summary
+# # A repo breakages object
+# - Run Datetime: 2025-03-01 17:47 UTC
+# - Summary:
 #   Package Version1 Version2 Breakages
 # 1    curl    5.2.1    6.2.1      TRUE
 # 2   dplyr    1.1.4    1.1.4     FALSE
 # 3   purrr    1.0.2    1.0.4     FALSE
 # 4 stringr    1.5.0    1.5.1     FALSE
-#
-# $Details
-# $Details$curl
-# # A difference object: curl package
-# - Comparing: v5.2.1/v6.2.1
+# - Details:
+#   # A difference object: curl package
+#   - Comparing: v5.2.1/v6.2.1
 # - Breaking Changes: TRUE
-# - Added Functions:
-#   - curl_parse_url()
-# - Added Parameters:
-#   - multi_download(): multi_timeout
-# - multi_set(): max_streams
-# - new_pool(): max_streams
+# - Added Functions: 1
+# - Added Parameters: 3
 # - Removed Parameters:
 #   - multi_download(): timeout
 }

@@ -167,22 +167,26 @@ test_that("utilities7: get_latest_data() works as expected.", {
   expect_equal(is.null(res), TRUE)
 
 
-  res <- get_latest_data("reporter")
+  if (dev) {
 
-  expect_equal(is.data.frame(res), TRUE)
+    res <- get_latest_data("reporter")
 
-  expect_equal(nrow(res) == 1, TRUE)
+    expect_equal(is.data.frame(res), TRUE)
 
-  expect_equal(ncol(res) == 5, TRUE)
+    expect_equal(nrow(res) == 1, TRUE)
+
+    expect_equal(ncol(res) == 5, TRUE)
 
 
-  res <- get_latest_data("Matrix")
+    res <- get_latest_data("Matrix")
 
-  expect_equal(is.data.frame(res), TRUE)
+    expect_equal(is.data.frame(res), TRUE)
 
-  expect_equal(nrow(res) == 1, TRUE)
+    expect_equal(nrow(res) == 1, TRUE)
 
-  expect_equal(ncol(res) == 5, TRUE)
+    expect_equal(ncol(res) == 5, TRUE)
+
+  }
 
 })
 

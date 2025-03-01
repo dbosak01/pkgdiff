@@ -480,7 +480,7 @@ packages? Yes! Here is how:</p>
 <span><span class="co"># View results</span></span>
 <span><span class="va">res2</span></span>
 <span><span class="co"># # A package repo object</span></span>
-<span><span class="co"># - Version: latest</span></span>
+<span><span class="co"># - Repo Version: latest</span></span>
 <span><span class="co"># - Packages:</span></span>
 <span><span class="co">#   Package Version</span></span>
 <span><span class="co"># 1    curl   6.2.1</span></span>
@@ -524,28 +524,24 @@ is an example:</p>
 <span><span class="co"># Comparing curl v5.2.1/v6.2.0</span></span>
 <span><span class="co"># Comparing fmtr v1.6.5/v1.6.8</span></span>
 <span><span class="co"># Comparing purrr v1.0.2/v1.0.4</span></span>
-<span><span class="co"># $Summary</span></span>
+<span><span class="co"># # A repo breakages object</span></span>
+<span><span class="co"># - Run Datetime: 2025-03-01 17:58 UTC</span></span>
+<span><span class="co"># - Summary:</span></span>
 <span><span class="co">#   Package Version1 Version2 Breakages</span></span>
-<span><span class="co"># 1    curl    5.2.1    6.2.0      TRUE</span></span>
+<span><span class="co"># 1    curl    5.2.1    6.2.1      TRUE</span></span>
 <span><span class="co"># 2   dplyr    1.1.4    1.1.4     FALSE</span></span>
 <span><span class="co"># 3    fmtr    1.6.5    1.6.8     FALSE</span></span>
 <span><span class="co"># 4   purrr    1.0.2    1.0.4     FALSE</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># $Details</span></span>
-<span><span class="co"># $Details$curl</span></span>
+<span><span class="co"># - Details:</span></span>
 <span><span class="co"># # A difference object: curl package</span></span>
-<span><span class="co"># - Comparing: v5.2.1/v6.2.0</span></span>
+<span><span class="co"># - Comparing: v5.2.1/v6.2.1</span></span>
 <span><span class="co"># - Breaking Changes: TRUE</span></span>
-<span><span class="co"># - Added Functions: </span></span>
-<span><span class="co">#   - curl_parse_url()</span></span>
-<span><span class="co"># - Added Parameters: </span></span>
-<span><span class="co">#   - multi_download(): multi_timeout</span></span>
-<span><span class="co">#   - multi_set(): max_streams</span></span>
-<span><span class="co">#   - new_pool(): max_streams</span></span>
+<span><span class="co"># - Added Functions: 1</span></span>
+<span><span class="co"># - Added Parameters: 3</span></span>
 <span><span class="co"># - Removed Parameters: </span></span>
 <span><span class="co">#   - multi_download(): timeout</span></span></code></pre></div>
 <p>The <code><a href="../reference/repo_breakages.html">repo_breakages()</a></code> function returns a list with two
-major items: “summary” and “details”. The “summary” item is a data frame
+major items: “Summary” and “Details”. The “Summary” item is a data frame
 showing the input packages, the input package versions, and a TRUE or
 FALSE flag that describes whether there are any breaking changes between
 the two package versions. The “details” list item then provides the
@@ -568,6 +564,9 @@ will perform an upgrade analyse on our entire R repository:</p>
 <span></span>
 <span><span class="co"># View Results</span></span>
 <span><span class="va">r1</span></span>
+<span><span class="co"># # A package repo object</span></span>
+<span><span class="co"># - Repo Version: 4.2</span></span>
+<span><span class="co"># - Packages:</span></span>
 <span><span class="co">#            Package              Version</span></span>
 <span><span class="co"># 1            abind                1.4-5</span></span>
 <span><span class="co"># 2          admiral               0.10.1</span></span>
@@ -592,6 +591,9 @@ will perform an upgrade analyse on our entire R repository:</p>
 <span></span>
 <span><span class="co"># View Results</span></span>
 <span><span class="va">r2</span></span>
+<span><span class="co"># # A package repo object</span></span>
+<span><span class="co"># - Repo Version: latest</span></span>
+<span><span class="co"># - Packages:</span></span>
 <span><span class="co">#            Package    Version</span></span>
 <span><span class="co"># 1            abind      1.4-8</span></span>
 <span><span class="co"># 2          admiral      1.2.0</span></span>
@@ -710,11 +712,14 @@ a large number of packages. Bulk stability scores are achieved using
 <span></span>
 <span><span class="co"># View results</span></span>
 <span><span class="va">res</span></span>
-<span><span class="co">#   Package    FV    LV         FR         LR TR BR     Score        Assessment</span></span>
-<span><span class="co"># 1    curl   0.2 6.2.1 2014-11-20 2025-02-19 51  1 0.9797917       Very Stable</span></span>
-<span><span class="co"># 2   dplyr   0.1 1.1.4 2014-01-16 2023-11-17 45 20 0.8711429 Somewhat Unstable</span></span>
-<span><span class="co"># 3  dbplyr 1.0.0 2.5.0 2017-06-09 2024-03-19 23 10 0.7369565          Unstable</span></span>
-<span><span class="co"># 4   purrr 0.1.0 1.0.4 2015-09-28 2025-02-05 18  6 0.9183333            Stable</span></span></code></pre></div>
+<span><span class="co"># # A repo stability object</span></span>
+<span><span class="co"># - Run Datetime: 2025-03-01 17:46 UTC</span></span>
+<span><span class="co"># - Summary:</span></span>
+<span><span class="co">#   Package    FV    LV         FR         LR TR BR Score        Assessment</span></span>
+<span><span class="co"># 1    curl   0.2 6.2.1 2014-11-20 2025-02-19 51  1  98.0       Very Stable</span></span>
+<span><span class="co"># 2   dplyr   0.1 1.1.4 2014-01-16 2023-11-17 45 20  87.5 Somewhat Unstable</span></span>
+<span><span class="co"># 3  dbplyr 1.0.0 2.5.0 2017-06-09 2024-03-19 23 10  74.1          Unstable</span></span>
+<span><span class="co"># 4   purrr 0.1.0 1.0.4 2015-09-28 2025-02-05 18  6  92.1            Stable</span></span></code></pre></div>
 <p>The above result shows each package on the input vector, the first
 and last versions, the first and last release dates, and the total
 number of releases. It also shows the number of breaking releases, a

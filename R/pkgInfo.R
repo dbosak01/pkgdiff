@@ -688,7 +688,7 @@ get_functions <- function(filepath, funcs, exppat, mthds = NULL) {
       }
       # print("Debug 4")
       if (!is.null(exppat))
-        pat <- any(grepl(exppat, nm))
+        pat <- any(suppressWarnings(grepl(exppat, nm)))
       else
         pat <- FALSE
 

@@ -402,7 +402,7 @@ res2 <- pkg_repo(v1, ver = "latest")
 # View results
 res2
 # # A package repo object
-# - Version: latest
+# - Repo Version: latest
 # - Packages:
 #   Package Version
 # 1    curl   6.2.1
@@ -448,29 +448,25 @@ repo_breakages(res1, res2)
 # Comparing curl v5.2.1/v6.2.0
 # Comparing fmtr v1.6.5/v1.6.8
 # Comparing purrr v1.0.2/v1.0.4
-# $Summary
+# # A repo breakages object
+# - Run Datetime: 2025-03-01 17:58 UTC
+# - Summary:
 #   Package Version1 Version2 Breakages
-# 1    curl    5.2.1    6.2.0      TRUE
+# 1    curl    5.2.1    6.2.1      TRUE
 # 2   dplyr    1.1.4    1.1.4     FALSE
 # 3    fmtr    1.6.5    1.6.8     FALSE
 # 4   purrr    1.0.2    1.0.4     FALSE
-# 
-# $Details
-# $Details$curl
+# - Details:
 # # A difference object: curl package
-# - Comparing: v5.2.1/v6.2.0
+# - Comparing: v5.2.1/v6.2.1
 # - Breaking Changes: TRUE
-# - Added Functions: 
-#   - curl_parse_url()
-# - Added Parameters: 
-#   - multi_download(): multi_timeout
-#   - multi_set(): max_streams
-#   - new_pool(): max_streams
+# - Added Functions: 1
+# - Added Parameters: 3
 # - Removed Parameters: 
 #   - multi_download(): timeout
 ```
-The `repo_breakages()` function returns a list with two major items: "summary"
-and "details".  The "summary" item is a data frame showing the input packages,
+The `repo_breakages()` function returns a list with two major items: "Summary"
+and "Details".  The "Summary" item is a data frame showing the input packages,
 the input package versions, and a TRUE or FALSE flag that describes whether
 there are any breaking changes between the two package versions.  The "details" 
 list item then provides the difference object for any package that had 
@@ -492,6 +488,9 @@ r1 <- pkg_repo(ver = "current")
 
 # View Results
 r1
+# # A package repo object
+# - Repo Version: 4.2
+# - Packages:
 #            Package              Version
 # 1            abind                1.4-5
 # 2          admiral               0.10.1
@@ -516,6 +515,9 @@ r2 <- pkg_repo(r1$Package, ver = "latest")
 
 # View Results
 r2
+# # A package repo object
+# - Repo Version: latest
+# - Packages:
 #            Package    Version
 # 1            abind      1.4-8
 # 2          admiral      1.2.0
@@ -637,11 +639,14 @@ res <- repo_stability(v1)
 
 # View results
 res
-#   Package    FV    LV         FR         LR TR BR     Score        Assessment
-# 1    curl   0.2 6.2.1 2014-11-20 2025-02-19 51  1 0.9797917       Very Stable
-# 2   dplyr   0.1 1.1.4 2014-01-16 2023-11-17 45 20 0.8711429 Somewhat Unstable
-# 3  dbplyr 1.0.0 2.5.0 2017-06-09 2024-03-19 23 10 0.7369565          Unstable
-# 4   purrr 0.1.0 1.0.4 2015-09-28 2025-02-05 18  6 0.9183333            Stable
+# # A repo stability object
+# - Run Datetime: 2025-03-01 17:46 UTC
+# - Summary:
+#   Package    FV    LV         FR         LR TR BR Score        Assessment
+# 1    curl   0.2 6.2.1 2014-11-20 2025-02-19 51  1  98.0       Very Stable
+# 2   dplyr   0.1 1.1.4 2014-01-16 2023-11-17 45 20  87.5 Somewhat Unstable
+# 3  dbplyr 1.0.0 2.5.0 2017-06-09 2024-03-19 23 10  74.1          Unstable
+# 4   purrr 0.1.0 1.0.4 2015-09-28 2025-02-05 18  6  92.1            Stable
 
 ```
 The above result shows each package on the input vector, the first and last

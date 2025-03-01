@@ -162,24 +162,20 @@ to collect stability information on multiple packages.</p>
 <span></span>
 <span><span class="co"># View results</span></span>
 <span><span class="va">res</span></span>
-<span><span class="co"># $Summary</span></span>
+<span><span class="co"># # A repo breakages object</span></span>
+<span><span class="co"># - Run Datetime: 2025-03-01 17:47 UTC</span></span>
+<span><span class="co"># - Summary:</span></span>
 <span><span class="co">#   Package Version1 Version2 Breakages</span></span>
 <span><span class="co"># 1    curl    5.2.1    6.2.1      TRUE</span></span>
 <span><span class="co"># 2   dplyr    1.1.4    1.1.4     FALSE</span></span>
 <span><span class="co"># 3   purrr    1.0.2    1.0.4     FALSE</span></span>
 <span><span class="co"># 4 stringr    1.5.0    1.5.1     FALSE</span></span>
-<span><span class="co">#</span></span>
-<span><span class="co"># $Details</span></span>
-<span><span class="co"># $Details$curl</span></span>
-<span><span class="co"># # A difference object: curl package</span></span>
-<span><span class="co"># - Comparing: v5.2.1/v6.2.1</span></span>
+<span><span class="co"># - Details:</span></span>
+<span><span class="co">#   # A difference object: curl package</span></span>
+<span><span class="co">#   - Comparing: v5.2.1/v6.2.1</span></span>
 <span><span class="co"># - Breaking Changes: TRUE</span></span>
-<span><span class="co"># - Added Functions:</span></span>
-<span><span class="co">#   - curl_parse_url()</span></span>
-<span><span class="co"># - Added Parameters:</span></span>
-<span><span class="co">#   - multi_download(): multi_timeout</span></span>
-<span><span class="co"># - multi_set(): max_streams</span></span>
-<span><span class="co"># - new_pool(): max_streams</span></span>
+<span><span class="co"># - Added Functions: 1</span></span>
+<span><span class="co"># - Added Parameters: 3</span></span>
 <span><span class="co"># - Removed Parameters:</span></span>
 <span><span class="co">#   - multi_download(): timeout</span></span></code></pre></div>
     </div>

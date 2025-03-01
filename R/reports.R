@@ -64,24 +64,20 @@
 #'
 #' # View results
 #' res
-#' # $Summary
+#' # # A repo breakages object
+#' # - Run Datetime: 2025-03-01 17:47 UTC
+#' # - Summary:
 #' #   Package Version1 Version2 Breakages
 #' # 1    curl    5.2.1    6.2.1      TRUE
 #' # 2   dplyr    1.1.4    1.1.4     FALSE
 #' # 3   purrr    1.0.2    1.0.4     FALSE
 #' # 4 stringr    1.5.0    1.5.1     FALSE
-#' #
-#' # $Details
-#' # $Details$curl
-#' # # A difference object: curl package
-#' # - Comparing: v5.2.1/v6.2.1
+#' # - Details:
+#' #   # A difference object: curl package
+#' #   - Comparing: v5.2.1/v6.2.1
 #' # - Breaking Changes: TRUE
-#' # - Added Functions:
-#' #   - curl_parse_url()
-#' # - Added Parameters:
-#' #   - multi_download(): multi_timeout
-#' # - multi_set(): max_streams
-#' # - new_pool(): max_streams
+#' # - Added Functions: 1
+#' # - Added Parameters: 3
 #' # - Removed Parameters:
 #' #   - multi_download(): timeout
 #' @import common
@@ -283,11 +279,14 @@ print.rbreak <- function(x, ..., verbose = FALSE) {
 #'
 #' # View stability results
 #' res
-#' #      Package    FV    LV         FR         LR TR BR     Score        Assessment
-#' # 1       curl   0.2 6.2.1 2014-11-20 2025-02-19 51  1 0.9797917       Very Stable
-#' # 2      dplyr   0.1 1.1.4 2014-01-16 2023-11-17 45 20 0.8711429 Somewhat Unstable
-#' # 3      rvest 0.1.0 1.0.4 2014-11-22 2024-02-12 14  4 0.9300000            Stable
-#' # 4 tidymodels 0.0.1 1.3.0 2018-07-27 2025-02-21 14  0 1.0000000           Perfect
+# # A repo stability object
+# - Run Datetime: 2025-03-01 17:53 UTC
+# - Summary:
+#' #   Package    FV    LV         FR         LR TR BR Score        Assessment
+#' # 1       curl   0.2 6.2.1 2014-11-20 2025-02-19 51  1  98.0       Very Stable
+#' # 2      dplyr   0.1 1.1.4 2014-01-16 2023-11-17 45 20  87.5 Somewhat Unstable
+#' # 3      rvest 0.1.0 1.0.4 2014-11-22 2024-02-12 14  4  93.2            Stable
+#' # 4 tidymodels 0.0.1 1.3.0 2018-07-27 2025-02-21 14  0 100.0           Perfect
 #'
 #' @export
 repo_stability <- function(pkgs, releases = NULL, months = NULL) {
