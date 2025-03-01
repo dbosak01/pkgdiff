@@ -94,6 +94,8 @@ res
 Other prepo: 
 \code{\link{pkg_repo}()},
 \code{\link{print.prepo}()},
+\code{\link{print.rbreak}()},
+\code{\link{print.rstability}()},
 \code{\link{repo_breakages}()}
 }
 \concept{prepo}

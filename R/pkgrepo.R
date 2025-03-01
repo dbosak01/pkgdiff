@@ -29,6 +29,9 @@
 #'
 #' # Retrieve latest versions
 #' pkg_repo(pkgs, ver = "latest")
+#' # # A package repo object
+#' # - Repo Version: latest
+#' # - Packages:
 #' #   Package Version
 #' # 1  common   1.1.3
 #' # 2   dplyr   1.1.4
@@ -152,7 +155,7 @@ print.prepo <- function(x, ...) {
   ver <- attr(x, "Version")
 
   if (!is.null(ver)) {
-    cat(paste0("- Version: ", ver , "\n"))
+    cat(paste0("- Repo Version: ", ver , "\n"))
   }
 
   pths <- attr(x, "LibPaths")

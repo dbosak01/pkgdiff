@@ -22,11 +22,11 @@ test_that("reports1: repo_breakages() works as expected.", {
 
   res <- repo_breakages(lst1, lst2)
 
-  expect_equal(is.data.frame(res$summary), TRUE)
+  expect_equal(is.data.frame(res$Summary), TRUE)
 
-  expect_equal(nrow(res$summary) == 3, TRUE)
+  expect_equal(nrow(res$Summary) == 3, TRUE)
 
-  expect_equal(ncol(res$summary) == 4, TRUE)
+  expect_equal(ncol(res$Summary) == 4, TRUE)
 
 
 })
@@ -42,6 +42,8 @@ test_that("reports2: repo_stability() works as expected.", {
   }
 
   res <- repo_stability(pkgs)
+
+  res
 
   expect_equal(is.data.frame(res), TRUE)
 
@@ -65,14 +67,14 @@ test_that("reports3: repo_breakages() handles edge cases.", {
     # Lot of situations to handle
     res <- repo_breakages(r1, r2)
 
-    res$summary
-    res$details$rmarkdown
-    res$details$admiral$RemovedFunctions
+    res$Summary
+    res$Details$rmarkdown
+    res$Details$admiral$RemovedFunctions
 
-    expect_equal(is.data.frame(res$summary), TRUE)
-    expect_equal(nrow(res$summary) > 0, TRUE)
-    expect_equal(ncol(res$summary) == 5, TRUE)
-    expect_equal(any(res$summary$Breakages == TRUE), TRUE)
+    expect_equal(is.data.frame(res$Summary), TRUE)
+    expect_equal(nrow(res$Summary) > 0, TRUE)
+    expect_equal(ncol(res$Summary) == 5, TRUE)
+    expect_equal(any(res$Summary$Breakages == TRUE), TRUE)
 
   } else {
 

@@ -72,15 +72,15 @@ res <- repo_breakages(r1, r2)
 
 # View results
 res
-# $summary
+# $Summary
 #   Package Version1 Version2 Breakages
 # 1    curl    5.2.1    6.2.1      TRUE
 # 2   dplyr    1.1.4    1.1.4     FALSE
 # 3   purrr    1.0.2    1.0.4     FALSE
 # 4 stringr    1.5.0    1.5.1     FALSE
 #
-# $details
-# $details$curl
+# $Details
+# $Details$curl
 # # A difference object: curl package
 # - Comparing: v5.2.1/v6.2.1
 # - Breaking Changes: TRUE
@@ -101,6 +101,8 @@ to collect stability information on multiple packages.
 Other prepo: 
 \code{\link{pkg_repo}()},
 \code{\link{print.prepo}()},
+\code{\link{print.rbreak}()},
+\code{\link{print.rstability}()},
 \code{\link{repo_stability}()}
 }
 \concept{prepo}

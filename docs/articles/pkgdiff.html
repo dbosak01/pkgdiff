@@ -179,7 +179,7 @@ values from this object:</p>
 <span><span class="va">res</span><span class="op">$</span><span class="va">Title</span></span>
 <span><span class="co"># [1] "Easily Install and Load the 'Tidymodels' Packages"</span></span>
 <span></span>
-<span><span class="co"># View functions</span></span>
+<span><span class="co"># View release date</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">ReleaseDate</span></span>
 <span><span class="co"># [1] "2025-02-21"</span></span></code></pre></div>
 <p>Note that, by default, the version of the package returned is the
@@ -236,9 +236,10 @@ parameter of the <code><a href="https://rdrr.io/r/base/print.html" class="extern
 looks at the entire history of the package, and attempts to assess its
 overall stability in terms of breaking changes. Here, a “breaking
 change” means either a removed function or removed function parameter.
-This function is very useful when you are writing production code, and
-want to select the most stable packages possible. The results of this
-function can help you make that determination:</p>
+The <code><a href="../reference/pkg_stability.html">pkg_stability()</a></code> function is very useful when you are
+writing production code, and want to select the most stable packages
+possible. The results of this function can help you make that
+determination:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># View package stability</span></span>
@@ -415,7 +416,7 @@ this:</p>
 <code class="sourceCode R"><span><span class="co"># Get package versions</span></span>
 <span><span class="fu"><a href="../reference/pkg_versions.html">pkg_versions</a></span><span class="op">(</span><span class="st">"stringr"</span><span class="op">)</span></span>
 <span><span class="co">#    Package Version              FileName    Release   Size</span></span>
-<span><span class="co"># 1  stringr   1.5.1  stringr_1.5.1.tar.gz 2023-11-14 172.5K</span></span>
+<span><span class="co"># 1  stringr   1.5.1  stringr_1.5.1.tar.gz 2023-11-14   172K</span></span>
 <span><span class="co"># 2  stringr   1.5.0  stringr_1.5.0.tar.gz 2022-12-02   172K</span></span>
 <span><span class="co"># 3  stringr   1.4.1  stringr_1.4.1.tar.gz 2022-08-21   133K</span></span>
 <span><span class="co"># 4  stringr   1.4.0  stringr_1.4.0.tar.gz 2019-02-10   133K</span></span>
@@ -445,12 +446,13 @@ the <code><a href="../reference/pkg_repo.html">pkg_repo()</a></code> function. L
 <span><span class="co"># Check version in repo</span></span>
 <span><span class="fu"><a href="../reference/pkg_repo.html">pkg_repo</a></span><span class="op">(</span><span class="st">"stringr"</span><span class="op">)</span></span>
 <span><span class="co"># # A package repo object</span></span>
-<span><span class="co"># - Version: 4.4</span></span>
+<span><span class="co"># - Repo Version: 4.4</span></span>
 <span><span class="co"># - Packages:</span></span>
 <span><span class="co">#   Package Version</span></span>
 <span><span class="co"># 1 stringr   1.5.1</span></span></code></pre></div>
 <p>Base on the above information, it appears we have the latest version
-of <strong>stringr</strong> installed. Good to know!</p>
+of <strong>stringr</strong> installed in our R 4.4 repo. Good to
+know!</p>
 <p>Can <code><a href="../reference/pkg_repo.html">pkg_repo()</a></code> be used to get versions for multiple
 packages? Yes! Here is how:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -464,7 +466,7 @@ packages? Yes! Here is how:</p>
 <span><span class="co"># View results</span></span>
 <span><span class="va">res1</span></span>
 <span><span class="co"># # A package repo object</span></span>
-<span><span class="co"># - Version: 4.4</span></span>
+<span><span class="co"># - Repo Version: 4.4</span></span>
 <span><span class="co"># - Packages:</span></span>
 <span><span class="co">#   Package Version</span></span>
 <span><span class="co"># 1    curl   5.2.1</span></span>
@@ -522,15 +524,15 @@ is an example:</p>
 <span><span class="co"># Comparing curl v5.2.1/v6.2.0</span></span>
 <span><span class="co"># Comparing fmtr v1.6.5/v1.6.8</span></span>
 <span><span class="co"># Comparing purrr v1.0.2/v1.0.4</span></span>
-<span><span class="co"># $summary</span></span>
+<span><span class="co"># $Summary</span></span>
 <span><span class="co">#   Package Version1 Version2 Breakages</span></span>
 <span><span class="co"># 1    curl    5.2.1    6.2.0      TRUE</span></span>
 <span><span class="co"># 2   dplyr    1.1.4    1.1.4     FALSE</span></span>
 <span><span class="co"># 3    fmtr    1.6.5    1.6.8     FALSE</span></span>
 <span><span class="co"># 4   purrr    1.0.2    1.0.4     FALSE</span></span>
 <span><span class="co"># </span></span>
-<span><span class="co"># $details</span></span>
-<span><span class="co"># $details$curl</span></span>
+<span><span class="co"># $Details</span></span>
+<span><span class="co"># $Details$curl</span></span>
 <span><span class="co"># # A difference object: curl package</span></span>
 <span><span class="co"># - Comparing: v5.2.1/v6.2.0</span></span>
 <span><span class="co"># - Breaking Changes: TRUE</span></span>

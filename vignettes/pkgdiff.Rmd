@@ -88,7 +88,7 @@ res$Version
 res$Title
 # [1] "Easily Install and Load the 'Tidymodels' Packages"
 
-# View functions
+# View release date
 res$ReleaseDate
 # [1] "2025-02-21"
 
@@ -146,7 +146,7 @@ Besides general information about a package, you may also view the "stability"
 of a package.  The `pkg_stability()` function looks at the entire history
 of the package, and attempts to assess its overall stability in terms of 
 breaking changes.  Here, a "breaking change" means either a removed function
-or removed function parameter.  This function is very useful when you are
+or removed function parameter.  The `pkg_stability()` function is very useful when you are
 writing production code, and want to select the most stable packages possible.
 The results of this function can help you make that determination: 
 
@@ -330,7 +330,7 @@ with release dates for each version. It works like this:
 # Get package versions
 pkg_versions("stringr")
 #    Package Version              FileName    Release   Size
-# 1  stringr   1.5.1  stringr_1.5.1.tar.gz 2023-11-14 172.5K
+# 1  stringr   1.5.1  stringr_1.5.1.tar.gz 2023-11-14   172K
 # 2  stringr   1.5.0  stringr_1.5.0.tar.gz 2022-12-02   172K
 # 3  stringr   1.4.1  stringr_1.4.1.tar.gz 2022-08-21   133K
 # 4  stringr   1.4.0  stringr_1.4.0.tar.gz 2019-02-10   133K
@@ -365,14 +365,14 @@ in your R repository. This information can be queried using the
 # Check version in repo
 pkg_repo("stringr")
 # # A package repo object
-# - Version: 4.4
+# - Repo Version: 4.4
 # - Packages:
 #   Package Version
 # 1 stringr   1.5.1
 
 ``` 
 Base on the above information, it appears we have the latest version of 
-**stringr** installed.  Good to know!
+**stringr** installed in our R 4.4 repo.  Good to know!
 
 Can `pkg_repo()` be used to get versions for multiple packages? Yes! Here
 is how:
@@ -388,7 +388,7 @@ res1 <- pkg_repo(v1, ver = "current")
 # View results
 res1
 # # A package repo object
-# - Version: 4.4
+# - Repo Version: 4.4
 # - Packages:
 #   Package Version
 # 1    curl   5.2.1
@@ -448,15 +448,15 @@ repo_breakages(res1, res2)
 # Comparing curl v5.2.1/v6.2.0
 # Comparing fmtr v1.6.5/v1.6.8
 # Comparing purrr v1.0.2/v1.0.4
-# $summary
+# $Summary
 #   Package Version1 Version2 Breakages
 # 1    curl    5.2.1    6.2.0      TRUE
 # 2   dplyr    1.1.4    1.1.4     FALSE
 # 3    fmtr    1.6.5    1.6.8     FALSE
 # 4   purrr    1.0.2    1.0.4     FALSE
 # 
-# $details
-# $details$curl
+# $Details
+# $Details$curl
 # # A difference object: curl package
 # - Comparing: v5.2.1/v6.2.0
 # - Breaking Changes: TRUE

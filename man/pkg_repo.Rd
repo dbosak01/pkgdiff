@@ -37,6 +37,9 @@ pkgs <- c("common", "dplyr", "rvest", "stringr")
 
 # Retrieve latest versions
 pkg_repo(pkgs, ver = "latest")
+# # A package repo object
+# - Repo Version: latest
+# - Packages:
 #   Package Version
 # 1  common   1.1.3
 # 2   dplyr   1.1.4
@@ -47,6 +50,8 @@ pkg_repo(pkgs, ver = "latest")
 \seealso{
 Other prepo: 
 \code{\link{print.prepo}()},
+\code{\link{print.rbreak}()},
+\code{\link{print.rstability}()},
 \code{\link{repo_breakages}()},
 \code{\link{repo_stability}()}
 }

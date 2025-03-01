@@ -60,11 +60,18 @@ get_latest_data <- function(pkgs,
         # Get size
 
         if (rc == 0) {
-          sz <- format(structure(file.size(flnm), class = "object_size"),
-                       units = "auto")
-          sz <- sub(" Kb", "K", sz, fixed = TRUE)
-          sz <- sub(" Mb", "M", sz, fixed = TRUE)
-          sz <- sub(" Gb", "G", sz, fixed = TRUE)
+          rsz <- file.size(flnm)
+          if (rsz < 1048576) {
+
+            sz <- sprintf("%.0fK", round(rsz / 1024, 0))
+          } else if (rsz < 1073741824 ) {
+
+            sz <- sprintf("%.1fM", round(rsz / 1048576, 1))
+          } else {
+            sz <- sprintf("%.1fG", round(rsz / 1073741824, 1))
+
+          }
+
           unlink(flnm)
         }
       }

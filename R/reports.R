@@ -64,15 +64,15 @@
 #'
 #' # View results
 #' res
-#' # $summary
+#' # $Summary
 #' #   Package Version1 Version2 Breakages
 #' # 1    curl    5.2.1    6.2.1      TRUE
 #' # 2   dplyr    1.1.4    1.1.4     FALSE
 #' # 3   purrr    1.0.2    1.0.4     FALSE
 #' # 4 stringr    1.5.0    1.5.1     FALSE
 #' #
-#' # $details
-#' # $details$curl
+#' # $Details
+#' # $Details$curl
 #' # # A difference object: curl package
 #' # - Comparing: v5.2.1/v6.2.1
 #' # - Breaking Changes: TRUE
@@ -165,10 +165,49 @@ repo_breakages <- function(r1 = "current", r2 = "latest") {
     }
   }
 
-  ret <- list(summary = dat, details = det)
+  ret <- list(Datetime = Sys.time(), Summary = dat, Details = det)
+
+  class(ret) <- c("rbreak", class(ret))
 
   return(ret)
 
+}
+
+#' @title Print a Repo Breakages Object
+#' @param x The repo breakages object to print.
+#' @param ... Follow-on parameters to the print function.
+#' @param verbose If FALSE, prints only the difference removals.
+#' If TRUE, prints both additions and removals. Default is FALSE.
+#' @family prepo
+#' @import crayon
+#' @export
+print.rbreak <- function(x, ..., verbose = FALSE) {
+
+  grey60 <- crayon::make_style(grey60 = "#999999")
+  cat(grey60(paste0("# A repo breakages object\n")))
+
+
+  if (!is.null(x$Datetime)) {
+    tmstmp <- format(x$Datetime, format = "%Y-%m-%d %H:%M UTC")
+    cat(paste0("- Run Datetime: ", tmstmp , "\n"))
+
+  }
+
+
+  if (!is.null(x$Summary)) {
+    cat(paste0("- Summary:\n"))
+    print(as.data.frame(x$Summary))
+  }
+
+
+  if (!is.null(x$Details)) {
+    cat(paste0("- Details:\n"))
+    for (d in x$Details) {
+      print(d, verbose = verbose)
+    }
+  }
+
+  invisible(x)
 }
 
 
@@ -306,5 +345,44 @@ repo_stability <- function(pkgs, releases = NULL, months = NULL) {
 
   ret <- dat
 
+  attr(ret, "Datetime") <- Sys.time()
+
+  class(ret) <- c("rstability", class(ret))
+
   return(ret)
 }
+
+#' @title Print a Repo Stability Object
+#' @param x The repo stability object to print.
+#' @param ... Follow-on parameters to the print function.
+#' @family prepo
+#' @import crayon
+#' @export
+print.rstability <- function(x, ...) {
+
+  grey60 <- crayon::make_style(grey60 = "#999999")
+  cat(grey60(paste0("# A repo stability object\n")))
+
+
+  dt <- attr(x, "Datetime")
+
+  if (!is.null(dt)) {
+    tmstmp <- format(dt, format = "%Y-%m-%d %H:%M UTC")
+    cat(paste0("- Run Datetime: ", tmstmp , "\n"))
+
+  }
+
+
+  if (!is.null(x)) {
+    cat(paste0("- Summary:\n"))
+    df <- as.data.frame(x)
+    scr <- sprintf("%.1f", df$Score * 100)
+    df$Score <- scr
+    print(df)
+  }
+
+
+  invisible(x)
+}
+
+

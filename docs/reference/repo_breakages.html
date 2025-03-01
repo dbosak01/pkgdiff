@@ -137,6 +137,8 @@ to collect stability information on multiple packages.</p>
 <p>Other prepo:
 <code><a href="pkg_repo.html">pkg_repo</a>()</code>,
 <code><a href="print.prepo.html">print.prepo</a>()</code>,
+<code><a href="print.rbreak.html">print.rbreak</a>()</code>,
+<code><a href="print.rstability.html">print.rstability</a>()</code>,
 <code><a href="repo_stability.html">repo_stability</a>()</code></p></div>
     </div>
 
@@ -160,15 +162,15 @@ to collect stability information on multiple packages.</p>
 <span></span>
 <span><span class="co"># View results</span></span>
 <span><span class="va">res</span></span>
-<span><span class="co"># $summary</span></span>
+<span><span class="co"># $Summary</span></span>
 <span><span class="co">#   Package Version1 Version2 Breakages</span></span>
 <span><span class="co"># 1    curl    5.2.1    6.2.1      TRUE</span></span>
 <span><span class="co"># 2   dplyr    1.1.4    1.1.4     FALSE</span></span>
 <span><span class="co"># 3   purrr    1.0.2    1.0.4     FALSE</span></span>
 <span><span class="co"># 4 stringr    1.5.0    1.5.1     FALSE</span></span>
 <span><span class="co">#</span></span>
-<span><span class="co"># $details</span></span>
-<span><span class="co"># $details$curl</span></span>
+<span><span class="co"># $Details</span></span>
+<span><span class="co"># $Details$curl</span></span>
 <span><span class="co"># # A difference object: curl package</span></span>
 <span><span class="co"># - Comparing: v5.2.1/v6.2.1</span></span>
 <span><span class="co"># - Breaking Changes: TRUE</span></span>

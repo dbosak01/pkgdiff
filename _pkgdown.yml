@@ -26,6 +26,8 @@ reference:
   - repo_breakages
   - repo_stability
   - print.prepo
+  - print.rbreak
+  - print.rstability
 - title: Cache Functions
   desc: Functions to query the package cache.
   contents:

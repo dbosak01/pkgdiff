@@ -151,11 +151,12 @@ test_that("utilities7: get_latest_data() works as expected.", {
 
   if (dev) {
 
-     res <- get_latest_data(c("common", "purr", "fmtr", "rvest"), skip_size = TRUE)
+     res <- get_latest_data(c("common", "reporter", "purr",
+                              "fmtr", "Matrix"), skip_size = FALSE)
 
      expect_equal(is.data.frame(res), TRUE)
 
-     expect_equal(nrow(res) == 3, TRUE)
+     expect_equal(nrow(res) == 4, TRUE)
 
      expect_equal(ncol(res) == 5, TRUE)
 
@@ -164,6 +165,24 @@ test_that("utilities7: get_latest_data() works as expected.", {
   res <- get_latest_data("purr")
 
   expect_equal(is.null(res), TRUE)
+
+
+  res <- get_latest_data("reporter")
+
+  expect_equal(is.data.frame(res), TRUE)
+
+  expect_equal(nrow(res) == 1, TRUE)
+
+  expect_equal(ncol(res) == 5, TRUE)
+
+
+  res <- get_latest_data("Matrix")
+
+  expect_equal(is.data.frame(res), TRUE)
+
+  expect_equal(nrow(res) == 1, TRUE)
+
+  expect_equal(ncol(res) == 5, TRUE)
 
 })
 
