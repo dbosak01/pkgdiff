@@ -167,7 +167,7 @@ For a few packages, it is very slow, and appears to be doing a lot of additional
 processing.  What is going on?
 
 **A:** The difference is that some packages have been cached, and some have not.
-About 16% of the top CRAN downloads have been cached.  This subset constitutes
+About 20% of the top CRAN downloads have been cached.  This subset constitutes
 the most commonly used R packages, with over 1000 downloads per month.  For 
 packages with less than 1000 downloads per month, the **pkgdiff** functions
 will still run. But the package information has to be downloaded and extracted

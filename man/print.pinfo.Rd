@@ -37,8 +37,10 @@ print(res)
 # mathematical operators for combining multiple plots. Other packages that try
 # to address this need (but with a different approach) are 'gridExtra' and
 # 'cowplot'.
-# - Imports: ggplot2 (>= 3.0.0), gtable, grid, stats, grDevices, utils, graphics, rlang (>= 1.0.0), cli, farver
-# - Suggests: knitr, rmarkdown, gridGraphics, gridExtra, ragg, testthat (>= 2.1.0), vdiffr, covr, png, gt (>= 0.11.0)
+# - Imports: ggplot2 (>= 3.0.0), gtable, grid, stats, grDevices, utils,
+# graphics, rlang (>= 1.0.0), cli, farver
+# - Suggests: knitr, rmarkdown, gridGraphics, gridExtra, ragg,
+# testthat (>= 2.1.0), vdiffr, covr, png, gt (>= 0.11.0)
 # - Downloads/Month: 239555
 # - Repository: CRAN
 # - Cached: TRUE

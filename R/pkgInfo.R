@@ -133,8 +133,10 @@ pinfo <- function(pkg, ver = "current", release = NULL, title = NULL, descriptio
 #' # mathematical operators for combining multiple plots. Other packages that try
 #' # to address this need (but with a different approach) are 'gridExtra' and
 #' # 'cowplot'.
-#' # - Imports: ggplot2 (>= 3.0.0), gtable, grid, stats, grDevices, utils, graphics, rlang (>= 1.0.0), cli, farver
-#' # - Suggests: knitr, rmarkdown, gridGraphics, gridExtra, ragg, testthat (>= 2.1.0), vdiffr, covr, png, gt (>= 0.11.0)
+#' # - Imports: ggplot2 (>= 3.0.0), gtable, grid, stats, grDevices, utils,
+#' # graphics, rlang (>= 1.0.0), cli, farver
+#' # - Suggests: knitr, rmarkdown, gridGraphics, gridExtra, ragg,
+#' # testthat (>= 2.1.0), vdiffr, covr, png, gt (>= 0.11.0)
 #' # - Downloads/Month: 239555
 #' # - Repository: CRAN
 #' # - Cached: TRUE
@@ -364,7 +366,7 @@ print.pcache <- function(x, ...) {
 #' @title Get Information for a Package
 #' @description
 #' Combines information related to a package. Objects of this class are
-#' used in several other functions in the \strong{pkgdiff} system.  This
+#' used by several other functions in the \strong{pkgdiff} system.  This
 #' class also makes a compact storage format for pre-processed package
 #' information.
 #' @details
@@ -383,14 +385,15 @@ print.pcache <- function(x, ...) {
 #'
 #' Most other information contained in the info object is retrieved
 #' from the package description file. One exception is the downloads
-#' per month.  This information is retrieved from the CRAN logs.
+#' per month.  This information is retrieved from CRAN logs.
 #'
 #' In addition, the package cache status is appended to the info object.
 #' The package cache status indicates whether the package info
 #' has been stored in the \strong{pkgdiff} Github cache.  Packages that
 #' have been stored in the cache enjoy faster results from
 #' \strong{pkgdiff} functions.
-#' @param pkg The package name.
+#' @param pkg The package name as a quoted string. This parameter is
+#' required.
 #' @param ver The version of the package to retrieve information for.
 #' Pass the version as a quoted string.
 #' Special values are "current" and
@@ -402,7 +405,7 @@ print.pcache <- function(x, ...) {
 #' return the info if available.  If the info is not available in the
 #' Github cache, or the cache parameter is set to FALSE, the info will be
 #' retrieved from CRAN.
-#' @returns A package information object.  This object contains
+#' @returns A package information object of class "pinfo".  This object contains
 #' a set of general information about the package, such as the version,
 #' release date, maintainer, title, etc.  Most of this information comes
 #' from the package description file.  In addition, the info object also

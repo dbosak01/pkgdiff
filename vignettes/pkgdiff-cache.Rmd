@@ -29,8 +29,8 @@ access to the internet and, specifically, Github.  If your machine is
 isolated from the internet, or blocked from Github, **pkgdiff** will error.
 
 2) The cache does not contain all CRAN packages.  It contains packages that
-exceed 1000 downloads per month.  These packages constitute approximately 16%
-of the top CRAN downloads, or about 3500 packages. For most R users, any package 
+exceed 1000 downloads per month.  These packages constitute approximately 20%
+of the top CRAN downloads, or about 4000 packages. For most R users, any package 
 you might be interested in will be included in this subset.
 
 3) To find out which packages are in the **pkgdiff** cache, 
