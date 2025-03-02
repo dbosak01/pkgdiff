@@ -170,12 +170,49 @@ repo_breakages <- function(r1 = "current", r2 = "latest") {
 }
 
 #' @title Print a Repo Breakages Object
+#' @description
+#' Print routine for a repo breakages object of class "rbreak".
 #' @param x The repo breakages object to print.
 #' @param ... Follow-on parameters to the print function.
 #' @param verbose If FALSE, prints only the difference removals.
 #' If TRUE, prints both additions and removals. Default is FALSE.
 #' @family prepo
 #' @import crayon
+#' @examples
+#' # Create package vector
+#' pkgs <- c("curl", "dplyr", "purrr", "stringr")
+#'
+#' # Get backdated versions
+#' r1 <- data.frame(Package = pkgs,
+#'                  Version = c("5.2.1", "1.1.4", "1.0.2", "1.5.0"))
+#'
+#' # Get latest versions from CRAN
+#' r2 <- pkg_repo(pkgs, "latest")
+#'
+#' # Find any breaking changes
+#' res <- repo_breakages(r1, r2)
+#' # Comparing curl v5.2.1/v6.2.1
+#' # Comparing purrr v1.0.2/v1.0.4
+#' # Comparing stringr v1.5.0/v1.5.1
+#'
+#' # View results
+#' print(res)
+#' # # A repo breakages object
+#' # - Run Datetime: 2025-03-01 19:22 UTC
+#' # - Summary:
+#' #   Package Version1 Version2 Breakages
+#' # 1    curl    5.2.1    6.2.1      TRUE
+#' # 2   dplyr    1.1.4    1.1.4     FALSE
+#' # 3   purrr    1.0.2    1.0.4     FALSE
+#' # 4 stringr    1.5.0    1.5.1     FALSE
+#' # - Details:
+#' #   # A difference object: curl package
+#' #   - Comparing: v5.2.1/v6.2.1
+#' # - Breaking Changes: TRUE
+#' # - Added Functions: 1
+#' # - Added Parameters: 3
+#' # - Removed Parameters:
+#' #   - multi_download(): timeout
 #' @export
 print.rbreak <- function(x, ..., verbose = FALSE) {
 
@@ -279,9 +316,9 @@ print.rbreak <- function(x, ..., verbose = FALSE) {
 #'
 #' # View stability results
 #' res
-# # A repo stability object
-# - Run Datetime: 2025-03-01 17:53 UTC
-# - Summary:
+#' # A repo stability object
+#' # - Run Datetime: 2025-03-01 17:53 UTC
+#' # - Summary:
 #' #   Package    FV    LV         FR         LR TR BR Score        Assessment
 #' # 1       curl   0.2 6.2.1 2014-11-20 2025-02-19 51  1  98.0       Very Stable
 #' # 2      dplyr   0.1 1.1.4 2014-01-16 2023-11-17 45 20  87.5 Somewhat Unstable
@@ -352,10 +389,30 @@ repo_stability <- function(pkgs, releases = NULL, months = NULL) {
 }
 
 #' @title Print a Repo Stability Object
+#' @description
+#' Print routine for a repot stability object of class "rstability".
+#'
 #' @param x The repo stability object to print.
 #' @param ... Follow-on parameters to the print function.
 #' @family prepo
 #' @import crayon
+#' @examples
+#' # Create vector of packages
+#' vct <- c("curl", "dplyr", "rvest", "tidymodels")
+#'
+#' # Get stablity scores
+#' res <- repo_stability(vct)
+#'
+#' # View stability scores
+#' print(res)
+#' # # A repo stability object
+#' # - Run Datetime: 2025-03-01 19:19 UTC
+#' # - Summary:
+#' #      Package    FV    LV         FR         LR TR BR Score        Assessment
+#' # 1       curl   0.2 6.2.1 2014-11-20 2025-02-19 51  1  98.0       Very Stable
+#' # 2      dplyr   0.1 1.1.4 2014-01-16 2023-11-17 45 20  87.5 Somewhat Unstable
+#' # 3      rvest 0.1.0 1.0.4 2014-11-22 2024-02-12 14  4  93.2            Stable
+#' # 4 tidymodels 0.0.1 1.3.0 2018-07-27 2025-02-21 14  0 100.0           Perfect
 #' @export
 print.rstability <- function(x, ...) {
 

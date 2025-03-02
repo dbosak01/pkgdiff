@@ -2,19 +2,50 @@
 % Please edit documentation in R/stability.R
 \name{print.pdiff_score}
 \alias{print.pdiff_score}
-\title{Print a Package Difference Stability Score Object}
+\title{Print a Stability Score Object}
 \usage{
-\method{print}{pdiff_score}(x, ..., verbose = FALSE)
+\method{print}{pdiff_score}(x, ...)
 }
 \arguments{
-\item{x}{The package difference to print}
+\item{x}{The package stability score to print}
 
 \item{...}{Follow-on parameters to the print function}
-
-\item{verbose}{Whether to print in summary or list-style.}
 }
 \description{
-Print a Package Difference Stability Score Object
+Print routine for a package stability score object of class "pdiff_score".
+}
+\examples{
+# View package stability
+res <- pkg_stability("rsample")
+
+# Print stability scores
+print(res)
+# # A stability score: rsample package
+# - Age: 7.67 years
+# - Score: 80.7
+# - Assessment: Somewhat Unstable
+# - Version Range: 0.0.1/1.2.1
+# - Release Range: 2017-07-08/2024-03-25
+# - Release Count: 16
+# - Breaking Releases: 6
+# - Data:
+#    Package Version             FileName    Release   Size  AF AP RF RP BC  TF
+# 1  rsample   1.2.1 rsample_1.2.1.tar.gz 2024-03-25   321K   1  0  0  0  0 401
+# 2  rsample   1.2.0 rsample_1.2.0.tar.gz 2023-08-23   321K  43  6  1  3  1 400
+# 3  rsample   1.1.1 rsample_1.1.1.tar.gz 2022-12-07   318K  37  5  0  0  0 358
+# 4  rsample   1.1.0 rsample_1.1.0.tar.gz 2022-08-08   306K  72  1  0  0  0 321
+# 5  rsample   1.0.0 rsample_1.0.0.tar.gz 2022-06-24   268K   1  0  1  0  1 249
+# 6  rsample   0.1.1 rsample_0.1.1.tar.gz 2021-11-08   274K   4  1  0  1  1 249
+# 7  rsample   0.1.0 rsample_0.1.0.tar.gz 2021-05-08   274K   0  5  0  0  0 245
+# 8  rsample   0.0.9 rsample_0.0.9.tar.gz 2021-02-17   269K  19  0  6  0  1 245
+# 9  rsample   0.0.8 rsample_0.0.8.tar.gz 2020-09-23   261K  59  0  0  0  0 232
+# 10 rsample   0.0.7 rsample_0.0.7.tar.gz 2020-06-04   248K 101  1  0  0  0 173
+# 11 rsample   0.0.6 rsample_0.0.6.tar.gz 2020-03-31   299K   7  2  0  0  0  72
+# 12 rsample   0.0.5 rsample_0.0.5.tar.gz 2019-07-13   297K   4  5  0  0  0  65
+# 13 rsample   0.0.4 rsample_0.0.4.tar.gz 2019-01-07   254K   0  0  4  0  1  61
+# 14 rsample   0.0.3 rsample_0.0.3.tar.gz 2018-11-20   254K   7  0  1  0  1  65
+# 15 rsample   0.0.2 rsample_0.0.2.tar.gz 2017-11-12   339K  24  0  0  0  0  59
+# 16 rsample   0.0.1 rsample_0.0.1.tar.gz 2017-07-08   180K  35 35  0  0  0  35
 }
 \seealso{
 Other pdiff: 

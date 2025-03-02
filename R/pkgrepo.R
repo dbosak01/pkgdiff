@@ -141,10 +141,30 @@ pkg_repo <- function(pkgs = NULL, ver = "current", libpaths = NULL) {
 
 
 #' @title Print a Package Repo Object
+#' @description
+#' Print routine for a package repo object of class "prepo".
 #' @param x The package repo to print.
 #' @param ... Follow-on parameters to the print function.
 #' @family prepo
 #' @import crayon
+#' @examples
+#' # Create vector of packages
+#' pkgs <- c("tidymodels", "rsample", "parsnip", "recipes", "workflows")
+#'
+#' # Retrieve latest versions
+#' res <- pkg_repo(pkgs, ver = "latest")
+#'
+#' # Print results
+#' print(res)
+#' # # A package repo object
+#' # - Repo Version: latest
+#' # - Packages:
+#' #   Package Version
+#' # 1    parsnip   1.3.0
+#' # 2    recipes   1.1.1
+#' # 3    rsample   1.2.1
+#' # 4 tidymodels   1.3.0
+#' # 5  workflows   1.2.0
 #' @export
 print.prepo <- function(x, ...) {
 

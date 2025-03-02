@@ -12,7 +12,25 @@
 \item{...}{Follow-on parameters to the print function.}
 }
 \description{
-Print a Repo Stability Object
+Print routine for a repot stability object of class "rstability".
+}
+\examples{
+# Create vector of packages
+vct <- c("curl", "dplyr", "rvest", "tidymodels")
+
+# Get stablity scores
+res <- repo_stability(vct)
+
+# View stability scores
+print(res)
+# # A repo stability object
+# - Run Datetime: 2025-03-01 19:19 UTC
+# - Summary:
+#      Package    FV    LV         FR         LR TR BR Score        Assessment
+# 1       curl   0.2 6.2.1 2014-11-20 2025-02-19 51  1  98.0       Very Stable
+# 2      dplyr   0.1 1.1.4 2014-01-16 2023-11-17 45 20  87.5 Somewhat Unstable
+# 3      rvest 0.1.0 1.0.4 2014-11-22 2024-02-12 14  4  93.2            Stable
+# 4 tidymodels 0.0.1 1.3.0 2018-07-27 2025-02-21 14  0 100.0           Perfect
 }
 \seealso{
 Other prepo: 

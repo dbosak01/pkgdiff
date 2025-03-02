@@ -12,7 +12,26 @@
 \item{...}{Follow-on parameters to the print function.}
 }
 \description{
-Print a Package Repo Object
+Print routine for a package repo object of class "prepo".
+}
+\examples{
+# Create vector of packages
+pkgs <- c("tidymodels", "rsample", "parsnip", "recipes", "workflows")
+
+# Retrieve latest versions
+res <- pkg_repo(pkgs, ver = "latest")
+
+# Print results
+print(res)
+# # A package repo object
+# - Repo Version: latest
+# - Packages:
+#   Package Version
+# 1    parsnip   1.3.0
+# 2    recipes   1.1.1
+# 3    rsample   1.2.1
+# 4 tidymodels   1.3.0
+# 5  workflows   1.2.0
 }
 \seealso{
 Other prepo: 

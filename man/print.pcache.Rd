@@ -12,7 +12,24 @@
 \item{...}{Follow-on parameters to the print function.}
 }
 \description{
-Print a Package Cache Object
+Print routine for a package cache object of class "pcache".
+}
+\examples{
+# Create vector of packages
+pkgs <- c("ggplot2", "patchwork", "gt")
+
+# Capture cache versions
+res <- pkg_cache(pkgs)
+
+# Print cache versions
+print(res)
+# # A package cache object
+# - Last Update: 2025-03-01 20:51 UTC
+# - Packages:
+#     Package Version
+# 1   ggplot2   3.5.1
+# 2 patchwork   1.3.0
+# 3        gt  0.11.1
 }
 \seealso{
 Other pdiff: 
