@@ -159,7 +159,7 @@ pkg_repo <- function(pkgs = NULL, ver = "current", libpaths = NULL) {
 #' # # A package repo object
 #' # - Repo Version: latest
 #' # - Packages:
-#' #   Package Version
+#' #      Package Version
 #' # 1    parsnip   1.3.0
 #' # 2    recipes   1.1.1
 #' # 3    rsample   1.2.1

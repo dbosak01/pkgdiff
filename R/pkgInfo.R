@@ -28,27 +28,9 @@
 #
 # installed.packages()
 #
-# myp <- parse("c:/packages/pkgdiff/R/utilities.R", keep.source = TRUE)
-#
-# methods::getFunction("github_package", where = myp)
-#
-# myl <- as.list(myp)
-#
-# myfunc <- myl[[22]]
-#
-# is.call(myfunc)
-#
-# myfunc[[3]]
-#
-# deparse(myfunc[[3]])
-#
 # cranlogs::cran_top_downloads(count = 100)
 # cranlogs::cran_downloads()
 # cranlogs::cran_downloads(c("accrual", "accessr", "fmtr", "procs"))
-
-
-# "Package"    "Version"    "Depends"    "LinkingTo"
-# "Suggests"   "Enhances"   "License"    "Repository"
 
 
 # Package Info ------------------------------------------------------------
@@ -512,6 +494,10 @@ pkg_info <- function(pkg, ver = "current", cache = TRUE) {
     ret <- get_info_github(pkg, ver)
 
     if (is.null(ret)) {
+
+      message(paste0("Version '", ver, "' of '", pkg, "' not found.\n",
+                     "Getting latest version."))
+      ver <- get_latest_version(pkg)
 
       ret <- get_info_cran(pkg, ver)
     }
