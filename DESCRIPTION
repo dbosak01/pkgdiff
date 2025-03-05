@@ -2,6 +2,7 @@ Package: pkgdiff
 Type: Package
 Title: Identifies Package Differences
 Version: 0.1.3
+Maintainer: David Bosak <dbosak01@gmail.com>
 Authors@R: c(
     person(
       "David", "Bosak",
