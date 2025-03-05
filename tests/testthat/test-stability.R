@@ -41,7 +41,7 @@ test_that("stability3: get_stability_data() release limit.", {
   expect_equal(is.data.frame(res), TRUE)
 
   # Need one extra for comparison
-  expect_equal(nrow(res) == 6, TRUE)
+  expect_equal(nrow(res) == 5, TRUE)
 
 
 })

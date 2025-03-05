@@ -307,6 +307,7 @@ pkg_stability <- function(pkg, releases = NULL, months = NULL) {
     dat <- get_cran_data(pkg, releases, months)
   else
     dat <- get_github_data(pkg, releases, months)
+
   if (!is.null(dat)) {
     if (nrow(dat) == 1) {
 
@@ -485,8 +486,8 @@ get_github_data <- function(pkgname, releases = NULL, months = NULL) {
 
   if (!is.null(releases)) {
 
-    if (nrow(dat) > releases)
-      dat <- dat[seq(1, releases + 1), ]
+    if (nrow(dat) >= releases)
+      dat <- dat[seq(1, releases), ]
   }
 
   if (!is.null(months)) {
