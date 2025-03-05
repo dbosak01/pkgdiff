@@ -6,8 +6,8 @@
 
 #' @title Retrieve Package Versions from a Repository
 #' @description
-#' Combines information related to a package repository. The function
-#' retrieves all the packages in a repository for a specified version
+#' The \code{pkg_repo} function combines information related to a package repository.
+#' The function retrieves all the packages in a repository for a specified version
 #' of R.  Results will list the package name and version.
 #' @param pkgs A vector of package names used to subset the repository list.
 #' Default is NULL, which means all packages in the repository will be returned.
@@ -20,9 +20,13 @@
 #' is NULL, meaning the function will use the default R locations on the machine.
 #' These default paths are identified by the Base R function \code{.libPaths()}.
 #' @returns An object of class "prepo".  The object will contain a data
-#' table of R packages with corresponding version numbers.  This table
+#' frame of R packages with corresponding version numbers.  This table
 #' may then be passed to \code{\link{repo_breakages}} or
 #' \code{\link{repo_stability}}.
+#'
+#' If a package is not found in the repo,
+#' a row will still be returned for the package.  However, the version
+#' will appear as NA.
 #' @examples
 #' # Create vector of packages
 #' pkgs <- c("common", "dplyr", "rvest", "stringr")

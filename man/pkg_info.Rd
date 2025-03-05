@@ -29,6 +29,11 @@ a set of general information about the package, such as the version,
 release date, maintainer, title, etc.  Most of this information comes
 from the package description file.  In addition, the info object also
 contains a list of functions in the package and their parameters.
+
+If the package has been archived on CRAN, info will be returned,
+but the "Archived" flag will be set to TRUE. If the
+package is not found on CRAN, the function will emit a message and return
+NULL.
 }
 \description{
 Combines information related to a package. Objects of this class are

@@ -567,7 +567,7 @@ notation:
 
 ```{r eval=FALSE, echo=TRUE}
 # View Summary Table
-res$summary
+res$Summary
 #            Package             Version1   Version2 Breakages
 # 1            abind                1.4-5      1.4-8     FALSE
 # 2          admiral               0.10.1      1.2.0      TRUE
@@ -588,7 +588,7 @@ res$summary
 # ...
 
 # View Difference Details
-res$details$admiralonco
+res$Details$admiralonco
 # # A difference object: admiralonco package
 # - Comparing: v0.3.0/v1.2.0
 # - Breaking Changes: TRUE
