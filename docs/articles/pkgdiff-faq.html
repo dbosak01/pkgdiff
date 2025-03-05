@@ -121,6 +121,8 @@ sequential versions?</a></li>
 <li><a href="#report">Can I create a report with pkgdiff?</a></li>
 <li><a href="#github">Can I use <strong>pkgdiff</strong> with packages
 that are not on CRAN?</a></li>
+<li><a href="#base">Can I use <strong>pkgdiff</strong> with Base R
+packages?</a></li>
 </ul>
 </div>
 <div class="section level2">
@@ -329,6 +331,25 @@ packages do not have a predictable and easily accessible archive.</p>
 <strong>packageDiff</strong> that allows you to compare two packages
 locally. This package can generated version differences. It will not,
 however, generate stability scores, or assess an entire repository.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="base">Can I use <strong>pkgdiff</strong> with Base R packages?<a class="anchor" aria-label="anchor" href="#base"></a>
+</h3>
+<p><strong>Q:</strong> I see that <strong>pkgdiff</strong> does not seem
+to work with some very commonly used packages. For instance,
+<code><a href="../reference/pkg_info.html">pkg_info()</a></code> produces no results for “tools” and “utils”.
+Does <strong>pkgdiff</strong> work with Base R packages?</p>
+<p><strong>A:</strong> No. <strong>pkgdiff</strong> only works with
+contributed packages. It does not work with Base R packages, as these
+packages are distributed and archived in a completely different way.</p>
+<p>Some Base R “recommended” packages are published as contributed CRAN
+packages, and will therefore work with <strong>pkgdiff</strong>. But
+packages such as “base”, “tools”, “utils”, “compiler”, “datasets”,
+“graphics”, “grDevices”, “grid”, “methods”, “stats”, etc. will give a
+message saying package data was not found. Data for these packages is
+indeed not found in the same area as most CRAN packages.</p>
 <p><a href="#top">top</a></p>
 <hr>
 <!-- ### How do I format a data frame? {#overview} --><!-- **Q:** I have a data frame with different types of variables: --><!-- numbers, dates, character values.  How can I format them without messing --><!-- up the original data? --><!-- **A:** With the **fmtr** package you can assign the formats to the  --><!-- "format" attribute of the dataframe, and the apply the formats using the  --><!-- `fdata()` function, returning the result to a new data frame.  Here is  --><!-- a simple example: --><!-- ```{r eval=FALSE, echo=TRUE} --><!-- # Create sample data --><!-- dat <- data.frame(SUBJ = c(1, 2, 3), --><!--                   BDATE = c(as.Date("1945-10-17"),  --><!--                             as.Date("1967-09-04"), --><!--                             as.Date("1998-04-28")), --><!--                   SEX = c("M", "F", "M"), --><!--                   WEIGHT = c(77.1107, 64.2848, 85.9842)) --><!-- # View data                   --><!-- dat --><!-- #   SUBJ      BDATE SEX  WEIGHT --><!-- # 1    1 1945-10-17   M 77.1107 --><!-- # 2    2 1967-09-04   F 64.2848 --><!-- # 3    3 1998-04-28   M 85.9842 --><!-- # Assign formats --><!-- formats(dat) <- list(BDATE = "%Y/%m/%d", --><!--                      SEX = c("M" = "Male", "F" = "Female"), --><!--                      WEIGHT = "%1.1f kg") --><!-- # Apply formats to new data frame --><!-- dat2 <- fdata(dat) --><!-- # View new data frame --><!-- dat2 --><!-- #   SUBJ      BDATE    SEX  WEIGHT --><!-- # 1    1 1945/10/17   Male 77.1 kg --><!-- # 2    2 1967/09/04 Female 64.3 kg --><!-- # 3    3 1998/04/28   Male 86.0 kg --><!-- ``` --><!-- [top](#top)  --><!-- ****** -->

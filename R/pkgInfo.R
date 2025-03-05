@@ -32,6 +32,14 @@
 # cranlogs::cran_downloads()
 # cranlogs::cran_downloads(c("accrual", "accessr", "fmtr", "procs"))
 
+# res1 <- as.data.frame(installed.packages())
+#
+# res1[res1$Package == "tools", ]
+#
+# res2 <- as.data.frame(available.packages())
+#
+# res2[res2$Package %in% c("tools", "utils"), ]
+
 
 # Package Info ------------------------------------------------------------
 
@@ -374,6 +382,10 @@ print.pcache <- function(x, ...) {
 #' has been stored in the \strong{pkgdiff} Github cache.  Packages that
 #' have been stored in the cache enjoy faster results from
 #' \strong{pkgdiff} functions.
+#'
+#' Note that \code{pkg_info} and other \strong{pkgdiff} functions
+#' only work with contributed CRAN packages.  They do not
+#' work with Base R packages.
 #' @param pkg The package name as a quoted string. This parameter is
 #' required.
 #' @param ver The version of the package to retrieve information for.
@@ -460,6 +472,7 @@ print.pcache <- function(x, ...) {
 #' @export
 pkg_info <- function(pkg, ver = "current", cache = TRUE) {
 
+  # browser()
   archived <- NULL
   tst <- github_packages(pkg)
 
@@ -477,51 +490,61 @@ pkg_info <- function(pkg, ver = "current", cache = TRUE) {
   if (length(ver) == 0)
     ver <- get_latest_version(pkg)
 
-  if (ver == "archived") {
+  if (!is.null(ver)) {
+    if (ver == "archived") {
 
-    tmp <- get_archive_versions(pkg)
+      tmp <- get_archive_versions(pkg)
 
-    if (nrow(tmp) > 0) {
+      if (nrow(tmp) > 0) {
 
-      ver <- tmp[1, "Version"]
-      archived <- TRUE
+        ver <- tmp[1, "Version"]
+        archived <- TRUE
 
+      }
     }
-
   }
 
-  if (!is.null(tst) && !is.na(tst) && cache == TRUE) {
-    ret <- get_info_github(pkg, ver)
+  if (is.null(ver)) {
 
-    if (is.null(ret)) {
-
-      message(paste0("Version '", ver, "' of '", pkg, "' not found.\n",
-                     "Getting latest version."))
-      ver <- get_latest_version(pkg)
-
-      ret <- get_info_cran(pkg, ver)
-    }
+    message(paste0("No version info available for '", pkg, "'."))
+    ret <- NULL
 
   } else {
 
-      ret <- get_info_cran(pkg, ver)
+    if (!is.null(tst) && !is.na(tst) && cache == TRUE) {
+      ret <- get_info_github(pkg, ver)
 
-  }
+      if (is.null(ret)) {
 
-  if (is.null(archived)) {
-    dm  <- cranlogs::cran_downloads(pkg, when = "last-month")
-    ret$LastMonthDownloads <- sum(dm$count)
+        message(paste0("Version '", ver, "' of '", pkg, "' not found.\n",
+                       "Getting latest version."))
+        ver <- get_latest_version(pkg)
 
-    cs <- github_packages(pkg)
+        ret <- get_info_cran(pkg, ver)
+      }
 
-    if (!is.na(cs))
-      ret$Cached <- TRUE
-    else
-      ret$Cached <- FALSE
+    } else {
 
-  } else {
+        ret <- get_info_cran(pkg, ver)
 
-    ret$Archived <- archived
+    }
+
+    if (is.null(archived)) {
+      dm  <- cranlogs::cran_downloads(pkg, when = "last-month")
+      ret$LastMonthDownloads <- sum(dm$count)
+
+      cs <- github_packages(pkg)
+
+      if (!is.na(cs))
+        ret$Cached <- TRUE
+      else
+        ret$Cached <- FALSE
+
+    } else {
+
+      ret$Archived <- archived
+    }
+
   }
 
   return(ret)

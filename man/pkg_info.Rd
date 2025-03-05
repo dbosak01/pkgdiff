@@ -7,7 +7,8 @@
 pkg_info(pkg, ver = "current", cache = TRUE)
 }
 \arguments{
-\item{pkg}{The package name.}
+\item{pkg}{The package name as a quoted string. This parameter is
+required.}
 
 \item{ver}{The version of the package to retrieve information for.
 Pass the version as a quoted string.
@@ -23,7 +24,7 @@ Github cache, or the cache parameter is set to FALSE, the info will be
 retrieved from CRAN.}
 }
 \value{
-A package information object.  This object contains
+A package information object of class "pinfo".  This object contains
 a set of general information about the package, such as the version,
 release date, maintainer, title, etc.  Most of this information comes
 from the package description file.  In addition, the info object also
@@ -31,7 +32,7 @@ contains a list of functions in the package and their parameters.
 }
 \description{
 Combines information related to a package. Objects of this class are
-used in several other functions in the \strong{pkgdiff} system.  This
+used by several other functions in the \strong{pkgdiff} system.  This
 class also makes a compact storage format for pre-processed package
 information.
 }
@@ -51,13 +52,17 @@ You may access this list using the \code{$Functions} item name.
 
 Most other information contained in the info object is retrieved
 from the package description file. One exception is the downloads
-per month.  This information is retrieved from the CRAN logs.
+per month.  This information is retrieved from CRAN logs.
 
 In addition, the package cache status is appended to the info object.
 The package cache status indicates whether the package info
 has been stored in the \strong{pkgdiff} Github cache.  Packages that
 have been stored in the cache enjoy faster results from
 \strong{pkgdiff} functions.
+
+Note that \code{pkg_info} and other \strong{pkgdiff} functions
+only work with contributed CRAN packages.  They do not
+work with Base R packages.
 }
 \examples{
 # View package info

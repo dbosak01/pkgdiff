@@ -18,7 +18,8 @@ stability and backward compatibility.
 
 The purpose of **pkgdiff** is to offer an objective approach 
 for anticipating and avoiding
-breaking changes in R.  It gives you a tool to evaluate packages in terms
+breaking changes in R.  It gives you a tool to evaluate contributed 
+packages in terms
 of overall stability, and provides a way to identify and plan for future
 breakages.
 

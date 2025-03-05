@@ -33,7 +33,7 @@ on the links below to navigate to the full question and answer content.
 * [How can I add a package to the cache?](#addcache)
 * [Can I create a report with pkgdiff?](#report)
 * [Can I use **pkgdiff** with packages that are not on CRAN?](#github)
-
+* [Can I use **pkgdiff** with Base R packages?](#base)
 
 ## Content
 
@@ -259,6 +259,29 @@ It will not, however, generate stability scores, or assess an entire repository.
 [top](#top) 
 
 ******
+
+### Can I use **pkgdiff** with Base R packages? {#base}
+
+**Q:** I see that **pkgdiff** does not seem to work with some very commonly 
+used packages.
+For instance, `pkg_info()` produces no results for "tools" and "utils".  Does
+**pkgdiff** work with Base R packages?
+
+**A:** No.  **pkgdiff** only works with contributed packages. It does not 
+work with Base R packages, as these packages are distributed and archived in 
+a completely different way.  
+
+Some Base R "recommended" packages are published
+as contributed CRAN packages, and will therefore work with **pkgdiff**.  But 
+packages such as "base", "tools", "utils", "compiler", "datasets", "graphics", 
+"grDevices", "grid", "methods", "stats", etc. will give a message saying package
+data was not found.  Data for these packages is indeed not found in the same
+area as most CRAN packages.
+
+[top](#top) 
+
+******
+
 
 
 <!-- ### How do I format a data frame? {#overview} -->
