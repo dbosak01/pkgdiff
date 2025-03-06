@@ -1,4 +1,4 @@
-# pkgdiff 0.1.6
+# pkgdiff 0.1.7
 
 * Initial release to CRAN.
 

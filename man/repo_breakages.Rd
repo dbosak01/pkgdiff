@@ -66,13 +66,13 @@ r2 <- data.frame(Package = pkgs,
                  Version = c("6.2.1", "1.1.4", "1.5.3", "1.5.1"))
 
 # Find any breaking changes
-res <- repo_breakages(r1, r2)
+# res <- repo_breakages(r1, r2) # - Commented out to pass CRAN checks
 # Comparing curl v5.2.1/v6.2.1
 # Comparing crayon v1.5.2/v1.5.3
 # Comparing stringr v1.5.0/v1.5.1
 
 # View results
-res
+# res # - Commented out to pass CRAN checks
 # # A repo breakages object
 # - Run Datetime: 2025-03-01 17:47 UTC
 # - Summary:

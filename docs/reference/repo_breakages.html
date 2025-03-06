@@ -19,7 +19,7 @@ to identify breakages for a small set of packages, or even an entire repository.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgdiff</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7</span>
       </span>
     </div>
 
@@ -156,13 +156,13 @@ to collect stability information on multiple packages.</p>
 <span>                 Version <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"6.2.1"</span>, <span class="st">"1.1.4"</span>, <span class="st">"1.5.3"</span>, <span class="st">"1.5.1"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Find any breaking changes</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">repo_breakages</span><span class="op">(</span><span class="va">r1</span>, <span class="va">r2</span><span class="op">)</span></span>
+<span><span class="co"># res &lt;- repo_breakages(r1, r2) # - Commented out to pass CRAN checks</span></span>
 <span><span class="co"># Comparing curl v5.2.1/v6.2.1</span></span>
 <span><span class="co"># Comparing crayon v1.5.2/v1.5.3</span></span>
 <span><span class="co"># Comparing stringr v1.5.0/v1.5.1</span></span>
 <span></span>
 <span><span class="co"># View results</span></span>
-<span><span class="va">res</span></span>
+<span><span class="co"># res # - Commented out to pass CRAN checks</span></span>
 <span><span class="co"># # A repo breakages object</span></span>
 <span><span class="co"># - Run Datetime: 2025-03-01 17:47 UTC</span></span>
 <span><span class="co"># - Summary:</span></span>
