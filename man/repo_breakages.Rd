@@ -55,11 +55,11 @@ exist in any other R package prior to \strong{pkgdiff}.
 }
 \examples{
 # Create package vector
-pkgs <- c("curl", "dplyr", "purrr", "stringr")
+pkgs <- c("curl", "dplyr", "crayon", "stringr")
 
 # Get backdated versions
 r1 <- data.frame(Package = pkgs,
-                 Version = c("5.2.1", "1.1.4", "1.0.2", "1.5.0"))
+                 Version = c("5.2.1", "1.1.4", "1.5.2", "1.5.0"))
 
 # Get latest versions from CRAN
 r2 <- pkg_repo(pkgs, "latest")
@@ -67,7 +67,7 @@ r2 <- pkg_repo(pkgs, "latest")
 # Find any breaking changes
 res <- repo_breakages(r1, r2)
 # Comparing curl v5.2.1/v6.2.1
-# Comparing purrr v1.0.2/v1.0.4
+# Comparing crayon v1.5.2/v1.5.3
 # Comparing stringr v1.5.0/v1.5.1
 
 # View results
@@ -78,7 +78,7 @@ res
 #   Package Version1 Version2 Breakages
 # 1    curl    5.2.1    6.2.1      TRUE
 # 2   dplyr    1.1.4    1.1.4     FALSE
-# 3   purrr    1.0.2    1.0.4     FALSE
+# 3  crayon    1.5.2    1.5.3     FALSE
 # 4 stringr    1.5.0    1.5.1     FALSE
 # - Details:
 #   # A difference object: curl package

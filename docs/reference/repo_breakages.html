@@ -19,7 +19,7 @@ to identify breakages for a small set of packages, or even an entire repository.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgdiff</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.4</span>
       </span>
     </div>
 
@@ -145,11 +145,11 @@ to collect stability information on multiple packages.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># Create package vector</span></span>
-<span><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"curl"</span>, <span class="st">"dplyr"</span>, <span class="st">"purrr"</span>, <span class="st">"stringr"</span><span class="op">)</span></span>
+<span><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"curl"</span>, <span class="st">"dplyr"</span>, <span class="st">"crayon"</span>, <span class="st">"stringr"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Get backdated versions</span></span>
 <span><span class="va">r1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Package <span class="op">=</span> <span class="va">pkgs</span>,</span>
-<span>                 Version <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"5.2.1"</span>, <span class="st">"1.1.4"</span>, <span class="st">"1.0.2"</span>, <span class="st">"1.5.0"</span><span class="op">)</span><span class="op">)</span></span>
+<span>                 Version <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"5.2.1"</span>, <span class="st">"1.1.4"</span>, <span class="st">"1.5.2"</span>, <span class="st">"1.5.0"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Get latest versions from CRAN</span></span>
 <span><span class="va">r2</span> <span class="op">&lt;-</span> <span class="fu"><a href="pkg_repo.html">pkg_repo</a></span><span class="op">(</span><span class="va">pkgs</span>, <span class="st">"latest"</span><span class="op">)</span></span>
@@ -157,7 +157,7 @@ to collect stability information on multiple packages.</p>
 <span><span class="co"># Find any breaking changes</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">repo_breakages</span><span class="op">(</span><span class="va">r1</span>, <span class="va">r2</span><span class="op">)</span></span>
 <span><span class="co"># Comparing curl v5.2.1/v6.2.1</span></span>
-<span><span class="co"># Comparing purrr v1.0.2/v1.0.4</span></span>
+<span><span class="co"># Comparing crayon v1.5.2/v1.5.3</span></span>
 <span><span class="co"># Comparing stringr v1.5.0/v1.5.1</span></span>
 <span></span>
 <span><span class="co"># View results</span></span>
@@ -168,7 +168,7 @@ to collect stability information on multiple packages.</p>
 <span><span class="co">#   Package Version1 Version2 Breakages</span></span>
 <span><span class="co"># 1    curl    5.2.1    6.2.1      TRUE</span></span>
 <span><span class="co"># 2   dplyr    1.1.4    1.1.4     FALSE</span></span>
-<span><span class="co"># 3   purrr    1.0.2    1.0.4     FALSE</span></span>
+<span><span class="co"># 3  crayon    1.5.2    1.5.3     FALSE</span></span>
 <span><span class="co"># 4 stringr    1.5.0    1.5.1     FALSE</span></span>
 <span><span class="co"># - Details:</span></span>
 <span><span class="co">#   # A difference object: curl package</span></span>
