@@ -49,12 +49,13 @@
 #' # Create package vector
 #' pkgs <- c("curl", "dplyr", "crayon", "stringr")
 #'
-#' # Get backdated versions
+#' # Backdated versions
 #' r1 <- data.frame(Package = pkgs,
 #'                  Version = c("5.2.1", "1.1.4", "1.5.2", "1.5.0"))
 #'
-#' # Get latest versions from CRAN
-#' r2 <- pkg_repo(pkgs, "latest")
+#' # More recent versions
+#' r2 <- data.frame(Package = pkgs,
+#'                  Version = c("6.2.1", "1.1.4", "1.5.3", "1.5.1"))
 #'
 #' # Find any breaking changes
 #' res <- repo_breakages(r1, r2)
@@ -182,12 +183,13 @@ repo_breakages <- function(r1 = "current", r2 = "latest") {
 #' # Create package vector
 #' pkgs <- c("curl", "dplyr", "crayon", "stringr")
 #'
-#' # Get backdated versions
+#' # Backdated versions
 #' r1 <- data.frame(Package = pkgs,
 #'                  Version = c("5.2.1", "1.1.4", "1.5.2", "1.5.0"))
 #'
-#' # Get latest versions from CRAN
-#' r2 <- pkg_repo(pkgs, "latest")
+#' # More recent versions
+#' r2 <- data.frame(Package = pkgs,
+#'                  Version = c("6.2.1", "1.1.4", "1.5.3", "1.5.1"))
 #'
 #' # Find any breaking changes
 #' res <- repo_breakages(r1, r2)

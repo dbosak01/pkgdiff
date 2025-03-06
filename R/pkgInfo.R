@@ -435,44 +435,54 @@ print.pcache <- function(x, ...) {
 #' # - Functions: 24
 #'
 #' # Get info object
-#' res <- pkg_info("tidymodels")
+#' res <- pkg_info("glue")
 #'
 #' # Extract package version
 #' res$Version
-#' # [1] "1.3.0"
+#' # [1] "1.7.0"
 #'
 #' # Extract maintainer
 #' res$Maintainer
-#' # [1] "Max Kuhn <max@posit.co>"
+#' # [1] "Jennifer Bryan <jenny@posit.co>"
 #'
 #' # Extract function list
 #' res$Functions
-#' # $pkg_deps
-#' # [1] "x"         "recursive"
+#' # $`[.glue`
+#' # [1] "x"   "i"   "..."
 #' #
-#' # $print.tidymodels_conflicts
-#' # [1] "x"       "..."     "startup"
+#' # $`[[.glue`
+#' # [1] "x"   "i"   "..."
 #' #
-#' # $tag_attach
-#' # [1] "tag"
+#' # $`+.glue`
+#' # [1] "e1" "e2"
 #' #
-#' # $tag_show
-#' # [1] ""
+#' # $as.character.glue
+#' # [1] "x"   "..."
 #' #
-#' # $tag_update
-#' # [1] "tag"
+#' # $as_glue
+#' # [1] "x"   "..."
 #' #
-#' # $tidymodels_conflicts
-#' # [1] ""
+#' # $as_glue.character
+#' # [1] "x"   "..."
 #' #
-#' # $tidymodels_packages
-#' # [1] "include_self"
+#' # $as_glue.default
+#' # [1] "x"   "..."
 #' #
-#' # $tidymodels_prefer
-#' # [1] "quiet"
+#' # $as_glue.glue
+#' # [1] "x"   "..."
 #' #
-#' # $tidymodels_update
-#' # [1] "pkg"       "recursive" "..."
+#' # $backtick
+#' # [1] "x"
+#' #
+#' # $double_quote
+#' # [1] "x"
+#' #
+#' # $glue
+#' # [1] "..."          ".sep"         ".envir"
+#' # [4] ".open"        ".close"       ".na"
+#' # [7] ".null"        ".comment"     ".literal"
+#' # [10] ".transformer" ".trim"
+#' # ...
 #' @family pdiff
 #' @export
 pkg_info <- function(pkg, ver = "current", cache = TRUE) {
