@@ -179,42 +179,6 @@ repo_breakages <- function(r1 = "current", r2 = "latest") {
 #' If TRUE, prints both additions and removals. Default is FALSE.
 #' @family prepo
 #' @import crayon
-#' @examples
-#' # Create package vector
-#' pkgs <- c("curl", "dplyr", "crayon", "stringr")
-#'
-#' # Backdated versions
-#' r1 <- data.frame(Package = pkgs,
-#'                  Version = c("5.2.1", "1.1.4", "1.5.2", "1.5.0"))
-#'
-#' # More recent versions
-#' r2 <- data.frame(Package = pkgs,
-#'                  Version = c("6.2.1", "1.1.4", "1.5.3", "1.5.1"))
-#'
-#' # Find any breaking changes
-#' res <- repo_breakages(r1, r2)
-#' # Comparing curl v5.2.1/v6.2.1
-#' # Comparing crayon v1.5.2/v1.5.3
-#' # Comparing stringr v1.5.0/v1.5.1
-#'
-#' # View results
-#' print(res)
-#' # # A repo breakages object
-#' # - Run Datetime: 2025-03-01 19:22 UTC
-#' # - Summary:
-#' #   Package Version1 Version2 Breakages
-#' # 1    curl    5.2.1    6.2.1      TRUE
-#' # 2   dplyr    1.1.4    1.1.4     FALSE
-#' # 3  crayon    1.5.2    1.5.3     FALSE
-#' # 4 stringr    1.5.0    1.5.1     FALSE
-#' # - Details:
-#' #   # A difference object: curl package
-#' #   - Comparing: v5.2.1/v6.2.1
-#' # - Breaking Changes: TRUE
-#' # - Added Functions: 1
-#' # - Added Parameters: 3
-#' # - Removed Parameters:
-#' #   - multi_download(): timeout
 #' @export
 print.rbreak <- function(x, ..., verbose = FALSE) {
 
