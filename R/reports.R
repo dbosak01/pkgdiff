@@ -179,6 +179,7 @@ repo_breakages <- function(r1 = "current", r2 = "latest") {
 #' If TRUE, prints both additions and removals. Default is FALSE.
 #' @family prepo
 #' @import crayon
+#' @returns The repo breakage object, invisibly.
 #' @export
 print.rbreak <- function(x, ..., verbose = FALSE) {
 
@@ -362,6 +363,7 @@ repo_stability <- function(pkgs, releases = NULL, months = NULL) {
 #' @param ... Follow-on parameters to the print function.
 #' @family prepo
 #' @import crayon
+#' @returns The repo stability object, invisibly.
 #' @examples
 #' # Create vector of packages
 #' vct <- c("curl", "dplyr", "rvest", "tidymodels")

@@ -432,19 +432,27 @@ get_current_version <- function(pkgname) {
 #' @noRd
 installed_packages <- function(pkgs = NULL, repos = NULL) {
 
-  ip <- as.data.frame(utils::installed.packages(repos)[,c(1,3:4)])
-  rownames(ip) <- NULL
-  ret <- ip[is.na(ip$Priority),1:2,drop=FALSE]
-
   if (!is.null(pkgs)) {
-     ret <- subset(ret, ret$Package %in% pkgs)
+    # User wants a vector of packages
+    vers <- c()
+    for (pkg in pkgs) {
+      mv <- tryCatch({packageVersion(pkg, lib.loc = repos)},
+                     error = function(err) {
+                       NA_character_
+                     })
+      vers <- append(vers, mv)
+    }
+    ret <- data.frame(Package = pkgs, Version = vers)
+  } else {
+    # User actually wants all the packages
+    ip <- as.data.frame(utils::installed.packages(repos)[,c(1,3:4)])
+    ret <- ip[is.na(ip$Priority),1:2,drop=FALSE]
   }
 
   rownames(ret) <- NULL
 
   return(ret)
 }
-
 
 
 # Difference Utilities ----------------------------------------------------

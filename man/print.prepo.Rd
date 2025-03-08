@@ -11,6 +11,9 @@
 
 \item{...}{Follow-on parameters to the print function.}
 }
+\value{
+The package repo object, invisibly.
+}
 \description{
 Print routine for a package repo object of class "prepo".
 }

@@ -11,6 +11,9 @@
 
 \item{...}{Follow-on parameters to the print function}
 }
+\value{
+The stability score object, invisibly.
+}
 \description{
 Print routine for a package stability score object of class "pdiff_score".
 }

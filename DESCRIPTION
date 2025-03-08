@@ -1,7 +1,7 @@
 Package: pkgdiff
 Type: Package
 Title: Identifies Package Differences
-Version: 0.1.7
+Version: 0.1.8
 Maintainer: David Bosak <dbosak01@gmail.com>
 Authors@R: c(
     person(
@@ -20,7 +20,7 @@ Authors@R: c(
       role = c("ctb")
     )
   )
-Description: Contains a set of functions to identify differences between
+Description: Identifies differences between
     versions of a package.  Specifically, the functions help
     determine if there are breaking changes from one package version
     to the next.  The package also includes a stability assessment,

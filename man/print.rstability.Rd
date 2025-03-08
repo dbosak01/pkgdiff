@@ -11,6 +11,9 @@
 
 \item{...}{Follow-on parameters to the print function.}
 }
+\value{
+The repo stability object, invisibly.
+}
 \description{
 Print routine for a repot stability object of class "rstability".
 }

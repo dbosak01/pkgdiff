@@ -104,6 +104,7 @@ pinfo <- function(pkg, ver = "current", release = NULL, title = NULL, descriptio
 #' will be printed.
 #' @family pdiff
 #' @import crayon
+#' @returns The package info object, invisibly.
 #' @examples
 #' # Capture package info
 #' res <- pkg_info("patchwork")
@@ -309,6 +310,7 @@ pkg_cache <- function(pkgs = NULL) {
 #' @param ... Follow-on parameters to the print function.
 #' @family pdiff
 #' @import crayon
+#' @returns The package cache object, invisibly.
 #' @examples
 #' # Create vector of packages
 #' pkgs <- c("ggplot2", "patchwork", "gt")

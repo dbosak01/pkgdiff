@@ -372,6 +372,7 @@ pkg_stability <- function(pkg, releases = NULL, months = NULL) {
 #' @param ... Follow-on parameters to the print function
 #' @family pdiff
 #' @import crayon
+#' @returns The stability score object, invisibly.
 #' @examples
 #' # View package stability
 #' res <- pkg_stability("rsample")

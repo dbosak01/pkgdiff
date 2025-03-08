@@ -15,6 +15,9 @@
 Default is FALSE.  When FALSE, only a count of the functions
 will be printed.}
 }
+\value{
+The package info object, invisibly.
+}
 \description{
 Print routine for a package info object of class "pinfo".
 }

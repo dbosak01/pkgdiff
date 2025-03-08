@@ -151,6 +151,7 @@ pkg_repo <- function(pkgs = NULL, ver = "current", libpaths = NULL) {
 #' @param ... Follow-on parameters to the print function.
 #' @family prepo
 #' @import crayon
+#' @returns The package repo object, invisibly.
 #' @examples
 #' # Create vector of packages
 #' pkgs <- c("tidymodels", "rsample", "parsnip", "recipes", "workflows")

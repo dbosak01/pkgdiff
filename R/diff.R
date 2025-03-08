@@ -257,6 +257,7 @@ pkg_diff <- function(pkg, v1 = "current",
 #' and function parameters.  Default is TRUE.  If FALSE, the function
 #' will print removed functions and parameters, but only print
 #' counts of added functions and parameters.
+#' @returns The package difference object, invisibly.
 #' @examples
 #' # View versions
 #' pkg_versions("rvest")

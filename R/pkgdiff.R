@@ -69,10 +69,6 @@ e$SavedPackages <- NULL
 #' @noRd
 refresh_package_lists <- function(force = FALSE) {
 
-  mror <- e$Mirror
-
-  options(repos = mror)
-
   ret <- FALSE
 
   ts <- Sys.Date() - e$LoadDate

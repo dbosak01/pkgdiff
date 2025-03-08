@@ -11,6 +11,9 @@
 
 \item{...}{Follow-on parameters to the print function.}
 }
+\value{
+The package cache object, invisibly.
+}
 \description{
 Print routine for a package cache object of class "pcache".
 }

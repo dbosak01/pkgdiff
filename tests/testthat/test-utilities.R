@@ -84,8 +84,9 @@ test_that("utilities3: get_version() works as expected.", {
 
 test_that("utilities4: installed_packages() works as expected.", {
 
+  pkgs <- c("rvest", "curl", "utils", "forker", "common")
 
-  res <- installed_packages()
+  res <- installed_packages(pkgs)
 
   expect_equal(is.data.frame(res), TRUE)
 
@@ -93,7 +94,17 @@ test_that("utilities4: installed_packages() works as expected.", {
 
   expect_equal(ncol(res) == 2, TRUE)
 
+
   if (dev) {
+
+    res <- installed_packages()
+
+    expect_equal(is.data.frame(res), TRUE)
+
+    expect_equal(nrow(res) > 1, TRUE)
+
+    expect_equal(ncol(res) == 2, TRUE)
+
     res <- installed_packages(c("logr", "fmtr", "common", "reporter"))
 
     expect_equal(is.data.frame(res), TRUE)

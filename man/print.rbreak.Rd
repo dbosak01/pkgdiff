@@ -14,6 +14,9 @@
 \item{verbose}{If FALSE, prints only the difference removals.
 If TRUE, prints both additions and removals. Default is FALSE.}
 }
+\value{
+The repo breakage object, invisibly.
+}
 \description{
 Print routine for a repo breakages object of class "rbreak".
 }

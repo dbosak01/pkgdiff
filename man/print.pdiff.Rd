@@ -16,6 +16,9 @@ and function parameters.  Default is TRUE.  If FALSE, the function
 will print removed functions and parameters, but only print
 counts of added functions and parameters.}
 }
+\value{
+The package difference object, invisibly.
+}
 \description{
 Print routine for a package difference object of class "pdiff".
 }
