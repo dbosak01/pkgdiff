@@ -436,11 +436,11 @@ installed_packages <- function(pkgs = NULL, repos = NULL) {
     # User wants a vector of packages
     vers <- c()
     for (pkg in pkgs) {
-      mv <- tryCatch({packageVersion(pkg, lib.loc = repos)},
+      mv <- tryCatch({as.character(packageVersion(pkg, lib.loc = repos))},
                      error = function(err) {
                        NA_character_
                      })
-      vers <- append(vers, mv)
+      vers[length(vers) + 1] <- mv
     }
     ret <- data.frame(Package = pkgs, Version = vers)
   } else {

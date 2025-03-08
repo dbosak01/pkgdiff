@@ -90,7 +90,7 @@ test_that("utilities4: installed_packages() works as expected.", {
 
   expect_equal(is.data.frame(res), TRUE)
 
-  expect_equal(nrow(res) > 1, TRUE)
+  expect_equal(nrow(res) == 5, TRUE)
 
   expect_equal(ncol(res) == 2, TRUE)
 
