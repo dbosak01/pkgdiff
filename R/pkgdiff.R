@@ -52,6 +52,7 @@ e$MirrorCurrentPath <- "https://cran.rstudio.com/src/contrib/"
 e$CranPackagePath <- "https://cran.r-project.org/web/packages"
 e$AvailablePackages <- NULL
 e$SavedPackages <- NULL
+e$BasePackages <- NULL
 
 
 .onAttach <- function(...) {
@@ -78,6 +79,8 @@ refresh_package_lists <- function(force = FALSE) {
     e$AvailablePackages <- available_packages()
 
     e$SavedPackages <- github_packages()
+
+    e$BasePackages <- base_packages()
 
     ret <- TRUE
   }

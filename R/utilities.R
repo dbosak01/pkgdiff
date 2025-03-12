@@ -102,7 +102,7 @@ get_latest_data <- function(pkgs,
 #' @import rvest
 #' @import utils
 #' @noRd
-get_latest_data_back <- function(pkgs, skip_size = FALSE) {
+get_latest_data_back <- function(pkgs, skip_size = FALSE, msg = TRUE) {
 
   baseurl = e$CranPackagePath
 
@@ -134,11 +134,13 @@ get_latest_data_back <- function(pkgs, skip_size = FALSE) {
 
     if (is.null(page)) {
 
-      message(paste0("Package data for '", pkg, "' not found."))
+      if (msg)
+        message(paste0("Package data for '", pkg, "' not found."))
 
     } else if (removed && archived && length(tables) == 0) {
 
-      message(paste0("Package data for '", pkg, "' has been archived."))
+      if (msg)
+        message(paste0("Package data for '", pkg, "' has been archived."))
 
       ret <- data.frame(Package = pkg, Version = "archived")
 
@@ -215,7 +217,7 @@ get_latest_data_back <- function(pkgs, skip_size = FALSE) {
 
 # Retrieve a table of info for latest version of a package
 #' @noRd
-get_latest_version <- function(pkgs) {
+get_latest_version <- function(pkgs, msg = TRUE) {
 
   #browser()
   ret <- c()
@@ -229,7 +231,7 @@ get_latest_version <- function(pkgs) {
   for (pkg in pkgs) {
 
     if (nrow(lst) == 0) {
-      dat <- get_latest_data_back(pkg, skip_size = TRUE)[1, "Version"]
+      dat <- get_latest_data_back(pkg, skip_size = TRUE, msg = msg)[1, "Version"]
     } else {
 
       dat <- lst[lst$Package == pkg, "Version"]
@@ -391,13 +393,24 @@ get_file_name <- function(pkgname, version) {
 #' @noRd
 get_current_version <- function(pkgname) {
 
-  dat <- installed_packages()
+  dat <- installed_packages(pkgname)
 
-  sdat <- subset(dat, dat$Package == pkgname, "Version")
-
-  ret <- sdat[["Version"]]
+  if (nrow(dat) > 0)
+    ret <- dat[["Version"]][1]
+  else
+    ret <- NULL
 
   return(ret)
+}
+
+#' @noRd
+get_package_version <- function(pkg, repo = NULL) {
+
+   p <- suppressWarnings(packageDescription(pkg, repo))
+
+   ret <- p$Version
+
+   return(ret)
 }
 
 #' @title Get Installed Packages and Versions
@@ -429,31 +442,78 @@ get_current_version <- function(pkgname) {
 #' # 9          bit   4.0.5
 #' # 10       bit64   4.0.5
 #' @import utils
+#' @import utils
 #' @noRd
 installed_packages <- function(pkgs = NULL, repos = NULL) {
 
-  if (!is.null(pkgs)) {
-    # User wants a vector of packages
-    vers <- c()
-    for (pkg in pkgs) {
-      mv <- tryCatch({as.character(packageVersion(pkg, lib.loc = repos))},
-                     error = function(err) {
-                       NA_character_
-                     })
-      vers[length(vers) + 1] <- mv
+  # Get pkgs if not passed
+  if (is.null(pkgs)) {
+    if (is.null(repos)) {
+      repos <- .libPaths()
+      if (any(grepl("/_build", repos, fixed = TRUE))) {
+
+        repos <- gsub("/_build", "", repos, fixed = TRUE)
+      }
     }
-    ret <- data.frame(Package = pkgs, Version = vers)
-  } else {
-    # User actually wants all the packages
-    ip <- as.data.frame(utils::installed.packages(repos)[,c(1,3:4)])
-    ret <- ip[is.na(ip$Priority),1:2,drop=FALSE]
+
+    pkgs <- c()
+    for (pth in repos) {
+      dirs <- common::dir.find(pth, up = -1, down = 1)
+      if (length(dirs) > 0) {
+        pkgs <- c(pkgs, basename(dirs))
+      } else {
+
+        print(paste0("Path is ", pth))
+      }
+    }
+
+    # Take out _build
+    pkgs <- pkgs[pkgs != "_build"]
   }
 
+  # Get versions of each package
+  vers <- c()
+  for (pkg in pkgs) {
+    mv <- tryCatch({get_package_version(pkg, repos)},
+                   error = function(err) {
+                     NA_character_
+                   })
+    vers[length(vers) + 1] <- mv
+  }
+
+  # Create data frame of results
+  ret <- data.frame(Package = pkgs, Version = vers)
+
+  # Kill any rownames
   rownames(ret) <- NULL
 
   return(ret)
 }
 
+
+#' @import common
+#' @noRd
+base_packages <- function() {
+
+  pth <- .Library
+
+  pths <- common::dir.find(pth, up = -1, down = 1)
+
+  ret <- basename(pths)
+
+
+  return(ret)
+}
+
+#' @noRd
+is_base <- function(pkg) {
+
+  ret <- FALSE
+  if (pkg %in% e$BasePackages)
+    ret <- TRUE
+
+  return(ret)
+}
 
 # Difference Utilities ----------------------------------------------------
 

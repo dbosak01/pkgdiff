@@ -193,6 +193,11 @@ print.pinfo <- function(x, ..., verbose = FALSE) {
     if (!is.null(x$Archived))
       cat(paste0("- Archived: ", as.character(x$Archived), "\n"))
 
+    if (!is.null(x$BasePackage)) {
+      if (x$BasePackage == TRUE)
+        cat(paste0("- Base Package: TRUE\n"))
+    }
+
     if (verbose == FALSE) {
 
       if (!is.null(x$Functions))
@@ -490,11 +495,22 @@ print.pcache <- function(x, ...) {
 pkg_info <- function(pkg, ver = "current", cache = TRUE) {
 
   # browser()
-  archived <- NULL
+
+  lv <- get_latest_version(pkg, msg = FALSE)
+  archived <- FALSE
+  if (!is.null(lv)) {
+    if (lv == "archived")
+      archived <- TRUE
+  }
+
+  based <- is_base(pkg)
+
   tst <- github_packages(pkg)
 
   if (is.null(ver)) {
+
     ver <- get_current_version(pkg)
+
   } else if (ver == "current") {
 
     ver <- get_current_version(pkg)
@@ -504,11 +520,13 @@ pkg_info <- function(pkg, ver = "current", cache = TRUE) {
     ver <- get_latest_version(pkg)
   }
 
-  if (length(ver) == 0)
+  if (length(ver) == 0) {
+
     ver <- get_latest_version(pkg)
+  }
 
   if (!is.null(ver)) {
-    if (ver == "archived") {
+    if (archived) {
 
       tmp <- get_archive_versions(pkg)
 
@@ -539,14 +557,21 @@ pkg_info <- function(pkg, ver = "current", cache = TRUE) {
 
         ret <- get_info_cran(pkg, ver)
       }
+    } else if (based == TRUE) {
+
+      ret <- get_info_description(pkg)
+
+      if (archived)
+        ret$Archived <- TRUE
+
+      ret$Cached <- FALSE
 
     } else {
 
         ret <- get_info_cran(pkg, ver)
-
     }
 
-    if (is.null(archived)) {
+    if (archived == FALSE) {
       dm  <- cranlogs::cran_downloads(pkg, when = "last-month")
       ret$LastMonthDownloads <- sum(dm$count)
 
@@ -559,7 +584,14 @@ pkg_info <- function(pkg, ver = "current", cache = TRUE) {
 
     } else {
 
-      ret$Archived <- archived
+      ret$Archived <- as.logical(archived)
+    }
+
+    if (based) {
+
+      ret$BasePackage <- TRUE
+    } else {
+      ret$BasePackge <- FALSE
     }
 
   }
@@ -718,6 +750,32 @@ get_info_cran <- function(pkg, ver) {
   # nsf$exportMethods
 
   return(pi)
+}
+
+
+#' @noRd
+get_info_description <- function(pkg) {
+
+  ret <- NULL
+
+  ds <- packageDescription(pkg)
+
+  if (length(ds) > 1) {
+
+    blt <- strsplit(ds$Built, ";", fixed = TRUE)[[1]][3]
+
+    ret <- pinfo(pkg, ds$Version,
+                release = as.Date(blt),
+                title = ds$Title,
+                description = ds$Description,
+                maintainer = ds$Maintainer,
+                imports = ds$Imports,
+                license = ds$License)
+
+    ret$BasePackage <- is_base(pkg)
+  }
+
+  return(ret)
 }
 
 # Export Patterns:

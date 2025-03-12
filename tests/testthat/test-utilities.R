@@ -560,3 +560,51 @@ test_that("utilities27: github_update() works as expected.", {
   expect_equal("POSIXct" %in% class(res), TRUE)
 
 })
+
+test_that("utilities27: github_update() works as expected.", {
+
+  res <- get_package_version("common")
+
+  expect_equal(is.character(res), TRUE)
+
+  expect_error(get_package_version("forker"))
+
+  if (dev) {
+    res <- get_package_version("Matrix")
+
+    expect_equal(is.character(res), TRUE)
+
+  }
+
+})
+
+
+test_that("utilities28: is_base() works as expected.", {
+
+  res <- is_base("grid")
+
+  expect_equal(res, TRUE)
+
+  res <- is_base("utils")
+
+  expect_equal(res, TRUE)
+
+  res <- is_base("common")
+
+  expect_equal(res, FALSE)
+
+  res <- is_base("rvest")
+
+  expect_equal(res, FALSE)
+
+})
+
+
+test_that("utilities29: get_info_description() works as expected.", {
+
+  res <- get_info_description("grid")
+
+  expect_equal("pinfo" %in% class(res), TRUE)
+  expect_equal(res$Package, "grid")
+
+})
