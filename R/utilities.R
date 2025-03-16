@@ -463,7 +463,7 @@ installed_packages <- function(pkgs = NULL, repos = NULL) {
         pkgs <- c(pkgs, basename(dirs))
       } else {
 
-        print(paste0("Path is ", pth))
+        message(paste0("No packages in repo path '", pth, "'"))
       }
     }
 

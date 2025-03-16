@@ -1,7 +1,7 @@
 <!-- badges: start -->
 
 [![pkgdiff version](https://www.r-pkg.org/badges/version/pkgdiff)](https://cran.r-project.org/package=pkgdiff)
-[![pkgdiff lifecycle](https://img.shields.io/badge/lifecycle-experimental-red.svg)](https://cran.r-project.org/package=pkgdiff)
+[![pkgdiff lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://cran.r-project.org/package=pkgdiff)
 [![pkgdiff downloads](https://cranlogs.r-pkg.org/badges/pkgdiff)](https://cran.r-project.org/package=pkgdiff)
 [![pkgdiff total downloads](https://cranlogs.r-pkg.org/badges/grand-total/pkgdiff)](https://cran.r-project.org/package=pkgdiff)
 [![R-CMD-check](https://github.com/dbosak01/pkgdiff/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dbosak01/pkgdiff/actions/workflows/R-CMD-check.yaml)

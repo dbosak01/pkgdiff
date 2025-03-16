@@ -248,6 +248,19 @@ test_that("stability15: pkg_stability() package edge cases.", {
 
   expect_equal(res$StabilityScore == 1, TRUE)
 
+
+  # Error on Base Package, formerly contributed
+  res <- pkg_stability("tcltk")
+
+  expect_equal(res$Repository, "?")
+
+
+  # Error on Base Package, formerly contributed
+  res <- pkg_stability("Matrix")
+
+  expect_equal(res$Repository, "?")
+
+
 })
 
 

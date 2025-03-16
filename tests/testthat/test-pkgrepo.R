@@ -185,6 +185,19 @@ test_that("repo9: pkg_repo() non-CRAN package.", {
 })
 
 
+test_that("repo10: pkg_repo() troublesome packages.", {
+
+    pkgs <- c("tcltk", "Matrix")
+
+    res <- repo_stability(pkgs)
+
+    expect_equal(nrow(res), 2)
+    expect_equal(all(is.na(res$Score)), TRUE)
+
+})
+
+
+
 # ip <- as.data.frame(installed.packages()[,c(1,3:4)])
 # rownames(ip) <- NULL
 # ip <- ip[is.na(ip$Priority),1:2,drop=FALSE]
