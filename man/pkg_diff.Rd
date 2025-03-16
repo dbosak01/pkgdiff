@@ -29,7 +29,8 @@ there were any breaking changes.
 \description{
 The \code{pkg_diff} function is used to compare two different versions of
 a package.  The function returns an object that contains the differences.
-Differences include any functions added or removed. The object may
+Differences include any functions added or removed, and any function parameters
+added or removed. The object may
 be printed directly, or stored in a variable and examined programmatically.
 }
 \details{

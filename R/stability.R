@@ -125,10 +125,10 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #' The above data will be included in the function print out.  It can also be
 #' accessed on the returned object from the "data" list item, i.e.
 #' \code{obj$data}.
-#' @section Disclaimers: Note that a "breaking release" does not currently factor
+#' @section Disclaimers: Note that a "breaking release" does not factor
 #' in the number of
 #' functions deprecated. One deprecated function counts the same as 10 deprecated
-#' functions within a release.  Current methodology also does not differentiate
+#' functions within a release.  The methodology also does not differentiate
 #' between removed
 #' functions and removed parameters. They are both considered "breaking", and
 #' counted equally.
@@ -143,7 +143,9 @@ get_stability_data <- function(pkgs, releases = NULL, months = NULL) {
 #' for some packages has been cached on Github, and can be retrieved very
 #' quickly.  For packages that have not been cached, the function must
 #' download each version of the package from the CRAN archive, and compare
-#' consecutive versions.  This process can take considerable time. The
+#' consecutive versions.  This process can take considerable time.
+#'
+#' The
 #' most popular packages on CRAN have been cached.  If there is a package
 #' you query frequently that has not been cached, please submit
 #' an issue to the \strong{pkgdiff} issue log on Github. In the issue description

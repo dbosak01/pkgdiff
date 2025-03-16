@@ -31,7 +31,7 @@ on the links below to navigate to the full question and answer content.
 * [Which packages are in the cache?](#cache)
 * [Where is the cache located?](#location)
 * [How can I add a package to the cache?](#addcache)
-* [Can I create a report with pkgdiff?](#report)
+* [Can I create a report with **pkgdiff**?](#report)
 * [Can I use **pkgdiff** with packages that are not on CRAN?](#github)
 * [Can I use **pkgdiff** with Base R packages?](#base)
 
@@ -253,7 +253,7 @@ package, and calculate stability scores.  Packages on Github or
 locally developed packages do not have a predictable and easily accessible archive.
 
 Note that there is another package on CRAN called **packageDiff** that allows you
-to compare two packages locally. This package can generated version differences.
+to compare two packages locally. This package can generate version differences.
 It will not, however, generate stability scores, or assess an entire repository.
 
 [top](#top) 
@@ -264,7 +264,7 @@ It will not, however, generate stability scores, or assess an entire repository.
 
 **Q:** I see that **pkgdiff** does not seem to work with some very commonly 
 used packages.
-For instance, `pkg_info()` produces no results for "tools" and "utils".  Does
+For instance, `pkg_stabilty()` produces no results for "tools" and "utils".  Does
 **pkgdiff** work with Base R packages?
 
 **A:** No.  **pkgdiff** only works with contributed packages. It does not 
@@ -274,9 +274,8 @@ a completely different way.
 Some Base R "recommended" packages are published
 as contributed CRAN packages, and will therefore work with **pkgdiff**.  But 
 packages such as "base", "tools", "utils", "compiler", "datasets", "graphics", 
-"grDevices", "grid", "methods", "stats", etc. will give a message saying package
-data was not found.  Data for these packages is indeed not found in the same
-area as most CRAN packages.
+"grDevices", "grid", "methods", "stats", etc. will give limited or no results
+for most functions in **pkgdiff**.  
 
 [top](#top) 
 

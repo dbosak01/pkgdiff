@@ -121,6 +121,9 @@ contains a list of functions in the package and their parameters.</p>
 but the "Archived" flag will be set to TRUE. If the
 package is not found on CRAN, the function will emit a message and return
 NULL.</p>
+<p>If the package is a Base R package, a reduced number of fields will be returned,
+and the package will be marked with <code>Base Package: TRUE</code>.  Function
+lists are not available for Base packages.</p>
     </div>
     <div id="details">
     <h2>Details</h2>

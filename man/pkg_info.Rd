@@ -34,6 +34,10 @@ If the package has been archived on CRAN, info will be returned,
 but the "Archived" flag will be set to TRUE. If the
 package is not found on CRAN, the function will emit a message and return
 NULL.
+
+If the package is a Base R package, a reduced number of fields will be returned,
+and the package will be marked with \code{Base Package: TRUE}.  Function
+lists are not available for Base packages.
 }
 \description{
 Combines information related to a package. Objects of this class are
