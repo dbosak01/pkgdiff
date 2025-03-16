@@ -528,10 +528,10 @@ pkg_info <- function(pkg, ver = "current", cache = TRUE) {
     ver <- get_latest_version(pkg)
   }
 
-  if (length(ver) == 0) {
-
-    ver <- get_latest_version(pkg)
-  }
+  if (length(ver) == 0)
+    ver <- lv
+  else if (is.na(ver))
+    ver <- lv
 
   if (!is.null(ver)) {
     if (archived) {

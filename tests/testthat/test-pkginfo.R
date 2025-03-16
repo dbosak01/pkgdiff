@@ -273,6 +273,18 @@ test_that("info10: pkg_versions() works as expected.", {
 })
 
 
+test_that("info11: pkg_info() edge cases.", {
+
+  # Not on local machine, not archived
+  # Therefore no current version
+  res <- pkg_info("pharmaRTF")
+
+  res
+
+  expect_equal(is.null(res), FALSE)
+
+})
+
 # Not doing good with S4 classes
 # pth <- "https://cran.r-project.org/src/contrib/Matrix_1.7-2.tar.gz"
 #

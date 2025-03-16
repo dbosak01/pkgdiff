@@ -1,6 +1,7 @@
 # pkgdiff 0.2.0
 
 * Handle Base R packages on `pkg_stabilty()` and `repo_stability()`.
+* Fixed bug in `pkg_info()` that was affecting some specific packages.
 
 # pkgdiff 0.1.9
 
