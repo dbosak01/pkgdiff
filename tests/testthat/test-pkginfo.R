@@ -283,6 +283,14 @@ test_that("info11: pkg_info() edge cases.", {
 
   expect_equal(is.null(res), FALSE)
 
+  if (dev) {
+
+    # Local version ahead of CRAN
+    res <- pkg_info("pkgdiff")
+
+    expect_equal(is.null(res), FALSE)
+  }
+
 })
 
 # Not doing good with S4 classes

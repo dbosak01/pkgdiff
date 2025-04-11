@@ -528,15 +528,15 @@ pkg_info <- function(pkg, ver = "current", cache = TRUE) {
     ver <- get_latest_version(pkg)
   }
 
-  if (length(ver) == 0)
+  if (length(ver) == 0) {
     ver <- lv
-  else if (is.na(ver))
+  } else if (is.na(ver)) {
     ver <- lv
+  }
 
   if (!is.null(ver)) {
+    tmp <- get_archive_versions(pkg)
     if (archived) {
-
-      tmp <- get_archive_versions(pkg)
 
       if (nrow(tmp) > 0) {
 
@@ -544,6 +544,16 @@ pkg_info <- function(pkg, ver = "current", cache = TRUE) {
         archived <- TRUE
 
       }
+    }
+
+    # No archive versions
+    if (is.null(tmp)) {
+      if (ver != lv) {
+        ver <- lv
+      }
+    } else if (!ver %in% tmp$Version) {  # Current version doesn't match anything
+
+      ver <- lv
     }
   }
 
