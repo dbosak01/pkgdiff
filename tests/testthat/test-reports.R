@@ -91,6 +91,8 @@ test_that("reports4: repo_stability() handles edge cases.", {
 
     r1 <- pkg_repo(ver = "4.2.1")
 
+    r2 <- pkg_repo()
+
 
     # What happens when you get stability scores
     # for a whole repository

@@ -1,3 +1,7 @@
+# pkgdiff 0.2.1
+
+* CRAN fixes.
+
 # pkgdiff 0.2.0
 
 * Handle Base R packages on `pkg_stabilty()` and `repo_stability()`.

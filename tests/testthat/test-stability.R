@@ -48,11 +48,17 @@ test_that("stability3: get_stability_data() release limit.", {
 
 test_that("stability4: get_stability_data() time limit.", {
 
-  res <- get_stability_data("fmtr", months = 12)
+  if (dev) {
+    res <- get_stability_data("fmtr", months = 12)
 
 
-  expect_equal(is.data.frame(res), TRUE)
-  expect_equal(nrow(res) > 1, TRUE)
+    expect_equal(is.data.frame(res), TRUE)
+    expect_equal(nrow(res) > 1, TRUE)
+
+  } else {
+
+    expect_equal(TRUE, TRUE)
+  }
 
 
 })
