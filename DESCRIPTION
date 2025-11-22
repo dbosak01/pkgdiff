@@ -1,7 +1,7 @@
 Package: pkgdiff
 Type: Package
 Title: Identifies Package Differences
-Version: 0.2.1
+Version: 1.0.0
 Maintainer: David Bosak <dbosak01@gmail.com>
 Authors@R: c(
     person(
@@ -32,7 +32,7 @@ LazyData: true
 URL: https://pkgdiff.r-sassy.org, https://github.com/dbosak01/pkgdiff
 BugReports: https://github.com/dbosak01/pkgdiff/issues
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Depends: 
     R (>= 4.0.0)
 Imports: rvest,

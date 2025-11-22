@@ -1,3 +1,9 @@
+# pkgdiff 1.0
+
+* Added logo
+* Added `pkg_report()` function for interactive use.
+* Upgraded life cycle to "stable".
+
 # pkgdiff 0.2.1
 
 * CRAN fixes.
