@@ -10,7 +10,7 @@ test_that("summary1: gen_chart() basic functionality.", {
 
   sb <- pkg_stability("stringr")
 
-  res <- gen_chart("stringr", sb$StabilityData, ipth)
+  res <- gen_chart("stringr", sb$StabilityData, ipth, "")
 
 
   expect_equal(file.exists(res), TRUE)
@@ -30,7 +30,7 @@ test_that("summary2: gen_html() basic functionality.", {
 
 
   # pkg, fpth, ipth
-  res <- gen_html("stringr", fpth, ipth)
+  res <- gen_html("stringr", fpth, ipth, NULL, NULL)
 
 
   expect_equal(file.exists(res), TRUE)
