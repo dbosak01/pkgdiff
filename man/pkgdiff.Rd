@@ -32,6 +32,8 @@ packages in a specified repository.}
 upgrading from one version of a repository to another.}
 \item {\code{\link{repo_stability}}: Performs a stability assessment
 on multiple packages, even an entire repository.}
+\item {\code{\link{pkg_summary}}: Generates a summary report in HTML
+that can be viewed interactively.}
 }
 For additional information on \strong{pkgdiff}, see the package vignette
 \code{vignette('pkgdiff')}, or visit the package web site

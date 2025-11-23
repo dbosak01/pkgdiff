@@ -29,6 +29,8 @@ the last month.
 which functions and parameters have been added or removed.
 - `pkg_stability()`: Looks at the history of a package,
 identifies breaking changes, and assesses the package for stability.
+- `pkg_summary()`: Creates an HTML summary of information about a package,
+and sends it to the RStudio viewer. 
 - `pkg_repo()`: Generates a table of the packages in a repository
 and their versions.
 - `repo_breakages()`: Looks at a package repository and tries to identify
@@ -238,6 +240,32 @@ of "Unstable" does not necessarily mean you should not use the package.  Whether
 or not you use the package depends on your situation, and the amount of 
 risk you can tolerate.
 
+
+## Create a Summary Report
+
+The information from the above functions can also be combined into a nice report
+using `pkg_summary()`. `pkg_summary()` pulls key data from `pkg_info()` and 
+`pkg_stability()` and generates an HTML page, which it then sends to the 
+RStudio viewer.  
+
+For example, you can run a package summary report for the **dplyr** package like
+this:
+
+```{r eval=FALSE, echo=TRUE}
+# Get package summary report
+pkg_summary("dplyr")
+```
+The following will then appear in the RStudio viewer:
+
+<img src="../man/images/summary2.png" alt = "Summary Report 2"/>
+
+The chart shows the number of breaking changes per release.  As you can see,
+the **dplyr** package had a large number of breaking changes between version
+"0.8.5" and version "1.0.0", but has been relatively stable since then.  
+
+The Package Summary Report provides an easy way to get an overview of a package.
+For additional information, see the `pkg_summary()` documentation.
+
 ## Comparing Package Versions
 
 If you find a package with breaking changes, you would then want to know
@@ -315,7 +343,6 @@ have been removed.  It is up to you to determine whether and how these
 removals will affect your programs.  It is very convenient, however,
 to have an accurate accounting of package changes.  These changes
 can help you plan your package upgrades and anticipate breakages.
-
 
 ## Listing Package Versions
 

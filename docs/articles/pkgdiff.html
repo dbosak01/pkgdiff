@@ -126,6 +126,9 @@ shows which functions and parameters have been added or removed.</li>
 identifies breaking changes, and assesses the package for
 stability.</li>
 <li>
+<code><a href="../reference/pkg_summary.html">pkg_summary()</a></code>: Creates an HTML summary of information
+about a package, and sends it to the RStudio viewer.</li>
+<li>
 <code><a href="../reference/pkg_repo.html">pkg_repo()</a></code>: Generates a table of the packages in a
 repository and their versions.</li>
 <li>
@@ -331,6 +334,29 @@ mean you should not use the package. Whether or not you use the package
 depends on your situation, and the amount of risk you can tolerate.</p>
 </div>
 <div class="section level2">
+<h2 id="create-a-summary-report">Create a Summary Report<a class="anchor" aria-label="anchor" href="#create-a-summary-report"></a>
+</h2>
+<p>The information from the above functions can also be combined into a
+nice report using <code><a href="../reference/pkg_summary.html">pkg_summary()</a></code>. <code><a href="../reference/pkg_summary.html">pkg_summary()</a></code>
+pulls key data from <code><a href="../reference/pkg_info.html">pkg_info()</a></code> and
+<code><a href="../reference/pkg_stability.html">pkg_stability()</a></code> and generates an HTML page, which it then
+sends to the RStudio viewer.</p>
+<p>For example, you can run a package summary report for the
+<strong>dplyr</strong> package like this:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Get package summary report</span></span>
+<span><span class="fu"><a href="../reference/pkg_summary.html">pkg_summary</a></span><span class="op">(</span><span class="st">"dplyr"</span><span class="op">)</span></span></code></pre></div>
+<p>The following will then appear in the RStudio viewer:</p>
+<p><img src="../man/images/summary2.png" alt="Summary Report 2"></p>
+<p>The chart shows the number of breaking changes per release. As you
+can see, the <strong>dplyr</strong> package had a large number of
+breaking changes between version “0.8.5” and version “1.0.0”, but has
+been relatively stable since then.</p>
+<p>The Package Summary Report provides an easy way to get an overview of
+a package. For additional information, see the
+<code><a href="../reference/pkg_summary.html">pkg_summary()</a></code> documentation.</p>
+</div>
+<div class="section level2">
 <h2 id="comparing-package-versions">Comparing Package Versions<a class="anchor" aria-label="anchor" href="#comparing-package-versions"></a>
 </h2>
 <p>If you find a package with breaking changes, you would then want to
@@ -341,7 +367,7 @@ the package you wish to compare.</p>
 <p>Looking at our stability data above, let’s examine the breaking
 changes between versions “2.4.0” and “2.5.0” of
 <strong>dbplyr</strong>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compare package versions</span></span>
 <span><span class="fu"><a href="../reference/pkg_diff.html">pkg_diff</a></span><span class="op">(</span><span class="st">"dbplyr"</span>, <span class="st">"2.4.0"</span>, <span class="st">"2.5.0"</span><span class="op">)</span></span>
 <span><span class="co"># # A difference object: dbplyr package</span></span>
@@ -418,7 +444,7 @@ tools to find version information: <code><a href="../reference/pkg_versions.html
 <p><code><a href="../reference/pkg_versions.html">pkg_versions()</a></code> returns all the versions of a package in
 a data frame, along with release dates for each version. It works like
 this:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get package versions</span></span>
 <span><span class="fu"><a href="../reference/pkg_versions.html">pkg_versions</a></span><span class="op">(</span><span class="st">"stringr"</span><span class="op">)</span></span>
 <span><span class="co">#    Package Version              FileName    Release   Size</span></span>
@@ -447,7 +473,7 @@ versions of a package are available.</p>
 <p>Next, you may want to know which versions of packages you have
 installed in your R repository. This information can be queried using
 the <code><a href="../reference/pkg_repo.html">pkg_repo()</a></code> function. Let’s take a look:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Check version in repo</span></span>
 <span><span class="fu"><a href="../reference/pkg_repo.html">pkg_repo</a></span><span class="op">(</span><span class="st">"stringr"</span><span class="op">)</span></span>
@@ -461,7 +487,7 @@ of <strong>stringr</strong> installed in our R 4.4 repo. Good to
 know!</p>
 <p>Can <code><a href="../reference/pkg_repo.html">pkg_repo()</a></code> be used to get versions for multiple
 packages? Yes! Here is how:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Create vector of packages</span></span>
 <span><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"curl"</span>, <span class="st">"dplyr"</span>, <span class="st">"fmtr"</span>, <span class="st">"purrr"</span><span class="op">)</span></span>
@@ -524,7 +550,7 @@ bulk. It will perform difference operations on any number of packages,
 and tell you whether or not there will be any breaking changes. As you
 can imagine, this function is well suited for repository upgrades. Here
 is an example:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># View upgrade breakages</span></span>
 <span><span class="fu"><a href="../reference/repo_breakages.html">repo_breakages</a></span><span class="op">(</span><span class="va">res1</span>, <span class="va">res2</span><span class="op">)</span> </span>
 <span><span class="co"># Comparing curl v5.2.1/v6.2.0</span></span>
@@ -563,7 +589,7 @@ your code, and determine whether those removals will break anything.</p>
 <code><a href="../reference/repo_breakages.html">repo_breakages()</a></code> on a small number of packages. Now let’s
 see how to use the function on a large number of packages. In fact, we
 will perform an upgrade analyse on our entire R repository:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Get current versions from local repo</span></span>
 <span><span class="va">r1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_repo.html">pkg_repo</a></span><span class="op">(</span>ver <span class="op">=</span> <span class="st">"current"</span><span class="op">)</span></span>
@@ -645,7 +671,7 @@ will perform an upgrade analyse on our entire R repository:</p>
 <span><span class="co"># ...</span></span></code></pre></div>
 <p>When the processing finishes, you can examine the results using
 dollar sign ($) notation:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># View Summary Table</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">Summary</span></span>
 <span><span class="co">#            Package             Version1   Version2 Breakages</span></span>
@@ -705,7 +731,7 @@ effort it might take to fix any breakages.</p>
 <strong>pkgdiff</strong> also allows you to gather stability scores for
 a large number of packages. Bulk stability scores are achieved using
 <code><a href="../reference/repo_stability.html">repo_stability()</a></code>. Here is how to do it:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create vector of packages</span></span>
 <span><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"curl"</span>, <span class="st">"dplyr"</span>, <span class="st">"dbplyr"</span>, <span class="st">"purrr"</span><span class="op">)</span></span>
 <span></span>

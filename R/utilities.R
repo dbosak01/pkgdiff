@@ -951,5 +951,43 @@ unzip_package <- function(pth) {
   return(ret)
 }
 
+# Show a file in the viewer.
+# This is used in pkg_report()
+#' @noRd
+show_viewer <- function(path) {
+
+  pth <- ""
+
+  #print(paste0("path: ", path))
+
+  if (file.exists(path)) {
+
+    # Not sure if we need a global option
+    # Comment out for now
+    # opts <- options("procs.print")[[1]]
+    # if (is.null(opts))
+    #   opts <- TRUE
+    #
+    # if (opts == TRUE) {
+    #
+      pth <- path
+
+      viewer <- getOption("viewer")
+
+      if (!is.null(viewer)) {
+        viewer(pth)
+      } else {
+        utils::browseURL(pth)
+      }
+
+    # }
+
+  }
+
+
+  return(pth)
+
+}
+
 
 

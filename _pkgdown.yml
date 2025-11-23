@@ -12,6 +12,7 @@ reference:
 - title: Single Package Functions
   desc: Functions to assess versions of a single package.
   contents:
+  - pkg_summary
   - pkg_info
   - pkg_diff
   - pkg_stability

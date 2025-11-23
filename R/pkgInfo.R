@@ -534,7 +534,7 @@ pkg_info <- function(pkg, ver = "current", cache = TRUE) {
     ver <- lv
   }
 
-  if (!is.null(ver)) {
+  if (!is.null(ver) && based == FALSE) {
     tmp <- get_archive_versions(pkg)
     if (archived) {
 

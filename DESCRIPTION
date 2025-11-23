@@ -39,7 +39,9 @@ Imports: rvest,
          common,
          crayon,
          utils,
-         cranlogs
+         cranlogs,
+         grDevices, 
+         graphics
 Suggests: 
     knitr,
     rmarkdown,
