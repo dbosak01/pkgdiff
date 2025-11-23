@@ -81,7 +81,7 @@ The function provides a nice snapshot that can help you get a feel for a package
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pkg_summary</span><span class="op">(</span><span class="va">pkg</span>, view <span class="op">=</span> <span class="cn">TRUE</span>, path <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pkg_summary</span><span class="op">(</span><span class="va">pkg</span>, releases <span class="op">=</span> <span class="cn">NULL</span>, months <span class="op">=</span> <span class="cn">NULL</span>, view <span class="op">=</span> <span class="cn">TRUE</span>, path <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -91,6 +91,21 @@ The function provides a nice snapshot that can help you get a feel for a package
 <dl><dt id="arg-pkg">pkg<a class="anchor" aria-label="anchor" href="#arg-pkg"></a></dt>
 <dd><p>A quoted string containing the name of the package to report on.
 This parameter is required.</p></dd>
+
+
+<dt id="arg-releases">releases<a class="anchor" aria-label="anchor" href="#arg-releases"></a></dt>
+<dd><p>An integer indicating the number of releases to collect
+stability data for. For example, <code>releases = 10</code> will return stability
+data for the last 10 releases of the package. Default is NULL, which means
+the function will return data for all releases.</p></dd>
+
+
+<dt id="arg-months">months<a class="anchor" aria-label="anchor" href="#arg-months"></a></dt>
+<dd><p>An integer indicating the number of months back to collect
+stability data for.  For example, <code>months = 24</code> will collect
+stability data for the previous 2 years.  Default is NULL, meaning there is
+no limitation on the number of release months, and the function will collect
+data from all releases.</p></dd>
 
 
 <dt id="arg-view">view<a class="anchor" aria-label="anchor" href="#arg-view"></a></dt>
@@ -124,7 +139,7 @@ The chart shows each release issued by the package maintainer
 over the last ~8.5 years. Releases prior to that are not displayed,
 as they are not included in the stability score. The bars represent the
 number of removed functions and removed parameters. The labels on each
-bar show the release month and version.</p>
+bar show the release year, month and version.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

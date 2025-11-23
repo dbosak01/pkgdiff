@@ -4,11 +4,22 @@
 \alias{pkg_summary}
 \title{Generate a Package Summary Report}
 \usage{
-pkg_summary(pkg, view = TRUE, path = NULL)
+pkg_summary(pkg, releases = NULL, months = NULL, view = TRUE, path = NULL)
 }
 \arguments{
 \item{pkg}{A quoted string containing the name of the package to report on.
 This parameter is required.}
+
+\item{releases}{An integer indicating the number of releases to collect
+stability data for. For example, \code{releases = 10} will return stability
+data for the last 10 releases of the package. Default is NULL, which means
+the function will return data for all releases.}
+
+\item{months}{An integer indicating the number of months back to collect
+stability data for.  For example, \code{months = 24} will collect
+stability data for the previous 2 years.  Default is NULL, meaning there is
+no limitation on the number of release months, and the function will collect
+data from all releases.}
 
 \item{view}{Whether to display the report in the viewer.  By default,
 the parameter is TRUE.}
@@ -43,7 +54,7 @@ The chart shows each release issued by the package maintainer
 over the last ~8.5 years. Releases prior to that are not displayed,
 as they are not included in the stability score. The bars represent the
 number of removed functions and removed parameters. The labels on each
-bar show the release month and version.
+bar show the release year, month and version.
 }
 \examples{
 # View summary report for "stringr" package

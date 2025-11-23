@@ -179,4 +179,33 @@ test_that("summary9: pkg_summary() path argument.", {
 })
 
 
+test_that("summary10: pkg_summary() releases and months parameters.", {
+
+
+
+  res <- pkg_summary("admiral", releases = 10)
+
+
+  expect_equal(file.exists(res), TRUE)
+
+
+  res <- pkg_summary("admiral", months = 18)
+
+
+  expect_equal(file.exists(res), TRUE)
+
+
+  res <- pkg_summary("admiral", months = 18, releases = 3)
+
+
+  expect_equal(file.exists(res), TRUE)
+
+
+  # file.show(res)
+
+
+})
+
+
+
 

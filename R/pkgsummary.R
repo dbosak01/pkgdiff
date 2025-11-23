@@ -24,12 +24,21 @@
 #' over the last ~8.5 years. Releases prior to that are not displayed,
 #' as they are not included in the stability score. The bars represent the
 #' number of removed functions and removed parameters. The labels on each
-#' bar show the release month and version.
+#' bar show the release year, month and version.
 #'
 #' @seealso For additional information, see \code{\link{pkg_info}} and
 #' \code{\link{pkg_stability}}.
 #' @param pkg A quoted string containing the name of the package to report on.
 #' This parameter is required.
+#' @param releases An integer indicating the number of releases to collect
+#' stability data for. For example, \code{releases = 10} will return stability
+#' data for the last 10 releases of the package. Default is NULL, which means
+#' the function will return data for all releases.
+#' @param months An integer indicating the number of months back to collect
+#' stability data for.  For example, \code{months = 24} will collect
+#' stability data for the previous 2 years.  Default is NULL, meaning there is
+#' no limitation on the number of release months, and the function will collect
+#' data from all releases.
 #' @param view Whether to display the report in the viewer.  By default,
 #' the parameter is TRUE.
 #' @param path A path and file name for the report.  If NULL, the function
@@ -44,7 +53,7 @@
 #' @import common
 #' @import graphics
 #' @export
-pkg_summary <- function(pkg, view = TRUE, path = NULL) {
+pkg_summary <- function(pkg, releases = NULL, months = NULL, view = TRUE, path = NULL) {
 
   # Add parameters for months and releases
   # Automatic limit on 10 years.
@@ -76,7 +85,7 @@ pkg_summary <- function(pkg, view = TRUE, path = NULL) {
   }
 
   # Get html page
-  pth <- gen_html(pkg, fpth, ipth)
+  pth <- gen_html(pkg, fpth, ipth, releases, months)
 
 
   # Show in viewer
@@ -102,7 +111,7 @@ pkg_summary <- function(pkg, view = TRUE, path = NULL) {
     }
 
     # Prepare target paths
-    ufpth <- file.path(udir, basename(pth))
+    ufpth <- file.path(udir, basename(path))
     uipth <- file.path(uidir, basename(ipth))
 
     # Copy files from temp to user targets
@@ -116,7 +125,7 @@ pkg_summary <- function(pkg, view = TRUE, path = NULL) {
 
 #' @import grDevices
 #' @noRd
-gen_chart <- function(pkg, dat, fpth) {
+gen_chart <- function(pkg, dat, fpth, sbttl) {
 
   # Extract stability data
   if (!is.null(dat) && nrow(dat) > 0) {
@@ -155,6 +164,11 @@ gen_chart <- function(pkg, dat, fpth) {
     # Set margins
     par(mar = c(5, 4, 4, 4))   # bottom, left, top, right
 
+    # Create title and subtitle
+    ttls <- "Breaking Changes by Release"
+    if (sbttl != "") {
+      ttls <- append(ttls, sbttl)
+    }
 
     # Base R stacked barplot
     barplot(
@@ -165,7 +179,7 @@ gen_chart <- function(pkg, dat, fpth) {
       las = 2,                        # vertical labels
       cex.names = 0.7,
      # cey.axis = 1.5,
-      main = c("Breaking Changes by Release"),
+      main = ttls,
       ylab = "Count",
       ylim = ylm
     )
@@ -217,7 +231,7 @@ gen_chart <- function(pkg, dat, fpth) {
 
 
 #' @noRd
-gen_html <- function(pkg, fpth, ipth) {
+gen_html <- function(pkg, fpth, ipth, rlses, mths) {
 
 
   # Get info data
@@ -226,13 +240,26 @@ gen_html <- function(pkg, fpth, ipth) {
   if (!is.null(info)) {
 
     # Get stability data
-    stb <- pkg_stability(pkg)
+    stb <- pkg_stability(pkg, releases = rlses, months = mths)
 
     # Modify image path for img tag
     ipth_mod <- file.path("./images", basename(ipth))
 
+    # Construct subtitle
+    sttl <- ""
+    if (!is.null(rlses)) {
+      sttl <- paste0("Releases = ", rlses)
+    }
+    if (!is.null(mths)) {
+      if (sttl != "") {
+        sttl <- paste0(sttl, " | ", "Months = ", mths)
+      } else {
+        sttl <- paste0("Months = ", mths)
+      }
+    }
+
     # Get chart path
-    cpth <- gen_chart(pkg, stb$StabilityData, ipth)
+    cpth <- gen_chart(pkg, stb$StabilityData, ipth, sttl)
 
     # Construct HTML
     lns <- c()
