@@ -91,7 +91,7 @@ pkg_summary <- function(pkg, releases = NULL, months = NULL, view = TRUE, path =
   # Show in viewer
   if (view) {
 
-    pth <- show_viewer(pth)
+    show_viewer(pth)
 
   }
 
@@ -117,6 +117,8 @@ pkg_summary <- function(pkg, releases = NULL, months = NULL, view = TRUE, path =
     # Copy files from temp to user targets
     file.copy(fpth, ufpth)
     file.copy(ipth, uipth)
+
+    pth <- path
   }
 
 

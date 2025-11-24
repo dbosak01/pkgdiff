@@ -956,21 +956,13 @@ unzip_package <- function(pth) {
 #' @noRd
 show_viewer <- function(path) {
 
-  pth <- ""
+  pth <- path
 
   #print(paste0("path: ", path))
 
-  if (file.exists(path)) {
+  if (interactive()) {
 
-    # Not sure if we need a global option
-    # Comment out for now
-    # opts <- options("procs.print")[[1]]
-    # if (is.null(opts))
-    #   opts <- TRUE
-    #
-    # if (opts == TRUE) {
-    #
-      pth <- path
+    if (file.exists(path)) {
 
       viewer <- getOption("viewer")
 
@@ -980,7 +972,7 @@ show_viewer <- function(path) {
         utils::browseURL(pth)
       }
 
-    # }
+    }
 
   }
 
@@ -1058,4 +1050,67 @@ sort_data_frame <- function(x, decreasing = FALSE, ..., by = NULL,
 
 }
 
+
+
+parse_date <- function(dstrng) {
+
+
+
+  ret <- tryCatch({as.Date(dstrng)},
+                  warning = function(cond) {NULL},
+                  error = function(cond) { NULL})
+
+  if (is.null(ret)) {
+
+    # Extract timezone (last word)
+    tz <- sub(".*\\s+", "", dstrng)
+
+    # Remove timezone from the timestamp
+    ts <- sub(paste0(" ", tz, "$"), "", dstrng)
+
+    # Parse and convert to Date
+    ret <- tryCatch({as.Date(as.POSIXct(ts,
+                                        format = " %Y-%m-%d %H:%M:%S",
+                                        tz = tz))},
+                    warning = function(cond) {NULL},
+                    error = function(cond) {NULL})
+
+
+  }
+
+  if (is.null(ret)) {
+
+
+    # 1. Remove surrounding single quotes and leading/trailing spaces
+    clean <- gsub("^[' ]+|[' ]+$", "", dstrng)
+
+    # 2. Extract the numeric timezone (e.g., "-0600")
+    offset <- sub(".* ([+-][0-9]{4})$", "\\1", clean)
+
+    # 3. Convert offset to "Etc/GMT" format
+    #    (Note: Etc/GMT signs are reversed relative to offsets)
+    hours_offset <- suppressWarnings(as.integer(substr(offset, 1, 3)))  # "-06" → -6
+    tz <- suppressWarnings(sprintf("Etc/GMT%+d", -hours_offset))  # becomes "Etc/GMT+6"
+
+    # 4. Remove the offset from the datetime string
+    datetime <- sub(paste0(" ", offset, "$"), "", clean)
+
+    # 5. Parse into POSIXct using the dynamically generated timezone
+    ret <- tryCatch({as.Date(as.POSIXct(datetime,
+                     format = "%a, %d %b %Y %H:%M:%S",
+                     tz = tz))},
+                   warning = function(cond) {NULL},
+                   error = function(cond) {NULL})
+
+  }
+
+  if (is.null(ret)) {
+
+    ret <- dstrng
+  }
+
+
+  return(ret)
+
+}
 

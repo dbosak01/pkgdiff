@@ -608,3 +608,33 @@ test_that("utilities29: get_info_description() works as expected.", {
   expect_equal(res$Package, "grid")
 
 })
+
+
+test_that("utilities30: parse_date() works as expected.", {
+
+
+
+  d1 <- " 2025-02-28 10:27:56 UTC"
+
+  res1 <- parse_date(d1)
+
+  expect_equal(res1, as.Date("2025-02-28"))
+
+
+  d2 <- " 'Wed, 08 Dec 2021 16:09:23 -0600'"
+
+  res2 <- parse_date(d2)
+
+  expect_equal(res2, as.Date("2021-12-08"))
+
+  d3 <- "bork"
+
+  res3 <- parse_date(d3)
+
+  expect_equal(res3, "bork")
+
+
+})
+
+
+
