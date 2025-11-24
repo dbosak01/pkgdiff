@@ -147,7 +147,8 @@ gen_chart <- function(pkg, dat, fpth, sbttl) {
     dat$Label <- paste0(substring(dat$Release, 3, 7), " v", dat$Version)
 
     # Sort ascending
-    dat <- sort_by(dat, dat$Release)
+    # dat <- sort_by(dat, dat$Release)
+    dat <- sort_data_frame(dat, by = "Release")
 
     # Reorder Releases chronologically (oldest to newest)
     # dat$Release <- factor(dat$Release, levels = dat$Release)

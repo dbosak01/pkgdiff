@@ -989,5 +989,73 @@ show_viewer <- function(path) {
 
 }
 
+#' @noRd
+sort_data_frame <- function(x, decreasing = FALSE, ..., by = NULL,
+                            ascending = TRUE, na.last = TRUE,
+                            index.return = FALSE) {
+
+  if (!"data.frame" %in% class(x)) {
+    stop("Input object must be derived from a data frame")
+
+  }
+
+  nms <- names(x)
+  if (!all(by %in% nms)) {
+    lst <- by[!by %in% nms]
+
+    stop(paste0("By value '", lst, "' is not a column on the input data frame."))
+
+  }
+
+  # A temporary list to hold columns
+  tmp <- list()
+
+  # Store input dataset in new variable
+  df <- x
+
+  # Default by is all variable names
+  if (is.null(by))
+    by <- names(df)
+
+  # Default ascending
+  a <- rep(TRUE, length(by))
+
+  # Set ascending if supplied
+  if (!is.null(ascending)) {
+    a <- rep(ascending, length(by))
+  }
+  names(a) <- by
+
+  # Create rank columns to handle custom sorts
+  for (nm in by) {
+
+    if (a[nm] == TRUE)
+      tmp[[nm]] <- rank(df[[nm]], na.last = na.last)
+    else
+      tmp[[nm]] <- -rank(df[[nm]], na.last = na.last)
+  }
+
+  # Get modified dataframe
+  tmp <- as.data.frame(tmp, stringsAsFactors = FALSE)
+
+  # Get row order
+  ord <- do.call('order', tmp)
+
+  if (index.return) {
+    ret <- ord
+  } else {
+    # Sort input dataframe
+    ret <- df[ord, , drop = FALSE]
+
+    # Restore attributes
+    ret <- copy.attributes(x, ret)
+  }
+
+
+
+  return(ret)
+
+
+}
 
 
