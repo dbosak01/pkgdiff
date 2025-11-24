@@ -827,8 +827,22 @@ github_packages <- function(pkg = NULL) {
   pth <- "https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/packages.rds"
 
   murl <- url(pth)
-  ret <- get(load(gzcon(murl)))
+  for (idx in seq(1, 10)) {
+    ret <- tryCatch({get(load(gzcon(murl)))},
+                    warning = function(cond){NULL},
+                    error = function(cond){NULL})
+    if (!is.null(ret)) {
+      break
+    }
+
+    Sys.sleep(1)
+  }
   close(murl)
+
+  if (is.null(ret)) {
+
+    stop("Pkgdiff GitHub package list not available.")
+  }
 
   if (!is.null(pkg)) {
     ret <- ret[pkg]
