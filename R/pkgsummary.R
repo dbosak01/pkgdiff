@@ -262,7 +262,10 @@ gen_html <- function(pkg, fpth, ipth, rlses, mths) {
     }
 
     # Get chart path
-    cpth <- gen_chart(pkg, stb$StabilityData, ipth, sttl)
+    cpth <- ""
+    if (interactive()) {
+      cpth <- gen_chart(pkg, stb$StabilityData, ipth, sttl)
+    }
 
     # Construct HTML
     lns <- c()

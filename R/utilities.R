@@ -863,13 +863,26 @@ github_package <- function(pkg) {
 
   fl <- file.path(pth, paste0(pkg, ".RData"))
 
-  info <- tryCatch({
-      murl <- url(fl)
-      ret <- get(load(gzcon(murl)))
-      close(murl)
-      ret
-    },
-      error = function(e){NULL})
+  murl <- url(fl)
+
+  for (idx in seq(1, 10)) {
+    info <- tryCatch({get(load(gzcon(murl)))},
+                    warning = function(cond){NULL},
+                    error = function(cond){NULL})
+    if (!is.null(info)) {
+      break
+    }
+
+    Sys.sleep(1)
+  }
+
+  close(murl)
+
+  if (is.null(info)) {
+
+    stop(paste0("Pkgdiff GitHub package '", pkg, "' not available."))
+  }
+
 
   return(info)
 
@@ -881,9 +894,24 @@ github_update <- function() {
   pth <- "https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/LastUpdate.RData"
 
   murl <- url(pth)
-  ret <- get(load(gzcon(murl)))
+  # ret <- get(load(gzcon(murl)))
+  for (idx in seq(1, 10)) {
+    ret <- tryCatch({get(load(gzcon(murl)))},
+                    warning = function(cond){NULL},
+                    error = function(cond){NULL})
+    if (!is.null(ret)) {
+      break
+    }
+
+    Sys.sleep(1)
+  }
+
   close(murl)
 
+  if (is.null(ret)) {
+
+    stop("Pkgdiff GitHub LastUpdated datestamp not available.")
+  }
 
   return(ret)
 }
