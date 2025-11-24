@@ -1096,13 +1096,11 @@ sort_data_frame <- function(x, decreasing = FALSE, ..., by = NULL,
 
 parse_date <- function(dstrng) {
 
-
-
   ret <- tryCatch({as.Date(dstrng)},
                   warning = function(cond) {NULL},
                   error = function(cond) { NULL})
 
-  if (is.null(ret)) {
+  if (is.null(ret) || is.na(ret)) {
 
     # Extract timezone (last word)
     tz <- sub(".*\\s+", "", dstrng)
@@ -1120,7 +1118,7 @@ parse_date <- function(dstrng) {
 
   }
 
-  if (is.null(ret)) {
+  if (is.null(ret) || is.na(ret)) {
 
 
     # 1. Remove surrounding single quotes and leading/trailing spaces
@@ -1146,7 +1144,7 @@ parse_date <- function(dstrng) {
 
   }
 
-  if (is.null(ret)) {
+  if (is.null(ret) || is.na(ret)) {
 
     ret <- dstrng
   }
