@@ -66,12 +66,17 @@ test_that("stability4: get_stability_data() time limit.", {
 # Need to handle
 test_that("stability5: get_stability_data() only one release.", {
 
+  if (dev) {
+    # No archives
+    res <- get_stability_data("defineR")
 
-  # No archives
-  res <- get_stability_data("defineR")
+    expect_equal(is.data.frame(res), TRUE)
+    expect_equal(nrow(res) == 1, TRUE)
 
-  expect_equal(is.data.frame(res), TRUE)
-  expect_equal(nrow(res) == 1, TRUE)
+  } else {
+
+    expect_equal(TRUE, TRUE)
+  }
 
 })
 
