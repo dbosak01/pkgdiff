@@ -1,4 +1,8 @@
-# pkgdiff 1.0
+# pkgdiff 1.0.1
+
+Fix for CRAN.
+
+# pkgdiff 1.0.0
 
 * Added logo.
 * Added `pkg_summary()` function for interactive use.

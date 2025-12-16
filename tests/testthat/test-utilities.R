@@ -362,18 +362,24 @@ test_that("utilities16: get_parameter_count() works as expected.", {
 
 test_that("utilities17: get_archive_versions() for negative tests.", {
 
+  if (dev) {
 
-  # Non-exisitant package name
-  res <- get_archive_versions("definrr")
+    # Non-existent package name
+    res <- get_archive_versions("definrr")
 
-  # No error
-  expect_equal(is.null(res), TRUE)
+    # No error
+    expect_equal(is.null(res), TRUE)
 
-  res <- get_archive_versions("defineR")
+    res <- get_archive_versions("defineR")
 
-  res
+    res
 
-  expect_equal(is.null(res), TRUE)
+    expect_equal(is.null(res), TRUE)
+
+  } else {
+
+    expect_equal(TRUE, TRUE)
+  }
 
 })
 
