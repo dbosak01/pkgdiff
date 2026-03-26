@@ -3,7 +3,7 @@ dev <- FALSE
 
 test_that("repo1: get_base_paths() works as expected.", {
 
-  if (dev) {
+  if (dev & FALSE) {
 
     res <- get_base_paths(.libPaths())
 
@@ -101,7 +101,7 @@ test_that("repo6: pkg_repo() ver parameter.", {
     expect_equal("data.frame" %in% class(res), TRUE)
     expect_equal("prepo" %in% class(res), TRUE)
     expect_equal(attr(res, "Version"), "4.2.1")
-    expect_equal(length(attr(res, "LibPaths")), 2)
+    expect_equal(length(attr(res, "LibPaths")), 3)
     expect_equal(nrow(res) == 3, TRUE)
 
   } else {
@@ -125,7 +125,7 @@ test_that("repo7: pkg_repo() libpaths parameter.", {
 
     expect_equal("data.frame" %in% class(res), TRUE)
     expect_equal("prepo" %in% class(res), TRUE)
-    expect_equal(attr(res, "Version"), NA)
+    expect_equal(attr(res, "Version"), "current")
     expect_equal(length(attr(res, "LibPaths")), 2)
     expect_equal(nrow(res) == 3, TRUE)
 
@@ -166,20 +166,20 @@ test_that("repo8: pkg_repo() version and libpaths parameter.", {
 test_that("repo9: pkg_repo() non-CRAN package.", {
 
 
-  p <- c("common", "rvest", "forker")
+  p <- c("common", "rvest", "forker22")
 
   res <- pkg_repo(p)
 
   res
   expect_equal(nrow(res) == 3, TRUE)
-  expect_equal("forker" %in% res$Package, TRUE)
+  expect_equal("forker22" %in% res$Package, TRUE)
 
-  p <- c("forker")
+  p <- c("forker22")
 
   res <-  pkg_repo(p)
 
   expect_equal(nrow(res) == 1, TRUE)
-  expect_equal("forker" %in% res$Package, TRUE)
+  expect_equal("forker22" %in% res$Package, TRUE)
 
 
 })

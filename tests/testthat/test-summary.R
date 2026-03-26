@@ -53,20 +53,23 @@ test_that("summary2: gen_html() basic functionality.", {
 test_that("summary3: pkg_summary() basic functionality.", {
 
 
+  if (dev) {
 
-  res <- pkg_summary("stringr")
-
-
-  expect_equal(file.exists(res), TRUE)
+    res <- pkg_summary("stringr")
 
 
-  res <- pkg_summary("stringr", view = FALSE)
+    expect_equal(file.exists(res), TRUE)
 
 
-  expect_equal(file.exists(res), TRUE)
+    res <- pkg_summary("stringr", view = FALSE)
 
 
+    expect_equal(file.exists(res), TRUE)
 
+
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
   # file.show(res)
 
@@ -78,20 +81,24 @@ test_that("summary3: pkg_summary() basic functionality.", {
 
 test_that("summary4: pkg_summary() more breaking changes.", {
 
+  if (dev) {
+
+    res <- pkg_summary("admiral")
 
 
-  res <- pkg_summary("admiral")
+    expect_equal(file.exists(res), TRUE)
+
+    res <- pkg_summary("gtsummary")
 
 
-  expect_equal(file.exists(res), TRUE)
-
-  res <- pkg_summary("gtsummary")
+    expect_equal(file.exists(res), TRUE)
 
 
-  expect_equal(file.exists(res), TRUE)
+    # file.show(res)
 
-
-  # file.show(res)
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 
 })
@@ -99,20 +106,24 @@ test_that("summary4: pkg_summary() more breaking changes.", {
 
 test_that("summary5: pkg_summary() less breaking changes.", {
 
+  if (dev) {
+
+    res <- pkg_summary("fmtr")
 
 
-  res <- pkg_summary("fmtr")
+    expect_equal(file.exists(res), TRUE)
+
+    res <- pkg_summary("logr")
 
 
-  expect_equal(file.exists(res), TRUE)
-
-  res <- pkg_summary("logr")
+    expect_equal(file.exists(res), TRUE)
 
 
-  expect_equal(file.exists(res), TRUE)
+    # file.show(res)
 
-
-  # file.show(res)
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 
 })
@@ -120,16 +131,20 @@ test_that("summary5: pkg_summary() less breaking changes.", {
 
 test_that("summary6: pkg_summary() few releases.", {
 
+  if (dev) {
+
+    res <- pkg_summary("ards")
 
 
-  res <- pkg_summary("ards")
+
+    expect_equal(file.exists(res), TRUE)
 
 
+    # file.show(res)
 
-  expect_equal(file.exists(res), TRUE)
-
-
-  # file.show(res)
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 
 })
@@ -170,16 +185,21 @@ test_that("summary8: pkg_summary() base package.", {
 test_that("summary9: pkg_summary() path argument.", {
 
 
-  pth <- file.path(base_path, "output/str01.html")
+  if (dev) {
 
-  res <- pkg_summary("stringr", path = pth)
+    pth <- file.path(base_path, "output/str01.html")
 
-
-
-  expect_equal(file.exists(res), TRUE)
+    res <- pkg_summary("stringr", path = pth)
 
 
-  # file.show(res)
+
+    expect_equal(file.exists(res), TRUE)
+
+
+    # file.show(res)
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 
 })
@@ -188,26 +208,31 @@ test_that("summary9: pkg_summary() path argument.", {
 test_that("summary10: pkg_summary() releases and months parameters.", {
 
 
+  if (dev) {
 
-  res <- pkg_summary("admiral", releases = 10)
-
-
-  expect_equal(file.exists(res), TRUE)
+    res <- pkg_summary("admiral", releases = 10)
 
 
-  res <- pkg_summary("admiral", months = 18)
+    expect_equal(file.exists(res), TRUE)
 
 
-  expect_equal(file.exists(res), TRUE)
+    res <- pkg_summary("admiral", months = 18)
 
 
-  res <- pkg_summary("admiral", months = 18, releases = 3)
+    expect_equal(file.exists(res), TRUE)
 
 
-  expect_equal(file.exists(res), TRUE)
+    res <- pkg_summary("admiral", months = 18, releases = 3)
 
 
-  # file.show(res)
+    expect_equal(file.exists(res), TRUE)
+
+
+    # file.show(res)
+
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 
 })

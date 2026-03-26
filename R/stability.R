@@ -471,6 +471,7 @@ print.pdiff_score <- function(x, ...) {
 #' @noRd
 get_github_data <- function(pkgname, releases = NULL, months = NULL) {
 
+  dat <- NULL
   fl <- paste0(pkgname, ".RData")
 
   # https://github.com/dbosak01/pkgdiffdata/blob/main/data/common.Rdata
@@ -481,31 +482,44 @@ get_github_data <- function(pkgname, releases = NULL, months = NULL) {
   pth <- file.path("https://github.com/dbosak01/pkgdiffdata/raw/refs/heads/main/data",
                    fl)
 
-  murl <- url(pth)
-  info <- get(load(gzcon(murl)))
-  close(murl)
+  info <- NULL
 
-  dat <- info$stability
+  ret <- tryCatch({
+    murl <- url(pth)
+    info <- get(load(gzcon(murl)))
+    close(murl)
+    TRUE
+  }, warning = function(msg) {
+    message(paste("Message:", msg))
+    return(FALSE)
+  }, error = function(cond) {
+    return(FALSE)
+  })
 
-  if (!is.null(releases)) {
+  if (TRUE & !is.null(info)) {
+    dat <- info$stability
 
-    if (nrow(dat) >= releases)
-      dat <- dat[seq(1, releases), ]
-  }
+    if (!is.null(releases)) {
 
-  if (!is.null(months)) {
-    dm <- Sys.Date() - ((months + 1) * 30)
-
-    # Handle situation where last package release date
-    # is before the requested release range.
-    if (max(dat$Release) < dm) {
-      dat <- dat[1, ]
-    } else {
-      dat <- subset(dat, dat$Release >= dm)
+      if (nrow(dat) >= releases)
+        dat <- dat[seq(1, releases), ]
     }
-  }
 
-  rownames(dat) <- NULL
+    if (!is.null(months)) {
+      dm <- Sys.Date() - ((months + 1) * 30)
+
+      # Handle situation where last package release date
+      # is before the requested release range.
+      if (max(dat$Release) < dm) {
+        dat <- dat[1, ]
+      } else {
+        dat <- subset(dat, dat$Release >= dm)
+      }
+    }
+
+    rownames(dat) <- NULL
+
+  }
 
   return(dat)
 }

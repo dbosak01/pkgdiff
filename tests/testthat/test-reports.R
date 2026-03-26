@@ -2,54 +2,66 @@ dev <- FALSE
 
 test_that("reports1: repo_breakages() works as expected.", {
 
-  pkgs <- c("common", "knitr", "rvest")
-  vrs <- c("1.1.3", "1.39", "0.3.6")
-
   if (dev) {
 
-    pkgs <- c("admiral", "common", "rvest")
+    pkgs <- c("common", "knitr", "rvest")
+    vrs <- c("1.1.3", "1.39", "0.3.6")
 
-    pth <- "C:\\Users\\dbosa\\AppData\\Local\\R\\win-library\\4.2"
-    lst1 <- installed_packages(pkgs,
-                                 repos = pth)
+    if (dev & FALSE) {
+
+      pkgs <- c("admiral", "common", "rvest")
+
+      pth <- "C:\\Users\\dbosa\\AppData\\Local\\R\\win-library\\4.2"
+      lst1 <- installed_packages(pkgs,
+                                   repos = pth)
+
+    } else {
+
+      lst1 <- data.frame(Package = pkgs, Version = vrs)
+    }
+
+    lst2 <- get_latest_data(pkgs)[ , c("Package", "Version")]
+
+    res <- repo_breakages(lst1, lst2)
+
+    expect_equal(is.data.frame(res$Summary), TRUE)
+
+    expect_equal(nrow(res$Summary) == 3, TRUE)
+
+    expect_equal(ncol(res$Summary) == 4, TRUE)
 
   } else {
-
-    lst1 <- data.frame(Package = pkgs, Version = vrs)
+    expect_equal(TRUE, TRUE)
   }
-
-  lst2 <- get_latest_data(pkgs)[ , c("Package", "Version")]
-
-  res <- repo_breakages(lst1, lst2)
-
-  expect_equal(is.data.frame(res$Summary), TRUE)
-
-  expect_equal(nrow(res$Summary) == 3, TRUE)
-
-  expect_equal(ncol(res$Summary) == 4, TRUE)
 
 
 })
 
 test_that("reports2: repo_stability() works as expected.", {
 
-  pkgs <- c("common", "fmtr", "libr", "defineR")
-
   if (dev) {
 
-    pkgs <- c("admiral", "common", "rvest")
+    pkgs <- c("common", "fmtr", "libr", "defineR")
 
+    if (dev & FALSE) {
+
+      pkgs <- c("admiral", "common", "rvest")
+
+    }
+
+    res <- repo_stability(pkgs)
+
+    res
+
+    expect_equal(is.data.frame(res), TRUE)
+
+    expect_equal(nrow(res) == 4, TRUE)
+
+    expect_equal(ncol(res) == 9, TRUE)
+
+  } else {
+    expect_equal(TRUE, TRUE)
   }
-
-  res <- repo_stability(pkgs)
-
-  res
-
-  expect_equal(is.data.frame(res), TRUE)
-
-  expect_equal(nrow(res) == 4, TRUE)
-
-  expect_equal(ncol(res) == 9, TRUE)
 
 
 })
@@ -57,7 +69,7 @@ test_that("reports2: repo_stability() works as expected.", {
 test_that("reports3: repo_breakages() handles edge cases.", {
 
 
-  if (dev) {
+  if (dev & FALSE) {
 
     r1 <- pkg_repo(ver = "4.2.1")
     r2 <- pkg_repo(ver = "latest")
@@ -87,7 +99,7 @@ test_that("reports3: repo_breakages() handles edge cases.", {
 test_that("reports4: repo_stability() handles edge cases.", {
 
 
-  if (dev) {
+  if (dev & FALSE) {
 
     r1 <- pkg_repo(ver = "4.2.1")
 

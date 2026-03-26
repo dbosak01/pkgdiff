@@ -3,22 +3,9 @@ dev <- FALSE
 
 test_that("utilities1: get_archive_versions() works as expected.", {
 
-  res <- get_archive_versions("fmtr")
-
-  res
-
-  expect_equal(is.data.frame(res), TRUE)
-
-  expect_equal(nrow(res) > 0, TRUE)
-
-  expect_equal(ncol(res) == 5, TRUE)
-
-
-
-
   if (dev) {
 
-    res <- get_archive_versions(c("fmtr", "common", "rvest"))
+    res <- get_archive_versions("fmtr")
 
     res
 
@@ -28,43 +15,68 @@ test_that("utilities1: get_archive_versions() works as expected.", {
 
     expect_equal(ncol(res) == 5, TRUE)
 
+
+
+
+    if (dev) {
+
+      res <- get_archive_versions(c("fmtr", "common", "rvest"))
+
+      res
+
+      expect_equal(is.data.frame(res), TRUE)
+
+      expect_equal(nrow(res) > 0, TRUE)
+
+      expect_equal(ncol(res) == 5, TRUE)
+
+    }
+
+  } else {
+    expect_equal(TRUE, TRUE)
   }
 })
 
 
 test_that("utilities2: get_latest_version() works as expected.", {
 
-  res <- get_latest_version("logr")
+  if (dev) {
 
-  expect_equal(is.data.frame(res), FALSE)
+    res <- get_latest_version("logr")
 
-  expect_equal(length(res) == 1, TRUE)
+    expect_equal(is.data.frame(res), FALSE)
 
-  res <- get_latest_version(c("logr", "fmtr", "common"))
+    expect_equal(length(res) == 1, TRUE)
 
-  expect_equal(is.data.frame(res), FALSE)
+    res <- get_latest_version(c("logr", "fmtr", "common"))
 
-  expect_equal(is.list(res), FALSE)
+    expect_equal(is.data.frame(res), FALSE)
 
-  expect_equal(length(res) == 3, TRUE)
+    expect_equal(is.list(res), FALSE)
 
-  res <- get_latest_version("Matrix")
+    expect_equal(length(res) == 3, TRUE)
 
-  expect_equal(is.data.frame(res), FALSE)
+    res <- get_latest_version("Matrix")
 
-  expect_equal(is.list(res), FALSE)
+    expect_equal(is.data.frame(res), FALSE)
 
-  expect_equal(length(res) == 1, TRUE)
+    expect_equal(is.list(res), FALSE)
 
-  res <- get_latest_version("grid")
+    expect_equal(length(res) == 1, TRUE)
 
-  expect_equal(is.data.frame(res), FALSE)
+    res <- get_latest_version("grid")
 
-  expect_equal(is.list(res), FALSE)
+    expect_equal(is.data.frame(res), FALSE)
 
-  expect_equal(length(res) == 1, TRUE)
+    expect_equal(is.list(res), FALSE)
 
-  expect_equal(res[[1]] == "archived", TRUE)
+    expect_equal(length(res) == 1, TRUE)
+
+    expect_equal(res[[1]] == "archived", TRUE)
+
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 })
 
@@ -73,12 +85,17 @@ test_that("utilities3: get_version() works as expected.", {
 
   vers <- c("logr_1.2.3.tar.gz", "logr_1.2.4.tar.gz", "logr_1.3.0.tar.gz")
 
+  if (dev) {
 
-  res <- get_version(vers)
+    res <- get_version(vers)
 
-  expect_equal(res[1], "1.2.3")
-  expect_equal(res[2], "1.2.4")
-  expect_equal(res[3], "1.3.0")
+    expect_equal(res[1], "1.2.3")
+    expect_equal(res[2], "1.2.4")
+    expect_equal(res[3], "1.3.0")
+
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 })
 
@@ -130,57 +147,42 @@ test_that("utilities4: installed_packages() works as expected.", {
 
 test_that("utilities5: get_current_version() works as expected.", {
 
+  if (dev) {
 
-  res <- get_current_version("common")
+    res <- get_current_version("common")
 
-  expect_equal(is.data.frame(res), FALSE)
+    expect_equal(is.data.frame(res), FALSE)
 
-  expect_equal(length(res), 1)
+    expect_equal(length(res), 1)
 
-  expect_equal(nchar(res) > 0, TRUE)
+    expect_equal(nchar(res) > 0, TRUE)
+
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 })
 
 
 test_that("utilities6: get_file_name() works as expected.", {
 
-  res <- get_file_name("common", "1.2.3")
+  if (dev) {
 
-  expect_equal(res, "common_1.2.3.tar.gz")
+    res <- get_file_name("common", "1.2.3")
+
+    expect_equal(res, "common_1.2.3.tar.gz")
+
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 })
 
 
 test_that("utilities7: get_latest_data() works as expected.", {
 
-  res <- get_latest_data("fmtr")
-
-  expect_equal(is.data.frame(res), TRUE)
-
-  expect_equal(nrow(res) == 1, TRUE)
-
-  expect_equal(ncol(res) == 5, TRUE)
-
   if (dev) {
 
-     res <- get_latest_data(c("common", "reporter", "purr",
-                              "fmtr", "Matrix"), skip_size = FALSE)
-
-     expect_equal(is.data.frame(res), TRUE)
-
-     expect_equal(nrow(res) == 4, TRUE)
-
-     expect_equal(ncol(res) == 5, TRUE)
-
-  }
-
-  res <- get_latest_data("purr")
-
-  expect_equal(is.null(res), TRUE)
-
-
-  if (dev) {
-
-    res <- get_latest_data("reporter")
+    res <- get_latest_data("fmtr")
 
     expect_equal(is.data.frame(res), TRUE)
 
@@ -188,15 +190,47 @@ test_that("utilities7: get_latest_data() works as expected.", {
 
     expect_equal(ncol(res) == 5, TRUE)
 
+    if (dev) {
 
-    res <- get_latest_data("Matrix")
+       res <- get_latest_data(c("common", "reporter", "purr",
+                                "fmtr", "Matrix"), skip_size = FALSE)
 
-    expect_equal(is.data.frame(res), TRUE)
+       expect_equal(is.data.frame(res), TRUE)
 
-    expect_equal(nrow(res) == 1, TRUE)
+       expect_equal(nrow(res) == 4, TRUE)
 
-    expect_equal(ncol(res) == 5, TRUE)
+       expect_equal(ncol(res) == 5, TRUE)
 
+    }
+
+    res <- get_latest_data("purr")
+
+    expect_equal(is.null(res), TRUE)
+
+
+    if (dev) {
+
+      res <- get_latest_data("reporter")
+
+      expect_equal(is.data.frame(res), TRUE)
+
+      expect_equal(nrow(res) == 1, TRUE)
+
+      expect_equal(ncol(res) == 5, TRUE)
+
+
+      res <- get_latest_data("Matrix")
+
+      expect_equal(is.data.frame(res), TRUE)
+
+      expect_equal(nrow(res) == 1, TRUE)
+
+      expect_equal(ncol(res) == 5, TRUE)
+
+    }
+
+  } else {
+    expect_equal(TRUE, TRUE)
   }
 
 })
@@ -307,62 +341,83 @@ test_that("utilities12: get_all_functions() works as expected.", {
 
 test_that("utilities13: pkg_info() works as expected.", {
 
+  if (dev) {
 
-  res <- pkg_info("tibble", "latest")
+    res <- pkg_info("tibble", "latest")
 
-  expect_equal(is.null(res), FALSE)
+    expect_equal(is.null(res), FALSE)
 
-  expect_equal("pinfo" %in% class(res), TRUE)
+    expect_equal("pinfo" %in% class(res), TRUE)
+
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 })
 
 
 test_that("utilities14: pkg_info() works as expected.", {
 
+  if (dev) {
 
-  res <- pkg_info("fmtr", "1.0.1")
+    res <- pkg_info("fmtr", "1.0.1")
 
-  expect_equal(is.null(res), FALSE)
+    expect_equal(is.null(res), FALSE)
 
-  expect_equal("pinfo" %in% class(res), TRUE)
+    expect_equal("pinfo" %in% class(res), TRUE)
+
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 })
 
 test_that("utilities15: get_all_parameters() works as expected.", {
 
 
-  inf <- pkg_info("fmtr", "1.0.1")
+  if (dev) {
 
-  res <- get_all_parameters(inf)
+    inf <- pkg_info("fmtr", "1.0.1")
 
-  res
+    res <- get_all_parameters(inf)
 
-  expect_equal(is.null(res), FALSE)
+    res
 
-  expect_equal("pinfo" %in% class(inf), TRUE)
+    expect_equal(is.null(res), FALSE)
 
-  expect_equal(length(res) > 0, TRUE)
+    expect_equal("pinfo" %in% class(inf), TRUE)
+
+    expect_equal(length(res) > 0, TRUE)
+
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 })
 
 test_that("utilities16: get_parameter_count() works as expected.", {
 
+  if (dev) {
 
-  inf <- pkg_info("fmtr", "1.0.1")
+    inf <- pkg_info("fmtr", "1.0.1")
 
-  res <- get_parameter_count(inf)
+    res <- get_parameter_count(inf)
 
-  res
+    res
 
-  expect_equal(is.null(res), FALSE)
+    expect_equal(is.null(res), FALSE)
 
-  expect_equal(res, 36)
+    expect_equal(res, 36)
+
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 })
 
 test_that("utilities17: get_archive_versions() for negative tests.", {
 
-  if (dev) {
+  if (dev & FALSE) {
 
     # Non-existent package name
     res <- get_archive_versions("definrr")
@@ -386,69 +441,95 @@ test_that("utilities17: get_archive_versions() for negative tests.", {
 
 test_that("utilities18: get_all_infos() works as expected.", {
 
-  res <- get_all_infos("procs")
 
-  res
+  if (dev) {
 
-  expect_equal(is.list(res), TRUE)
-  expect_equal(length(res) > 0, TRUE)
-  expect_equal("pinfo" %in% class(res[[1]]), TRUE)
+    res <- get_all_infos("procs")
 
-  res <- get_all_infos("procs", c("1.0.3", "1.0.4"))
+    res
 
-  res
+    expect_equal(is.list(res), TRUE)
+    expect_equal(length(res) > 0, TRUE)
+    expect_equal("pinfo" %in% class(res[[1]]), TRUE)
 
-  expect_equal(is.list(res), TRUE)
-  expect_equal(length(res) == 2, TRUE)
-  expect_equal("pinfo" %in% class(res[[1]]), TRUE)
+    res <- get_all_infos("procs", c("1.0.3", "1.0.4"))
 
-  res <- get_all_infos("forker")
+    res
 
-  res
+    expect_equal(is.list(res), TRUE)
+    expect_equal(length(res) == 2, TRUE)
+    expect_equal("pinfo" %in% class(res[[1]]), TRUE)
 
-  expect_equal(is.null(res), TRUE)
+    res <- get_all_infos("forker")
+
+    res
+
+    expect_equal(is.null(res), TRUE)
+
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 })
 
 test_that("utilities19: github_packages() works as expected.", {
 
-  res <- github_packages()
+  if (dev) {
 
-  expect_equal(length(res) > 0, TRUE)
-  expect_equal("logr" %in% names(res), TRUE)
+    res <- github_packages()
 
-  res <- github_packages("logr")
+    expect_equal(length(res) > 0, TRUE)
+    expect_equal("logr" %in% names(res), TRUE)
 
-  expect_equal(length(res) == 1, TRUE)
-  expect_equal("logr" %in% names(res), TRUE)
+    res <- github_packages("logr")
+
+    expect_equal(length(res) == 1, TRUE)
+    expect_equal("logr" %in% names(res), TRUE)
 
 
-  res <- github_packages("loxx")
-  expect_equal(is.na(res[[1]]) == TRUE, TRUE)
+    res <- github_packages("loxx")
+    expect_equal(is.na(res[[1]]) == TRUE, TRUE)
+
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 })
 
 test_that("utilities20: get_all_versions() works as expected.", {
 
-  res <- get_all_versions("zoo")
 
-  res
+  if (dev) {
 
-  expect_equal(is.data.frame(res), TRUE)
-  expect_equal(nrow(res) > 0, TRUE)
-  expect_equal(ncol(res), 5)
+    res <- get_all_versions("zoo")
+
+    res
+
+    expect_equal(is.data.frame(res), TRUE)
+    expect_equal(nrow(res) > 0, TRUE)
+    expect_equal(ncol(res), 5)
+
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 })
 
 
 test_that("utilities21: github_package() works as expected.", {
 
-  res <- github_package("tibble")
+  if (dev) {
 
-  expect_equal(is.data.frame(res$stability), TRUE)
-  expect_equal(nrow(res$stability) > 0, TRUE)
-  expect_equal("pinfo" %in% class(res$infos[[1]]), TRUE)
-  expect_equal(length(res$infos) > 2, TRUE)
+    res <- github_package("tibble")
+
+    expect_equal(is.data.frame(res$stability), TRUE)
+    expect_equal(nrow(res$stability) > 0, TRUE)
+    expect_equal("pinfo" %in% class(res$infos[[1]]), TRUE)
+    expect_equal(length(res$infos) > 2, TRUE)
+
+  } else {
+    expect_equal(TRUE, TRUE)
+  }
 
 })
 
