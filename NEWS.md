@@ -1,10 +1,14 @@
+# pkgdiff 1.0.3
+
+* Fix for CRAN.
+
 # pkgdiff 1.0.2
 
-Fix for CRAN.
+* Fix for CRAN.
 
 # pkgdiff 1.0.1
 
-Fix for CRAN.
+* Fix for CRAN.
 
 # pkgdiff 1.0.0
 

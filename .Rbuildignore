@@ -6,3 +6,5 @@
 ^pkgdown$
 ^docs$
 ^logo\.png$
+^\.positai$
+^\.claude$

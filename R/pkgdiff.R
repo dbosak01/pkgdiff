@@ -78,11 +78,17 @@ refresh_package_lists <- function(force = FALSE) {
   if (is.null(e$AvailablePackages) ||
       is.null(e$SavedPackages) || ts > 1 || force == TRUE) {
 
-    e$AvailablePackages <- available_packages()
+    e$AvailablePackages <- tryCatch(available_packages(),
+                                    error = function(cond) {
+                                      NULL})
 
-    e$SavedPackages <- github_packages()
+    e$SavedPackages <- tryCatch(github_packages(),
+                                error = function(cond) {
+                                  NULL})
 
-    e$BasePackages <- base_packages()
+    e$BasePackages <- tryCatch(base_packages(),
+                               error = function(cond) {
+                                 NULL})
 
     ret <- TRUE
   }
