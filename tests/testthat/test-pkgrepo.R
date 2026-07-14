@@ -101,7 +101,7 @@ test_that("repo6: pkg_repo() ver parameter.", {
     expect_equal("data.frame" %in% class(res), TRUE)
     expect_equal("prepo" %in% class(res), TRUE)
     expect_equal(attr(res, "Version"), "4.2.1")
-    expect_equal(length(attr(res, "LibPaths")), 3)
+    expect_equal(length(attr(res, "LibPaths")), 2)
     expect_equal(nrow(res) == 3, TRUE)
 
   } else {

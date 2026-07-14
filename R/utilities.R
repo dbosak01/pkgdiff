@@ -302,7 +302,8 @@ get_archive_versions <- function(pkgs) {
 
 
       # Clear out unnecessary rows
-      tmp <- subset(table1, table1$Name != "Parent Directory" & table1$Name != "")
+      tmp <- subset(table1, table1$Name != "Parent Directory" & table1$Name != "" &
+                      table1$Name != "PACKAGES.rds")
 
       # Convert dates
       tmp[["Last modified"]] <- as.Date(tmp[["Last modified"]],

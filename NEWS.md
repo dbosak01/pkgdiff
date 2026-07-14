@@ -1,3 +1,7 @@
+# pkgdiff 1.0.4
+
+* Update screen scrape logic for CRAN package archive.
+
 # pkgdiff 1.0.3
 
 * Fix for CRAN.
