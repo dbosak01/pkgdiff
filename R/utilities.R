@@ -147,8 +147,8 @@ get_latest_data_back <- function(pkgs, skip_size = FALSE, msg = TRUE) {
 
     } else {
 
-      table1 <- html_table(tables[1], fill = TRUE)[[1]]
-      table3 <- html_table(tables[3], fill = TRUE)[[1]]
+      table1 <- html_table(tables[1])[[1]]
+      table3 <- html_table(tables[3])[[1]]
 
       # Replace non-breaking space
       table1$X1 <- gsub('\xc2\xa0+', " ", table1$X1)
@@ -287,7 +287,7 @@ get_archive_versions <- function(pkgs) {
     } else {
 
       tables <- html_elements(page, "table")
-      table1 <- html_table(tables[1], fill = TRUE)[[1]]
+      table1 <- html_table(tables[1])[[1]]
 
       # Get column names
       nms <- names(table1)
