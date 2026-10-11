@@ -95,11 +95,11 @@ Use the \code{\link{pkg_repo}} function to help gather
 version information for each package set.  Also see \code{\link{repo_stability}}
 to collect stability information on multiple packages.
 
-Other prepo: 
-\code{\link{pkg_repo}()},
-\code{\link{print.prepo}()},
-\code{\link{print.rbreak}()},
-\code{\link{print.rstability}()},
-\code{\link{repo_stability}()}
+Other prepo:
+\code{\link[=pkg_repo]{pkg_repo()}},
+\code{\link[=print.prepo]{print.prepo()}},
+\code{\link[=print.rbreak]{print.rbreak()}},
+\code{\link[=print.rstability]{print.rstability()}},
+\code{\link[=repo_stability]{repo_stability()}}
 }
 \concept{prepo}

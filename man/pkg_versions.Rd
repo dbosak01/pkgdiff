@@ -45,14 +45,14 @@ pkg_versions("rsample")
 # 16 rsample   0.0.1 rsample_0.0.1.tar.gz 2017-07-08   180K
 }
 \seealso{
-Other pdiff: 
-\code{\link{pkg_cache}()},
-\code{\link{pkg_diff}()},
-\code{\link{pkg_info}()},
-\code{\link{pkg_stability}()},
-\code{\link{print.pcache}()},
-\code{\link{print.pdiff}()},
-\code{\link{print.pdiff_score}()},
-\code{\link{print.pinfo}()}
+Other pdiff:
+\code{\link[=pkg_cache]{pkg_cache()}},
+\code{\link[=pkg_diff]{pkg_diff()}},
+\code{\link[=pkg_info]{pkg_info()}},
+\code{\link[=pkg_stability]{pkg_stability()}},
+\code{\link[=print.pcache]{print.pcache()}},
+\code{\link[=print.pdiff]{print.pdiff()}},
+\code{\link[=print.pdiff_score]{print.pdiff_score()}},
+\code{\link[=print.pinfo]{print.pinfo()}}
 }
 \concept{pdiff}

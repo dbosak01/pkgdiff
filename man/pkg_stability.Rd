@@ -280,14 +280,14 @@ pkg_stability("ggplot2")
 # 50 ggplot2     0.5     ggplot2_0.5.tar.gz 2007-06-01 7.1M 160 160   0  0  0 160
 }
 \seealso{
-Other pdiff: 
-\code{\link{pkg_cache}()},
-\code{\link{pkg_diff}()},
-\code{\link{pkg_info}()},
-\code{\link{pkg_versions}()},
-\code{\link{print.pcache}()},
-\code{\link{print.pdiff}()},
-\code{\link{print.pdiff_score}()},
-\code{\link{print.pinfo}()}
+Other pdiff:
+\code{\link[=pkg_cache]{pkg_cache()}},
+\code{\link[=pkg_diff]{pkg_diff()}},
+\code{\link[=pkg_info]{pkg_info()}},
+\code{\link[=pkg_versions]{pkg_versions()}},
+\code{\link[=print.pcache]{print.pcache()}},
+\code{\link[=print.pdiff]{print.pdiff()}},
+\code{\link[=print.pdiff_score]{print.pdiff_score()}},
+\code{\link[=print.pinfo]{print.pinfo()}}
 }
 \concept{pdiff}

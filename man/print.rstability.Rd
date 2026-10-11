@@ -36,11 +36,11 @@ print(res)
 # 4 tidymodels 0.0.1 1.3.0 2018-07-27 2025-02-21 14  0 100.0           Perfect
 }
 \seealso{
-Other prepo: 
-\code{\link{pkg_repo}()},
-\code{\link{print.prepo}()},
-\code{\link{print.rbreak}()},
-\code{\link{repo_breakages}()},
-\code{\link{repo_stability}()}
+Other prepo:
+\code{\link[=pkg_repo]{pkg_repo()}},
+\code{\link[=print.prepo]{print.prepo()}},
+\code{\link[=print.rbreak]{print.rbreak()}},
+\code{\link[=repo_breakages]{repo_breakages()}},
+\code{\link[=repo_stability]{repo_stability()}}
 }
 \concept{prepo}

@@ -124,16 +124,21 @@ pkg_repo <- function(pkgs = NULL, ver = "current", libpaths = NULL) {
 
   }
 
-  if (nrow(lst) < length(pkgs)) {
+  if (!is.null(lst)) {
+    if (nrow(lst) < length(pkgs)) {
 
-    mpkgs <- pkgs[!pkgs %in% lst$Package]
-    mdf <- data.frame(Package = mpkgs, Version = NA)
-    lst <- rbind(lst, mdf)
+      mpkgs <- pkgs[!pkgs %in% lst$Package]
+      mdf <- data.frame(Package = mpkgs, Version = NA)
+      lst <- rbind(lst, mdf)
+    }
   }
 
   ret <- lst
-  class(ret) <- c("prepo", class(ret))
-  rownames(ret) <- NULL
+
+  if (!is.null(lst)) {
+    class(ret) <- c("prepo", class(ret))
+    rownames(ret) <- NULL
+  }
 
   if (!is.null(mver))
     attr(ret, "Version") <- mver

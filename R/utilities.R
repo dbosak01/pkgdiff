@@ -23,12 +23,15 @@ get_latest_data <- function(pkgs,
 
   lst <- e$AvailablePackages[e$AvailablePackages$Package %in% pkgs, ]
 
+
   for(pkg in pkgs) {
 
     lrw <- lst[lst$Package == pkg, ]
 
+    if (is.null(lrw)) {
 
-    if (nrow(lrw) == 0) {
+      message(paste0("Package data for '", pkg, "' not found."))
+    } else if (nrow(lrw) == 0) {
 
       message(paste0("Package data for '", pkg, "' not found."))
     } else {
@@ -98,7 +101,7 @@ get_latest_data <- function(pkgs,
   return(ret)
 }
 
-# Retrieve latest info for a package from CRAN
+#' Retrieve latest info for a package from CRAN
 #' @import rvest
 #' @import utils
 #' @noRd
@@ -226,11 +229,16 @@ get_latest_version <- function(pkgs, msg = TRUE) {
 
   lst <- e$AvailablePackages[e$AvailablePackages$Package %in% pkgs, ]
 
+
   pos <- 1
   nfpkgs <- c()
   for (pkg in pkgs) {
 
-    if (nrow(lst) == 0) {
+    if (is.null(lst)) {
+
+      dat <- get_latest_data_back(pkg, skip_size = TRUE, msg = msg)[1, "Version"]
+
+    } else if (nrow(lst) == 0) {
       dat <- get_latest_data_back(pkg, skip_size = TRUE, msg = msg)[1, "Version"]
     } else {
 

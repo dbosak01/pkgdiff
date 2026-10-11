@@ -1,3 +1,8 @@
+# pkgdiff 1.0.5
+
+* Fix some errors/warnings due to dependency deprecation.
+* Improve error handling when package data is not found.
+
 # pkgdiff 1.0.4
 
 * Update screen scrape logic for CRAN package archive.

@@ -52,11 +52,11 @@ pkg_repo(pkgs, ver = "latest")
 
 }
 \seealso{
-Other prepo: 
-\code{\link{print.prepo}()},
-\code{\link{print.rbreak}()},
-\code{\link{print.rstability}()},
-\code{\link{repo_breakages}()},
-\code{\link{repo_stability}()}
+Other prepo:
+\code{\link[=print.prepo]{print.prepo()}},
+\code{\link[=print.rbreak]{print.rbreak()}},
+\code{\link[=print.rstability]{print.rstability()}},
+\code{\link[=repo_breakages]{repo_breakages()}},
+\code{\link[=repo_stability]{repo_stability()}}
 }
 \concept{prepo}

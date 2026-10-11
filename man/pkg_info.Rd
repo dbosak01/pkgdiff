@@ -149,14 +149,14 @@ res$Functions
 # ...
 }
 \seealso{
-Other pdiff: 
-\code{\link{pkg_cache}()},
-\code{\link{pkg_diff}()},
-\code{\link{pkg_stability}()},
-\code{\link{pkg_versions}()},
-\code{\link{print.pcache}()},
-\code{\link{print.pdiff}()},
-\code{\link{print.pdiff_score}()},
-\code{\link{print.pinfo}()}
+Other pdiff:
+\code{\link[=pkg_cache]{pkg_cache()}},
+\code{\link[=pkg_diff]{pkg_diff()}},
+\code{\link[=pkg_stability]{pkg_stability()}},
+\code{\link[=pkg_versions]{pkg_versions()}},
+\code{\link[=print.pcache]{print.pcache()}},
+\code{\link[=print.pdiff]{print.pdiff()}},
+\code{\link[=print.pdiff_score]{print.pdiff_score()}},
+\code{\link[=print.pinfo]{print.pinfo()}}
 }
 \concept{pdiff}

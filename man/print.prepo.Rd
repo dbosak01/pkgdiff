@@ -37,11 +37,11 @@ print(res)
 # 5  workflows   1.2.0
 }
 \seealso{
-Other prepo: 
-\code{\link{pkg_repo}()},
-\code{\link{print.rbreak}()},
-\code{\link{print.rstability}()},
-\code{\link{repo_breakages}()},
-\code{\link{repo_stability}()}
+Other prepo:
+\code{\link[=pkg_repo]{pkg_repo()}},
+\code{\link[=print.rbreak]{print.rbreak()}},
+\code{\link[=print.rstability]{print.rstability()}},
+\code{\link[=repo_breakages]{repo_breakages()}},
+\code{\link[=repo_stability]{repo_stability()}}
 }
 \concept{prepo}

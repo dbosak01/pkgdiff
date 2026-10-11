@@ -140,14 +140,14 @@ pkg_diff("rsample", "1.1.1", "1.2.0")
 #   - int_t(): statistics, alpha
 }
 \seealso{
-Other pdiff: 
-\code{\link{pkg_cache}()},
-\code{\link{pkg_info}()},
-\code{\link{pkg_stability}()},
-\code{\link{pkg_versions}()},
-\code{\link{print.pcache}()},
-\code{\link{print.pdiff}()},
-\code{\link{print.pdiff_score}()},
-\code{\link{print.pinfo}()}
+Other pdiff:
+\code{\link[=pkg_cache]{pkg_cache()}},
+\code{\link[=pkg_info]{pkg_info()}},
+\code{\link[=pkg_stability]{pkg_stability()}},
+\code{\link[=pkg_versions]{pkg_versions()}},
+\code{\link[=print.pcache]{print.pcache()}},
+\code{\link[=print.pdiff]{print.pdiff()}},
+\code{\link[=print.pdiff_score]{print.pdiff_score()}},
+\code{\link[=print.pinfo]{print.pinfo()}}
 }
 \concept{pdiff}

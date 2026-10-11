@@ -21,11 +21,11 @@ The repo breakage object, invisibly.
 Print routine for a repo breakages object of class "rbreak".
 }
 \seealso{
-Other prepo: 
-\code{\link{pkg_repo}()},
-\code{\link{print.prepo}()},
-\code{\link{print.rstability}()},
-\code{\link{repo_breakages}()},
-\code{\link{repo_stability}()}
+Other prepo:
+\code{\link[=pkg_repo]{pkg_repo()}},
+\code{\link[=print.prepo]{print.prepo()}},
+\code{\link[=print.rstability]{print.rstability()}},
+\code{\link[=repo_breakages]{repo_breakages()}},
+\code{\link[=repo_stability]{repo_stability()}}
 }
 \concept{prepo}

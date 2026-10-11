@@ -94,11 +94,11 @@ res
 
 }
 \seealso{
-Other prepo: 
-\code{\link{pkg_repo}()},
-\code{\link{print.prepo}()},
-\code{\link{print.rbreak}()},
-\code{\link{print.rstability}()},
-\code{\link{repo_breakages}()}
+Other prepo:
+\code{\link[=pkg_repo]{pkg_repo()}},
+\code{\link[=print.prepo]{print.prepo()}},
+\code{\link[=print.rbreak]{print.rbreak()}},
+\code{\link[=print.rstability]{print.rstability()}},
+\code{\link[=repo_breakages]{repo_breakages()}}
 }
 \concept{prepo}
